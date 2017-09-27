@@ -2,5 +2,5 @@
 *.log
 *.gz
 *.out
-doc/UML/components/.Components.vpp.lck
+*.vpp.lck
 *.bak*
