@@ -5,3 +5,10 @@
 *.vpp.lck
 *.bak*
 *.vux
+*.cproject
+.nedexclusions
+.nedfolders
+.oppbuildspec
+.oppfeaturestate
+.project
+.settings/
