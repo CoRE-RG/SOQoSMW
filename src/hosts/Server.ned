@@ -13,25 +13,15 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_TCX_H
-#define __HAUPTPROJEKT_TIMO_HAECKEL_TCX_H
+package hauptprojekt_timo_haeckel.hosts;
 
-#include <omnetpp.h>
-
-using namespace omnetpp;
-
-namespace hauptprojekt_timo_haeckel {
-
-/**
- * Implements the Txc simple module. See the NED file for more information.
- */
-class Txc : public cSimpleModule
+//
+// Immediately sends out any message it receives. It can optionally generate
+// a message at the beginning of the simulation, to bootstrap the process.
+//
+simple Server
 {
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
-};
-
-}; // namespace
-
-#endif
+    gates:
+        input in;
+        output out;
+}

@@ -13,25 +13,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "Txc.h"
+package hauptprojekt_timo_haeckel.simulations;
 
-namespace hauptprojekt_timo_haeckel {
+import hauptprojekt_timo_haeckel.hosts.Client;
+import hauptprojekt_timo_haeckel.hosts.Server;
 
-Define_Module(Txc);
-
-void Txc::initialize()
+//
+// Two instances (tic and toc) of Txc connected.
+//
+network ClientServer
 {
-    if (par("sendInitialMessage").boolValue())
-    {
-        cMessage *msg = new cMessage("tictocMsg");
-        send(msg, "out");
-    }
+    submodules:
+        client: Client;
+        server: Server;
+    connections:
+        client.out --> {delay = 100ms;} --> server.in;
+        client.in <-- {delay = 100ms;} <-- server.out;
 }
-
-void Txc::handleMessage(cMessage *msg)
-{
-    // just send back the message we received
-    send(msg, "out");
-}
-
-}; // namespace

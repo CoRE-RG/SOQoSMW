@@ -13,19 +13,15 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package hauptprojekt_timo_haeckel.simulations;
-
-import hauptprojekt_timo_haeckel.Txc;
+package hauptprojekt_timo_haeckel.hosts;
 
 //
-// Two instances (tic and toc) of Txc connected.
+// Immediately sends out any message it receives. It can optionally generate
+// a message at the beginning of the simulation, to bootstrap the process.
 //
-network Tictoc
+simple Client
 {
-    submodules:
-        tic: Txc;
-        toc: Txc;
-    connections:
-        tic.out --> {delay = 100ms;} --> toc.in;
-        tic.in <-- {delay = 100ms;} <-- toc.out;
+    gates:
+        input in;
+        output out;
 }
