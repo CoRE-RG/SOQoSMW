@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<gateway id="gateway2">
+		<routing>
+			<route source="1" destination="0">
+				<ethernetframe dst="CB-98-6D-ED-BD-FC"/>
+			</route>
+		</routing>
+		<buffering>
+		</buffering>
+		<transformation destination="0" type="toCan">
+			<ethernetframe dst=""/>
+		</transformation>
+	</gateway>
+
+</config>

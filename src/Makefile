@@ -1,41 +1,41 @@
 #
-# OMNeT++/OMNEST Makefile for Hauptprojekt-Timo_Haeckel
+# OMNeT++/OMNEST Makefile for $(LIB_PREFIX)Hauptprojekt-Timo_Haeckel
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep
+#  opp_makemake --make-so -f --deep -KCORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET -KINET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet -KFICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
 #
 
 # Name of target to be created (-o option)
-TARGET = Hauptprojekt-Timo_Haeckel$(EXE_SUFFIX)
-
-# User interface (uncomment one) (-u option)
-USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LIBS)
-#USERIF_LIBS = $(CMDENV_LIBS)
-#USERIF_LIBS = $(TKENV_LIBS)
-#USERIF_LIBS = $(QTENV_LIBS)
+TARGET = $(LIB_PREFIX)Hauptprojekt-Timo_Haeckel$(SHARED_LIB_SUFFIX)
 
 # C++ include paths (with -I)
-INCLUDE_PATH =
+INCLUDE_PATH = -I$(CORE4INET_PROJ)/src -I$(CORE4INET_PROJ)/src/core4inet/api/AS6802/tte_api -I$(INET_PROJ)/src -I$(FICO4OMNET_PROJ)/src -I$(SIGNALSANDGATEWAYS_PROJ)/src
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS =
+LIBS = $(LDFLAG_LIBPATH)$(CORE4INET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(FICO4OMNET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(INET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src  -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
 PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
-# Object files for local .cpp, .msg and .sm files
-OBJS = $O/hosts/Client.o $O/hosts/Server.o
+# Object files for local .cc, .msg and .sm files
+OBJS =
 
 # Message files
 MSGFILES =
 
 # SM files
 SMFILES =
+
+# Other makefile variables (-K)
+CORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET
+INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet
+FICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT
+SIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways
 
 #------------------------------------------------------------------------------
 
@@ -58,7 +58,10 @@ endif
 include $(CONFIGFILE)
 
 # Simulation kernel and user interface libraries
-OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
+OMNETPP_LIBS = -loppenvir$D $(KERNEL_LIBS) $(SYS_LIBS)
+ifneq ($(TOOLCHAIN_NAME),clangc2)
+LIBS += -Wl,-rpath,$(abspath $(CORE4INET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(FICO4OMNET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(INET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src)
+endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
 MSGCOPTS = $(INCLUDE_PATH)
@@ -84,25 +87,26 @@ all: $O/$(TARGET)
 
 $O/$(TARGET): $(OBJS)  $(wildcard $(EXTRA_OBJS)) Makefile $(CONFIGFILE)
 	@$(MKPATH) $O
-	@echo Creating executable: $@
-	$(Q)$(CXX) $(LDFLAGS) -o $O/$(TARGET) $(OBJS) $(EXTRA_OBJS) $(AS_NEEDED_OFF) $(WHOLE_ARCHIVE_ON) $(LIBS) $(WHOLE_ARCHIVE_OFF) $(OMNETPP_LIBS)
+	@echo Creating shared library: $@
+	$(Q)$(SHLIB_LD) -o $O/$(TARGET) $(OBJS) $(EXTRA_OBJS) $(AS_NEEDED_OFF) $(WHOLE_ARCHIVE_ON) $(LIBS) $(WHOLE_ARCHIVE_OFF) $(OMNETPP_LIBS) $(LDFLAGS)
+	$(Q)$(SHLIB_POSTPROCESS) $O/$(TARGET)
 
 .PHONY: all clean cleanall depend msgheaders smheaders
 
-.SUFFIXES: .cpp
+.SUFFIXES: .cc
 
-$O/%.o: %.cpp $(COPTS_FILE) | msgheaders smheaders
+$O/%.o: %.cc $(COPTS_FILE) | msgheaders smheaders
 	@$(MKPATH) $(dir $@)
 	$(qecho) "$<"
 	$(Q)$(CXX) -c $(CXXFLAGS) $(COPTS) -o $@ $<
 
-%_m.cpp %_m.h: %.msg
+%_m.cc %_m.h: %.msg
 	$(qecho) MSGC: $<
-	$(Q)$(MSGC) -s _m.cpp $(MSGCOPTS) $?
+	$(Q)$(MSGC) -s _m.cc $(MSGCOPTS) $?
 
-%_sm.cpp %_sm.h: %.sm
+%_sm.cc %_sm.h: %.sm
 	$(qecho) SMC: $<
-	$(Q)$(SMC) -c++ -suffix cpp $(SMCOPTS) $?
+	$(Q)$(SMC) -c++ -suffix cc $(SMCOPTS) $?
 
 msgheaders: $(MSGFILES:.msg=_m.h)
 
@@ -112,7 +116,7 @@ clean:
 	$(qecho) Cleaning...
 	$(Q)-rm -rf $O
 	$(Q)-rm -f $(TARGET)
-	$(Q)-rm -f $(call opp_rwildcard, . , *_m.cpp *_m.h *_sm.cpp *_sm.h)
+	$(Q)-rm -f $(call opp_rwildcard, . , *_m.cc *_m.h *_sm.cc *_sm.h)
 
 cleanall: clean
 	$(Q)-rm -rf $(PROJECT_OUTPUT_DIR)
