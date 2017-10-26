@@ -1,0 +1,1 @@
+This folder contains all files managing quality of service negotiations and management.

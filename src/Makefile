@@ -2,14 +2,21 @@
 # OMNeT++/OMNEST Makefile for $(LIB_PREFIX)Hauptprojekt-Timo_Haeckel
 #
 # This file was generated with the command:
-#  opp_makemake --make-so -f --deep -KCORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET -KINET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet -KFICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
+#  opp_makemake --make-so -f --deep -KCORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET -KINET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet -KFICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways -I. -Isoqosmw -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
 #
 
 # Name of target to be created (-o option)
 TARGET = $(LIB_PREFIX)Hauptprojekt-Timo_Haeckel$(SHARED_LIB_SUFFIX)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I$(CORE4INET_PROJ)/src -I$(CORE4INET_PROJ)/src/core4inet/api/AS6802/tte_api -I$(INET_PROJ)/src -I$(FICO4OMNET_PROJ)/src -I$(SIGNALSANDGATEWAYS_PROJ)/src
+INCLUDE_PATH = \
+    -I. \
+    -Isoqosmw \
+    -I$(CORE4INET_PROJ)/src \
+    -I$(CORE4INET_PROJ)/src/core4inet/api/AS6802/tte_api \
+    -I$(INET_PROJ)/src \
+    -I$(FICO4OMNET_PROJ)/src \
+    -I$(SIGNALSANDGATEWAYS_PROJ)/src
 
 # Additional object and library files to link with
 EXTRA_OBJS =
@@ -23,10 +30,11 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS =
+OBJS = $O/soqosmw/base/Session.o $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o $O/soqosmw/qosmanagement/negotiation/client/QoSClient.o $O/soqosmw/state/SessionsDB.o $O/soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.o
 
 # Message files
-MSGFILES =
+MSGFILES = \
+    soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg
 
 # SM files
 SMFILES =
