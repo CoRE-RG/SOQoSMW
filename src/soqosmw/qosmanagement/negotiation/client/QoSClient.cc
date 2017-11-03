@@ -44,7 +44,7 @@ void QoSClient::handleMessage(cMessage *msg) {
             //TODO set other data ..
 
             //send QoS Request
-            send(request, "out");
+            send(request, "avbChannel$o");
             cout << " --> send negotiation request";
 
             //set state to pending
@@ -79,7 +79,7 @@ void QoSClient::handleMessage(cMessage *msg) {
                     //TODO set other data ..
 
                     //send connection request
-                    send(establish, "out");
+                    send(establish, "avbChannel$o");
                     cout << " --> send establish request";
 
                     //switch state to pending connection

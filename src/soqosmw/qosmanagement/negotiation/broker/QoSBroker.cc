@@ -68,7 +68,7 @@ void QoSBroker::handleMessage(cMessage *msg) {
                 }
 
                 //send response
-                send(response, "out");
+                send(response, "avbChannel$o");
                 cout << " --> send response";
             }
         } catch (exception& e) {

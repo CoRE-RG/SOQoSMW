@@ -13,22 +13,30 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO Auto-generated network
-//
-package soqosmw.examples.qos_std_msg;
+package soqosmw.examples.qos_via_tteavb;
 
-import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
-import soqosmw.qosmanagement.negotiation.client.QoSClient;
+import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
+import core4inet.incoming.AS6802.TTIncoming;
+import core4inet.buffer.AS6802.TTDoubleBuffer;
 
-network qos_std_msg
+//
+// node1: configuration in node1.ini.
+//
+// - Sends time-triggered messages at 1ms with VL-ID 100
+//
+module Node1 extends TTEAVBEtherHost
 {
-    @display("bgb=348,246");
+    @display("bgb=651,314");
     submodules:
-        broker: QoSBroker;
-        client: QoSClient {
-            @display("p=249,133");
+        vl_100_ctc: TTIncoming {
+            parameters:
+                @display("p=508,118");
+
+        }
+        vl_100: TTDoubleBuffer {
+            parameters:
+                @display("p=598,118");
         }
     connections:
-        broker.avbChannel <--> {  delay = 100ms; } <--> client.avbChannel;
+        vl_100_ctc.out --> vl_100.in;
 }

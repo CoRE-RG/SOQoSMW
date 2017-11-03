@@ -1,0 +1,1164 @@
+file 44114 1509704916                                           
+version 2
+run General-0-20171103-11:28:23-2440
+attr configname General
+attr datetime 20171103-11:28:23
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network small_network
+attr processid 2440
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.ct_marker 0x03040506
+param **.ct_mask -1
+param **.node1.app[0].intervalFrames 1
+param **.node1.app[0].payload 350Byte
+param **.node1.app[0].srClass "\"A\""
+param **.node1.app[0].streamID 1
+param **.node1.app[0].typename "\"AVBTrafficSourceApp\""
+param **.node1.app[1].action_time 980us
+param **.node1.app[1].buffers "\"vl_100\""
+param **.node1.app[1].ct_id 100
+param **.node1.app[1].payload 46Byte
+param **.node1.app[1].typename "\"TTTrafficSourceApp\""
+param **.node1.numApps 2
+param **.node1.phy[*].mac.address "\"0A-00-00-00-00-01\""
+param **.node1.phy[0].shaper.TTEBandwith 3
+param **.node1.phy[0].shaper.tt_buffers "\"vl_100\""
+param **.node1.vl_100.ct_id 100
+param **.node1.vl_100.destination_gates "\"phy[0].TTin\""
+param **.node1.vl_100.sendWindowStart sec_to_tick(1000us)
+param **.node1.vl_100_ctc.permanence_pit sec_to_tick(990us)
+param **.node1.vl_100_ctc.receive_window_end sec_to_tick(990us)
+param **.node1.vl_100_ctc.receive_window_start sec_to_tick(970us)
+param **.node2.app[0].intervalFrames 1
+param **.node2.app[0].payload 350Byte
+param **.node2.app[0].srClass "\"B\""
+param **.node2.app[0].streamID 2
+param **.node2.app[0].typename "\"AVBTrafficSourceApp\""
+param **.node2.app[1].typename "\"CTTrafficSinkApp\""
+param **.node2.numApps 2
+param **.node2.phy[*].mac.address "\"0A-00-00-00-00-02\""
+param **.node2.phy[0].inControl.ct_incomings "\"vl_100_ctc\""
+param **.node2.vl_100.ct_id 100
+param **.node2.vl_100.destination_gates "\"app[1].TTin\""
+param **.node2.vl_100.sendWindowStart sec_to_tick(1080us)
+param **.node2.vl_100_ctc.permanence_pit sec_to_tick(1040us)
+param **.node2.vl_100_ctc.receive_window_end sec_to_tick(1040us)
+param **.node2.vl_100_ctc.receive_window_start sec_to_tick(1020us)
+param **.precission 500ns
+param **.scheduler.oscillator.drift_change uniform(-50ppm,50ppm)
+param **.scheduler.oscillator.max_drift 200ppm
+param **.scheduler.period[0].cycle_ticks sec_to_tick(5ms)
+param **.scheduler.tick 80ns
+param **.switch1.phy[0].inControl.ct_incomings "\"vl_100_ctc\""
+param **.switch1.phy[1].shaper.AVBHigherPriorityBandwidth 3Mbps
+param **.switch1.phy[1].shaper.tt_buffers "\"vl_100\""
+param **.switch1.vl_100.ct_id 100
+param **.switch1.vl_100.destination_gates "\"phy[1].TTin\""
+param **.switch1.vl_100.sendWindowStart sec_to_tick(1024.960us)
+param **.switch1.vl_100_ctc.permanence_pit sec_to_tick(1015.120us)
+param **.switch1.vl_100_ctc.receive_window_end sec_to_tick(1015.120us)
+param **.switch1.vl_100_ctc.receive_window_start sec_to_tick(995.120us)
+
+vector 194  small_network.node1.phy[0].shaper  q0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q0QueueLength)"
+vector 195  small_network.node1.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q0QueueSize)"
+attr unit  B
+vector 196  small_network.node1.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q1QueueLength)"
+vector 197  small_network.node1.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q1QueueSize)"
+attr unit  B
+vector 198  small_network.node1.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q2QueueLength)"
+vector 199  small_network.node1.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q2QueueSize)"
+attr unit  B
+vector 200  small_network.node1.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q3QueueLength)"
+vector 201  small_network.node1.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q3QueueSize)"
+attr unit  B
+vector 202  small_network.node1.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q4QueueLength)"
+vector 203  small_network.node1.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q4QueueSize)"
+attr unit  B
+vector 204  small_network.node1.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q5QueueLength)"
+vector 205  small_network.node1.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q5QueueSize)"
+attr unit  B
+vector 206  small_network.node1.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q6QueueLength)"
+vector 207  small_network.node1.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q6QueueSize)"
+attr unit  B
+vector 208  small_network.node1.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q7QueueLength)"
+vector 209  small_network.node1.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q7QueueSize)"
+attr unit  B
+vector 210  small_network.node1.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc0QueueLength)"
+attr unit  packets
+vector 211  small_network.node1.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc0QueueSize)"
+attr unit  B
+vector 212  small_network.node1.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc1QueueLength)"
+attr unit  packets
+vector 213  small_network.node1.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc1QueueSize)"
+attr unit  B
+vector 214  small_network.node1.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc2QueueLength)"
+attr unit  packets
+vector 215  small_network.node1.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc2QueueSize)"
+attr unit  B
+vector 216  small_network.node1.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc3QueueLength)"
+attr unit  packets
+vector 217  small_network.node1.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc3QueueSize)"
+attr unit  B
+vector 218  small_network.node1.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc4QueueLength)"
+attr unit  packets
+vector 219  small_network.node1.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc4QueueSize)"
+attr unit  B
+vector 220  small_network.node1.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc5QueueLength)"
+attr unit  packets
+vector 221  small_network.node1.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc5QueueSize)"
+attr unit  B
+vector 222  small_network.node1.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc6QueueLength)"
+attr unit  packets
+vector 223  small_network.node1.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc6QueueSize)"
+attr unit  B
+vector 224  small_network.node1.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc7QueueLength)"
+attr unit  packets
+vector 225  small_network.node1.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc7QueueSize)"
+attr unit  B
+vector 226  small_network.node1.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc8QueueLength)"
+attr unit  packets
+vector 227  small_network.node1.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc8QueueSize)"
+attr unit  B
+vector 228  small_network.node1.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc9QueueLength)"
+attr unit  packets
+vector 229  small_network.node1.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc9QueueSize)"
+attr unit  B
+vector 2  small_network.node1.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "PCF-Queue Length, vector"
+attr unit  packets
+vector 3  small_network.node1.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "BE-Queue Size, vector"
+attr unit  B
+vector 4  small_network.node1.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "TT-Queue Length, vector"
+attr unit  packets
+vector 230  small_network.node2.phy[0].shaper  q0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q0QueueLength)"
+vector 231  small_network.node2.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q0QueueSize)"
+attr unit  B
+vector 232  small_network.node2.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q1QueueLength)"
+vector 233  small_network.node2.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q1QueueSize)"
+attr unit  B
+vector 234  small_network.node2.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q2QueueLength)"
+vector 235  small_network.node2.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q2QueueSize)"
+attr unit  B
+vector 236  small_network.node2.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q3QueueLength)"
+vector 237  small_network.node2.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q3QueueSize)"
+attr unit  B
+vector 238  small_network.node2.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q4QueueLength)"
+vector 239  small_network.node2.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q4QueueSize)"
+attr unit  B
+vector 240  small_network.node2.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q5QueueLength)"
+vector 241  small_network.node2.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q5QueueSize)"
+attr unit  B
+vector 242  small_network.node2.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q6QueueLength)"
+vector 243  small_network.node2.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q6QueueSize)"
+attr unit  B
+vector 244  small_network.node2.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q7QueueLength)"
+vector 245  small_network.node2.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q7QueueSize)"
+attr unit  B
+vector 246  small_network.node2.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc0QueueLength)"
+attr unit  packets
+vector 247  small_network.node2.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc0QueueSize)"
+attr unit  B
+vector 248  small_network.node2.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc1QueueLength)"
+attr unit  packets
+vector 249  small_network.node2.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc1QueueSize)"
+attr unit  B
+vector 250  small_network.node2.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc2QueueLength)"
+attr unit  packets
+vector 251  small_network.node2.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc2QueueSize)"
+attr unit  B
+vector 252  small_network.node2.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc3QueueLength)"
+attr unit  packets
+vector 253  small_network.node2.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc3QueueSize)"
+attr unit  B
+vector 254  small_network.node2.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc4QueueLength)"
+attr unit  packets
+vector 255  small_network.node2.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc4QueueSize)"
+attr unit  B
+vector 256  small_network.node2.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc5QueueLength)"
+attr unit  packets
+vector 257  small_network.node2.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc5QueueSize)"
+attr unit  B
+vector 258  small_network.node2.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc6QueueLength)"
+attr unit  packets
+vector 259  small_network.node2.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc6QueueSize)"
+attr unit  B
+vector 260  small_network.node2.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc7QueueLength)"
+attr unit  packets
+vector 261  small_network.node2.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc7QueueSize)"
+attr unit  B
+vector 262  small_network.node2.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc8QueueLength)"
+attr unit  packets
+vector 263  small_network.node2.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc8QueueSize)"
+attr unit  B
+vector 264  small_network.node2.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc9QueueLength)"
+attr unit  packets
+vector 265  small_network.node2.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc9QueueSize)"
+attr unit  B
+vector 50  small_network.node2.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "PCF-Queue Length, vector"
+attr unit  packets
+vector 51  small_network.node2.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "BE-Queue Size, vector"
+attr unit  B
+vector 52  small_network.node2.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "TT-Queue Length, vector"
+attr unit  packets
+vector 266  small_network.switch1.phy[0].shaper  q0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q0QueueLength)"
+vector 267  small_network.switch1.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q0QueueSize)"
+attr unit  B
+vector 268  small_network.switch1.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q1QueueLength)"
+vector 269  small_network.switch1.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q1QueueSize)"
+attr unit  B
+vector 270  small_network.switch1.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q2QueueLength)"
+vector 271  small_network.switch1.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q2QueueSize)"
+attr unit  B
+vector 272  small_network.switch1.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q3QueueLength)"
+vector 273  small_network.switch1.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q3QueueSize)"
+attr unit  B
+vector 274  small_network.switch1.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q4QueueLength)"
+vector 275  small_network.switch1.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q4QueueSize)"
+attr unit  B
+vector 276  small_network.switch1.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q5QueueLength)"
+vector 277  small_network.switch1.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q5QueueSize)"
+attr unit  B
+vector 278  small_network.switch1.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q6QueueLength)"
+vector 279  small_network.switch1.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q6QueueSize)"
+attr unit  B
+vector 280  small_network.switch1.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q7QueueLength)"
+vector 281  small_network.switch1.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q7QueueSize)"
+attr unit  B
+vector 282  small_network.switch1.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc0QueueLength)"
+attr unit  packets
+vector 283  small_network.switch1.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc0QueueSize)"
+attr unit  B
+vector 284  small_network.switch1.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc1QueueLength)"
+attr unit  packets
+vector 285  small_network.switch1.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc1QueueSize)"
+attr unit  B
+vector 286  small_network.switch1.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc2QueueLength)"
+attr unit  packets
+vector 287  small_network.switch1.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc2QueueSize)"
+attr unit  B
+vector 288  small_network.switch1.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc3QueueLength)"
+attr unit  packets
+vector 289  small_network.switch1.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc3QueueSize)"
+attr unit  B
+vector 290  small_network.switch1.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc4QueueLength)"
+attr unit  packets
+vector 291  small_network.switch1.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc4QueueSize)"
+attr unit  B
+vector 292  small_network.switch1.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc5QueueLength)"
+attr unit  packets
+vector 293  small_network.switch1.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc5QueueSize)"
+attr unit  B
+vector 294  small_network.switch1.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc6QueueLength)"
+attr unit  packets
+vector 295  small_network.switch1.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc6QueueSize)"
+attr unit  B
+vector 296  small_network.switch1.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc7QueueLength)"
+attr unit  packets
+vector 297  small_network.switch1.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc7QueueSize)"
+attr unit  B
+vector 298  small_network.switch1.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc8QueueLength)"
+attr unit  packets
+vector 299  small_network.switch1.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc8QueueSize)"
+attr unit  B
+vector 300  small_network.switch1.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc9QueueLength)"
+attr unit  packets
+vector 301  small_network.switch1.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc9QueueSize)"
+attr unit  B
+vector 101  small_network.switch1.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "PCF-Queue Length, vector"
+attr unit  packets
+vector 102  small_network.switch1.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "BE-Queue Size, vector"
+attr unit  B
+vector 103  small_network.switch1.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "TT-Queue Length, vector"
+attr unit  packets
+vector 302  small_network.switch1.phy[1].shaper  q0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q0QueueLength)"
+vector 303  small_network.switch1.phy[1].shaper  q0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q0QueueSize)"
+attr unit  B
+vector 304  small_network.switch1.phy[1].shaper  q1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q1QueueLength)"
+vector 305  small_network.switch1.phy[1].shaper  q1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q1QueueSize)"
+attr unit  B
+vector 306  small_network.switch1.phy[1].shaper  q2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q2QueueLength)"
+vector 307  small_network.switch1.phy[1].shaper  q2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q2QueueSize)"
+attr unit  B
+vector 308  small_network.switch1.phy[1].shaper  q3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q3QueueLength)"
+vector 309  small_network.switch1.phy[1].shaper  q3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q3QueueSize)"
+attr unit  B
+vector 310  small_network.switch1.phy[1].shaper  q4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q4QueueLength)"
+vector 311  small_network.switch1.phy[1].shaper  q4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q4QueueSize)"
+attr unit  B
+vector 312  small_network.switch1.phy[1].shaper  q5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q5QueueLength)"
+vector 313  small_network.switch1.phy[1].shaper  q5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q5QueueSize)"
+attr unit  B
+vector 314  small_network.switch1.phy[1].shaper  q6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q6QueueLength)"
+vector 315  small_network.switch1.phy[1].shaper  q6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q6QueueSize)"
+attr unit  B
+vector 316  small_network.switch1.phy[1].shaper  q7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q7QueueLength)"
+vector 317  small_network.switch1.phy[1].shaper  q7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q7QueueSize)"
+attr unit  B
+vector 318  small_network.switch1.phy[1].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc0QueueLength)"
+attr unit  packets
+vector 319  small_network.switch1.phy[1].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc0QueueSize)"
+attr unit  B
+vector 320  small_network.switch1.phy[1].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc1QueueLength)"
+attr unit  packets
+vector 321  small_network.switch1.phy[1].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc1QueueSize)"
+attr unit  B
+vector 322  small_network.switch1.phy[1].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc2QueueLength)"
+attr unit  packets
+vector 323  small_network.switch1.phy[1].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc2QueueSize)"
+attr unit  B
+vector 324  small_network.switch1.phy[1].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc3QueueLength)"
+attr unit  packets
+vector 325  small_network.switch1.phy[1].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc3QueueSize)"
+attr unit  B
+vector 326  small_network.switch1.phy[1].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc4QueueLength)"
+attr unit  packets
+vector 327  small_network.switch1.phy[1].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc4QueueSize)"
+attr unit  B
+vector 328  small_network.switch1.phy[1].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc5QueueLength)"
+attr unit  packets
+vector 329  small_network.switch1.phy[1].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc5QueueSize)"
+attr unit  B
+vector 330  small_network.switch1.phy[1].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc6QueueLength)"
+attr unit  packets
+vector 331  small_network.switch1.phy[1].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc6QueueSize)"
+attr unit  B
+vector 332  small_network.switch1.phy[1].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc7QueueLength)"
+attr unit  packets
+vector 333  small_network.switch1.phy[1].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc7QueueSize)"
+attr unit  B
+vector 334  small_network.switch1.phy[1].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc8QueueLength)"
+attr unit  packets
+vector 335  small_network.switch1.phy[1].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc8QueueSize)"
+attr unit  B
+vector 336  small_network.switch1.phy[1].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc9QueueLength)"
+attr unit  packets
+vector 337  small_network.switch1.phy[1].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc9QueueSize)"
+attr unit  B
+vector 120  small_network.switch1.phy[1].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "PCF-Queue Length, vector"
+attr unit  packets
+vector 121  small_network.switch1.phy[1].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "BE-Queue Size, vector"
+attr unit  B
+vector 122  small_network.switch1.phy[1].shaper  ttQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "TT-Queue Length, vector"
+attr unit  packets
+vector 338  small_network.switch1.phy[2].shaper  q0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q0QueueLength)"
+vector 339  small_network.switch1.phy[2].shaper  q0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q0QueueSize)"
+attr unit  B
+vector 340  small_network.switch1.phy[2].shaper  q1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q1QueueLength)"
+vector 341  small_network.switch1.phy[2].shaper  q1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q1QueueSize)"
+attr unit  B
+vector 342  small_network.switch1.phy[2].shaper  q2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q2QueueLength)"
+vector 343  small_network.switch1.phy[2].shaper  q2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q2QueueSize)"
+attr unit  B
+vector 344  small_network.switch1.phy[2].shaper  q3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q3QueueLength)"
+vector 345  small_network.switch1.phy[2].shaper  q3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q3QueueSize)"
+attr unit  B
+vector 346  small_network.switch1.phy[2].shaper  q4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q4QueueLength)"
+vector 347  small_network.switch1.phy[2].shaper  q4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q4QueueSize)"
+attr unit  B
+vector 348  small_network.switch1.phy[2].shaper  q5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q5QueueLength)"
+vector 349  small_network.switch1.phy[2].shaper  q5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q5QueueSize)"
+attr unit  B
+vector 350  small_network.switch1.phy[2].shaper  q6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q6QueueLength)"
+vector 351  small_network.switch1.phy[2].shaper  q6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q6QueueSize)"
+attr unit  B
+vector 352  small_network.switch1.phy[2].shaper  q7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Length (q7QueueLength)"
+vector 353  small_network.switch1.phy[2].shaper  q7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "Q-Queue Size (q7QueueSize)"
+attr unit  B
+vector 354  small_network.switch1.phy[2].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc0QueueLength)"
+attr unit  packets
+vector 355  small_network.switch1.phy[2].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc0QueueSize)"
+attr unit  B
+vector 356  small_network.switch1.phy[2].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc1QueueLength)"
+attr unit  packets
+vector 357  small_network.switch1.phy[2].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc1QueueSize)"
+attr unit  B
+vector 358  small_network.switch1.phy[2].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc2QueueLength)"
+attr unit  packets
+vector 359  small_network.switch1.phy[2].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc2QueueSize)"
+attr unit  B
+vector 360  small_network.switch1.phy[2].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc3QueueLength)"
+attr unit  packets
+vector 361  small_network.switch1.phy[2].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc3QueueSize)"
+attr unit  B
+vector 362  small_network.switch1.phy[2].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc4QueueLength)"
+attr unit  packets
+vector 363  small_network.switch1.phy[2].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc4QueueSize)"
+attr unit  B
+vector 364  small_network.switch1.phy[2].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc5QueueLength)"
+attr unit  packets
+vector 365  small_network.switch1.phy[2].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc5QueueSize)"
+attr unit  B
+vector 366  small_network.switch1.phy[2].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc6QueueLength)"
+attr unit  packets
+vector 367  small_network.switch1.phy[2].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc6QueueSize)"
+attr unit  B
+vector 368  small_network.switch1.phy[2].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc7QueueLength)"
+attr unit  packets
+vector 369  small_network.switch1.phy[2].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc7QueueSize)"
+attr unit  B
+vector 370  small_network.switch1.phy[2].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc8QueueLength)"
+attr unit  packets
+vector 371  small_network.switch1.phy[2].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc8QueueSize)"
+attr unit  B
+vector 372  small_network.switch1.phy[2].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Length (rc9QueueLength)"
+attr unit  packets
+vector 373  small_network.switch1.phy[2].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "RC-Queue Size (rc9QueueSize)"
+attr unit  B
+vector 139  small_network.switch1.phy[2].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "PCF-Queue Length, vector"
+attr unit  packets
+vector 140  small_network.switch1.phy[2].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "BE-Queue Size, vector"
+attr unit  B
+vector 141  small_network.switch1.phy[2].shaper  ttQueueLength:vector  ETV
+attr interpolationmode  sample-hold
+attr title  "TT-Queue Length, vector"
+attr unit  packets
+vector 15  small_network.node1.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 63  small_network.node2.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 10  small_network.node1.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 58  small_network.node2.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 129  small_network.switch1.phy[1].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 130  small_network.switch1.phy[1].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 127  small_network.switch1.phy[1].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 110  small_network.switch1.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 111  small_network.switch1.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 108  small_network.switch1.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 23  small_network.node1.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 28  small_network.node1.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 71  small_network.node2.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 76  small_network.node2.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 114  small_network.switch1.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 133  small_network.switch1.phy[1].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 109  small_network.switch1.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 128  small_network.switch1.phy[1].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 11  small_network.node1.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 12  small_network.node1.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 59  small_network.node2.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 60  small_network.node2.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 9  small_network.node1.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 57  small_network.node2.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 160  small_network.switch1.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 175  small_network.switch1.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 165  small_network.switch1.avbABuffer[1]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 180  small_network.switch1.avbBBuffer[1]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+2	41288 9 0 0 0 0 1 0 0 0 0
+3	41297 9 0 0 0 0 1 0 0 0 0
+4	41306 9 0 0 0 0 1 0 0 0 0
+9	41315 27 37 37 0.00001967 0.00001967 1 9.86e-006 9.86e-006 9.86e-006 9.72196e-011
+10	41342 21 13 13 0.00000576 0.00000576 1 64 64 64 4096
+11	41363 21 35 35 0.00001967 0.00001967 1 64 64 64 4096
+12	41384 21 35 35 0.00001967 0.00001967 1 64 64 64 4096
+15	41405 12 11 11 0 0 1 64 64 64 4096
+23	41417 20 19 19 0.00000672 0.00000672 1 0 0 0 0
+28	41437 20 19 19 0.00000672 0.00000672 1 0 0 0 0
+50	41457 10 0 0 0 0 1 0 0 0 0
+51	41467 10 0 0 0 0 1 0 0 0 0
+52	41477 10 0 0 0 0 1 0 0 0 0
+57	41487 28 38 38 0.00001967 0.00001967 1 9.81e-006 9.81e-006 9.81e-006 9.62361e-011
+58	41515 21 14 14 0.00000576 0.00000576 1 64 64 64 4096
+59	41536 21 36 36 0.00001967 0.00001967 1 64 64 64 4096
+60	41557 21 36 36 0.00001967 0.00001967 1 64 64 64 4096
+63	41578 12 12 12 0 0 1 64 64 64 4096
+71	41590 20 20 20 0.00000672 0.00000672 1 0 0 0 0
+76	41610 20 20 20 0.00000672 0.00000672 1 0 0 0 0
+101	41630 11 0 0 0 0 1 0 0 0 0
+102	41641 11 0 0 0 0 1 0 0 0 0
+103	41652 11 0 0 0 0 1 0 0 0 0
+108	41663 29 18 18 0.00000586 0.00000586 1 5.86e-006 5.86e-006 5.86e-006 3.43396e-011
+109	41692 22 33 33 0.00001957 0.00001957 1 64 64 64 4096
+110	41714 22 17 17 0.00000586 0.00000586 1 64 64 64 4096
+111	41736 22 17 17 0.00000586 0.00000586 1 64 64 64 4096
+114	41758 22 29 29 0.00001381 0.00001381 1 64 64 64 4096
+120	41780 11 0 0 0 0 1 0 0 0 0
+121	41791 11 0 0 0 0 1 0 0 0 0
+122	41802 11 0 0 0 0 1 0 0 0 0
+127	41813 29 16 16 0.00000581 0.00000581 1 5.81e-006 5.81e-006 5.81e-006 3.37561e-011
+128	41842 22 34 34 0.00001962 0.00001962 1 64 64 64 4096
+129	41864 22 15 15 0.00000581 0.00000581 1 64 64 64 4096
+130	41886 22 15 15 0.00000581 0.00000581 1 64 64 64 4096
+133	41908 22 32 32 0.00001386 0.00001386 1 64 64 64 4096
+139	41930 11 0 0 0 0 1 0 0 0 0
+140	41941 11 0 0 0 0 1 0 0 0 0
+141	41952 11 0 0 0 0 1 0 0 0 0
+160	41963 21 45 45 0.00002053 0.00002053 1 0 0 0 0
+165	41984 21 46 46 0.00002058 0.00002058 1 0 0 0 0
+175	42005 21 45 45 0.00002053 0.00002053 1 0 0 0 0
+180	42026 21 46 46 0.00002058 0.00002058 1 0 0 0 0
+194	42047 11 0 0 0 0 1 0 0 0 0
+195	42058 11 0 0 0 0 1 0 0 0 0
+196	42069 11 0 0 0 0 1 0 0 0 0
+197	42080 11 0 0 0 0 1 0 0 0 0
+198	42091 11 0 0 0 0 1 0 0 0 0
+199	42102 11 0 0 0 0 1 0 0 0 0
+200	42113 11 0 0 0 0 1 0 0 0 0
+201	42124 11 0 0 0 0 1 0 0 0 0
+202	42135 11 0 0 0 0 1 0 0 0 0
+203	42146 11 0 0 0 0 1 0 0 0 0
+204	42157 11 0 0 0 0 1 0 0 0 0
+205	42168 11 0 0 0 0 1 0 0 0 0
+206	42179 11 0 0 0 0 1 0 0 0 0
+207	42190 11 0 0 0 0 1 0 0 0 0
+208	42201 11 0 0 0 0 1 0 0 0 0
+209	42212 11 0 0 0 0 1 0 0 0 0
+210	42223 11 0 0 0 0 1 0 0 0 0
+211	42234 11 0 0 0 0 1 0 0 0 0
+212	42245 11 0 0 0 0 1 0 0 0 0
+213	42256 11 0 0 0 0 1 0 0 0 0
+214	42267 11 0 0 0 0 1 0 0 0 0
+215	42278 11 0 0 0 0 1 0 0 0 0
+216	42289 11 0 0 0 0 1 0 0 0 0
+217	42300 11 0 0 0 0 1 0 0 0 0
+218	42311 11 0 0 0 0 1 0 0 0 0
+219	42322 11 0 0 0 0 1 0 0 0 0
+220	42333 11 0 0 0 0 1 0 0 0 0
+221	42344 11 0 0 0 0 1 0 0 0 0
+222	42355 11 0 0 0 0 1 0 0 0 0
+223	42366 11 0 0 0 0 1 0 0 0 0
+224	42377 11 0 0 0 0 1 0 0 0 0
+225	42388 11 0 0 0 0 1 0 0 0 0
+226	42399 11 0 0 0 0 1 0 0 0 0
+227	42410 11 0 0 0 0 1 0 0 0 0
+228	42421 11 0 0 0 0 1 0 0 0 0
+229	42432 11 0 0 0 0 1 0 0 0 0
+230	42443 11 0 0 0 0 1 0 0 0 0
+231	42454 11 0 0 0 0 1 0 0 0 0
+232	42465 11 0 0 0 0 1 0 0 0 0
+233	42476 11 0 0 0 0 1 0 0 0 0
+234	42487 11 0 0 0 0 1 0 0 0 0
+235	42498 11 0 0 0 0 1 0 0 0 0
+236	42509 11 0 0 0 0 1 0 0 0 0
+237	42520 11 0 0 0 0 1 0 0 0 0
+238	42531 11 0 0 0 0 1 0 0 0 0
+239	42542 11 0 0 0 0 1 0 0 0 0
+240	42553 11 0 0 0 0 1 0 0 0 0
+241	42564 11 0 0 0 0 1 0 0 0 0
+242	42575 11 0 0 0 0 1 0 0 0 0
+243	42586 11 0 0 0 0 1 0 0 0 0
+244	42597 11 0 0 0 0 1 0 0 0 0
+245	42608 11 0 0 0 0 1 0 0 0 0
+246	42619 11 0 0 0 0 1 0 0 0 0
+247	42630 11 0 0 0 0 1 0 0 0 0
+248	42641 11 0 0 0 0 1 0 0 0 0
+249	42652 11 0 0 0 0 1 0 0 0 0
+250	42663 11 0 0 0 0 1 0 0 0 0
+251	42674 11 0 0 0 0 1 0 0 0 0
+252	42685 11 0 0 0 0 1 0 0 0 0
+253	42696 11 0 0 0 0 1 0 0 0 0
+254	42707 11 0 0 0 0 1 0 0 0 0
+255	42718 11 0 0 0 0 1 0 0 0 0
+256	42729 11 0 0 0 0 1 0 0 0 0
+257	42740 11 0 0 0 0 1 0 0 0 0
+258	42751 11 0 0 0 0 1 0 0 0 0
+259	42762 11 0 0 0 0 1 0 0 0 0
+260	42773 11 0 0 0 0 1 0 0 0 0
+261	42784 11 0 0 0 0 1 0 0 0 0
+262	42795 11 0 0 0 0 1 0 0 0 0
+263	42806 11 0 0 0 0 1 0 0 0 0
+264	42817 11 0 0 0 0 1 0 0 0 0
+265	42828 11 0 0 0 0 1 0 0 0 0
+266	42839 11 0 0 0 0 1 0 0 0 0
+267	42850 11 0 0 0 0 1 0 0 0 0
+268	42861 11 0 0 0 0 1 0 0 0 0
+269	42872 11 0 0 0 0 1 0 0 0 0
+270	42883 11 0 0 0 0 1 0 0 0 0
+271	42894 11 0 0 0 0 1 0 0 0 0
+272	42905 11 0 0 0 0 1 0 0 0 0
+273	42916 11 0 0 0 0 1 0 0 0 0
+274	42927 11 0 0 0 0 1 0 0 0 0
+275	42938 11 0 0 0 0 1 0 0 0 0
+276	42949 11 0 0 0 0 1 0 0 0 0
+277	42960 11 0 0 0 0 1 0 0 0 0
+278	42971 11 0 0 0 0 1 0 0 0 0
+279	42982 11 0 0 0 0 1 0 0 0 0
+280	42993 11 0 0 0 0 1 0 0 0 0
+281	43004 11 0 0 0 0 1 0 0 0 0
+282	43015 11 0 0 0 0 1 0 0 0 0
+283	43026 11 0 0 0 0 1 0 0 0 0
+284	43037 11 0 0 0 0 1 0 0 0 0
+285	43048 11 0 0 0 0 1 0 0 0 0
+286	43059 11 0 0 0 0 1 0 0 0 0
+287	43070 11 0 0 0 0 1 0 0 0 0
+288	43081 11 0 0 0 0 1 0 0 0 0
+289	43092 11 0 0 0 0 1 0 0 0 0
+290	43103 11 0 0 0 0 1 0 0 0 0
+291	43114 11 0 0 0 0 1 0 0 0 0
+292	43125 11 0 0 0 0 1 0 0 0 0
+293	43136 11 0 0 0 0 1 0 0 0 0
+294	43147 11 0 0 0 0 1 0 0 0 0
+295	43158 11 0 0 0 0 1 0 0 0 0
+296	43169 11 0 0 0 0 1 0 0 0 0
+297	43180 11 0 0 0 0 1 0 0 0 0
+298	43191 11 0 0 0 0 1 0 0 0 0
+299	43202 11 0 0 0 0 1 0 0 0 0
+300	43213 11 0 0 0 0 1 0 0 0 0
+301	43224 11 0 0 0 0 1 0 0 0 0
+302	43235 11 0 0 0 0 1 0 0 0 0
+303	43246 11 0 0 0 0 1 0 0 0 0
+304	43257 11 0 0 0 0 1 0 0 0 0
+305	43268 11 0 0 0 0 1 0 0 0 0
+306	43279 11 0 0 0 0 1 0 0 0 0
+307	43290 11 0 0 0 0 1 0 0 0 0
+308	43301 11 0 0 0 0 1 0 0 0 0
+309	43312 11 0 0 0 0 1 0 0 0 0
+310	43323 11 0 0 0 0 1 0 0 0 0
+311	43334 11 0 0 0 0 1 0 0 0 0
+312	43345 11 0 0 0 0 1 0 0 0 0
+313	43356 11 0 0 0 0 1 0 0 0 0
+314	43367 11 0 0 0 0 1 0 0 0 0
+315	43378 11 0 0 0 0 1 0 0 0 0
+316	43389 11 0 0 0 0 1 0 0 0 0
+317	43400 11 0 0 0 0 1 0 0 0 0
+318	43411 11 0 0 0 0 1 0 0 0 0
+319	43422 11 0 0 0 0 1 0 0 0 0
+320	43433 11 0 0 0 0 1 0 0 0 0
+321	43444 11 0 0 0 0 1 0 0 0 0
+322	43455 11 0 0 0 0 1 0 0 0 0
+323	43466 11 0 0 0 0 1 0 0 0 0
+324	43477 11 0 0 0 0 1 0 0 0 0
+325	43488 11 0 0 0 0 1 0 0 0 0
+326	43499 11 0 0 0 0 1 0 0 0 0
+327	43510 11 0 0 0 0 1 0 0 0 0
+328	43521 11 0 0 0 0 1 0 0 0 0
+329	43532 11 0 0 0 0 1 0 0 0 0
+330	43543 11 0 0 0 0 1 0 0 0 0
+331	43554 11 0 0 0 0 1 0 0 0 0
+332	43565 11 0 0 0 0 1 0 0 0 0
+333	43576 11 0 0 0 0 1 0 0 0 0
+334	43587 11 0 0 0 0 1 0 0 0 0
+335	43598 11 0 0 0 0 1 0 0 0 0
+336	43609 11 0 0 0 0 1 0 0 0 0
+337	43620 11 0 0 0 0 1 0 0 0 0
+338	43631 53 0 31 0 0.00001386 3 0 2 3 5
+339	43684 56 0 31 0 0.00001386 3 0 128 192 20480
+340	43740 11 0 0 0 0 1 0 0 0 0
+341	43751 11 0 0 0 0 1 0 0 0 0
+342	43762 11 0 0 0 0 1 0 0 0 0
+343	43773 11 0 0 0 0 1 0 0 0 0
+344	43784 11 0 0 0 0 1 0 0 0 0
+345	43795 11 0 0 0 0 1 0 0 0 0
+346	43806 11 0 0 0 0 1 0 0 0 0
+347	43817 11 0 0 0 0 1 0 0 0 0
+348	43828 11 0 0 0 0 1 0 0 0 0
+349	43839 11 0 0 0 0 1 0 0 0 0
+350	43850 11 0 0 0 0 1 0 0 0 0
+351	43861 11 0 0 0 0 1 0 0 0 0
+352	43872 11 0 0 0 0 1 0 0 0 0
+353	43883 11 0 0 0 0 1 0 0 0 0
+354	43894 11 0 0 0 0 1 0 0 0 0
+355	43905 11 0 0 0 0 1 0 0 0 0
+356	43916 11 0 0 0 0 1 0 0 0 0
+357	43927 11 0 0 0 0 1 0 0 0 0
+358	43938 11 0 0 0 0 1 0 0 0 0
+359	43949 11 0 0 0 0 1 0 0 0 0
+360	43960 11 0 0 0 0 1 0 0 0 0
+361	43971 11 0 0 0 0 1 0 0 0 0
+362	43982 11 0 0 0 0 1 0 0 0 0
+363	43993 11 0 0 0 0 1 0 0 0 0
+364	44004 11 0 0 0 0 1 0 0 0 0
+365	44015 11 0 0 0 0 1 0 0 0 0
+366	44026 11 0 0 0 0 1 0 0 0 0
+367	44037 11 0 0 0 0 1 0 0 0 0
+368	44048 11 0 0 0 0 1 0 0 0 0
+369	44059 11 0 0 0 0 1 0 0 0 0
+370	44070 11 0 0 0 0 1 0 0 0 0
+371	44081 11 0 0 0 0 1 0 0 0 0
+372	44092 11 0 0 0 0 1 0 0 0 0
+373	44103 11 0 0 0 0 1 0 0 0 0

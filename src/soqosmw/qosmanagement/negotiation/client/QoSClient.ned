@@ -22,6 +22,5 @@ simple QoSClient
 {
     @class(soqosmw::QoSClient);
     gates:
-        input in;
-        output out;
+        inout avbChannel;
 }

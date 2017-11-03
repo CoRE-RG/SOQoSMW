@@ -23,6 +23,5 @@ simple QoSBroker
 {
     @class(soqosmw::QoSBroker);
     gates:
-        input in;
-        output out;
+        inout avbChannel;
 }
