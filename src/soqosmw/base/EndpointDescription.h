@@ -19,8 +19,29 @@ namespace soqosmw {
 
 class EndpointDescription {
 public:
-    EndpointDescription(){}
-    virtual ~EndpointDescription(){}
+    EndpointDescription() {
+    }
+    virtual ~EndpointDescription() {
+    }
+
+    /**
+     * comparing operators
+     */
+    inline bool operator==(const EndpointDescription& other) {
+        bool value = false;
+        if (_networkAddr == other.getNetworkAddr()) {
+            if (_networkPort == other.getNetworkPort()) {
+                if (_path == other.getPath()) {
+                    value = true;
+                }
+            }
+        }
+        return value;
+    }
+
+    inline bool operator!=(const EndpointDescription& other) {
+        return !(*this == other);
+    }
 
     const L3Address& getNetworkAddr() const {
         return _networkAddr;
@@ -47,9 +68,9 @@ public:
     }
 
 private:
-    string      _path;
-    L3Address   _networkAddr;
-    int         _networkPort;
+    string _path;
+    L3Address _networkAddr;
+    int _networkPort;
 };
 
 } /* namespace soqosmw */

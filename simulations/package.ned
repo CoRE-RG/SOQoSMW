@@ -1,3 +1,3 @@
-package hauptprojekt_timo_haeckel.simulations;
+package soqosmw.simulations;
 
 @license(LGPL);

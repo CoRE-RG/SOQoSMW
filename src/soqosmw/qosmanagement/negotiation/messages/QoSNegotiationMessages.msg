@@ -15,22 +15,13 @@
 
 cplusplus {{
     #include "soqosmw/base/EndpointDescription.h"
+    #include "soqosmw/qosmanagement/QoSGroups.h"
     using namespace soqosmw;
 }}
 class noncobject EndpointDescription;
+class noncobject QoSGroups_t;
 
 namespace soqosmw;
-
-//******************************************//
-//	QoS Negotiation Data Specification		//
-//******************************************//
-
-//Groups of QoS Requirements
-enum QoSGroups {
-    QoSGroup_RT = 0;
-    QoSGroup_STD = 1;
-    QoSGroup_WEB = 2;
-}
 
 //Type of Negotiation message for @see QoSNegotiation
 enum QoSNegotiationMsgType{
@@ -51,13 +42,9 @@ enum QoSNegotiationResponseStatus{
  	QoS_ResponseStatusFailure	= 1;
 }
 
-//******************************************//
-//	QoS Negotiation Payload Specification	//
-//******************************************//
-
 //common parameters of qos negotiation
 packet QoSNegotiationPayload {
-    int		qosGroup @enum(QoSGroups);
+    QoSGroups_t		qosGroup;
 }
 
 //special parameters for requests
@@ -69,10 +56,6 @@ packet QoSNegotiationRequestPayload extends QoSNegotiationPayload {
 packet QoSNegotiationResponsePayload extends QoSNegotiationPayload {
     int		resposeStatus @enum(QoSNegotiationResponseStatus);
 }
-
-//******************************************//
-//	QoS Negotiation Message Specification	//
-//******************************************//
 
 packet QoSNegotiation {
     int 					type @enum(QoSNegotiationMsgType);

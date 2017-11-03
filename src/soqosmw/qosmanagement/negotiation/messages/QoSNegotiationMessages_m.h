@@ -18,6 +18,7 @@
 
 // cplusplus {{
     #include "soqosmw/base/EndpointDescription.h"
+    #include "soqosmw/qosmanagement/QoSGroups.h"
     using namespace soqosmw;
 // }}
 
@@ -25,26 +26,7 @@
 namespace soqosmw {
 
 /**
- * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:29</tt> by nedtool.
- * <pre>
- * //Groups of QoS Requirements
- * enum QoSGroups
- * {
- * 
- *     QoSGroup_RT = 0;
- *     QoSGroup_STD = 1;
- *     QoSGroup_WEB = 2;
- * }
- * </pre>
- */
-enum QoSGroups {
-    QoSGroup_RT = 0,
-    QoSGroup_STD = 1,
-    QoSGroup_WEB = 2
-};
-
-/**
- * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:36</tt> by nedtool.
+ * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:27</tt> by nedtool.
  * <pre>
  * //Type of Negotiation message for \@see QoSNegotiation
  * enum QoSNegotiationMsgType
@@ -61,7 +43,7 @@ enum QoSNegotiationMsgType {
 };
 
 /**
- * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:42</tt> by nedtool.
+ * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:33</tt> by nedtool.
  * <pre>
  * //Type of Connection Establish message for \@see QoSConnectionEstablish
  * enum QoSConnectionEstablishMsgType
@@ -80,7 +62,7 @@ enum QoSConnectionEstablishMsgType {
 };
 
 /**
- * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:49</tt> by nedtool.
+ * Enum generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:40</tt> by nedtool.
  * <pre>
  * //Type of Negotiation response payload status \@see QoSNegotiationResponsePayload
  * enum QoSNegotiationResponseStatus
@@ -89,10 +71,6 @@ enum QoSConnectionEstablishMsgType {
  *     QoS_ResponseStatusSuccess = 0;
  *     QoS_ResponseStatusFailure = 1;
  * }
- * 
- * //*****************************************  /
- * //	QoS Negotiation Payload Specification	//
- * //*****************************************  /
  * </pre>
  */
 enum QoSNegotiationResponseStatus {
@@ -101,19 +79,19 @@ enum QoSNegotiationResponseStatus {
 };
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:59</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:46</tt> by nedtool.
  * <pre>
  * //common parameters of qos negotiation
  * packet QoSNegotiationPayload
  * {
- *     int qosGroup \@enum(QoSGroups);
+ *     QoSGroups_t qosGroup;
  * }
  * </pre>
  */
 class QoSNegotiationPayload : public ::omnetpp::cPacket
 {
   protected:
-    int qosGroup;
+    QoSGroups_t qosGroup;
 
   private:
     void copy(const QoSNegotiationPayload& other);
@@ -132,15 +110,16 @@ class QoSNegotiationPayload : public ::omnetpp::cPacket
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
     // field getter/setter methods
-    virtual int getQosGroup() const;
-    virtual void setQosGroup(int qosGroup);
+    virtual QoSGroups_t& getQosGroup();
+    virtual const QoSGroups_t& getQosGroup() const {return const_cast<QoSNegotiationPayload*>(this)->getQosGroup();}
+    virtual void setQosGroup(const QoSGroups_t& qosGroup);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiationPayload& obj) {obj.parsimPack(b);}
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiationPayload& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:64</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:51</tt> by nedtool.
  * <pre>
  * //special parameters for requests
  * packet QoSNegotiationRequestPayload extends QoSNegotiationPayload
@@ -175,17 +154,13 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiationRequest
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiationRequestPayload& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:69</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:56</tt> by nedtool.
  * <pre>
  * //special parameters for response
  * packet QoSNegotiationResponsePayload extends QoSNegotiationPayload
  * {
  *     int resposeStatus \@enum(QoSNegotiationResponseStatus);
  * }
- * 
- * //*****************************************  /
- * //	QoS Negotiation Message Specification	//
- * //*****************************************  /
  * </pre>
  */
 class QoSNegotiationResponsePayload : public ::soqosmw::QoSNegotiationPayload
@@ -218,7 +193,7 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiationRespons
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiationResponsePayload& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:77</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:60</tt> by nedtool.
  * <pre>
  * packet QoSNegotiation
  * {
@@ -271,7 +246,7 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiation& obj) 
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiation& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:84</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:67</tt> by nedtool.
  * <pre>
  * packet QoSNegotiationRequest extends QoSNegotiation
  * {
@@ -311,7 +286,7 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiationRequest
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiationRequest& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:89</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:72</tt> by nedtool.
  * <pre>
  * packet QoSNegotiationResponse extends QoSNegotiation
  * {
@@ -351,7 +326,7 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const QoSNegotiationRespons
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, QoSNegotiationResponse& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:94</tt> by nedtool.
+ * Class generated from <tt>soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg:77</tt> by nedtool.
  * <pre>
  * packet QoSConnectionEstablish
  * {

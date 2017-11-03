@@ -1,4 +1,4 @@
-file 42494 1508404884                                           
+file 42494 1508401284                                           
 version 2
 run General-0-20171019-11:21:03-2960
 attr configname General
@@ -34,1038 +34,1037 @@ param **.server.app[0].typename "\"BGTrafficSinkApp\""
 param **.server.bgIn.destination_gates "\"app[0].in\""
 param **.server.numApps 1
 param **.server.phy[*].mac.address "\"FE-F5-18-77-B8-B7\""
-
 vector 153  ClientServer.client.phy[0].shaper  q0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q0QueueLength)"
-vector 154  ClientServer.client.phy[0].shaper  q0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q0QueueSize)"
-attr unit  B
-vector 155  ClientServer.client.phy[0].shaper  q1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q1QueueLength)"
-vector 156  ClientServer.client.phy[0].shaper  q1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q1QueueSize)"
-attr unit  B
-vector 157  ClientServer.client.phy[0].shaper  q2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q2QueueLength)"
-vector 158  ClientServer.client.phy[0].shaper  q2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q2QueueSize)"
-attr unit  B
-vector 159  ClientServer.client.phy[0].shaper  q3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q3QueueLength)"
-vector 160  ClientServer.client.phy[0].shaper  q3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q3QueueSize)"
-attr unit  B
-vector 161  ClientServer.client.phy[0].shaper  q4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q4QueueLength)"
-vector 162  ClientServer.client.phy[0].shaper  q4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q4QueueSize)"
-attr unit  B
-vector 163  ClientServer.client.phy[0].shaper  q5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q5QueueLength)"
-vector 164  ClientServer.client.phy[0].shaper  q5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q5QueueSize)"
-attr unit  B
-vector 165  ClientServer.client.phy[0].shaper  q6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q6QueueLength)"
-vector 166  ClientServer.client.phy[0].shaper  q6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q6QueueSize)"
-attr unit  B
-vector 167  ClientServer.client.phy[0].shaper  q7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q7QueueLength)"
-vector 168  ClientServer.client.phy[0].shaper  q7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q7QueueSize)"
-attr unit  B
-vector 169  ClientServer.client.phy[0].shaper  rc0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc0QueueLength)"
-attr unit  packets
-vector 170  ClientServer.client.phy[0].shaper  rc0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc0QueueSize)"
-attr unit  B
-vector 171  ClientServer.client.phy[0].shaper  rc1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc1QueueLength)"
-attr unit  packets
-vector 172  ClientServer.client.phy[0].shaper  rc1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc1QueueSize)"
-attr unit  B
-vector 173  ClientServer.client.phy[0].shaper  rc2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc2QueueLength)"
-attr unit  packets
-vector 174  ClientServer.client.phy[0].shaper  rc2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc2QueueSize)"
-attr unit  B
-vector 175  ClientServer.client.phy[0].shaper  rc3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc3QueueLength)"
-attr unit  packets
-vector 176  ClientServer.client.phy[0].shaper  rc3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc3QueueSize)"
-attr unit  B
-vector 177  ClientServer.client.phy[0].shaper  rc4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc4QueueLength)"
-attr unit  packets
-vector 178  ClientServer.client.phy[0].shaper  rc4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc4QueueSize)"
-attr unit  B
-vector 179  ClientServer.client.phy[0].shaper  rc5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc5QueueLength)"
-attr unit  packets
-vector 180  ClientServer.client.phy[0].shaper  rc5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc5QueueSize)"
-attr unit  B
-vector 181  ClientServer.client.phy[0].shaper  rc6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc6QueueLength)"
-attr unit  packets
-vector 182  ClientServer.client.phy[0].shaper  rc6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc6QueueSize)"
-attr unit  B
-vector 183  ClientServer.client.phy[0].shaper  rc7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc7QueueLength)"
-attr unit  packets
-vector 184  ClientServer.client.phy[0].shaper  rc7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc7QueueSize)"
-attr unit  B
-vector 185  ClientServer.client.phy[0].shaper  rc8QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc8QueueLength)"
-attr unit  packets
-vector 186  ClientServer.client.phy[0].shaper  rc8QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc8QueueSize)"
-attr unit  B
-vector 187  ClientServer.client.phy[0].shaper  rc9QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc9QueueLength)"
-attr unit  packets
-vector 188  ClientServer.client.phy[0].shaper  rc9QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc9QueueSize)"
-attr unit  B
-vector 2  ClientServer.client.phy[0].shaper  pcfQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "PCF-Queue Length, vector"
-attr unit  packets
-vector 3  ClientServer.client.phy[0].shaper  pcfQueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "BE-Queue Size, vector"
-attr unit  B
-vector 4  ClientServer.client.phy[0].shaper  ttQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "TT-Queue Length, vector"
-attr unit  packets
-vector 189  ClientServer.server.phy[0].shaper  q0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q0QueueLength)"
-vector 190  ClientServer.server.phy[0].shaper  q0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q0QueueSize)"
-attr unit  B
-vector 191  ClientServer.server.phy[0].shaper  q1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q1QueueLength)"
-vector 192  ClientServer.server.phy[0].shaper  q1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q1QueueSize)"
-attr unit  B
-vector 193  ClientServer.server.phy[0].shaper  q2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q2QueueLength)"
-vector 194  ClientServer.server.phy[0].shaper  q2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q2QueueSize)"
-attr unit  B
-vector 195  ClientServer.server.phy[0].shaper  q3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q3QueueLength)"
-vector 196  ClientServer.server.phy[0].shaper  q3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q3QueueSize)"
-attr unit  B
-vector 197  ClientServer.server.phy[0].shaper  q4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q4QueueLength)"
-vector 198  ClientServer.server.phy[0].shaper  q4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q4QueueSize)"
-attr unit  B
-vector 199  ClientServer.server.phy[0].shaper  q5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q5QueueLength)"
-vector 200  ClientServer.server.phy[0].shaper  q5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q5QueueSize)"
-attr unit  B
-vector 201  ClientServer.server.phy[0].shaper  q6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q6QueueLength)"
-vector 202  ClientServer.server.phy[0].shaper  q6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q6QueueSize)"
-attr unit  B
-vector 203  ClientServer.server.phy[0].shaper  q7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q7QueueLength)"
-vector 204  ClientServer.server.phy[0].shaper  q7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q7QueueSize)"
-attr unit  B
-vector 205  ClientServer.server.phy[0].shaper  rc0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc0QueueLength)"
-attr unit  packets
-vector 206  ClientServer.server.phy[0].shaper  rc0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc0QueueSize)"
-attr unit  B
-vector 207  ClientServer.server.phy[0].shaper  rc1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc1QueueLength)"
-attr unit  packets
-vector 208  ClientServer.server.phy[0].shaper  rc1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc1QueueSize)"
-attr unit  B
-vector 209  ClientServer.server.phy[0].shaper  rc2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc2QueueLength)"
-attr unit  packets
-vector 210  ClientServer.server.phy[0].shaper  rc2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc2QueueSize)"
-attr unit  B
-vector 211  ClientServer.server.phy[0].shaper  rc3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc3QueueLength)"
-attr unit  packets
-vector 212  ClientServer.server.phy[0].shaper  rc3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc3QueueSize)"
-attr unit  B
-vector 213  ClientServer.server.phy[0].shaper  rc4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc4QueueLength)"
-attr unit  packets
-vector 214  ClientServer.server.phy[0].shaper  rc4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc4QueueSize)"
-attr unit  B
-vector 215  ClientServer.server.phy[0].shaper  rc5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc5QueueLength)"
-attr unit  packets
-vector 216  ClientServer.server.phy[0].shaper  rc5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc5QueueSize)"
-attr unit  B
-vector 217  ClientServer.server.phy[0].shaper  rc6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc6QueueLength)"
-attr unit  packets
-vector 218  ClientServer.server.phy[0].shaper  rc6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc6QueueSize)"
-attr unit  B
-vector 219  ClientServer.server.phy[0].shaper  rc7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc7QueueLength)"
-attr unit  packets
-vector 220  ClientServer.server.phy[0].shaper  rc7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc7QueueSize)"
-attr unit  B
-vector 221  ClientServer.server.phy[0].shaper  rc8QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc8QueueLength)"
-attr unit  packets
-vector 222  ClientServer.server.phy[0].shaper  rc8QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc8QueueSize)"
-attr unit  B
-vector 223  ClientServer.server.phy[0].shaper  rc9QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc9QueueLength)"
-attr unit  packets
-vector 224  ClientServer.server.phy[0].shaper  rc9QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc9QueueSize)"
-attr unit  B
-vector 46  ClientServer.server.phy[0].shaper  pcfQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "PCF-Queue Length, vector"
-attr unit  packets
-vector 47  ClientServer.server.phy[0].shaper  pcfQueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "BE-Queue Size, vector"
-attr unit  B
-vector 48  ClientServer.server.phy[0].shaper  ttQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "TT-Queue Length, vector"
-attr unit  packets
-vector 225  ClientServer.eth_switch.phy[0].shaper  q0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q0QueueLength)"
-vector 226  ClientServer.eth_switch.phy[0].shaper  q0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q0QueueSize)"
-attr unit  B
-vector 227  ClientServer.eth_switch.phy[0].shaper  q1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q1QueueLength)"
-vector 228  ClientServer.eth_switch.phy[0].shaper  q1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q1QueueSize)"
-attr unit  B
-vector 229  ClientServer.eth_switch.phy[0].shaper  q2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q2QueueLength)"
-vector 230  ClientServer.eth_switch.phy[0].shaper  q2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q2QueueSize)"
-attr unit  B
-vector 231  ClientServer.eth_switch.phy[0].shaper  q3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q3QueueLength)"
-vector 232  ClientServer.eth_switch.phy[0].shaper  q3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q3QueueSize)"
-attr unit  B
-vector 233  ClientServer.eth_switch.phy[0].shaper  q4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q4QueueLength)"
-vector 234  ClientServer.eth_switch.phy[0].shaper  q4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q4QueueSize)"
-attr unit  B
-vector 235  ClientServer.eth_switch.phy[0].shaper  q5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q5QueueLength)"
-vector 236  ClientServer.eth_switch.phy[0].shaper  q5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q5QueueSize)"
-attr unit  B
-vector 237  ClientServer.eth_switch.phy[0].shaper  q6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q6QueueLength)"
-vector 238  ClientServer.eth_switch.phy[0].shaper  q6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q6QueueSize)"
-attr unit  B
-vector 239  ClientServer.eth_switch.phy[0].shaper  q7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q7QueueLength)"
-vector 240  ClientServer.eth_switch.phy[0].shaper  q7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q7QueueSize)"
-attr unit  B
-vector 241  ClientServer.eth_switch.phy[0].shaper  rc0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc0QueueLength)"
-attr unit  packets
-vector 242  ClientServer.eth_switch.phy[0].shaper  rc0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc0QueueSize)"
-attr unit  B
-vector 243  ClientServer.eth_switch.phy[0].shaper  rc1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc1QueueLength)"
-attr unit  packets
-vector 244  ClientServer.eth_switch.phy[0].shaper  rc1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc1QueueSize)"
-attr unit  B
-vector 245  ClientServer.eth_switch.phy[0].shaper  rc2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc2QueueLength)"
-attr unit  packets
-vector 246  ClientServer.eth_switch.phy[0].shaper  rc2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc2QueueSize)"
-attr unit  B
-vector 247  ClientServer.eth_switch.phy[0].shaper  rc3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc3QueueLength)"
-attr unit  packets
-vector 248  ClientServer.eth_switch.phy[0].shaper  rc3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc3QueueSize)"
-attr unit  B
-vector 249  ClientServer.eth_switch.phy[0].shaper  rc4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc4QueueLength)"
-attr unit  packets
-vector 250  ClientServer.eth_switch.phy[0].shaper  rc4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc4QueueSize)"
-attr unit  B
-vector 251  ClientServer.eth_switch.phy[0].shaper  rc5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc5QueueLength)"
-attr unit  packets
-vector 252  ClientServer.eth_switch.phy[0].shaper  rc5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc5QueueSize)"
-attr unit  B
-vector 253  ClientServer.eth_switch.phy[0].shaper  rc6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc6QueueLength)"
-attr unit  packets
-vector 254  ClientServer.eth_switch.phy[0].shaper  rc6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc6QueueSize)"
-attr unit  B
-vector 255  ClientServer.eth_switch.phy[0].shaper  rc7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc7QueueLength)"
-attr unit  packets
-vector 256  ClientServer.eth_switch.phy[0].shaper  rc7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc7QueueSize)"
-attr unit  B
-vector 257  ClientServer.eth_switch.phy[0].shaper  rc8QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc8QueueLength)"
-attr unit  packets
-vector 258  ClientServer.eth_switch.phy[0].shaper  rc8QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc8QueueSize)"
-attr unit  B
-vector 259  ClientServer.eth_switch.phy[0].shaper  rc9QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc9QueueLength)"
-attr unit  packets
-vector 260  ClientServer.eth_switch.phy[0].shaper  rc9QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc9QueueSize)"
-attr unit  B
-vector 93  ClientServer.eth_switch.phy[0].shaper  pcfQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "PCF-Queue Length, vector"
-attr unit  packets
-vector 94  ClientServer.eth_switch.phy[0].shaper  pcfQueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "BE-Queue Size, vector"
-attr unit  B
-vector 95  ClientServer.eth_switch.phy[0].shaper  ttQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "TT-Queue Length, vector"
-attr unit  packets
-vector 261  ClientServer.eth_switch.phy[1].shaper  q0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q0QueueLength)"
-vector 262  ClientServer.eth_switch.phy[1].shaper  q0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q0QueueSize)"
-attr unit  B
-vector 263  ClientServer.eth_switch.phy[1].shaper  q1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q1QueueLength)"
-vector 264  ClientServer.eth_switch.phy[1].shaper  q1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q1QueueSize)"
-attr unit  B
-vector 265  ClientServer.eth_switch.phy[1].shaper  q2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q2QueueLength)"
-vector 266  ClientServer.eth_switch.phy[1].shaper  q2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q2QueueSize)"
-attr unit  B
-vector 267  ClientServer.eth_switch.phy[1].shaper  q3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q3QueueLength)"
-vector 268  ClientServer.eth_switch.phy[1].shaper  q3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q3QueueSize)"
-attr unit  B
-vector 269  ClientServer.eth_switch.phy[1].shaper  q4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q4QueueLength)"
-vector 270  ClientServer.eth_switch.phy[1].shaper  q4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q4QueueSize)"
-attr unit  B
-vector 271  ClientServer.eth_switch.phy[1].shaper  q5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q5QueueLength)"
-vector 272  ClientServer.eth_switch.phy[1].shaper  q5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q5QueueSize)"
-attr unit  B
-vector 273  ClientServer.eth_switch.phy[1].shaper  q6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q6QueueLength)"
-vector 274  ClientServer.eth_switch.phy[1].shaper  q6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q6QueueSize)"
-attr unit  B
-vector 275  ClientServer.eth_switch.phy[1].shaper  q7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Length (q7QueueLength)"
-vector 276  ClientServer.eth_switch.phy[1].shaper  q7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "Q-Queue Size (q7QueueSize)"
-attr unit  B
-vector 277  ClientServer.eth_switch.phy[1].shaper  rc0QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc0QueueLength)"
-attr unit  packets
-vector 278  ClientServer.eth_switch.phy[1].shaper  rc0QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc0QueueSize)"
-attr unit  B
-vector 279  ClientServer.eth_switch.phy[1].shaper  rc1QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc1QueueLength)"
-attr unit  packets
-vector 280  ClientServer.eth_switch.phy[1].shaper  rc1QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc1QueueSize)"
-attr unit  B
-vector 281  ClientServer.eth_switch.phy[1].shaper  rc2QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc2QueueLength)"
-attr unit  packets
-vector 282  ClientServer.eth_switch.phy[1].shaper  rc2QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc2QueueSize)"
-attr unit  B
-vector 283  ClientServer.eth_switch.phy[1].shaper  rc3QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc3QueueLength)"
-attr unit  packets
-vector 284  ClientServer.eth_switch.phy[1].shaper  rc3QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc3QueueSize)"
-attr unit  B
-vector 285  ClientServer.eth_switch.phy[1].shaper  rc4QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc4QueueLength)"
-attr unit  packets
-vector 286  ClientServer.eth_switch.phy[1].shaper  rc4QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc4QueueSize)"
-attr unit  B
-vector 287  ClientServer.eth_switch.phy[1].shaper  rc5QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc5QueueLength)"
-attr unit  packets
-vector 288  ClientServer.eth_switch.phy[1].shaper  rc5QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc5QueueSize)"
-attr unit  B
-vector 289  ClientServer.eth_switch.phy[1].shaper  rc6QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc6QueueLength)"
-attr unit  packets
-vector 290  ClientServer.eth_switch.phy[1].shaper  rc6QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc6QueueSize)"
-attr unit  B
-vector 291  ClientServer.eth_switch.phy[1].shaper  rc7QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc7QueueLength)"
-attr unit  packets
-vector 292  ClientServer.eth_switch.phy[1].shaper  rc7QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc7QueueSize)"
-attr unit  B
-vector 293  ClientServer.eth_switch.phy[1].shaper  rc8QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc8QueueLength)"
-attr unit  packets
-vector 294  ClientServer.eth_switch.phy[1].shaper  rc8QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc8QueueSize)"
-attr unit  B
-vector 295  ClientServer.eth_switch.phy[1].shaper  rc9QueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Length (rc9QueueLength)"
-attr unit  packets
-vector 296  ClientServer.eth_switch.phy[1].shaper  rc9QueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "RC-Queue Size (rc9QueueSize)"
-attr unit  B
-vector 112  ClientServer.eth_switch.phy[1].shaper  pcfQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "PCF-Queue Length, vector"
-attr unit  packets
-vector 113  ClientServer.eth_switch.phy[1].shaper  pcfQueueSize:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "BE-Queue Size, vector"
-attr unit  B
-vector 114  ClientServer.eth_switch.phy[1].shaper  ttQueueLength:vector  ETV
-attr interpolationmode  sample-hold
-attr title  "TT-Queue Length, vector"
-attr unit  packets
-vector 42  ClientServer.client.bgOut  length:vector  ETV
-attr interpolationmode  sample-hold
-attr source  length
-attr title  "Queue Length, vector"
-attr unit  packets
-vector 43  ClientServer.client.bgOut  size:vector  ETV
-attr interpolationmode  sample-hold
-attr source  size
-attr title  "Queue Size, vector"
-attr unit  B
-vector 40  ClientServer.client.bgOut  txBytes:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "Transmitted Bytes, vector(packetBytes)"
-attr unit  B
-vector 41  ClientServer.client.bgOut  txLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(txPk)
-attr title  "End-to-end latency (transmitted), vector"
-attr unit  s
-vector 15  ClientServer.client.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkFromHL
-attr title  "packet bytes from higher layer, vector(packetBytes)"
-vector 102  ClientServer.eth_switch.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkOk
-attr title  "packets received OK, vector(packetBytes)"
-vector 103  ClientServer.eth_switch.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  packetSentToUpper
-attr title  "packets passed to higher layer, vector(packetBytes)"
-vector 10  ClientServer.client.phy[0].mac  txPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "packets transmitted, vector(packetBytes)"
-vector 100  ClientServer.eth_switch.phy[0].inControl  rxLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(rxPk)
-attr title  "End-to-end latency (received), vector"
-attr unit  s
-vector 23  ClientServer.client.avbABuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 28  ClientServer.client.avbBBuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 125  ClientServer.eth_switch.phy[1].mac  rxPkFromHL:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkFromHL
-attr title  "packet bytes from higher layer, vector(packetBytes)"
-vector 55  ClientServer.server.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkOk
-attr title  "packets received OK, vector(packetBytes)"
-vector 56  ClientServer.server.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  packetSentToUpper
-attr title  "packets passed to higher layer, vector(packetBytes)"
-vector 120  ClientServer.eth_switch.phy[1].mac  txPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "packets transmitted, vector(packetBytes)"
-vector 53  ClientServer.server.phy[0].inControl  rxLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(rxPk)
-attr title  "End-to-end latency (received), vector"
-attr unit  s
-vector 85  ClientServer.server.bgIn  length:vector  ETV
-attr interpolationmode  sample-hold
-attr source  length
-attr title  "Queue Length, vector"
-attr unit  packets
-vector 86  ClientServer.server.bgIn  size:vector  ETV
-attr interpolationmode  sample-hold
-attr source  size
-attr title  "Queue Size, vector"
-attr unit  B
-vector 83  ClientServer.server.bgIn  txBytes:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "Transmitted Bytes, vector(packetBytes)"
-attr unit  B
-vector 84  ClientServer.server.bgIn  txLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(txPk)
-attr title  "End-to-end latency (transmitted), vector"
-attr unit  s
-vector 80  ClientServer.server.app[0]  rxBytes:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPk
-attr title  "Received Bytes, vector(packetBytes)"
-attr unit  B
-vector 81  ClientServer.server.app[0]  rxLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(rxPk)
-attr title  "End-to-end latency, vector"
-attr unit  s
-vector 82  ClientServer.server.app[0]  rxLatencyInner:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(innerMessage(rxPk))
-attr title  "End-to-end latency inner, vector"
-attr unit  s
-vector 89  ClientServer.server.bgOut  length:vector  ETV
-attr interpolationmode  sample-hold
-attr source  length
-attr title  "Queue Length, vector"
-attr unit  packets
-vector 90  ClientServer.server.bgOut  size:vector  ETV
-attr interpolationmode  sample-hold
-attr source  size
-attr title  "Queue Size, vector"
-attr unit  B
-vector 87  ClientServer.server.bgOut  txBytes:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "Transmitted Bytes, vector(packetBytes)"
-attr unit  B
-vector 88  ClientServer.server.bgOut  txLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(txPk)
-attr title  "End-to-end latency (transmitted), vector"
-attr unit  s
-vector 59  ClientServer.server.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkFromHL
-attr title  "packet bytes from higher layer, vector(packetBytes)"
-vector 138  ClientServer.eth_switch.avbABuffer[1]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 148  ClientServer.eth_switch.avbBBuffer[1]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 121  ClientServer.eth_switch.phy[1].mac  rxPkOk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkOk
-attr title  "packets received OK, vector(packetBytes)"
-vector 122  ClientServer.eth_switch.phy[1].mac  passedUpPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  packetSentToUpper
-attr title  "packets passed to higher layer, vector(packetBytes)"
-vector 54  ClientServer.server.phy[0].mac  txPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "packets transmitted, vector(packetBytes)"
-vector 119  ClientServer.eth_switch.phy[1].inControl  rxLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(rxPk)
-attr title  "End-to-end latency (received), vector"
-attr unit  s
-vector 67  ClientServer.server.avbABuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 72  ClientServer.server.avbBBuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 106  ClientServer.eth_switch.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkFromHL
-attr title  "packet bytes from higher layer, vector(packetBytes)"
-vector 11  ClientServer.client.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  rxPkOk
-attr title  "packets received OK, vector(packetBytes)"
-vector 12  ClientServer.client.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  packetSentToUpper
-attr title  "packets passed to higher layer, vector(packetBytes)"
-vector 101  ClientServer.eth_switch.phy[0].mac  txPk:vector(packetBytes)  ETV
-attr interpolationmode  none
-attr source  txPk
-attr title  "packets transmitted, vector(packetBytes)"
-vector 9  ClientServer.client.phy[0].inControl  rxLatency:vector  ETV
-attr interpolationmode  none
-attr source  messageAge(rxPk)
-attr title  "End-to-end latency (received), vector"
-attr unit  s
-vector 38  ClientServer.client.bgIn  length:vector  ETV
-attr interpolationmode  sample-hold
-attr source  length
-attr title  "Queue Length, vector"
-attr unit  packets
-vector 39  ClientServer.client.bgIn  size:vector  ETV
-attr interpolationmode  sample-hold
-attr source  size
-attr title  "Queue Size, vector"
-attr unit  B
-vector 133  ClientServer.eth_switch.avbABuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 143  ClientServer.eth_switch.avbBBuffer[0]  credit:vector  ETV
-attr ""  ""
-attr interpolationmode  linear
-attr source  credit
-attr title  "Credit, vector"
-attr unit  b
-vector 35  ClientServer.client.scheduler.oscillator  currentDrift:vector  ETV
-attr title  "Current drift, vector"
-attr unit  s
-vector 34  ClientServer.client.scheduler.timer  clockCorrection:vector  ETV
-attr title  "Clock correction, vector"
-attr unit  tick
-vector 79  ClientServer.server.scheduler.oscillator  currentDrift:vector  ETV
-attr title  "Current drift, vector"
-attr unit  s
-vector 78  ClientServer.server.scheduler.timer  clockCorrection:vector  ETV
-attr title  "Clock correction, vector"
-attr unit  tick
-vector 152  ClientServer.eth_switch.scheduler.oscillator  currentDrift:vector  ETV
-attr title  "Current drift, vector"
-attr unit  s
-vector 151  ClientServer.eth_switch.scheduler.timer  clockCorrection:vector  ETV
-attr title  "Clock correction, vector"
-attr unit  tick
-2	37023 9 0 0 0 0 1 0 0 0 0
-3	37032 9 0 0 0 0 1 0 0 0 0
-4	37041 9 0 0 0 0 1 0 0 0 0
-9	37050 28 36 36 0.00003904 0.00003904 1 1.952e-005 1.952e-005 1.952e-005 3.810304e-010
-10	37078 64 10 137 0.00000576 0.02000576 3 64 64 192 12288
-11	37142 21 34 34 0.00003904 0.00003904 1 64 64 64 4096
-12	37163 21 34 34 0.00003904 0.00003904 1 64 64 64 4096
-15	37184 42 8 135 0 0.02 3 64 64 192 12288
-23	37226 61 12 139 0.00000672 0.02000672 3 0 0 0 0
-28	37287 61 12 139 0.00000672 0.02000672 3 0 0 0 0
-34	37348 243 45 193 0.003 0.029999874996 10 -4 4 -4 64
-35	37591 286 44 192 0.003 0.029999874996 10 -4e-012 0 -1.8e-011 5e-023
-38	37877 20 38 38 0.00003904 0.00003904 1 1 1 1 1
-39	37897 21 38 38 0.00003904 0.00003904 1 64 64 64 4096
-40	37918 42 5 132 0 0.02 3 64 64 192 12288
-41	37960 39 5 132 0 0.02 3 0 0 0 0
-42	37999 78 5 132 0 0.02 6 0 1 3 3
-43	38077 81 5 132 0 0.02 6 0 64 192 12288
-46	38158 10 0 0 0 0 1 0 0 0 0
-47	38168 10 0 0 0 0 1 0 0 0 0
-48	38178 10 0 0 0 0 1 0 0 0 0
-53	38188 88 18 145 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
-54	38276 21 28 28 0.00002528 0.00002528 1 64 64 64 4096
-55	38297 64 16 143 0.00001952 0.02001952 3 64 64 192 12288
-56	38361 64 16 143 0.00001952 0.02001952 3 64 64 192 12288
-59	38425 21 25 25 0.00001952 0.00001952 1 64 64 64 4096
-67	38446 20 30 30 0.00002624 0.00002624 1 0 0 0 0
-72	38466 20 30 30 0.00002624 0.00002624 1 0 0 0 0
-78	38486 205 48 185 0.003 0.027000212497 9 -3 3 -2 48
-79	38691 237 47 184 0.003 0.027000212497 9 -2e-012 0 -7e-012 9e-024
-80	38928 64 21 148 0.00001952 0.02001952 3 64 64 192 12288
-81	38992 88 21 148 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
-82	39080 88 21 148 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
-83	39168 64 20 147 0.00001952 0.02001952 3 64 64 192 12288
-84	39232 88 20 147 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
-85	39320 122 20 147 0.00001952 0.02001952 6 0 1 3 3
-86	39442 125 20 147 0.00001952 0.02001952 6 0 64 192 12288
-87	39567 21 22 22 0.00001952 0.00001952 1 64 64 64 4096
-88	39588 20 22 22 0.00001952 0.00001952 1 0 0 0 0
-89	39608 40 22 22 0.00001952 0.00001952 2 0 1 1 1
-90	39648 41 22 22 0.00001952 0.00001952 2 0 64 64 4096
-93	39689 10 0 0 0 0 1 0 0 0 0
-94	39699 10 0 0 0 0 1 0 0 0 0
-95	39709 10 0 0 0 0 1 0 0 0 0
-100	39719 88 11 138 0.00000576 0.02000576 3 5.76e-006 5.76e-006 1.728e-005 9.95328e-011
-101	39807 22 35 35 0.00003904 0.00003904 1 64 64 64 4096
-102	39829 66 9 136 0.00000576 0.02000576 3 64 64 192 12288
-103	39895 66 9 136 0.00000576 0.02000576 3 64 64 192 12288
-106	39961 22 33 33 0.00003328 0.00003328 1 64 64 64 4096
-112	39983 11 0 0 0 0 1 0 0 0 0
-113	39994 11 0 0 0 0 1 0 0 0 0
-114	40005 11 0 0 0 0 1 0 0 0 0
-119	40016 29 29 29 0.00002528 0.00002528 1 5.76e-006 5.76e-006 5.76e-006 3.31776e-011
-120	40045 67 17 144 0.00001952 0.02001952 3 64 64 192 12288
-121	40112 22 27 27 0.00002528 0.00002528 1 64 64 64 4096
-122	40134 22 27 27 0.00002528 0.00002528 1 64 64 64 4096
-125	40156 67 15 142 0.00001376 0.02001376 3 64 64 192 12288
-133	40223 18 39 39 0.00004 0.00004 1 0 0 0 0
-138	40241 64 26 149 0.00002048 0.02002048 3 0 0 0 0
-143	40305 18 39 39 0.00004 0.00004 1 0 0 0 0
-148	40323 64 26 149 0.00002048 0.02002048 3 0 0 0 0
-151	40387 242 51 189 0.003 0.02999986749 10 -1 5 3 29
-152	40629 281 50 188 0.003 0.02999986749 10 -1e-012 2e-012 6e-012 1.4e-023
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q0QueueLength)"
 153	40910 11 0 0 0 0 1 0 0 0 0
+vector 154  ClientServer.client.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q0QueueSize)"
+attr unit B
 154	40921 11 0 0 0 0 1 0 0 0 0
+vector 155  ClientServer.client.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q1QueueLength)"
 155	40932 11 0 0 0 0 1 0 0 0 0
+vector 156  ClientServer.client.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q1QueueSize)"
+attr unit B
 156	40943 11 0 0 0 0 1 0 0 0 0
+vector 157  ClientServer.client.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q2QueueLength)"
 157	40954 11 0 0 0 0 1 0 0 0 0
+vector 158  ClientServer.client.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q2QueueSize)"
+attr unit B
 158	40965 11 0 0 0 0 1 0 0 0 0
+vector 159  ClientServer.client.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q3QueueLength)"
 159	40976 11 0 0 0 0 1 0 0 0 0
+vector 160  ClientServer.client.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q3QueueSize)"
+attr unit B
 160	40987 11 0 0 0 0 1 0 0 0 0
+vector 161  ClientServer.client.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q4QueueLength)"
 161	40998 11 0 0 0 0 1 0 0 0 0
+vector 162  ClientServer.client.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q4QueueSize)"
+attr unit B
 162	41009 11 0 0 0 0 1 0 0 0 0
+vector 163  ClientServer.client.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q5QueueLength)"
 163	41020 11 0 0 0 0 1 0 0 0 0
+vector 164  ClientServer.client.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q5QueueSize)"
+attr unit B
 164	41031 11 0 0 0 0 1 0 0 0 0
+vector 165  ClientServer.client.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q6QueueLength)"
 165	41042 11 0 0 0 0 1 0 0 0 0
+vector 166  ClientServer.client.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q6QueueSize)"
+attr unit B
 166	41053 11 0 0 0 0 1 0 0 0 0
+vector 167  ClientServer.client.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q7QueueLength)"
 167	41064 11 0 0 0 0 1 0 0 0 0
+vector 168  ClientServer.client.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q7QueueSize)"
+attr unit B
 168	41075 11 0 0 0 0 1 0 0 0 0
+vector 169  ClientServer.client.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc0QueueLength)"
+attr unit packets
 169	41086 11 0 0 0 0 1 0 0 0 0
+vector 170  ClientServer.client.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc0QueueSize)"
+attr unit B
 170	41097 11 0 0 0 0 1 0 0 0 0
+vector 171  ClientServer.client.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc1QueueLength)"
+attr unit packets
 171	41108 11 0 0 0 0 1 0 0 0 0
+vector 172  ClientServer.client.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc1QueueSize)"
+attr unit B
 172	41119 11 0 0 0 0 1 0 0 0 0
+vector 173  ClientServer.client.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc2QueueLength)"
+attr unit packets
 173	41130 11 0 0 0 0 1 0 0 0 0
+vector 174  ClientServer.client.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc2QueueSize)"
+attr unit B
 174	41141 11 0 0 0 0 1 0 0 0 0
+vector 175  ClientServer.client.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc3QueueLength)"
+attr unit packets
 175	41152 11 0 0 0 0 1 0 0 0 0
+vector 176  ClientServer.client.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc3QueueSize)"
+attr unit B
 176	41163 11 0 0 0 0 1 0 0 0 0
+vector 177  ClientServer.client.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc4QueueLength)"
+attr unit packets
 177	41174 11 0 0 0 0 1 0 0 0 0
+vector 178  ClientServer.client.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc4QueueSize)"
+attr unit B
 178	41185 11 0 0 0 0 1 0 0 0 0
+vector 179  ClientServer.client.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc5QueueLength)"
+attr unit packets
 179	41196 11 0 0 0 0 1 0 0 0 0
+vector 180  ClientServer.client.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc5QueueSize)"
+attr unit B
 180	41207 11 0 0 0 0 1 0 0 0 0
+vector 181  ClientServer.client.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc6QueueLength)"
+attr unit packets
 181	41218 11 0 0 0 0 1 0 0 0 0
+vector 182  ClientServer.client.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc6QueueSize)"
+attr unit B
 182	41229 11 0 0 0 0 1 0 0 0 0
+vector 183  ClientServer.client.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc7QueueLength)"
+attr unit packets
 183	41240 11 0 0 0 0 1 0 0 0 0
+vector 184  ClientServer.client.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc7QueueSize)"
+attr unit B
 184	41251 11 0 0 0 0 1 0 0 0 0
+vector 185  ClientServer.client.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc8QueueLength)"
+attr unit packets
 185	41262 11 0 0 0 0 1 0 0 0 0
+vector 186  ClientServer.client.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc8QueueSize)"
+attr unit B
 186	41273 11 0 0 0 0 1 0 0 0 0
+vector 187  ClientServer.client.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc9QueueLength)"
+attr unit packets
 187	41284 11 0 0 0 0 1 0 0 0 0
+vector 188  ClientServer.client.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc9QueueSize)"
+attr unit B
 188	41295 11 0 0 0 0 1 0 0 0 0
+vector 2  ClientServer.client.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "PCF-Queue Length, vector"
+attr unit packets
+2	37023 9 0 0 0 0 1 0 0 0 0
+vector 3  ClientServer.client.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "BE-Queue Size, vector"
+attr unit B
+3	37032 9 0 0 0 0 1 0 0 0 0
+vector 4  ClientServer.client.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "TT-Queue Length, vector"
+attr unit packets
+4	37041 9 0 0 0 0 1 0 0 0 0
+vector 189  ClientServer.server.phy[0].shaper  q0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q0QueueLength)"
 189	41306 11 0 0 0 0 1 0 0 0 0
+vector 190  ClientServer.server.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q0QueueSize)"
+attr unit B
 190	41317 11 0 0 0 0 1 0 0 0 0
+vector 191  ClientServer.server.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q1QueueLength)"
 191	41328 11 0 0 0 0 1 0 0 0 0
+vector 192  ClientServer.server.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q1QueueSize)"
+attr unit B
 192	41339 11 0 0 0 0 1 0 0 0 0
+vector 193  ClientServer.server.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q2QueueLength)"
 193	41350 11 0 0 0 0 1 0 0 0 0
+vector 194  ClientServer.server.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q2QueueSize)"
+attr unit B
 194	41361 11 0 0 0 0 1 0 0 0 0
+vector 195  ClientServer.server.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q3QueueLength)"
 195	41372 11 0 0 0 0 1 0 0 0 0
+vector 196  ClientServer.server.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q3QueueSize)"
+attr unit B
 196	41383 11 0 0 0 0 1 0 0 0 0
+vector 197  ClientServer.server.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q4QueueLength)"
 197	41394 11 0 0 0 0 1 0 0 0 0
+vector 198  ClientServer.server.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q4QueueSize)"
+attr unit B
 198	41405 11 0 0 0 0 1 0 0 0 0
+vector 199  ClientServer.server.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q5QueueLength)"
 199	41416 11 0 0 0 0 1 0 0 0 0
+vector 200  ClientServer.server.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q5QueueSize)"
+attr unit B
 200	41427 11 0 0 0 0 1 0 0 0 0
+vector 201  ClientServer.server.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q6QueueLength)"
 201	41438 11 0 0 0 0 1 0 0 0 0
+vector 202  ClientServer.server.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q6QueueSize)"
+attr unit B
 202	41449 11 0 0 0 0 1 0 0 0 0
+vector 203  ClientServer.server.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q7QueueLength)"
 203	41460 11 0 0 0 0 1 0 0 0 0
+vector 204  ClientServer.server.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q7QueueSize)"
+attr unit B
 204	41471 11 0 0 0 0 1 0 0 0 0
+vector 205  ClientServer.server.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc0QueueLength)"
+attr unit packets
 205	41482 11 0 0 0 0 1 0 0 0 0
+vector 206  ClientServer.server.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc0QueueSize)"
+attr unit B
 206	41493 11 0 0 0 0 1 0 0 0 0
+vector 207  ClientServer.server.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc1QueueLength)"
+attr unit packets
 207	41504 11 0 0 0 0 1 0 0 0 0
+vector 208  ClientServer.server.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc1QueueSize)"
+attr unit B
 208	41515 11 0 0 0 0 1 0 0 0 0
+vector 209  ClientServer.server.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc2QueueLength)"
+attr unit packets
 209	41526 11 0 0 0 0 1 0 0 0 0
+vector 210  ClientServer.server.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc2QueueSize)"
+attr unit B
 210	41537 11 0 0 0 0 1 0 0 0 0
+vector 211  ClientServer.server.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc3QueueLength)"
+attr unit packets
 211	41548 11 0 0 0 0 1 0 0 0 0
+vector 212  ClientServer.server.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc3QueueSize)"
+attr unit B
 212	41559 11 0 0 0 0 1 0 0 0 0
+vector 213  ClientServer.server.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc4QueueLength)"
+attr unit packets
 213	41570 11 0 0 0 0 1 0 0 0 0
+vector 214  ClientServer.server.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc4QueueSize)"
+attr unit B
 214	41581 11 0 0 0 0 1 0 0 0 0
+vector 215  ClientServer.server.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc5QueueLength)"
+attr unit packets
 215	41592 11 0 0 0 0 1 0 0 0 0
+vector 216  ClientServer.server.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc5QueueSize)"
+attr unit B
 216	41603 11 0 0 0 0 1 0 0 0 0
+vector 217  ClientServer.server.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc6QueueLength)"
+attr unit packets
 217	41614 11 0 0 0 0 1 0 0 0 0
+vector 218  ClientServer.server.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc6QueueSize)"
+attr unit B
 218	41625 11 0 0 0 0 1 0 0 0 0
+vector 219  ClientServer.server.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc7QueueLength)"
+attr unit packets
 219	41636 11 0 0 0 0 1 0 0 0 0
+vector 220  ClientServer.server.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc7QueueSize)"
+attr unit B
 220	41647 11 0 0 0 0 1 0 0 0 0
+vector 221  ClientServer.server.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc8QueueLength)"
+attr unit packets
 221	41658 11 0 0 0 0 1 0 0 0 0
+vector 222  ClientServer.server.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc8QueueSize)"
+attr unit B
 222	41669 11 0 0 0 0 1 0 0 0 0
+vector 223  ClientServer.server.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc9QueueLength)"
+attr unit packets
 223	41680 11 0 0 0 0 1 0 0 0 0
+vector 224  ClientServer.server.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc9QueueSize)"
+attr unit B
 224	41691 11 0 0 0 0 1 0 0 0 0
+vector 46  ClientServer.server.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "PCF-Queue Length, vector"
+attr unit packets
+46	38158 10 0 0 0 0 1 0 0 0 0
+vector 47  ClientServer.server.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "BE-Queue Size, vector"
+attr unit B
+47	38168 10 0 0 0 0 1 0 0 0 0
+vector 48  ClientServer.server.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "TT-Queue Length, vector"
+attr unit packets
+48	38178 10 0 0 0 0 1 0 0 0 0
+vector 225  ClientServer.eth_switch.phy[0].shaper  q0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q0QueueLength)"
 225	41702 11 0 0 0 0 1 0 0 0 0
+vector 226  ClientServer.eth_switch.phy[0].shaper  q0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q0QueueSize)"
+attr unit B
 226	41713 11 0 0 0 0 1 0 0 0 0
+vector 227  ClientServer.eth_switch.phy[0].shaper  q1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q1QueueLength)"
 227	41724 11 0 0 0 0 1 0 0 0 0
+vector 228  ClientServer.eth_switch.phy[0].shaper  q1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q1QueueSize)"
+attr unit B
 228	41735 11 0 0 0 0 1 0 0 0 0
+vector 229  ClientServer.eth_switch.phy[0].shaper  q2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q2QueueLength)"
 229	41746 11 0 0 0 0 1 0 0 0 0
+vector 230  ClientServer.eth_switch.phy[0].shaper  q2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q2QueueSize)"
+attr unit B
 230	41757 11 0 0 0 0 1 0 0 0 0
+vector 231  ClientServer.eth_switch.phy[0].shaper  q3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q3QueueLength)"
 231	41768 11 0 0 0 0 1 0 0 0 0
+vector 232  ClientServer.eth_switch.phy[0].shaper  q3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q3QueueSize)"
+attr unit B
 232	41779 11 0 0 0 0 1 0 0 0 0
+vector 233  ClientServer.eth_switch.phy[0].shaper  q4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q4QueueLength)"
 233	41790 11 0 0 0 0 1 0 0 0 0
+vector 234  ClientServer.eth_switch.phy[0].shaper  q4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q4QueueSize)"
+attr unit B
 234	41801 11 0 0 0 0 1 0 0 0 0
+vector 235  ClientServer.eth_switch.phy[0].shaper  q5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q5QueueLength)"
 235	41812 11 0 0 0 0 1 0 0 0 0
+vector 236  ClientServer.eth_switch.phy[0].shaper  q5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q5QueueSize)"
+attr unit B
 236	41823 11 0 0 0 0 1 0 0 0 0
+vector 237  ClientServer.eth_switch.phy[0].shaper  q6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q6QueueLength)"
 237	41834 11 0 0 0 0 1 0 0 0 0
+vector 238  ClientServer.eth_switch.phy[0].shaper  q6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q6QueueSize)"
+attr unit B
 238	41845 11 0 0 0 0 1 0 0 0 0
+vector 239  ClientServer.eth_switch.phy[0].shaper  q7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q7QueueLength)"
 239	41856 11 0 0 0 0 1 0 0 0 0
+vector 240  ClientServer.eth_switch.phy[0].shaper  q7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q7QueueSize)"
+attr unit B
 240	41867 11 0 0 0 0 1 0 0 0 0
+vector 241  ClientServer.eth_switch.phy[0].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc0QueueLength)"
+attr unit packets
 241	41878 11 0 0 0 0 1 0 0 0 0
+vector 242  ClientServer.eth_switch.phy[0].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc0QueueSize)"
+attr unit B
 242	41889 11 0 0 0 0 1 0 0 0 0
+vector 243  ClientServer.eth_switch.phy[0].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc1QueueLength)"
+attr unit packets
 243	41900 11 0 0 0 0 1 0 0 0 0
+vector 244  ClientServer.eth_switch.phy[0].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc1QueueSize)"
+attr unit B
 244	41911 11 0 0 0 0 1 0 0 0 0
+vector 245  ClientServer.eth_switch.phy[0].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc2QueueLength)"
+attr unit packets
 245	41922 11 0 0 0 0 1 0 0 0 0
+vector 246  ClientServer.eth_switch.phy[0].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc2QueueSize)"
+attr unit B
 246	41933 11 0 0 0 0 1 0 0 0 0
+vector 247  ClientServer.eth_switch.phy[0].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc3QueueLength)"
+attr unit packets
 247	41944 11 0 0 0 0 1 0 0 0 0
+vector 248  ClientServer.eth_switch.phy[0].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc3QueueSize)"
+attr unit B
 248	41955 11 0 0 0 0 1 0 0 0 0
+vector 249  ClientServer.eth_switch.phy[0].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc4QueueLength)"
+attr unit packets
 249	41966 11 0 0 0 0 1 0 0 0 0
+vector 250  ClientServer.eth_switch.phy[0].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc4QueueSize)"
+attr unit B
 250	41977 11 0 0 0 0 1 0 0 0 0
+vector 251  ClientServer.eth_switch.phy[0].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc5QueueLength)"
+attr unit packets
 251	41988 11 0 0 0 0 1 0 0 0 0
+vector 252  ClientServer.eth_switch.phy[0].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc5QueueSize)"
+attr unit B
 252	41999 11 0 0 0 0 1 0 0 0 0
+vector 253  ClientServer.eth_switch.phy[0].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc6QueueLength)"
+attr unit packets
 253	42010 11 0 0 0 0 1 0 0 0 0
+vector 254  ClientServer.eth_switch.phy[0].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc6QueueSize)"
+attr unit B
 254	42021 11 0 0 0 0 1 0 0 0 0
+vector 255  ClientServer.eth_switch.phy[0].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc7QueueLength)"
+attr unit packets
 255	42032 11 0 0 0 0 1 0 0 0 0
+vector 256  ClientServer.eth_switch.phy[0].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc7QueueSize)"
+attr unit B
 256	42043 11 0 0 0 0 1 0 0 0 0
+vector 257  ClientServer.eth_switch.phy[0].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc8QueueLength)"
+attr unit packets
 257	42054 11 0 0 0 0 1 0 0 0 0
+vector 258  ClientServer.eth_switch.phy[0].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc8QueueSize)"
+attr unit B
 258	42065 11 0 0 0 0 1 0 0 0 0
+vector 259  ClientServer.eth_switch.phy[0].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc9QueueLength)"
+attr unit packets
 259	42076 11 0 0 0 0 1 0 0 0 0
+vector 260  ClientServer.eth_switch.phy[0].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc9QueueSize)"
+attr unit B
 260	42087 11 0 0 0 0 1 0 0 0 0
+vector 93  ClientServer.eth_switch.phy[0].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "PCF-Queue Length, vector"
+attr unit packets
+93	39689 10 0 0 0 0 1 0 0 0 0
+vector 94  ClientServer.eth_switch.phy[0].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "BE-Queue Size, vector"
+attr unit B
+94	39699 10 0 0 0 0 1 0 0 0 0
+vector 95  ClientServer.eth_switch.phy[0].shaper  ttQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "TT-Queue Length, vector"
+attr unit packets
+95	39709 10 0 0 0 0 1 0 0 0 0
+vector 261  ClientServer.eth_switch.phy[1].shaper  q0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q0QueueLength)"
 261	42098 11 0 0 0 0 1 0 0 0 0
+vector 262  ClientServer.eth_switch.phy[1].shaper  q0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q0QueueSize)"
+attr unit B
 262	42109 11 0 0 0 0 1 0 0 0 0
+vector 263  ClientServer.eth_switch.phy[1].shaper  q1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q1QueueLength)"
 263	42120 11 0 0 0 0 1 0 0 0 0
+vector 264  ClientServer.eth_switch.phy[1].shaper  q1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q1QueueSize)"
+attr unit B
 264	42131 11 0 0 0 0 1 0 0 0 0
+vector 265  ClientServer.eth_switch.phy[1].shaper  q2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q2QueueLength)"
 265	42142 11 0 0 0 0 1 0 0 0 0
+vector 266  ClientServer.eth_switch.phy[1].shaper  q2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q2QueueSize)"
+attr unit B
 266	42153 11 0 0 0 0 1 0 0 0 0
+vector 267  ClientServer.eth_switch.phy[1].shaper  q3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q3QueueLength)"
 267	42164 11 0 0 0 0 1 0 0 0 0
+vector 268  ClientServer.eth_switch.phy[1].shaper  q3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q3QueueSize)"
+attr unit B
 268	42175 11 0 0 0 0 1 0 0 0 0
+vector 269  ClientServer.eth_switch.phy[1].shaper  q4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q4QueueLength)"
 269	42186 11 0 0 0 0 1 0 0 0 0
+vector 270  ClientServer.eth_switch.phy[1].shaper  q4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q4QueueSize)"
+attr unit B
 270	42197 11 0 0 0 0 1 0 0 0 0
+vector 271  ClientServer.eth_switch.phy[1].shaper  q5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q5QueueLength)"
 271	42208 11 0 0 0 0 1 0 0 0 0
+vector 272  ClientServer.eth_switch.phy[1].shaper  q5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q5QueueSize)"
+attr unit B
 272	42219 11 0 0 0 0 1 0 0 0 0
+vector 273  ClientServer.eth_switch.phy[1].shaper  q6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q6QueueLength)"
 273	42230 11 0 0 0 0 1 0 0 0 0
+vector 274  ClientServer.eth_switch.phy[1].shaper  q6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q6QueueSize)"
+attr unit B
 274	42241 11 0 0 0 0 1 0 0 0 0
+vector 275  ClientServer.eth_switch.phy[1].shaper  q7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Length (q7QueueLength)"
 275	42252 11 0 0 0 0 1 0 0 0 0
+vector 276  ClientServer.eth_switch.phy[1].shaper  q7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "Q-Queue Size (q7QueueSize)"
+attr unit B
 276	42263 11 0 0 0 0 1 0 0 0 0
+vector 277  ClientServer.eth_switch.phy[1].shaper  rc0QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc0QueueLength)"
+attr unit packets
 277	42274 11 0 0 0 0 1 0 0 0 0
+vector 278  ClientServer.eth_switch.phy[1].shaper  rc0QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc0QueueSize)"
+attr unit B
 278	42285 11 0 0 0 0 1 0 0 0 0
+vector 279  ClientServer.eth_switch.phy[1].shaper  rc1QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc1QueueLength)"
+attr unit packets
 279	42296 11 0 0 0 0 1 0 0 0 0
+vector 280  ClientServer.eth_switch.phy[1].shaper  rc1QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc1QueueSize)"
+attr unit B
 280	42307 11 0 0 0 0 1 0 0 0 0
+vector 281  ClientServer.eth_switch.phy[1].shaper  rc2QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc2QueueLength)"
+attr unit packets
 281	42318 11 0 0 0 0 1 0 0 0 0
+vector 282  ClientServer.eth_switch.phy[1].shaper  rc2QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc2QueueSize)"
+attr unit B
 282	42329 11 0 0 0 0 1 0 0 0 0
+vector 283  ClientServer.eth_switch.phy[1].shaper  rc3QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc3QueueLength)"
+attr unit packets
 283	42340 11 0 0 0 0 1 0 0 0 0
+vector 284  ClientServer.eth_switch.phy[1].shaper  rc3QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc3QueueSize)"
+attr unit B
 284	42351 11 0 0 0 0 1 0 0 0 0
+vector 285  ClientServer.eth_switch.phy[1].shaper  rc4QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc4QueueLength)"
+attr unit packets
 285	42362 11 0 0 0 0 1 0 0 0 0
+vector 286  ClientServer.eth_switch.phy[1].shaper  rc4QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc4QueueSize)"
+attr unit B
 286	42373 11 0 0 0 0 1 0 0 0 0
+vector 287  ClientServer.eth_switch.phy[1].shaper  rc5QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc5QueueLength)"
+attr unit packets
 287	42384 11 0 0 0 0 1 0 0 0 0
+vector 288  ClientServer.eth_switch.phy[1].shaper  rc5QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc5QueueSize)"
+attr unit B
 288	42395 11 0 0 0 0 1 0 0 0 0
+vector 289  ClientServer.eth_switch.phy[1].shaper  rc6QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc6QueueLength)"
+attr unit packets
 289	42406 11 0 0 0 0 1 0 0 0 0
+vector 290  ClientServer.eth_switch.phy[1].shaper  rc6QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc6QueueSize)"
+attr unit B
 290	42417 11 0 0 0 0 1 0 0 0 0
+vector 291  ClientServer.eth_switch.phy[1].shaper  rc7QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc7QueueLength)"
+attr unit packets
 291	42428 11 0 0 0 0 1 0 0 0 0
+vector 292  ClientServer.eth_switch.phy[1].shaper  rc7QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc7QueueSize)"
+attr unit B
 292	42439 11 0 0 0 0 1 0 0 0 0
+vector 293  ClientServer.eth_switch.phy[1].shaper  rc8QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc8QueueLength)"
+attr unit packets
 293	42450 11 0 0 0 0 1 0 0 0 0
+vector 294  ClientServer.eth_switch.phy[1].shaper  rc8QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc8QueueSize)"
+attr unit B
 294	42461 11 0 0 0 0 1 0 0 0 0
+vector 295  ClientServer.eth_switch.phy[1].shaper  rc9QueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Length (rc9QueueLength)"
+attr unit packets
 295	42472 11 0 0 0 0 1 0 0 0 0
+vector 296  ClientServer.eth_switch.phy[1].shaper  rc9QueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "RC-Queue Size (rc9QueueSize)"
+attr unit B
 296	42483 11 0 0 0 0 1 0 0 0 0
+vector 112  ClientServer.eth_switch.phy[1].shaper  pcfQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "PCF-Queue Length, vector"
+attr unit packets
+112	39983 11 0 0 0 0 1 0 0 0 0
+vector 113  ClientServer.eth_switch.phy[1].shaper  pcfQueueSize:vector  ETV
+attr interpolationmode sample-hold
+attr title "BE-Queue Size, vector"
+attr unit B
+113	39994 11 0 0 0 0 1 0 0 0 0
+vector 114  ClientServer.eth_switch.phy[1].shaper  ttQueueLength:vector  ETV
+attr interpolationmode sample-hold
+attr title "TT-Queue Length, vector"
+attr unit packets
+114	40005 11 0 0 0 0 1 0 0 0 0
+vector 42  ClientServer.client.bgOut  length:vector  ETV
+attr interpolationmode sample-hold
+attr source length
+attr title "Queue Length, vector"
+attr unit packets
+42	37999 78 5 132 0 0.02 6 0 1 3 3
+vector 43  ClientServer.client.bgOut  size:vector  ETV
+attr interpolationmode sample-hold
+attr source size
+attr title "Queue Size, vector"
+attr unit B
+43	38077 81 5 132 0 0.02 6 0 64 192 12288
+vector 40  ClientServer.client.bgOut  txBytes:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "Transmitted Bytes, vector(packetBytes)"
+attr unit B
+40	37918 42 5 132 0 0.02 3 64 64 192 12288
+vector 41  ClientServer.client.bgOut  txLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(txPk)
+attr title "End-to-end latency (transmitted), vector"
+attr unit s
+41	37960 39 5 132 0 0.02 3 0 0 0 0
+vector 15  ClientServer.client.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkFromHL
+attr title "packet bytes from higher layer, vector(packetBytes)"
+15	37184 42 8 135 0 0.02 3 64 64 192 12288
+vector 102  ClientServer.eth_switch.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkOk
+attr title "packets received OK, vector(packetBytes)"
+102	39829 66 9 136 0.00000576 0.02000576 3 64 64 192 12288
+vector 103  ClientServer.eth_switch.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source packetSentToUpper
+attr title "packets passed to higher layer, vector(packetBytes)"
+103	39895 66 9 136 0.00000576 0.02000576 3 64 64 192 12288
+vector 10  ClientServer.client.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "packets transmitted, vector(packetBytes)"
+10	37078 64 10 137 0.00000576 0.02000576 3 64 64 192 12288
+vector 100  ClientServer.eth_switch.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(rxPk)
+attr title "End-to-end latency (received), vector"
+attr unit s
+100	39719 88 11 138 0.00000576 0.02000576 3 5.76e-006 5.76e-006 1.728e-005 9.95328e-011
+vector 23  ClientServer.client.avbABuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+23	37226 61 12 139 0.00000672 0.02000672 3 0 0 0 0
+vector 28  ClientServer.client.avbBBuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+28	37287 61 12 139 0.00000672 0.02000672 3 0 0 0 0
+vector 125  ClientServer.eth_switch.phy[1].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkFromHL
+attr title "packet bytes from higher layer, vector(packetBytes)"
+125	40156 67 15 142 0.00001376 0.02001376 3 64 64 192 12288
+vector 55  ClientServer.server.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkOk
+attr title "packets received OK, vector(packetBytes)"
+55	38297 64 16 143 0.00001952 0.02001952 3 64 64 192 12288
+vector 56  ClientServer.server.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source packetSentToUpper
+attr title "packets passed to higher layer, vector(packetBytes)"
+56	38361 64 16 143 0.00001952 0.02001952 3 64 64 192 12288
+vector 120  ClientServer.eth_switch.phy[1].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "packets transmitted, vector(packetBytes)"
+120	40045 67 17 144 0.00001952 0.02001952 3 64 64 192 12288
+vector 53  ClientServer.server.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(rxPk)
+attr title "End-to-end latency (received), vector"
+attr unit s
+53	38188 88 18 145 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
+vector 85  ClientServer.server.bgIn  length:vector  ETV
+attr interpolationmode sample-hold
+attr source length
+attr title "Queue Length, vector"
+attr unit packets
+85	39320 122 20 147 0.00001952 0.02001952 6 0 1 3 3
+vector 86  ClientServer.server.bgIn  size:vector  ETV
+attr interpolationmode sample-hold
+attr source size
+attr title "Queue Size, vector"
+attr unit B
+86	39442 125 20 147 0.00001952 0.02001952 6 0 64 192 12288
+vector 83  ClientServer.server.bgIn  txBytes:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "Transmitted Bytes, vector(packetBytes)"
+attr unit B
+83	39168 64 20 147 0.00001952 0.02001952 3 64 64 192 12288
+vector 84  ClientServer.server.bgIn  txLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(txPk)
+attr title "End-to-end latency (transmitted), vector"
+attr unit s
+84	39232 88 20 147 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
+vector 80  ClientServer.server.app[0]  rxBytes:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPk
+attr title "Received Bytes, vector(packetBytes)"
+attr unit B
+80	38928 64 21 148 0.00001952 0.02001952 3 64 64 192 12288
+vector 81  ClientServer.server.app[0]  rxLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(rxPk)
+attr title "End-to-end latency, vector"
+attr unit s
+81	38992 88 21 148 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
+vector 82  ClientServer.server.app[0]  rxLatencyInner:vector  ETV
+attr interpolationmode none
+attr source messageAge(innerMessage(rxPk))
+attr title "End-to-end latency inner, vector"
+attr unit s
+82	39080 88 21 148 0.00001952 0.02001952 3 1.952e-005 1.952e-005 5.856e-005 1.1430912e-009
+vector 89  ClientServer.server.bgOut  length:vector  ETV
+attr interpolationmode sample-hold
+attr source length
+attr title "Queue Length, vector"
+attr unit packets
+89	39608 40 22 22 0.00001952 0.00001952 2 0 1 1 1
+vector 90  ClientServer.server.bgOut  size:vector  ETV
+attr interpolationmode sample-hold
+attr source size
+attr title "Queue Size, vector"
+attr unit B
+90	39648 41 22 22 0.00001952 0.00001952 2 0 64 64 4096
+vector 87  ClientServer.server.bgOut  txBytes:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "Transmitted Bytes, vector(packetBytes)"
+attr unit B
+87	39567 21 22 22 0.00001952 0.00001952 1 64 64 64 4096
+vector 88  ClientServer.server.bgOut  txLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(txPk)
+attr title "End-to-end latency (transmitted), vector"
+attr unit s
+88	39588 20 22 22 0.00001952 0.00001952 1 0 0 0 0
+vector 59  ClientServer.server.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkFromHL
+attr title "packet bytes from higher layer, vector(packetBytes)"
+59	38425 21 25 25 0.00001952 0.00001952 1 64 64 64 4096
+vector 138  ClientServer.eth_switch.avbABuffer[1]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+138	40241 64 26 149 0.00002048 0.02002048 3 0 0 0 0
+vector 148  ClientServer.eth_switch.avbBBuffer[1]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+148	40323 64 26 149 0.00002048 0.02002048 3 0 0 0 0
+vector 121  ClientServer.eth_switch.phy[1].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkOk
+attr title "packets received OK, vector(packetBytes)"
+121	40112 22 27 27 0.00002528 0.00002528 1 64 64 64 4096
+vector 122  ClientServer.eth_switch.phy[1].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source packetSentToUpper
+attr title "packets passed to higher layer, vector(packetBytes)"
+122	40134 22 27 27 0.00002528 0.00002528 1 64 64 64 4096
+vector 54  ClientServer.server.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "packets transmitted, vector(packetBytes)"
+54	38276 21 28 28 0.00002528 0.00002528 1 64 64 64 4096
+vector 119  ClientServer.eth_switch.phy[1].inControl  rxLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(rxPk)
+attr title "End-to-end latency (received), vector"
+attr unit s
+119	40016 29 29 29 0.00002528 0.00002528 1 5.76e-006 5.76e-006 5.76e-006 3.31776e-011
+vector 67  ClientServer.server.avbABuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+67	38446 20 30 30 0.00002624 0.00002624 1 0 0 0 0
+vector 72  ClientServer.server.avbBBuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+72	38466 20 30 30 0.00002624 0.00002624 1 0 0 0 0
+vector 106  ClientServer.eth_switch.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkFromHL
+attr title "packet bytes from higher layer, vector(packetBytes)"
+106	39961 22 33 33 0.00003328 0.00003328 1 64 64 64 4096
+vector 11  ClientServer.client.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source rxPkOk
+attr title "packets received OK, vector(packetBytes)"
+11	37142 21 34 34 0.00003904 0.00003904 1 64 64 64 4096
+vector 12  ClientServer.client.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source packetSentToUpper
+attr title "packets passed to higher layer, vector(packetBytes)"
+12	37163 21 34 34 0.00003904 0.00003904 1 64 64 64 4096
+vector 101  ClientServer.eth_switch.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode none
+attr source txPk
+attr title "packets transmitted, vector(packetBytes)"
+101	39807 22 35 35 0.00003904 0.00003904 1 64 64 64 4096
+vector 9  ClientServer.client.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode none
+attr source messageAge(rxPk)
+attr title "End-to-end latency (received), vector"
+attr unit s
+9	37050 28 36 36 0.00003904 0.00003904 1 1.952e-005 1.952e-005 1.952e-005 3.810304e-010
+vector 38  ClientServer.client.bgIn  length:vector  ETV
+attr interpolationmode sample-hold
+attr source length
+attr title "Queue Length, vector"
+attr unit packets
+38	37877 20 38 38 0.00003904 0.00003904 1 1 1 1 1
+vector 39  ClientServer.client.bgIn  size:vector  ETV
+attr interpolationmode sample-hold
+attr source size
+attr title "Queue Size, vector"
+attr unit B
+39	37897 21 38 38 0.00003904 0.00003904 1 64 64 64 4096
+vector 133  ClientServer.eth_switch.avbABuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+133	40223 18 39 39 0.00004 0.00004 1 0 0 0 0
+vector 143  ClientServer.eth_switch.avbBBuffer[0]  credit:vector  ETV
+attr "" ""
+attr interpolationmode linear
+attr source credit
+attr title "Credit, vector"
+attr unit b
+143	40305 18 39 39 0.00004 0.00004 1 0 0 0 0
+vector 35  ClientServer.client.scheduler.oscillator  currentDrift:vector  ETV
+attr title "Current drift, vector"
+attr unit s
+35	37591 286 44 192 0.003 0.029999874996 10 -4e-012 0 -1.8e-011 5e-023
+vector 34  ClientServer.client.scheduler.timer  clockCorrection:vector  ETV
+attr title "Clock correction, vector"
+attr unit tick
+34	37348 243 45 193 0.003 0.029999874996 10 -4 4 -4 64
+vector 79  ClientServer.server.scheduler.oscillator  currentDrift:vector  ETV
+attr title "Current drift, vector"
+attr unit s
+79	38691 237 47 184 0.003 0.027000212497 9 -2e-012 0 -7e-012 9e-024
+vector 78  ClientServer.server.scheduler.timer  clockCorrection:vector  ETV
+attr title "Clock correction, vector"
+attr unit tick
+78	38486 205 48 185 0.003 0.027000212497 9 -3 3 -2 48
+vector 152  ClientServer.eth_switch.scheduler.oscillator  currentDrift:vector  ETV
+attr title "Current drift, vector"
+attr unit s
+152	40629 281 50 188 0.003 0.02999986749 10 -1e-012 2e-012 6e-012 1.4e-023
+vector 151  ClientServer.eth_switch.scheduler.timer  clockCorrection:vector  ETV
+attr title "Clock correction, vector"
+attr unit tick
+151	40387 242 51 189 0.003 0.02999986749 10 -1 5 3 29

@@ -1,4 +1,4 @@
-package hauptprojekt_timo_haeckel.simulations.ClientServerTSN;
+package soqosmw.simulations.ClientServerTSN;
 
 import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
 import core4inet.incoming.AS6802.TTIncoming;

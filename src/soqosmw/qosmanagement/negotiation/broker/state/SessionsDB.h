@@ -9,7 +9,7 @@
 #define SOQOSMW_STATE_SessionSDB_H_
 
 #include "soqosmw/base/Singleton.h"
-#include "soqosmw/base/Session.h"
+#include "soqosmw/qosmanagement/negotiation/broker/Session.h"
 #include <vector>
 
 namespace soqosmw {
@@ -20,15 +20,31 @@ friend class Singleton <SessionsDB>;
 public:
     virtual ~SessionsDB();
 
+    /**
+     * Adds the session to the database if possible.
+     * @return true if added.
+     */
     bool addSession (Session session);
+
+    /**
+     * Removes the session from the database if possible.
+     * @return true if removed.
+     */
     bool removeSession (Session session);
+
+    /**
+     * Checks if the database contains the session by checking equality of elemets.
+     * @return true if database contains the session.
+     */
     bool contains (Session session);
 
+    /**
+     * @return the current number of open sessions.
+     */
     int numberOfSessions();
 
 protected:
     SessionsDB();
-
 
 private:
     int getIndexOf(Session session);

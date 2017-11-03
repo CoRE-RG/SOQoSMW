@@ -1,3 +1,4 @@
+
 types std {
 	ethernetLink ETH_100MBIT {
 		bandwidth 100Mb/s;

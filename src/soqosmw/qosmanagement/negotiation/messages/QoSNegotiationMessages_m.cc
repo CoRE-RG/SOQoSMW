@@ -179,14 +179,6 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
 }
 
 EXECUTE_ON_STARTUP(
-    omnetpp::cEnum *e = omnetpp::cEnum::find("soqosmw::QoSGroups");
-    if (!e) omnetpp::enums.getInstance()->add(e = new omnetpp::cEnum("soqosmw::QoSGroups"));
-    e->insert(QoSGroup_RT, "QoSGroup_RT");
-    e->insert(QoSGroup_STD, "QoSGroup_STD");
-    e->insert(QoSGroup_WEB, "QoSGroup_WEB");
-)
-
-EXECUTE_ON_STARTUP(
     omnetpp::cEnum *e = omnetpp::cEnum::find("soqosmw::QoSNegotiationMsgType");
     if (!e) omnetpp::enums.getInstance()->add(e = new omnetpp::cEnum("soqosmw::QoSNegotiationMsgType"));
     e->insert(QoS_Request, "QoS_Request");
@@ -212,7 +204,6 @@ Register_Class(QoSNegotiationPayload)
 
 QoSNegotiationPayload::QoSNegotiationPayload(const char *name, short kind) : ::omnetpp::cPacket(name,kind)
 {
-    this->qosGroup = 0;
 }
 
 QoSNegotiationPayload::QoSNegotiationPayload(const QoSNegotiationPayload& other) : ::omnetpp::cPacket(other)
@@ -249,12 +240,12 @@ void QoSNegotiationPayload::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->qosGroup);
 }
 
-int QoSNegotiationPayload::getQosGroup() const
+QoSGroups_t& QoSNegotiationPayload::getQosGroup()
 {
     return this->qosGroup;
 }
 
-void QoSNegotiationPayload::setQosGroup(int qosGroup)
+void QoSNegotiationPayload::setQosGroup(const QoSGroups_t& qosGroup)
 {
     this->qosGroup = qosGroup;
 }
@@ -336,7 +327,7 @@ unsigned int QoSNegotiationPayloadDescriptor::getFieldTypeFlags(int field) const
         field -= basedesc->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
-        FD_ISEDITABLE,
+        FD_ISCOMPOUND,
     };
     return (field>=0 && field<1) ? fieldTypeFlags[field] : 0;
 }
@@ -372,7 +363,7 @@ const char *QoSNegotiationPayloadDescriptor::getFieldTypeString(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
-        "int",
+        "QoSGroups_t",
     };
     return (field>=0 && field<1) ? fieldTypeStrings[field] : nullptr;
 }
@@ -386,10 +377,6 @@ const char **QoSNegotiationPayloadDescriptor::getFieldPropertyNames(int field) c
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 0: {
-            static const char *names[] = { "enum",  nullptr };
-            return names;
-        }
         default: return nullptr;
     }
 }
@@ -403,9 +390,6 @@ const char *QoSNegotiationPayloadDescriptor::getFieldProperty(int field, const c
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 0:
-            if (!strcmp(propertyname,"enum")) return "soqosmw::QoSGroups";
-            return nullptr;
         default: return nullptr;
     }
 }
@@ -448,7 +432,7 @@ std::string QoSNegotiationPayloadDescriptor::getFieldValueAsString(void *object,
     }
     QoSNegotiationPayload *pp = (QoSNegotiationPayload *)object; (void)pp;
     switch (field) {
-        case 0: return enum2string(pp->getQosGroup(), "soqosmw::QoSGroups");
+        case 0: {std::stringstream out; out << pp->getQosGroup(); return out.str();}
         default: return "";
     }
 }
@@ -463,7 +447,6 @@ bool QoSNegotiationPayloadDescriptor::setFieldValueAsString(void *object, int fi
     }
     QoSNegotiationPayload *pp = (QoSNegotiationPayload *)object; (void)pp;
     switch (field) {
-        case 0: pp->setQosGroup((soqosmw::QoSGroups)string2enum(value, "soqosmw::QoSGroups")); return true;
         default: return false;
     }
 }
@@ -477,6 +460,7 @@ const char *QoSNegotiationPayloadDescriptor::getFieldStructName(int field) const
         field -= basedesc->getFieldCount();
     }
     switch (field) {
+        case 0: return omnetpp::opp_typename(typeid(QoSGroups_t));
         default: return nullptr;
     };
 }
@@ -491,6 +475,7 @@ void *QoSNegotiationPayloadDescriptor::getFieldStructValuePointer(void *object, 
     }
     QoSNegotiationPayload *pp = (QoSNegotiationPayload *)object; (void)pp;
     switch (field) {
+        case 0: return (void *)(&pp->getQosGroup()); break;
         default: return nullptr;
     }
 }

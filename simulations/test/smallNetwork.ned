@@ -1,4 +1,4 @@
-package hauptprojekt_timo_haeckel.simulations.test;
+package soqosmw.simulations.test;
 
 import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
 import inet.node.ethernet.EtherLink;
