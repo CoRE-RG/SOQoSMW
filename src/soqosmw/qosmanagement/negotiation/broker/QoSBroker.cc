@@ -21,6 +21,12 @@ namespace soqosmw {
 
 Define_Module(QoSBroker);
 
+QoSBroker::QoSBroker() {
+}
+
+QoSBroker::~QoSBroker() {
+}
+
 void QoSBroker::initialize() {
     cout << "QoSBorker::initialize";
     handleParameterChange(nullptr);
@@ -53,9 +59,10 @@ void QoSBroker::serverHandleMessage(cMessage *msg) {
     switch (_state) {
     case SERVER_NO_SESSION:
         try {
+            cPacket* incomingPayload = extractMessage(msg);
             //check incoming message class
             QoSNegotiationRequest* incoming =
-                    dynamic_cast<QoSNegotiationRequest*>(msg);
+                    dynamic_cast<QoSNegotiationRequest*>(incomingPayload);
 
             if (incoming == 0) {
                 //not a QoS Negotiation class.
@@ -148,9 +155,10 @@ void QoSBroker::clientHandleMessage(cMessage *msg) {
 
     case CLIENT_PENDING_REQUEST:
         try {
+            cPacket* incomingPayload = extractMessage(msg);
             //check if msg is correct class
             QoSNegotiationResponse *incoming =
-                    dynamic_cast<QoSNegotiationResponse*>(msg);
+                    dynamic_cast<QoSNegotiationResponse*>(incomingPayload);
 
             if (incoming == 0) {
                 //not a QoS Negotiation class.
@@ -233,6 +241,12 @@ void QoSBroker::handleParameterChange(const char* parname) {
     if (!parname || !strcmp(parname, "isClient")) { //is this a client?
         _isClient = this->par("isClient").boolValue();
     }
+    if (!parname || !strcmp(parname, "useNetworkLayerOut")) { //is this a client?
+        _useNetworkLayerOut = this->par("useNetworkLayerOut").boolValue();
+    }
+    if (!parname || !strcmp(parname, "useTargetGate")) { //is this a client?
+        _useTargetGate = this->par("useTargetGate").boolValue();
+    }
 
     if (!parname || !strcmp(parname, "destAddress")) { //update destination address
         if (par("destAddress").stdstringValue() == "auto") {
@@ -246,41 +260,45 @@ void QoSBroker::handleParameterChange(const char* parname) {
         }
     }
 
-    if (!parname || !strcmp(parname, "targetModule")) { //set target module
-        targetModulePar = this->par("targetModule").stringValue();
-        if (targetModulePar) {
-            _targetModule = getParentModule()->getSubmodule(targetModulePar);
-            if (_targetModule) {
-                updateGate = true;
+    if(_useTargetGate) {
+        if (!parname || !strcmp(parname, "targetModule")) { //set target module
+            targetModulePar = this->par("targetModule").stringValue();
+            if (!strcmp(targetModulePar,"")) {
+                _targetModule = getParentModule()->getSubmodule(targetModulePar);
+                if (_targetModule) {
+                    updateGate = true;
+                } else {
+                    throw cRuntimeError(
+                            "Parent module does not contain the specified target Module: %s.",
+                            targetModulePar);
+                }
             } else {
-                throw cRuntimeError(
-                        "Parent module does not contain the specified target Module: %s.",
-                        targetModulePar);
+                //no module specified!
+                throw cRuntimeError("Please specify a targetModule.");
             }
-        } else {
-            throw cRuntimeError("No targetModule Specified.");
+
+        }
+        if (!parname || !strcmp(parname, "targetGate")) { //set target gate
+            targetGatePar = this->par("targetGate").stringValue();
+            updateGate = true;
         }
 
-    }
-    if (!parname || !strcmp(parname, "targetGate")) { //set target gate
-        targetGatePar = this->par("targetGate").stringValue();
-        updateGate = true;
-    }
-
-    //check if gate or module has been updated.
-    if (updateGate) {
-        if (_targetModule) {
-            _targetGate = _targetModule->gate(targetGatePar);
-            if (!_targetGate) {
-                //target Module has no gate with that name
-                throw cRuntimeError(
-                        "Module does not contain the specified gate: %s.",
-                        targetGatePar);
+        //check if gate or module has been updated.
+        if (updateGate) {
+            if (_targetModule && !strcmp(targetGatePar,"")) {
+                _targetGate = _targetModule->gate(targetGatePar);
+                if (!_targetGate) {
+                    //target Module has no gate with that name
+                    throw cRuntimeError(
+                            "Module does not contain the specified gate: %s.",
+                            targetGatePar);
+                }
+            } else {
+                throw cRuntimeError("Gate should update but no module set. This should never happen!");
             }
-        } else {
-            throw cRuntimeError("No targetModule has been set.");
         }
     }
+
 
     //first initialization before startup finished?
     if (!parname && !_parametersInitialized) {
@@ -326,7 +344,18 @@ void QoSBroker::sendMessage(cPacket* payload_packet) {
     if (frame->getByteLength() < MIN_ETHERNET_FRAME_BYTES) {
         frame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
     }
-    sendDirect(frame, _targetGate);
+    if (gate("networkLayerOut")->isConnected() && _useNetworkLayerOut)
+    {
+        send(frame->dup(), "networkLayerOut");
+    }
+    if (_useTargetGate){
+        sendDirect(frame->dup(), _targetGate);
+    }
+}
+
+cPacket* QoSBroker::extractMessage(cMessage *msg){
+    inet::EthernetIIFrame *frame = dynamic_cast<inet::EthernetIIFrame*>(msg);
+    return frame->decapsulate();
 }
 
 } /* namespace soqosmw */

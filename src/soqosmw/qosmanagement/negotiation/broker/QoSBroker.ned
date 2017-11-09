@@ -25,6 +25,8 @@ simple QoSBroker
         bool isClient = default(false);//TODO remove and create client and server apps
         string destAddress = default("auto");// destination MAC address
         
+        bool useNetworkLayerOut = default(true);
+        bool useTargetGate = default (false);
         string targetModule;
         string targetGate;
         //--> sendDirect(msg, _target); --> sendMessage()
@@ -34,6 +36,7 @@ simple QoSBroker
     gates:
         //connections to lower layer
         input networkLayerIn; //in connected via connections out needs to be specified in targetModule and Gate.
+        output networkLayerOut;
         
         //app connections
         input appIn;

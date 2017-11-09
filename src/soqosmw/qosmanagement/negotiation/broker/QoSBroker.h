@@ -47,6 +47,10 @@ typedef enum QoSBrokerStates {
  */
 class QoSBroker : public cSimpleModule
 {
+  public:
+    QoSBroker();
+    virtual ~QoSBroker();
+
   protected:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
@@ -59,11 +63,14 @@ class QoSBroker : public cSimpleModule
     void clientHandleMessage(cMessage *msg);
     bool clientProcessQoSResponseIsSuccess(QoSNegotiationResponse* response);
 
+    cPacket* extractMessage(cMessage *msg);
     void sendMessage(cPacket* msg);
 
     std::string getStateAsName();
     QoSBrokerStates_t _state;
 
+    bool _useTargetGate;
+    bool _useNetworkLayerOut;
     cModule* _targetModule; //targetModule object
     cGate* _targetGate; //targetGate object
 

@@ -21,13 +21,15 @@ import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
 module SOQoSMWHost extends TTEAVBEtherHost
 {
     
-    bgIn.destination_gates = "qos_broker.networkLayerIn";
+    //bgIn.destination_gates = "qos_broker.networkLayerIn";
     
     submodules:
         qos_broker : QoSBroker {
-            targetModule = "bgOut";
-            targetGate = "in";
+            //targetModule = "bgOut";
+            //targetGate = "in";
         }
         
     connections:
+        bgIn.out --> qos_broker.networkLayerIn;
+        qos_broker.networkLayerOut --> bgOut.in;
 }

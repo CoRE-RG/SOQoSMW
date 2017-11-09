@@ -1,14 +1,14 @@
 version 2
-run General-0-20171108-12:42:08-4508
+run General-0-20171109-11:52:57-1552
 attr configname General
-attr datetime 20171108-12:42:08
+attr datetime 20171109-11:52:57
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network small_network
-attr processid 4508
+attr processid 1552
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -1052,6 +1052,30 @@ attr interpolationmode  none
 attr source  messageAge(txPk)
 attr title  "End-to-end latency (transmitted), vector"
 attr unit  s
+vector 138  small_network.node3.bgOut  length:vector  ETV
+attr interpolationmode  sample-hold
+attr source  length
+attr title  "Queue Length, vector"
+attr unit  packets
+vector 139  small_network.node3.bgOut  size:vector  ETV
+attr interpolationmode  sample-hold
+attr source  size
+attr title  "Queue Size, vector"
+attr unit  B
+vector 136  small_network.node3.bgOut  txBytes:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "Transmitted Bytes, vector(packetBytes)"
+attr unit  B
+vector 137  small_network.node3.bgOut  txLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(txPk)
+attr title  "End-to-end latency (transmitted), vector"
+attr unit  s
+vector 111  small_network.node3.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
 vector 59  small_network.node2.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
 attr interpolationmode  none
 attr source  rxPkOk
@@ -1085,6 +1109,30 @@ attr interpolationmode  none
 attr source  messageAge(txPk)
 attr title  "End-to-end latency (transmitted), vector"
 attr unit  s
+vector 90  small_network.node2.bgOut  length:vector  ETV
+attr interpolationmode  sample-hold
+attr source  length
+attr title  "Queue Length, vector"
+attr unit  packets
+vector 91  small_network.node2.bgOut  size:vector  ETV
+attr interpolationmode  sample-hold
+attr source  size
+attr title  "Queue Size, vector"
+attr unit  B
+vector 88  small_network.node2.bgOut  txBytes:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "Transmitted Bytes, vector(packetBytes)"
+attr unit  B
+vector 89  small_network.node2.bgOut  txLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(txPk)
+attr title  "End-to-end latency (transmitted), vector"
+attr unit  s
+vector 63  small_network.node2.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
 vector 210  small_network.switch1.avbABuffer[1]  credit:vector  ETV
 attr ""  ""
 attr interpolationmode  linear
@@ -1109,13 +1157,134 @@ attr interpolationmode  linear
 attr source  credit
 attr title  "Credit, vector"
 attr unit  b
+vector 106  small_network.node3.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 193  small_network.switch1.phy[2].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 194  small_network.switch1.phy[2].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 58  small_network.node2.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 191  small_network.switch1.phy[2].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 174  small_network.switch1.phy[1].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 175  small_network.switch1.phy[1].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 172  small_network.switch1.phy[1].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 119  small_network.node3.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 124  small_network.node3.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 71  small_network.node2.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 76  small_network.node2.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 159  small_network.switch1.phy[0].mac  rxPkFromHL:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkFromHL
+attr title  "packet bytes from higher layer, vector(packetBytes)"
+vector 154  small_network.switch1.phy[0].mac  txPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "packets transmitted, vector(packetBytes)"
+vector 11  small_network.node1.phy[0].mac  rxPkOk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  rxPkOk
+attr title  "packets received OK, vector(packetBytes)"
+vector 12  small_network.node1.phy[0].mac  passedUpPk:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  packetSentToUpper
+attr title  "packets passed to higher layer, vector(packetBytes)"
+vector 9  small_network.node1.phy[0].inControl  rxLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(rxPk)
+attr title  "End-to-end latency (received), vector"
+attr unit  s
+vector 38  small_network.node1.bgIn  length:vector  ETV
+attr interpolationmode  sample-hold
+attr source  length
+attr title  "Queue Length, vector"
+attr unit  packets
+vector 39  small_network.node1.bgIn  size:vector  ETV
+attr interpolationmode  sample-hold
+attr source  size
+attr title  "Queue Size, vector"
+attr unit  B
+vector 36  small_network.node1.bgIn  txBytes:vector(packetBytes)  ETV
+attr interpolationmode  none
+attr source  txPk
+attr title  "Transmitted Bytes, vector(packetBytes)"
+attr unit  B
+vector 37  small_network.node1.bgIn  txLatency:vector  ETV
+attr interpolationmode  none
+attr source  messageAge(txPk)
+attr title  "End-to-end latency (transmitted), vector"
+attr unit  s
+vector 205  small_network.switch1.avbABuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
+vector 220  small_network.switch1.avbBBuffer[0]  credit:vector  ETV
+attr ""  ""
+attr interpolationmode  linear
+attr source  credit
+attr title  "Credit, vector"
+attr unit  b
 2	0	0	0
 3	0	0	0
 4	0	0	0
+9	4075	1.00003929	1.9645e-005
+9	4093	1.00004601	2.634e-005
 10	4013	1.00000576	64
+10	4087	1.00004505	64
+11	4074	1.00003929	64
+11	4091	1.00004601	64
+12	4074	1.00003929	64
+12	4091	1.00004601	64
 15	4004	1	64
+15	4082	1.00003929	64
 23	4016	1.00000672	0
+23	4092	1.00004601	0
 28	4016	1.00000672	0
+28	4092	1.00004601	0
 34	18	0.005	1
 34	43	0.00999992	-2
 34	59	0.01500008	1
@@ -1316,11 +1485,9 @@ attr unit  b
 34	3963	0.990000264339	3
 34	3983	0.995000149333	2
 34	4008	1.000000364321	2
-34	4051	1.005000454313	6
-34	4071	1.010000161795	2
-34	4095	1.015000439281	5
-34	4115	1.020000539241	5
-34	4135	1.025000514211	7
+34	4123	1.005000454313	6
+34	4143	1.010000161795	2
+34	4167	1.015000439281	5
 35	17	0.005	0
 35	42	0.00999992	0
 35	58	0.01500008	-1e-012
@@ -1521,23 +1688,49 @@ attr unit  b
 35	3962	0.990000264339	2e-012
 35	3982	0.995000149333	6e-012
 35	4007	1.000000364321	4e-012
-35	4050	1.005000454313	3e-012
-35	4070	1.010000161795	7e-012
-35	4094	1.015000439281	8e-012
-35	4114	1.020000539241	6e-012
-35	4134	1.025000514211	6e-012
+35	4122	1.005000454313	3e-012
+35	4142	1.010000161795	7e-012
+35	4166	1.015000439281	8e-012
+36	4077	1.00003929	64
+36	4095	1.00004601	64
+37	4077	1.00003929	1.9645e-005
+37	4095	1.00004601	2.634e-005
+38	4077	1.00003929	1
+38	4077	1.00003929	0
+38	4095	1.00004601	1
+38	4095	1.00004601	0
+39	4077	1.00003929	64
+39	4077	1.00003929	0
+39	4095	1.00004601	64
+39	4095	1.00004601	0
 40	4001	1	64
+40	4079	1.00003929	64
 41	4001	1	0
+41	4079	1.00003929	0
 42	4001	1	1
 42	4001	1	0
+42	4079	1.00003929	1
+42	4079	1.00003929	0
 43	4001	1	64
 43	4001	1	0
+43	4079	1.00003929	64
+43	4079	1.00003929	0
 50	0	0	0
 51	0	0	0
 52	0	0	0
-57	4030	1.00001967	1.967e-005
-59	4029	1.00001967	64
-60	4029	1.00001967	64
+57	4034	1.00001967	1.967e-005
+57	4065	1.00003924	1.9595e-005
+57	4103	1.00005896	1.967e-005
+58	4046	1.00002543	64
+59	4033	1.00001967	64
+59	4063	1.00003924	64
+59	4102	1.00005896	64
+60	4033	1.00001967	64
+60	4063	1.00003924	64
+60	4102	1.00005896	64
+63	4041	1.00001967	64
+71	4051	1.00002639	0
+76	4051	1.00002639	0
 82	21	0.005	2
 82	47	0.009999964996	-4
 82	67	0.015000597516	7
@@ -1738,11 +1931,9 @@ attr unit  b
 82	3967	0.990000665677	7
 82	3987	0.995000355649	1
 82	4012	1.000000713142	5
-82	4055	1.005000750607	10
-82	4075	1.010000325547	5
-82	4091	1.015000238022	3
-82	4111	1.02000024801	0
-82	4131	1.02500031051	4
+82	4127	1.005000750607	10
+82	4147	1.010000325547	5
+82	4163	1.015000238022	3
 83	20	0.005	2e-012
 83	46	0.009999964996	5e-012
 83	66	0.015000597516	5e-012
@@ -1943,23 +2134,46 @@ attr unit  b
 83	3966	0.990000665677	4e-012
 83	3986	0.995000355649	7e-012
 83	4011	1.000000713142	7e-012
-83	4054	1.005000750607	6e-012
-83	4074	1.010000325547	5e-012
-83	4090	1.015000238022	4e-012
-83	4110	1.02000024801	1e-012
-83	4130	1.02500031051	3e-012
-84	4032	1.00001967	64
-85	4032	1.00001967	1.967e-005
-86	4032	1.00001967	1
-86	4032	1.00001967	0
-87	4032	1.00001967	64
-87	4032	1.00001967	0
+83	4126	1.005000750607	6e-012
+83	4146	1.010000325547	5e-012
+83	4162	1.015000238022	4e-012
+84	4036	1.00001967	64
+84	4067	1.00003924	64
+84	4105	1.00005896	64
+85	4036	1.00001967	1.967e-005
+85	4067	1.00003924	1.9595e-005
+85	4105	1.00005896	1.967e-005
+86	4036	1.00001967	1
+86	4036	1.00001967	0
+86	4067	1.00003924	1
+86	4067	1.00003924	0
+86	4105	1.00005896	1
+86	4105	1.00005896	0
+87	4036	1.00001967	64
+87	4036	1.00001967	0
+87	4067	1.00003924	64
+87	4067	1.00003924	0
+87	4105	1.00005896	64
+87	4105	1.00005896	0
+88	4038	1.00001967	64
+89	4038	1.00001967	0
+90	4038	1.00001967	1
+90	4038	1.00001967	0
+91	4038	1.00001967	64
+91	4038	1.00001967	0
 98	0	0	0
 99	0	0	0
 100	0	0	0
 105	4025	1.000019645	1.9645e-005
+105	4070	1.000039265	1.9595e-005
+106	4044	1.000025405	64
 107	4024	1.000019645	64
+107	4069	1.000039265	64
 108	4024	1.000019645	64
+108	4069	1.000039265	64
+111	4032	1.000019645	64
+119	4050	1.000026365	0
+124	4050	1.000026365	0
 130	24	0.005	2
 130	39	0.009999902498	-3
 130	63	0.015000267504	5
@@ -2160,11 +2374,9 @@ attr unit  b
 130	3959	0.989999160375	-9
 130	3975	0.994999005249	-10
 130	3999	0.999998992619	-12
-130	4047	1.004999014939	-10
-130	4063	1.009998939799	-13
-130	4087	1.014999229643	-11
-130	4107	1.019999484533	-9
-130	4127	1.02499976697	-4
+130	4119	1.004999014939	-10
+130	4135	1.009998939799	-13
+130	4159	1.014999229643	-11
 131	23	0.005	1e-012
 131	38	0.009999902498	2e-012
 131	62	0.015000267504	4e-012
@@ -2365,38 +2577,76 @@ attr unit  b
 131	3958	0.989999160375	-1.4e-011
 131	3974	0.994999005249	-1.3e-011
 131	3998	0.999998992619	-1.5e-011
-131	4046	1.004999014939	-1.4e-011
-131	4062	1.009998939799	-1.2e-011
-131	4086	1.014999229643	-1e-011
-131	4106	1.019999484533	-7e-012
-131	4126	1.02499976697	-8e-012
-131	4146	1.029999586938	-1.2e-011
+131	4118	1.004999014939	-1.4e-011
+131	4134	1.009998939799	-1.2e-011
+131	4158	1.014999229643	-1e-011
 132	4027	1.000019645	64
+132	4072	1.000039265	64
 133	4027	1.000019645	1.9645e-005
+133	4072	1.000039265	1.9595e-005
 134	4027	1.000019645	1
 134	4027	1.000019645	0
+134	4072	1.000039265	1
+134	4072	1.000039265	0
 135	4027	1.000019645	64
 135	4027	1.000019645	0
+135	4072	1.000039265	64
+135	4072	1.000039265	0
+136	4029	1.000019645	64
+137	4029	1.000019645	0
+138	4029	1.000019645	1
+138	4029	1.000019645	0
+139	4029	1.000019645	64
+139	4029	1.000019645	0
 146	0	0	0
 147	0	0	0
 148	0	0	0
 153	4015	1.00000586	5.86e-006
+153	4089	1.00004515	5.86e-006
+154	4061	1.00003919	64
+154	4090	1.00004591	64
 155	4014	1.00000586	64
+155	4088	1.00004515	64
 156	4014	1.00000586	64
+156	4088	1.00004515	64
+159	4056	1.00003343	64
+159	4085	1.00004015	64
 165	0	0	0
 166	0	0	0
 167	0	0	0
+172	4049	1.00002548	5.81e-006
 173	4022	1.00001962	64
+173	4062	1.00003919	64
+173	4101	1.00005891	64
+174	4048	1.00002548	64
+175	4048	1.00002548	64
 178	4020	1.00001386	64
+178	4057	1.00003343	64
+178	4100	1.00005315	64
 184	0	0	0
 185	0	0	0
 186	0	0	0
+191	4047	1.00002543	5.785e-006
 192	4023	1.00001962	64
+192	4064	1.00003924	64
+193	4045	1.00002543	64
+194	4045	1.00002543	64
 197	4021	1.00001386	64
-210	4034	1.00002058	0
-215	4035	1.00002058	0
-225	4034	1.00002058	0
-230	4035	1.00002058	0
+197	4060	1.00003348	64
+205	4083	1.00004015	0
+205	4097	1.00004687	0
+210	4042	1.00002058	0
+210	4084	1.00004015	0
+210	4107	1.00005987	0
+215	4043	1.00002058	0
+215	4086	1.0000402	0
+220	4083	1.00004015	0
+220	4097	1.00004687	0
+225	4042	1.00002058	0
+225	4084	1.00004015	0
+225	4107	1.00005987	0
+230	4043	1.00002058	0
+230	4086	1.0000402	0
 233	27	0.005	2
 233	35	0.00999984	-1
 233	55	0.014999857499	-3
@@ -2597,12 +2847,9 @@ attr unit  b
 233	3955	0.989998863921	-16
 233	3979	0.994999143665	-9
 233	3995	0.999998863521	-12
-233	4043	1.004998823329	-18
-233	4067	1.009999263041	-10
-233	4083	1.014999187901	-10
-233	4103	1.019999300291	-12
-233	4123	1.024999447635	-6
-233	4143	1.029998927539	-16
+233	4115	1.004998823329	-18
+233	4139	1.009999263041	-10
+233	4155	1.014999187901	-10
 234	26	0.005	0
 234	34	0.00999984	-1e-012
 234	54	0.014999857499	3e-012
@@ -2803,12 +3050,9 @@ attr unit  b
 234	3954	0.989998863921	-1.6e-011
 234	3978	0.994999143665	-1.6e-011
 234	3994	0.999998863521	-1.6e-011
-234	4042	1.004998823329	-1.6e-011
-234	4066	1.009999263041	-1.4e-011
-234	4082	1.014999187901	-1.1e-011
-234	4102	1.019999300291	-1.3e-011
-234	4122	1.024999447635	-1.6e-011
-234	4142	1.029998927539	-1.6e-011
+234	4114	1.004998823329	-1.6e-011
+234	4138	1.009999263041	-1.4e-011
+234	4154	1.014999187901	-1.1e-011
 239	0	0	0
 240	0	0	0
 241	0	0	0
@@ -2918,7 +3162,11 @@ attr unit  b
 345	0	0	0
 346	0	0	0
 347	0	0	0
+347	4058	1.00003348	1
+347	4083	1.00004015	0
 348	0	0	0
+348	4058	1.00003348	64
+348	4083	1.00004015	0
 349	0	0	0
 350	0	0	0
 351	0	0	0
