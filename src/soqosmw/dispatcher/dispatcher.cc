@@ -13,28 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.qos_via_tteavb;
+#include "dispatcher.h"
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
-import core4inet.incoming.AS6802.TTIncoming;
-import core4inet.buffer.AS6802.TTDoubleBuffer;
+Define_Module(Dispatcher);
 
-//
-// switch1: configuration in switch1.ini
-// Forwards time-triggered messages with VL-ID 100
-//
-module Switch1 extends TTEAVBEtherSwitch
+void Dispatcher::initialize()
 {
-    @display("bgb=990,547");
-    submodules:
-        vl_100_ctc: TTIncoming {
-            parameters:
-                @display("p=534,111");
-        }
-        vl_100: TTDoubleBuffer {
-            parameters:
-                @display("p=604,111");
-        }
-    connections:
-        vl_100_ctc.out --> vl_100.in;
+    // TODO - Generated method body
+}
+
+void Dispatcher::handleMessage(cMessage *msg)
+{
+    // TODO - Generated method body
 }

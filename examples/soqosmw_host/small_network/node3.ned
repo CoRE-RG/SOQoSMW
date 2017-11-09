@@ -13,29 +13,29 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.qos_via_tteavb;
+package soqosmw.examples.soqosmw_host.small_network;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
+import soqosmw.nodes.SOQoSMWHost;
 import core4inet.incoming.AS6802.TTIncoming;
 import core4inet.buffer.AS6802.TTDoubleBuffer;
 
 //
-// node2: configuration in node2.ini.
+// node3: configuration in node3.ini.
 //
 // - Receives time-triggered messages with VL-ID 100
 //
-module Node2 extends TTEAVBEtherHost
+module Node3 extends SOQoSMWHost
 {
-    @display("bgb=678,314");
+    @display("bgb=658,314");
     submodules:
         vl_100_ctc: TTIncoming {
             parameters:
-                @display("p=530,118");
+                @display("p=520,118");
 
         }
         vl_100: TTDoubleBuffer {
             parameters:
-                @display("p=620,118");
+                @display("p=610,118");
         }
     connections:
         vl_100_ctc.out --> vl_100.in;

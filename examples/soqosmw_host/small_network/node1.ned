@@ -13,9 +13,9 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.qos_via_tteavb;
+package soqosmw.examples.soqosmw_host.small_network;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
+import soqosmw.nodes.SOQoSMWHost;
 import core4inet.incoming.AS6802.TTIncoming;
 import core4inet.buffer.AS6802.TTDoubleBuffer;
 
@@ -24,8 +24,8 @@ import core4inet.buffer.AS6802.TTDoubleBuffer;
 //
 // - Sends time-triggered messages at 1ms with VL-ID 100
 //
-module Node1 extends TTEAVBEtherHost
-{
+module Node1 extends SOQoSMWHost
+{        
     @display("bgb=651,314");
     submodules:
         vl_100_ctc: TTIncoming {

@@ -20,6 +20,9 @@
 #include <string>
 #include "soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.h"
 
+//INET
+#include "inet/linklayer/common/MACAddress.h"
+
 using namespace omnetpp;
 
 namespace soqosmw {
@@ -28,9 +31,15 @@ namespace soqosmw {
  * Statemachine for Broker.
  */
 typedef enum QoSBrokerStates {
-    NO_SESSION = 0,
-    PENDING_ACCEPT = 1,
-    SESSION_ESTABLISHED = 2,
+    SERVER_NO_SESSION,
+    SERVER_PENDING_ACCEPT,
+    SERVER_SESSION_ESTABLISHED,
+
+    CLIENT_STARTUP,
+    CLIENT_PENDING_REQUEST,
+    CLIENT_PENDING_CONNECTION,
+    CLIENT_FAILURE,
+    CLIENT_SUCCESS
 }QoSBrokerStates_t;
 
 /**
@@ -39,14 +48,30 @@ typedef enum QoSBrokerStates {
 class QoSBroker : public cSimpleModule
 {
   protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    virtual void handleParameterChange(const char* parname);
 
   private:
-    bool processQoSRequestIsAcceptable(QoSNegotiation* response);
+    void serverHandleMessage(cMessage *msg);
+    bool serverProcessQoSRequestIsAcceptable(QoSNegotiation* response);
+
+    void clientHandleMessage(cMessage *msg);
+    bool clientProcessQoSResponseIsSuccess(QoSNegotiationResponse* response);
+
+    void sendMessage(cPacket* msg);
 
     std::string getStateAsName();
     QoSBrokerStates_t _state;
+
+    cModule* _targetModule; //targetModule object
+    cGate* _targetGate; //targetGate object
+
+    bool _isClient; //is client or server? TODO remove...
+
+    inet::MACAddress destAddress; //destination address
+
+    bool _parametersInitialized; //first initialization of parameters finished?
 };
 
 } /* namespace soqosmw */

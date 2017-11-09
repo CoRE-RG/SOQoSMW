@@ -21,7 +21,21 @@ package soqosmw.qosmanagement.negotiation.broker;
 //
 simple QoSBroker
 {
+    parameters:
+        bool isClient = default(false);//TODO remove and create client and server apps
+        string destAddress = default("auto");// destination MAC address
+        
+        string targetModule;
+        string targetGate;
+        //--> sendDirect(msg, _target); --> sendMessage()
+        //holen mit cGate _target = getParentModule()->getSubmodule(this->par("targetModule"))->gate(this->par("targetGate")) --> handleParameterChange() (else throw cRuntimeError)
+        
     @class(soqosmw::QoSBroker);
     gates:
-        inout avbChannel;
+        //connections to lower layer
+        input networkLayerIn; //in connected via connections out needs to be specified in targetModule and Gate.
+        
+        //app connections
+        input appIn;
+        output appOut;
 }

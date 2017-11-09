@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.qos_via_tteavb;
+package soqosmw.examples.soqosmw_host.small_network;
 
 import inet.node.ethernet.Eth100M;
 
@@ -35,6 +35,10 @@ network small_network
             @display("p=249,30");
         }
 
+        node3: Node3 {
+            @display("p=249,102");
+        }
+
         switch1: Switch1 {
             parameters:
                 @display("p=147,70");
@@ -47,4 +51,5 @@ network small_network
         //
         node1.ethg <--> Eth100M {  length = 20m; } <--> switch1.ethg[0];
         node2.ethg <--> Eth100M {  length = 10m; } <--> switch1.ethg[1];
+        node3.ethg <--> Eth100M {  length = 5m; } <--> switch1.ethg[2];
 }
