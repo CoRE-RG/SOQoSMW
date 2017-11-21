@@ -18,7 +18,13 @@
 
 #include <omnetpp.h>
 #include <string>
-#include "soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.h"
+
+#include <soqosmw/messages/Envelope_m.h>
+#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+
+//INET
+#include "inet/networklayer/common/L3Address.h"
+#include "inet/transportlayer/contract/udp/UDPSocket.h"
 
 using namespace omnetpp;
 
@@ -28,25 +34,70 @@ namespace soqosmw {
  * Statemachine for Broker.
  */
 typedef enum QoSBrokerStates {
-    NO_SESSION = 0,
-    PENDING_ACCEPT = 1,
-    SESSION_ESTABLISHED = 2,
+    SERVER_NO_SESSION,
+    SERVER_PENDING_ACCEPT,
+    SERVER_SESSION_ESTABLISHED,
+
+    CLIENT_STARTUP,
+    CLIENT_PENDING_REQUEST,
+    CLIENT_PENDING_CONNECTION,
+    CLIENT_FAILURE,
+    CLIENT_SUCCESS
 }QoSBrokerStates_t;
+
+#define NO_OF_INIT_STAGES 15
+#define MY_INIT_STAGE 13
 
 /**
  * TODO - Generated class
  */
 class QoSBroker : public cSimpleModule
 {
+  public:
+    QoSBroker();
+    virtual ~QoSBroker();
+
   protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+    virtual void initialize(int stage) override;
+    virtual int numInitStages() const override {
+        return NO_OF_INIT_STAGES;
+    }
+    virtual void handleMessage(cMessage *msg) override;
+    virtual void handleParameterChange(const char* parname);
 
   private:
-    bool processQoSRequestIsAcceptable(QoSNegotiation* response);
+
+    void handleStartSignal();
+    void handleRequest(QoSNegotiationRequest* request);
+    void handleResponse(QoSNegotiationResponse* response);
+    void handleEstablish(QoSNegotiationEstablish* establish);
+    void handleFinalise(QoSNegotiationFinalise* finalise);
+
+    bool isRequestAcceptable(QoSNegotiationRequest* request);
+    bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
+
+    void fillEnvelope(soqosmw::Envelope* envelope);
+    void sendMessage(cPacket* msg);
 
     std::string getStateAsName();
     QoSBrokerStates_t _state;
+
+    //udp specific
+    void socketSetup();
+    bool isSocketBound();
+    void socketClose();
+
+    bool _isClient; //is client or server? TODO remove...
+
+    L3Address _localAddress;
+    int _localPort;
+    L3Address _destAddress;
+    int _destPort;
+
+    bool _parametersInitialized; //first initialization of parameters finished?
+
+    UDPSocket _socket;
+    bool _socketBound;
 };
 
 } /* namespace soqosmw */

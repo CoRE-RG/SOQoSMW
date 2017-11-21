@@ -9,7 +9,7 @@
 #define SOQOSMW_BASE_SESSION_H_
 
 #include "soqosmw/base/EndpointDescription.h"
-#include "QoSBroker.h"
+#include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 namespace soqosmw {
 
 class Session {

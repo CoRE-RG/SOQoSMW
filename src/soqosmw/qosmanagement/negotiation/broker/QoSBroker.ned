@@ -15,14 +15,29 @@
 
 package soqosmw.qosmanagement.negotiation.broker;
 
-
+import inet.applications.contract.IUDPApp;
 //
 // TODO auto-generated module
 //
-simple QoSBroker
+simple QoSBroker like IUDPApp
 {
-    @class(soqosmw::QoSBroker);
+    parameters:
+        @class(soqosmw::QoSBroker);
+        
+        //Specific Parameters
+        bool isClient = default(false);//TODO remove and create client and server apps
+        
+       	//UDP common parameters
+       	string interfaceTableModule;   // The path to the InterfaceTable module
+       	//local specifics
+       	int localPort = default(-1);  // local port (-1: use ephemeral port)
+        string localAddress = default("");
+        //destination specification
+        string destAddress = default(""); 
+        int destPort;
+        
     gates:
-        input in;
-        output out;
+        //UDP Transport Protocol gates
+        input udpIn @labels(UDPControlInfo/up);
+        output udpOut @labels(UDPControlInfo/down);
 }

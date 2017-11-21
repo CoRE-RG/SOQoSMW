@@ -13,44 +13,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSCLIENT_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_QOSCLIENT_H_
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_DISPATCHER_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_DISPATCHER_H_
 
 #include <omnetpp.h>
-#include <string>
-#include "soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.h"
 
 using namespace omnetpp;
-
-namespace soqosmw {
-
-/**
- * Statemachine for client.
- */
-typedef enum QoSClientStates {
-    STARTUP = 0,
-    PENDING_REQUEST = 1,
-    PENDING_CONNECTION = 2,
-    FAILURE = 3,
-    SUCCESS = 4
-}QoSClientStates_t;
 
 /**
  * TODO - Generated class
  */
-class QoSClient : public cSimpleModule
+class Dispatcher : public cSimpleModule
 {
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-
-  private:
-
-    bool processQoSResponseIsSuccess(QoSNegotiationResponse* response);
-    std::string getStateAsName();
-    QoSClientStates_t _state;
 };
-
-} /* namespace soqosmw */
 
 #endif

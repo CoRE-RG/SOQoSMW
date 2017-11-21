@@ -13,15 +13,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.qosmanagement.negotiation.client;
+cplusplus {{
+#include "soqosmw/base/EndpointDescription.h"
+}}
+
+class noncobject EndpointDescription;
+
+namespace soqosmw;
+
+enum SOQoSMWProtocols {
+    QOSNEGOTIATIONPROTOCOL = 0;
+}
 
 //
-// TODO auto-generated module
+// TODO generated message class
 //
-simple QoSClient
-{
-    @class(soqosmw::QoSClient);
-    gates:
-        input in;
-        output out;
+packet Envelope {
+    int 					protocol @enum(SOQoSMWProtocols); //indicates the type of message for better casting and correct forwarding.
+    EndpointDescription 	receiver; //contains information about the receiver of the message.
+    EndpointDescription		sender; //contains information about the sender of the message.
 }

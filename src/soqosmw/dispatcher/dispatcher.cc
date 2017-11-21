@@ -13,23 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO Auto-generated network
-//
-package soqosmw.examples.qos_std_msg;
+#include "dispatcher.h"
 
-import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
-import soqosmw.qosmanagement.negotiation.client.QoSClient;
+Define_Module(Dispatcher);
 
-network qos_std_msg
+void Dispatcher::initialize()
 {
-    @display("bgb=348,246");
-    submodules:
-        broker: QoSBroker;
-        client: QoSClient {
-            @display("p=249,133");
-        }
-    connections:
-        broker.out --> {  delay = 100ms; } --> client.in;
-        broker.in <-- {  delay = 100ms; } <-- client.out;
+    // TODO - Generated method body
+}
+
+void Dispatcher::handleMessage(cMessage *msg)
+{
+    // TODO - Generated method body
 }
