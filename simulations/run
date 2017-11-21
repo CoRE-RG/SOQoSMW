@@ -1,4 +1,0 @@
-#!/bin/sh
-cd `dirname $0`
-../src/hauptprojekt_timo_haeckel -n .:../src $*
-# for shared lib, use: opp_run -l ../src/hauptprojekt_timo_haeckel -n .:../src $*
