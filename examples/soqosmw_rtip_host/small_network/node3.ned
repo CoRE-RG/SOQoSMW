@@ -13,28 +13,30 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.soqosmw_host.small_network;
+package soqosmw.examples.soqosmw_rtip_host.small_network;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
+
+import soqosmw.nodes.SOQoSMWRTIPHost;
+import core4inet.buffer.AS6802.RCQueueBuffer;
+import core4inet.incoming.AS6802.RCIncoming;
+import core4inet.buffer.AS6802.TTQueueBuffer;
 import core4inet.incoming.AS6802.TTIncoming;
-import core4inet.buffer.AS6802.TTDoubleBuffer;
 
-//
-// switch1: configuration in switch1.ini
-// Forwards time-triggered messages with VL-ID 100
-//
-module Switch1 extends TTEAVBEtherSwitch
+module Node3 extends SOQoSMWRTIPHost
 {
-    @display("bgb=990,547");
     submodules:
-        vl_100_ctc: TTIncoming {
+        vl_100_ctc: RCIncoming {
             parameters:
-                @display("p=534,111");
+                @display("p=350,100");
+
         }
-        vl_100: TTDoubleBuffer {
+        vl_100: RCQueueBuffer {
             parameters:
-                @display("p=604,111");
+                @display("p=440,100");
         }
+        vl_101_ctc: TTIncoming;
+        vl_101: TTQueueBuffer;
     connections:
         vl_100_ctc.out --> vl_100.in;
+        vl_101_ctc.out --> vl_101.in;
 }

@@ -15,21 +15,22 @@
 
 package soqosmw.nodes;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
+import core4inet.nodes.inet.RTIPHost;
+
 import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
 
-module SOQoSMWHost extends TTEAVBEtherHost
+module SOQoSMWRTIPHost extends RTIPHost
 {
-    
-    //bgIn.destination_gates = "qos_broker.networkLayerIn";
-    
+    hasUdp = true;
     submodules:
-        qos_broker : QoSBroker {
-            //targetModule = "bgOut";
-            //targetGate = "in";
+        qosBroker: QoSBroker {
+            @display("p=344,54");
+            interfaceTableModule = default(absPath(".interfaceTable"));
         }
-        
-    connections:
-        bgIn.out --> qos_broker.networkLayerIn;
-        qos_broker.networkLayerOut --> bgOut.in;
+
+	connections allowunconnected:
+	    
+        qosBroker.udpOut --> udp.appIn++;
+        qosBroker.udpIn <-- udp.appOut++;
+
 }

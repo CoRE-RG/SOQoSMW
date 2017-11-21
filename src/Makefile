@@ -33,14 +33,15 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/soqosmw/dispatcher/dispatcher.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/Session.o \
+    $O/soqosmw/qosmanagement/negotiation/broker/state/Session.o \
     $O/soqosmw/qosmanagement/negotiation/broker/state/SessionsDB.o \
-    $O/soqosmw/qosmanagement/negotiation/client/QoSClient.o \
-    $O/soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.o
+    $O/soqosmw/messages/Envelope_m.o \
+    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
 
 # Message files
 MSGFILES = \
-    soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages.msg
+    soqosmw/messages/Envelope.msg \
+    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg
 
 # SM files
 SMFILES =

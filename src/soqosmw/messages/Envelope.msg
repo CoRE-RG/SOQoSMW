@@ -13,22 +13,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO Auto-generated network
-//
-package soqosmw.examples.qos_std_msg;
+cplusplus {{
+#include "soqosmw/base/EndpointDescription.h"
+}}
 
-import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
-import soqosmw.qosmanagement.negotiation.client.QoSClient;
+class noncobject EndpointDescription;
 
-network qos_std_msg
-{
-    @display("bgb=348,246");
-    submodules:
-        broker: QoSBroker;
-        client: QoSClient {
-            @display("p=249,133");
-        }
-    connections:
-        broker.avbChannel <--> {  delay = 100ms; } <--> client.avbChannel;
+namespace soqosmw;
+
+enum SOQoSMWProtocols {
+    QOSNEGOTIATIONPROTOCOL = 0;
+}
+
+//
+// TODO generated message class
+//
+packet Envelope {
+    int 					protocol @enum(SOQoSMWProtocols); //indicates the type of message for better casting and correct forwarding.
+    EndpointDescription 	receiver; //contains information about the receiver of the message.
+    EndpointDescription		sender; //contains information about the sender of the message.
 }

@@ -18,10 +18,13 @@
 
 #include <omnetpp.h>
 #include <string>
-#include "soqosmw/qosmanagement/negotiation/messages/QoSNegotiationMessages_m.h"
+
+#include <soqosmw/messages/Envelope_m.h>
+#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 
 //INET
-#include "inet/linklayer/common/MACAddress.h"
+#include "inet/networklayer/common/L3Address.h"
+#include "inet/transportlayer/contract/udp/UDPSocket.h"
 
 using namespace omnetpp;
 
@@ -42,6 +45,9 @@ typedef enum QoSBrokerStates {
     CLIENT_SUCCESS
 }QoSBrokerStates_t;
 
+#define NO_OF_INIT_STAGES 15
+#define MY_INIT_STAGE 13
+
 /**
  * TODO - Generated class
  */
@@ -52,33 +58,46 @@ class QoSBroker : public cSimpleModule
     virtual ~QoSBroker();
 
   protected:
-    virtual void initialize() override;
+    virtual void initialize(int stage) override;
+    virtual int numInitStages() const override {
+        return NO_OF_INIT_STAGES;
+    }
     virtual void handleMessage(cMessage *msg) override;
     virtual void handleParameterChange(const char* parname);
 
   private:
-    void serverHandleMessage(cMessage *msg);
-    bool serverProcessQoSRequestIsAcceptable(QoSNegotiation* response);
 
-    void clientHandleMessage(cMessage *msg);
-    bool clientProcessQoSResponseIsSuccess(QoSNegotiationResponse* response);
+    void handleStartSignal();
+    void handleRequest(QoSNegotiationRequest* request);
+    void handleResponse(QoSNegotiationResponse* response);
+    void handleEstablish(QoSNegotiationEstablish* establish);
+    void handleFinalise(QoSNegotiationFinalise* finalise);
 
-    cPacket* extractMessage(cMessage *msg);
+    bool isRequestAcceptable(QoSNegotiationRequest* request);
+    bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
+
+    void fillEnvelope(soqosmw::Envelope* envelope);
     void sendMessage(cPacket* msg);
 
     std::string getStateAsName();
     QoSBrokerStates_t _state;
 
-    bool _useTargetGate;
-    bool _useNetworkLayerOut;
-    cModule* _targetModule; //targetModule object
-    cGate* _targetGate; //targetGate object
+    //udp specific
+    void socketSetup();
+    bool isSocketBound();
+    void socketClose();
 
     bool _isClient; //is client or server? TODO remove...
 
-    inet::MACAddress destAddress; //destination address
+    L3Address _localAddress;
+    int _localPort;
+    L3Address _destAddress;
+    int _destPort;
 
     bool _parametersInitialized; //first initialization of parameters finished?
+
+    UDPSocket _socket;
+    bool _socketBound;
 };
 
 } /* namespace soqosmw */

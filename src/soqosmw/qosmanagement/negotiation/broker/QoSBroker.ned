@@ -15,30 +15,29 @@
 
 package soqosmw.qosmanagement.negotiation.broker;
 
-
+import inet.applications.contract.IUDPApp;
 //
 // TODO auto-generated module
 //
-simple QoSBroker
+simple QoSBroker like IUDPApp
 {
     parameters:
+        @class(soqosmw::QoSBroker);
+        
+        //Specific Parameters
         bool isClient = default(false);//TODO remove and create client and server apps
-        string destAddress = default("auto");// destination MAC address
         
-        bool useNetworkLayerOut = default(true);
-        bool useTargetGate = default (false);
-        string targetModule;
-        string targetGate;
-        //--> sendDirect(msg, _target); --> sendMessage()
-        //holen mit cGate _target = getParentModule()->getSubmodule(this->par("targetModule"))->gate(this->par("targetGate")) --> handleParameterChange() (else throw cRuntimeError)
+       	//UDP common parameters
+       	string interfaceTableModule;   // The path to the InterfaceTable module
+       	//local specifics
+       	int localPort = default(-1);  // local port (-1: use ephemeral port)
+        string localAddress = default("");
+        //destination specification
+        string destAddress = default(""); 
+        int destPort;
         
-    @class(soqosmw::QoSBroker);
     gates:
-        //connections to lower layer
-        input networkLayerIn; //in connected via connections out needs to be specified in targetModule and Gate.
-        output networkLayerOut;
-        
-        //app connections
-        input appIn;
-        output appOut;
+        //UDP Transport Protocol gates
+        input udpIn @labels(UDPControlInfo/up);
+        output udpOut @labels(UDPControlInfo/down);
 }

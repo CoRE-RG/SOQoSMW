@@ -9,7 +9,7 @@
 #define SOQOSMW_STATE_SessionSDB_H_
 
 #include "soqosmw/base/Singleton.h"
-#include "soqosmw/qosmanagement/negotiation/broker/Session.h"
+#include "soqosmw/qosmanagement/negotiation/broker/state/Session.h"
 #include <vector>
 
 namespace soqosmw {

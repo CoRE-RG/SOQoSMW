@@ -13,8 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.examples.soqosmw_host.small_network;
+package soqosmw.examples.soqosmw_rtip_host.small_network;
 
+import core4inet.nodes.inet.RTIPHost;
+import soqosmw.examples.soqosmw_rtip_host.small_network.Node1;
+import soqosmw.examples.soqosmw_rtip_host.small_network.Node3;
+
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
 
 //
@@ -31,7 +36,7 @@ network small_network
             @display("p=39,70");
         }
 
-        node2: Node2 {
+        node2: RTIPHost {
             @display("p=249,30");
         }
 
@@ -44,6 +49,10 @@ network small_network
                 @display("p=147,70");
             gates:
                 ethg[3];
+        }
+
+        configurator: IPv4NetworkConfigurator {
+            @display("p=89,22");
         }
     connections:
         //
