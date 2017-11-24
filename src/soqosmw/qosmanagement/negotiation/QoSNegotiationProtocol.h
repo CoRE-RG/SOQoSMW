@@ -18,9 +18,11 @@
 
 #include <omnetpp.h>
 #include <string>
+#include <list>
 
 #include <soqosmw/messages/Envelope_m.h>
 #include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <soqosmw/qosmanagement/negotiation/broker/QoSBroker.h>
 
 //INET
 #include "inet/networklayer/common/L3Address.h"
@@ -29,21 +31,6 @@
 using namespace omnetpp;
 
 namespace soqosmw {
-
-/**
- * Statemachine for Broker.
- */
-typedef enum QoSNegotiationProtocolStates {
-    SERVER_NO_SESSION,
-    SERVER_PENDING_ACCEPT,
-    SERVER_SESSION_ESTABLISHED,
-
-    CLIENT_STARTUP,
-    CLIENT_PENDING_REQUEST,
-    CLIENT_PENDING_CONNECTION,
-    CLIENT_FAILURE,
-    CLIENT_SUCCESS
-}QoSNegotiationProtocolStates_t;
 
 #define NO_OF_INIT_STAGES 15
 #define MY_INIT_STAGE 13
@@ -79,9 +66,6 @@ class QoSNegotiationProtocol : public cSimpleModule
     void fillEnvelope(soqosmw::Envelope* envelope);
     void sendMessage(cPacket* msg);
 
-    std::string getStateAsName();
-    QoSNegotiationProtocolStates_t _state;
-
     //udp specific
     void socketSetup();
     bool isSocketBound();
@@ -90,13 +74,17 @@ class QoSNegotiationProtocol : public cSimpleModule
     bool _isClient; //is client or server? TODO remove...
 
     L3Address _localAddress;
+    string _localPath;
     L3Address _destAddress;
+    string _destPath;
     int _protocolPort;
 
     bool _parametersInitialized; //first initialization of parameters finished?
 
     UDPSocket _socket;
     bool _socketBound;
+
+    QoSBroker* _broker;
 };
 
 } /* namespace soqosmw */

@@ -22,7 +22,7 @@ import inet.applications.contract.IUDPApp;
 simple QoSNegotiationProtocol like IUDPApp
 {
     parameters:
-        @class(soqosmw::QoSBroker);
+        @class(soqosmw::QoSNegotiationProtocol);
         
         //Specific Parameters
         bool isClient = default(false);//TODO remove and create client and server apps
@@ -32,8 +32,10 @@ simple QoSNegotiationProtocol like IUDPApp
        	//local specifics
        	int protocolPort = default(5005);  // local port (-1: use ephemeral port)
         string localAddress = default("");
+        string localPath = default("");
         //destination specification
         string destAddress = default(""); 
+        string destPath = default("");
         
     gates:
         //UDP Transport Protocol gates

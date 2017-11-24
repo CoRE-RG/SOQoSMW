@@ -19,8 +19,13 @@ namespace soqosmw {
 
 class EndpointDescription {
 public:
+    EndpointDescription(string path, L3Address networkAddr, int networkPort) : _path(path), _networkAddr (networkAddr), _networkPort(networkPort){
+
+    }
+
     EndpointDescription() {
     }
+
     virtual ~EndpointDescription() {
     }
 

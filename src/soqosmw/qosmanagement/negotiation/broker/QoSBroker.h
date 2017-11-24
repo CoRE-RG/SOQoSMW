@@ -21,9 +21,9 @@
 
 #include <soqosmw/messages/Envelope_m.h>
 #include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <soqosmw/base/EndpointDescription.h>
 
 //INET
-#include "inet/networklayer/common/L3Address.h"
 #include "inet/transportlayer/contract/udp/UDPSocket.h"
 
 using namespace omnetpp;
@@ -31,43 +31,35 @@ using namespace omnetpp;
 namespace soqosmw {
 
 /**
- * Statemachine for Broker.
- */
-typedef enum QoSBrokerStates {
-    SERVER_NO_SESSION,
-    SERVER_PENDING_ACCEPT,
-    SERVER_SESSION_ESTABLISHED,
-
-    CLIENT_STARTUP,
-    CLIENT_PENDING_REQUEST,
-    CLIENT_PENDING_CONNECTION,
-    CLIENT_FAILURE,
-    CLIENT_SUCCESS
-}QoSBrokerStates_t;
-
-#define NO_OF_INIT_STAGES 15
-#define MY_INIT_STAGE 13
-
-/**
  * TODO - Generated class
  */
-class QoSBroker : public cSimpleModule
+class QoSBroker
 {
   public:
-    QoSBroker();
+    QoSBroker(UDPSocket* socket, EndpointDescription local, EndpointDescription remote, bool isClient);
     virtual ~QoSBroker();
 
+    virtual void handleMessage(QoSNegotiationProtocolMsg *msg);
+    void handleStartSignal();
+
   protected:
-    virtual void initialize(int stage) override;
-    virtual int numInitStages() const override {
-        return NO_OF_INIT_STAGES;
-    }
-    virtual void handleMessage(cMessage *msg) override;
-    virtual void handleParameterChange(const char* parname);
+
+    /**
+     * Statemachine for Broker.
+     */
+    typedef enum QoSBrokerStates {
+        SERVER_NO_SESSION,
+        SERVER_PENDING_ACCEPT,
+        SERVER_SESSION_ESTABLISHED,
+
+        CLIENT_STARTUP,
+        CLIENT_PENDING_REQUEST,
+        CLIENT_PENDING_CONNECTION,
+        CLIENT_FAILURE,
+        CLIENT_SUCCESS
+    }QoSBrokerStates_t;
 
   private:
-
-    void handleStartSignal();
     void handleRequest(QoSNegotiationRequest* request);
     void handleResponse(QoSNegotiationResponse* response);
     void handleEstablish(QoSNegotiationEstablish* establish);
@@ -77,26 +69,19 @@ class QoSBroker : public cSimpleModule
     bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
 
     void fillEnvelope(soqosmw::Envelope* envelope);
-    void sendMessage(cPacket* msg);
+    void sendMessage(QoSNegotiationProtocolMsg* msg);
 
     std::string getStateAsName();
     QoSBrokerStates_t _state;
 
-    //udp specific
-    void socketSetup();
-    bool isSocketBound();
-    void socketClose();
 
-    bool _isClient; //is client or server? TODO remove...
+    UDPSocket* _socket;
 
-    L3Address _localAddress;
-    L3Address _destAddress;
-    int _protocolPort;
+    EndpointDescription _me;
+    EndpointDescription _you;
+    bool _isClient;
 
     bool _parametersInitialized; //first initialization of parameters finished?
-
-    UDPSocket _socket;
-    bool _socketBound;
 };
 
 } /* namespace soqosmw */

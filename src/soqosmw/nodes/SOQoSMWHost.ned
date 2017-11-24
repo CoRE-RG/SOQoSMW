@@ -17,7 +17,6 @@ package soqosmw.nodes;
 
 import core4inet.nodes.inet.RTIPHost;
 
-import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
 import soqosmw.qosmanagement.negotiation.QoSNegotiationProtocol;
 
 module SOQoSMWHost extends RTIPHost

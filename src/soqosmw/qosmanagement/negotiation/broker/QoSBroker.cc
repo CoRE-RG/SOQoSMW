@@ -15,82 +15,67 @@
 
 #include <soqosmw/qosmanagement/negotiation/broker/QoSBroker.h>
 
-#include "inet/networklayer/common/L3AddressResolver.h"
-
 namespace soqosmw {
 
-Define_Module(QoSBroker);
-
-QoSBroker::QoSBroker() {
+QoSBroker::QoSBroker(UDPSocket* socket, EndpointDescription local,
+        EndpointDescription remote, bool isClient) :
+        _socket(socket), _me(local), _you(remote), _isClient(isClient) {
+    // is there anything todo?
 }
 
 QoSBroker::~QoSBroker() {
-    socketClose();
 }
 
-void QoSBroker::initialize(int stage) {
-    cout << "QoSBorker::initialize stage " << stage;
-    if(stage == MY_INIT_STAGE) {
-        handleParameterChange(nullptr);
-        if (_isClient) {
-            //Client Starts the Operation so create selfmsg for startsignal
-            cMessage* startSignal = new cMessage("startSignal");
+void QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
+    cout << " QoSBroker:" << " --> message received";
 
-            scheduleAt(simTime(), startSignal);
-            cout << "is Client so setup start message.";
-        } else {
-            //nothing to do
-        }
-        if(!isSocketBound()){
-            socketSetup();
-        }
+    if(!(msg->getReceiver().getPath() == _me.getPath())) {
+        //i am not responsible do nothing...
+        cout << " --> I am not the receiver";
     }
-
-
-    cout << endl;
-}
-
-void QoSBroker::handleMessage(cMessage *msg) {
-    cout << "QoSBroker:" << " --> message received";
-
-    if(msg->isSelfMessage()) {
-        handleStartSignal();
-    } else if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
+    else if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
+        cout << " --> I am the receiver";
         //is in soqosmw::Envelope --> check other types
-        if (auto as_negotiation = dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
+        if (auto as_negotiation =
+                dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
             //is negotiation type
-            switch(as_negotiation->getMessageType()){
+            switch (as_negotiation->getMessageType()) {
             case QoSNegotiationMsgType::QoS_Request:
-                handleRequest(dynamic_cast<soqosmw::QoSNegotiationRequest*>(as_negotiation));
+                handleRequest(
+                        dynamic_cast<soqosmw::QoSNegotiationRequest*>(as_negotiation));
                 break;
             case QoSNegotiationMsgType::QoS_Response:
-                handleResponse(dynamic_cast<soqosmw::QoSNegotiationResponse*>(as_negotiation));
+                handleResponse(
+                        dynamic_cast<soqosmw::QoSNegotiationResponse*>(as_negotiation));
                 break;
             case QoSNegotiationMsgType::QoS_Establish:
-                handleEstablish(dynamic_cast<soqosmw::QoSNegotiationEstablish*>(as_negotiation));
+                handleEstablish(
+                        dynamic_cast<soqosmw::QoSNegotiationEstablish*>(as_negotiation));
                 break;
             case QoSNegotiationMsgType::QoS_Finalise:
-                handleFinalise(dynamic_cast<soqosmw::QoSNegotiationFinalise*>(as_negotiation));
+                handleFinalise(
+                        dynamic_cast<soqosmw::QoSNegotiationFinalise*>(as_negotiation));
                 break;
             default:
-                cout << " --> Message type not set, this should not happen --> ignore it!";
+                cout
+                        << " --> Message type not set, this should not happen --> ignore it!";
                 break;
             }
         } else {
-            cout << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!";
+            cout
+                    << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!";
         }
     } else {
         cout << " --> not in soqosmw::Envelope --> ignore it!";
     }
 
     //cleanup
-    cout << endl;
     delete msg;
 }
 
-void QoSBroker::handleStartSignal(){
+void QoSBroker::handleStartSignal() {
     //--> start the negotiation!
-    cout << " --> start signal received";
+    cout << " QoSBroker:" << " --> start signal received";
 
     //create QoS Request Message
     QoSNegotiationRequest* request = new QoSNegotiationRequest();
@@ -103,12 +88,11 @@ void QoSBroker::handleStartSignal(){
     cout << " --> send negotiation request";
 }
 
-void QoSBroker::handleRequest(QoSNegotiationRequest* request){
-    if(request){
+void QoSBroker::handleRequest(QoSNegotiationRequest* request) {
+    if (request) {
         //request received --> check requirements
         cout << " --> received request";
-        bool requestAcceptables = isRequestAcceptable(
-                request);
+        bool requestAcceptables = isRequestAcceptable(request);
 
         //create response
         QoSNegotiationResponse* response = new QoSNegotiationResponse();
@@ -134,8 +118,8 @@ void QoSBroker::handleRequest(QoSNegotiationRequest* request){
     }
 }
 
-void QoSBroker::handleResponse(QoSNegotiationResponse* response){
-    if(response){
+void QoSBroker::handleResponse(QoSNegotiationResponse* response) {
+    if (response) {
         //response received --> check contract
         cout << " --> received response";
 
@@ -158,8 +142,8 @@ void QoSBroker::handleResponse(QoSNegotiationResponse* response){
     }
 }
 
-void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish){
-    if(establish) {
+void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
+    if (establish) {
         //create response
         QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise();
         fillEnvelope(finalise);
@@ -179,8 +163,8 @@ void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish){
     }
 }
 
-void QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise){
-    if(finalise){
+void QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
+    if (finalise) {
         cout << " --> full cycle successfull";
     }
 }
@@ -190,56 +174,22 @@ bool QoSBroker::isRequestAcceptable(QoSNegotiationRequest* request) {
     return true;
 }
 
-bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish){
+bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish) {
     return true;
 }
 
-void QoSBroker::handleParameterChange(const char* parname) {
-
-    //read UDP Common Parameters
-    if(!parname || !strcmp(parname, "protocolPort")){
-        _protocolPort = par("protocolPort");
-    }
-    if(!parname || !strcmp(parname, "destAddress")){
-        const char* destAddr = par("destAddress");
-        _destAddress = L3AddressResolver().resolve(destAddr);
-    }
-    if(!parname || !strcmp(parname, "localAddress")){
-        const char* localAddr = par("localAddress");
-        _localAddress = L3AddressResolver().resolve(localAddr);
-    }
-
-    //update parameters if nullptr or parameter specified.
-    if (!parname || !strcmp(parname, "isClient")) { //is this a client?
-        _isClient = this->par("isClient").boolValue();
-    }
-
-    //first initialization before startup finished?
-    if (!parname && !_parametersInitialized) {
-        _parametersInitialized = true;
-    }
-
-}
-
-void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope){
+void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope) {
     //set receiver
-    EndpointDescription receiver;
-    receiver.setNetworkAddr(_destAddress);
-    receiver.setNetworkPort(_protocolPort);
+    EndpointDescription receiver (_you);
     envelope->setReceiver(receiver);
     //set sender
-    EndpointDescription sender;
-    sender.setNetworkAddr(_localAddress);
-    sender.setNetworkPort(_protocolPort);
+    EndpointDescription sender (_me);
     envelope->setSender(sender);
 }
 
-void QoSBroker::sendMessage(cPacket* payload_packet) {
-    if(!isSocketBound()){
-        socketSetup();
-    }
+void QoSBroker::sendMessage(QoSNegotiationProtocolMsg* payload_packet) {
     //payload_packet->setByteLength(sizeof(*payload_packet));
-    _socket.sendTo(payload_packet, _destAddress, _protocolPort);
+    _socket->sendTo(payload_packet, _you.getNetworkAddr(), _you.getNetworkPort());
 }
 
 string QoSBroker::getStateAsName() {
@@ -264,21 +214,6 @@ string QoSBroker::getStateAsName() {
     default:
         return "-.-";
     }
-}
-
-void QoSBroker::socketSetup() {
-    _socket.setOutputGate(gate("udpOut"));
-    _socket.bind(_localAddress, _protocolPort);
-    _socketBound = true;
-}
-
-bool QoSBroker::isSocketBound(){
-    return _socketBound;
-}
-
-void QoSBroker::socketClose() {
-    _socket.close();
-    _socketBound = false;
 }
 
 } /* namespace soqosmw */

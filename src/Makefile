@@ -30,14 +30,7 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = \
-    $O/soqosmw/dispatcher/dispatcher.o \
-    $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/state/Session.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/state/SessionsDB.o \
-    $O/soqosmw/messages/Envelope_m.o \
-    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
+OBJS = $O/soqosmw/dispatcher/dispatcher.o $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o $O/soqosmw/messages/Envelope_m.o $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
 
 # Message files
 MSGFILES = \
