@@ -6,3 +6,7 @@
 *.bak*
 *.vux
 out/
+*.dll
+*_m.cc
+*_m.h
+examples/soqosmw_rtip_host/small_network/results/
