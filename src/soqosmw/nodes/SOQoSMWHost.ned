@@ -20,18 +20,18 @@ import core4inet.nodes.inet.RTIPHost;
 import soqosmw.qosmanagement.negotiation.broker.QoSBroker;
 import soqosmw.qosmanagement.negotiation.QoSNegotiationProtocol;
 
-module SOQoSMWRTIPHost extends RTIPHost
+module SOQoSMWHost extends RTIPHost
 {
     hasUdp = true;
     submodules:
-        qosBroker: QoSNegotiationProtocol {
+        qosnp: QoSNegotiationProtocol {
             @display("p=344,54");
             interfaceTableModule = default(absPath(".interfaceTable"));
         }
 
 	connections allowunconnected:
 	    
-        qosBroker.udpOut --> udp.appIn++;
-        qosBroker.udpIn <-- udp.appOut++;
+        qosnp.udpOut --> udp.appIn++;
+        qosnp.udpIn <-- udp.appOut++;
 
 }
