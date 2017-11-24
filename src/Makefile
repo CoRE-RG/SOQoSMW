@@ -32,6 +32,7 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/soqosmw/dispatcher/dispatcher.o \
+    $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
     $O/soqosmw/qosmanagement/negotiation/broker/state/Session.o \
     $O/soqosmw/qosmanagement/negotiation/broker/state/SessionsDB.o \

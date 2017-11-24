@@ -46,7 +46,7 @@ enum QoSNegotiationStatus{
 }
 
 //Message type for all Protocol message of the qos negotiation
-packet QoSNegotiationProtocol extends soqosmw::Envelope {
+packet QoSNegotiationProtocolMsg extends soqosmw::Envelope {
     protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //indicates the type of message for better casting.
     //receiver; inherited from Envelope
     //sender; inherited from Envelope  
@@ -55,7 +55,7 @@ packet QoSNegotiationProtocol extends soqosmw::Envelope {
 }
 
 //request for qos negotiation
-packet QoSNegotiationRequest extends QoSNegotiationProtocol {
+packet QoSNegotiationRequest extends QoSNegotiationProtocolMsg {
     //protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //inherited from QoSNegotiationProtocol and Envelope
     //receiver; inherited from Envelope
     //sender; inherited from Envelope
@@ -64,7 +64,7 @@ packet QoSNegotiationRequest extends QoSNegotiationProtocol {
 }
 
 //response to a request for qos negotiation
-packet QoSNegotiationResponse extends QoSNegotiationProtocol {
+packet QoSNegotiationResponse extends QoSNegotiationProtocolMsg {
     //protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //inherited from QoSNegotiationProtocol and Envelope
     //receiver; inherited from Envelope
     //sender; inherited from Envelope
@@ -74,7 +74,7 @@ packet QoSNegotiationResponse extends QoSNegotiationProtocol {
 }
 
 //establish the negotiated connection
-packet QoSNegotiationEstablish extends QoSNegotiationProtocol {
+packet QoSNegotiationEstablish extends QoSNegotiationProtocolMsg {
     //protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //inherited from QoSNegotiationProtocol and Envelope
     //receiver; inherited from Envelope
     //sender; inherited from Envelope
@@ -83,7 +83,7 @@ packet QoSNegotiationEstablish extends QoSNegotiationProtocol {
 }
 
 //finalise the connection
-packet QoSNegotiationFinalise extends QoSNegotiationProtocol {
+packet QoSNegotiationFinalise extends QoSNegotiationProtocolMsg {
     //protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //inherited from QoSNegotiationProtocol and Envelope
     //receiver; inherited from Envelope
     //sender; inherited from Envelope

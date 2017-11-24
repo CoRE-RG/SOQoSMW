@@ -13,8 +13,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 
 #include <omnetpp.h>
 #include <string>
@@ -33,7 +33,7 @@ namespace soqosmw {
 /**
  * Statemachine for Broker.
  */
-typedef enum QoSBrokerStates {
+typedef enum QoSNegotiationProtocolStates {
     SERVER_NO_SESSION,
     SERVER_PENDING_ACCEPT,
     SERVER_SESSION_ESTABLISHED,
@@ -43,7 +43,7 @@ typedef enum QoSBrokerStates {
     CLIENT_PENDING_CONNECTION,
     CLIENT_FAILURE,
     CLIENT_SUCCESS
-}QoSBrokerStates_t;
+}QoSNegotiationProtocolStates_t;
 
 #define NO_OF_INIT_STAGES 15
 #define MY_INIT_STAGE 13
@@ -51,11 +51,11 @@ typedef enum QoSBrokerStates {
 /**
  * TODO - Generated class
  */
-class QoSBroker : public cSimpleModule
+class QoSNegotiationProtocol : public cSimpleModule
 {
   public:
-    QoSBroker();
-    virtual ~QoSBroker();
+    QoSNegotiationProtocol();
+    virtual ~QoSNegotiationProtocol();
 
   protected:
     virtual void initialize(int stage) override;
@@ -80,7 +80,7 @@ class QoSBroker : public cSimpleModule
     void sendMessage(cPacket* msg);
 
     std::string getStateAsName();
-    QoSBrokerStates_t _state;
+    QoSNegotiationProtocolStates_t _state;
 
     //udp specific
     void socketSetup();

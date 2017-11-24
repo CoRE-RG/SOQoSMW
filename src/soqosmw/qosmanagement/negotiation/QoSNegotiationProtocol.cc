@@ -13,23 +13,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <soqosmw/qosmanagement/negotiation/broker/QoSBroker.h>
+#include <soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.h>
 
 #include "inet/networklayer/common/L3AddressResolver.h"
 
 namespace soqosmw {
 
-Define_Module(QoSBroker);
+Define_Module(QoSNegotiationProtocol);
 
-QoSBroker::QoSBroker() {
+QoSNegotiationProtocol::QoSNegotiationProtocol() {
 }
 
-QoSBroker::~QoSBroker() {
+QoSNegotiationProtocol::~QoSNegotiationProtocol() {
     socketClose();
 }
 
-void QoSBroker::initialize(int stage) {
-    cout << "QoSBorker::initialize stage " << stage;
+void QoSNegotiationProtocol::initialize(int stage) {
+    cout << "QoSNegotiationProtocol::initialize stage " << stage;
     if(stage == MY_INIT_STAGE) {
         handleParameterChange(nullptr);
         if (_isClient) {
@@ -50,8 +50,8 @@ void QoSBroker::initialize(int stage) {
     cout << endl;
 }
 
-void QoSBroker::handleMessage(cMessage *msg) {
-    cout << "QoSBroker:" << " --> message received";
+void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
+    cout << "QoSNegotiationProtocol:" << " --> message received";
 
     if(msg->isSelfMessage()) {
         handleStartSignal();
@@ -88,7 +88,7 @@ void QoSBroker::handleMessage(cMessage *msg) {
     delete msg;
 }
 
-void QoSBroker::handleStartSignal(){
+void QoSNegotiationProtocol::handleStartSignal(){
     //--> start the negotiation!
     cout << " --> start signal received";
 
@@ -103,7 +103,7 @@ void QoSBroker::handleStartSignal(){
     cout << " --> send negotiation request";
 }
 
-void QoSBroker::handleRequest(QoSNegotiationRequest* request){
+void QoSNegotiationProtocol::handleRequest(QoSNegotiationRequest* request){
     if(request){
         //request received --> check requirements
         cout << " --> received request";
@@ -134,7 +134,7 @@ void QoSBroker::handleRequest(QoSNegotiationRequest* request){
     }
 }
 
-void QoSBroker::handleResponse(QoSNegotiationResponse* response){
+void QoSNegotiationProtocol::handleResponse(QoSNegotiationResponse* response){
     if(response){
         //response received --> check contract
         cout << " --> received response";
@@ -158,7 +158,7 @@ void QoSBroker::handleResponse(QoSNegotiationResponse* response){
     }
 }
 
-void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish){
+void QoSNegotiationProtocol::handleEstablish(QoSNegotiationEstablish* establish){
     if(establish) {
         //create response
         QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise();
@@ -179,22 +179,22 @@ void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish){
     }
 }
 
-void QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise){
+void QoSNegotiationProtocol::handleFinalise(QoSNegotiationFinalise* finalise){
     if(finalise){
         cout << " --> full cycle successfull";
     }
 }
 
-bool QoSBroker::isRequestAcceptable(QoSNegotiationRequest* request) {
+bool QoSNegotiationProtocol::isRequestAcceptable(QoSNegotiationRequest* request) {
     //get payload
     return true;
 }
 
-bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish){
+bool QoSNegotiationProtocol::isEstablishAcceptable(QoSNegotiationEstablish* establish){
     return true;
 }
 
-void QoSBroker::handleParameterChange(const char* parname) {
+void QoSNegotiationProtocol::handleParameterChange(const char* parname) {
 
     //read UDP Common Parameters
     if(!parname || !strcmp(parname, "protocolPort")){
@@ -221,7 +221,7 @@ void QoSBroker::handleParameterChange(const char* parname) {
 
 }
 
-void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope){
+void QoSNegotiationProtocol::fillEnvelope(soqosmw::Envelope* envelope){
     //set receiver
     EndpointDescription receiver;
     receiver.setNetworkAddr(_destAddress);
@@ -234,7 +234,7 @@ void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope){
     envelope->setSender(sender);
 }
 
-void QoSBroker::sendMessage(cPacket* payload_packet) {
+void QoSNegotiationProtocol::sendMessage(cPacket* payload_packet) {
     if(!isSocketBound()){
         socketSetup();
     }
@@ -242,7 +242,7 @@ void QoSBroker::sendMessage(cPacket* payload_packet) {
     _socket.sendTo(payload_packet, _destAddress, _protocolPort);
 }
 
-string QoSBroker::getStateAsName() {
+string QoSNegotiationProtocol::getStateAsName() {
     switch (_state) {
     case SERVER_NO_SESSION:
         return "SERVER_NO_SESSION";
@@ -266,17 +266,17 @@ string QoSBroker::getStateAsName() {
     }
 }
 
-void QoSBroker::socketSetup() {
+void QoSNegotiationProtocol::socketSetup() {
     _socket.setOutputGate(gate("udpOut"));
     _socket.bind(_localAddress, _protocolPort);
     _socketBound = true;
 }
 
-bool QoSBroker::isSocketBound(){
+bool QoSNegotiationProtocol::isSocketBound(){
     return _socketBound;
 }
 
-void QoSBroker::socketClose() {
+void QoSNegotiationProtocol::socketClose() {
     _socket.close();
     _socketBound = false;
 }

@@ -13,13 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.qosmanagement.negotiation.broker;
+package soqosmw.qosmanagement.negotiation;
 
 import inet.applications.contract.IUDPApp;
 //
 // TODO auto-generated module
 //
-simple QoSBroker like IUDPApp
+simple QoSNegotiationProtocol like IUDPApp
 {
     parameters:
         @class(soqosmw::QoSBroker);
