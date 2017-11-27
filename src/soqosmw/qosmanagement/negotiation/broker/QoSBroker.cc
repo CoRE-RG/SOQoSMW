@@ -21,6 +21,11 @@ QoSBroker::QoSBroker(UDPSocket* socket, EndpointDescription local,
         EndpointDescription remote, bool isClient) :
         _socket(socket), _me(local), _you(remote), _isClient(isClient) {
     // is there anything todo?
+    if (_isClient) {
+        _state = QoSBrokerStates_t::CLIENT_STARTUP;
+    } else {
+        _state = QoSBrokerStates_t::SERVER_NO_SESSION;
+    }
 }
 
 QoSBroker::~QoSBroker() {
@@ -29,44 +34,34 @@ QoSBroker::~QoSBroker() {
 void QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
     cout << " QoSBroker:" << " --> message received";
 
-    if(!(msg->getReceiver().getPath() == _me.getPath())) {
+    if (!(msg->getReceiver().getPath() == _me.getPath())) {
         //i am not responsible do nothing...
         cout << " --> I am not the receiver";
-    }
-    else if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
-        cout << " --> I am the receiver";
-        //is in soqosmw::Envelope --> check other types
-        if (auto as_negotiation =
-                dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
-            //is negotiation type
-            switch (as_negotiation->getMessageType()) {
-            case QoSNegotiationMsgType::QoS_Request:
-                handleRequest(
-                        dynamic_cast<soqosmw::QoSNegotiationRequest*>(as_negotiation));
-                break;
-            case QoSNegotiationMsgType::QoS_Response:
-                handleResponse(
-                        dynamic_cast<soqosmw::QoSNegotiationResponse*>(as_negotiation));
-                break;
-            case QoSNegotiationMsgType::QoS_Establish:
-                handleEstablish(
-                        dynamic_cast<soqosmw::QoSNegotiationEstablish*>(as_negotiation));
-                break;
-            case QoSNegotiationMsgType::QoS_Finalise:
-                handleFinalise(
-                        dynamic_cast<soqosmw::QoSNegotiationFinalise*>(as_negotiation));
-                break;
-            default:
-                cout
-                        << " --> Message type not set, this should not happen --> ignore it!";
-                break;
-            }
-        } else {
-            cout
-                    << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!";
-        }
     } else {
-        cout << " --> not in soqosmw::Envelope --> ignore it!";
+        cout << " --> I am the receiver";
+
+        switch (msg->getMessageType()) {
+        case QoSNegotiationMsgType::QoS_Request:
+            handleRequest(
+                    dynamic_cast<soqosmw::QoSNegotiationRequest*>(msg));
+            break;
+        case QoSNegotiationMsgType::QoS_Response:
+            handleResponse(
+                    dynamic_cast<soqosmw::QoSNegotiationResponse*>(msg));
+            break;
+        case QoSNegotiationMsgType::QoS_Establish:
+            handleEstablish(
+                    dynamic_cast<soqosmw::QoSNegotiationEstablish*>(msg));
+            break;
+        case QoSNegotiationMsgType::QoS_Finalise:
+            handleFinalise(
+                    dynamic_cast<soqosmw::QoSNegotiationFinalise*>(msg));
+            break;
+        default:
+            cout
+                    << " --> Message type not set, this should not happen --> ignore it!";
+            break;
+        }
     }
 
     //cleanup
@@ -77,95 +72,140 @@ void QoSBroker::handleStartSignal() {
     //--> start the negotiation!
     cout << " QoSBroker:" << " --> start signal received";
 
-    //create QoS Request Message
-    QoSNegotiationRequest* request = new QoSNegotiationRequest();
-    //fill envelope
-    fillEnvelope(request);
-    request->setQosClass(QoSGroups::RT);
+    if (_state == QoSBrokerStates_t::CLIENT_STARTUP) {
+        //create QoS Request Message
+        QoSNegotiationRequest* request = new QoSNegotiationRequest();
+        //fill envelope
+        fillEnvelope(request);
+        request->setQosClass(QoSGroups::RT);
 
-    //send QoS Request
-    sendMessage(request);
-    cout << " --> send negotiation request";
+        //send QoS Request
+        sendMessage(request);
+        cout << " --> send negotiation request";
+        _state = QoSBrokerStates_t::CLIENT_PENDING_REQUEST;
+    } else {
+        cout
+                << " --> Broker not in correct state to handle start signal. State is: "
+                << getStateAsName();
+    }
 }
 
 void QoSBroker::handleRequest(QoSNegotiationRequest* request) {
     if (request) {
-        //request received --> check requirements
-        cout << " --> received request";
-        bool requestAcceptables = isRequestAcceptable(request);
+        if (_state == QoSBrokerStates_t::SERVER_NO_SESSION) {
+            //request received --> check requirements
+            cout << " --> received request";
+            bool requestAcceptables = isRequestAcceptable(request);
 
-        //create response
-        QoSNegotiationResponse* response = new QoSNegotiationResponse();
-        fillEnvelope(response);
-        response->setQosClass(request->getQosClass());
+            //create response
+            QoSNegotiationResponse* response = new QoSNegotiationResponse();
+            fillEnvelope(response);
+            response->setQosClass(request->getQosClass());
 
-        if (requestAcceptables) {
-            // successfull negotiation
-            cout << " --> request acceptable";
+            if (requestAcceptables) {
+                // successfull negotiation
+                cout << " --> request acceptable";
 
-            response->setResponseStatus(QoSNegotiationStatus::Success);
+                response->setResponseStatus(QoSNegotiationStatus::Success);
+            } else {
+                // negotiation failed. QUIT
+                cout << " --> request unacceptable";
+
+                //create accept payload
+                response->setResponseStatus(QoSNegotiationStatus::Failure);
+            }
+
+            //send response
+            sendMessage(response);
+            cout << " --> send response";
+            _state = QoSBrokerStates_t::SERVER_PENDING_ACCEPT;
         } else {
-            // negotiation failed. QUIT
-            cout << " --> request unacceptable";
-
-            //create accept payload
-            response->setResponseStatus(QoSNegotiationStatus::Failure);
+            cout
+                    << " --> Broker not in correct state to handle new request. State is: "
+                    << getStateAsName();
         }
-
-        //send response
-        sendMessage(response);
-        cout << " --> send response";
+    } else {
+        cout << " --> request invalid";
     }
 }
 
 void QoSBroker::handleResponse(QoSNegotiationResponse* response) {
     if (response) {
-        //response received --> check contract
-        cout << " --> received response";
+        if (_state == QoSBrokerStates_t::CLIENT_PENDING_REQUEST) {
+            //response received --> check contract
+            cout << " --> received response";
 
-        if (response->getResponseStatus() == QoSNegotiationStatus::Success) {
-            // successfull negotiation
-            cout << " --> negotiation successful";
+            if (response->getResponseStatus()
+                    == QoSNegotiationStatus::Success) {
+                // successfull negotiation
+                cout << " --> negotiation successful";
 
-            //create Connection request
-            QoSNegotiationEstablish* establish = new QoSNegotiationEstablish();
-            fillEnvelope(establish);
-            establish->setQosClass(response->getQosClass());
+                //create Connection request
+                QoSNegotiationEstablish* establish =
+                        new QoSNegotiationEstablish();
+                fillEnvelope(establish);
+                establish->setQosClass(response->getQosClass());
 
-            //send connection request
-            sendMessage(establish);
-            cout << " --> send establish request";
+                //send connection request
+                sendMessage(establish);
+                cout << " --> send establish request";
+                _state = QoSBrokerStates_t::CLIENT_PENDING_CONNECTION;
+            } else {
+                // negotiation failed. QUIT
+                cout << " --> negotiation Failed";
+            }
         } else {
-            // negotiation failed. QUIT
-            cout << " --> negotiation Failed";
+            cout
+                    << " --> Broker not in correct state to handle a response. State is: "
+                    << getStateAsName();
         }
+    } else {
+        cout << " --> response invalid";
     }
 }
 
 void QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
     if (establish) {
-        //create response
-        QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise();
-        fillEnvelope(finalise);
-        finalise->setQosClass(establish->getQosClass());
+        if (_state == QoSBrokerStates_t::SERVER_PENDING_ACCEPT) {
+            cout << " --> received establish";
+            //create response
+            QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise();
+            fillEnvelope(finalise);
+            finalise->setQosClass(establish->getQosClass());
 
-        if (isEstablishAcceptable(establish)) {
-            // successfull negotiation
-            cout << " --> finalise success";
+            if (isEstablishAcceptable(establish)) {
+                // successfull negotiation
+                cout << " --> finalise success";
+
+                //send response
+                sendMessage(finalise);
+                cout << " --> send response";
+                _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
+            } else {
+                // negotiation failed. QUIT
+                cout << " --> finalise failed";
+                _state = QoSBrokerStates_t::SERVER_FAILURE;
+            }
         } else {
-            // negotiation failed. QUIT
-            cout << " --> finalise failed";
+            cout
+                    << " --> Broker not in correct state to handle a establish request. State is: "
+                    << getStateAsName();
         }
-
-        //send response
-        sendMessage(finalise);
-        cout << " --> send response";
+    } else {
+        cout << " --> establish invalid";
     }
 }
 
 void QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
     if (finalise) {
-        cout << " --> full cycle successfull";
+        if (_state == QoSBrokerStates_t::CLIENT_PENDING_CONNECTION) {
+            cout << " --> full cycle successfull";
+            _state = QoSBrokerStates_t::CLIENT_SUCCESS;
+        } else {
+            cout
+                    << " --> Broker not in correct state to handle finalise. State is: "
+                    << getStateAsName();
+        }
     }
 }
 
@@ -180,16 +220,17 @@ bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish) {
 
 void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope) {
     //set receiver
-    EndpointDescription receiver (_you);
+    EndpointDescription receiver(_you);
     envelope->setReceiver(receiver);
     //set sender
-    EndpointDescription sender (_me);
+    EndpointDescription sender(_me);
     envelope->setSender(sender);
 }
 
 void QoSBroker::sendMessage(QoSNegotiationProtocolMsg* payload_packet) {
     //payload_packet->setByteLength(sizeof(*payload_packet));
-    _socket->sendTo(payload_packet, _you.getNetworkAddr(), _you.getNetworkPort());
+    _socket->sendTo(payload_packet, _you.getNetworkAddr(),
+            _you.getNetworkPort());
 }
 
 string QoSBroker::getStateAsName() {
@@ -200,6 +241,8 @@ string QoSBroker::getStateAsName() {
         return "SERVER_PENDING_ACCEPT";
     case SERVER_SESSION_ESTABLISHED:
         return "SERVER_SESSION_ESTABLISHED";
+    case SERVER_FAILURE:
+        return "SERVER_FAILURE";
 
     case CLIENT_STARTUP:
         return "CLIENT_STARTUP";
