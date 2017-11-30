@@ -30,7 +30,20 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/soqosmw/dispatcher/dispatcher.o $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o $O/soqosmw/messages/Envelope_m.o $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
+OBJS = \
+    $O/soqosmw/dispatcher/dispatcher.o \
+    $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
+    $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
+    $O/soqosmw/servicemanager/base/IServiceManager.o \
+    $O/soqosmw/servicemanager/realtime/avb/AVBServiceManager.o \
+    $O/soqosmw/servicemanager/realtime/base/IRTServiceManager.o \
+    $O/soqosmw/servicemanager/standard/base/IStdServiceManager.o \
+    $O/soqosmw/servicemanager/standard/tcp/TCPServiceManager.o \
+    $O/soqosmw/servicemanager/standard/udp/UDPServiceManager.o \
+    $O/soqosmw/servicemanager/web/base/IWebServiceManager.o \
+    $O/soqosmw/servicemanager/web/rest/RESTServiceManager.o \
+    $O/soqosmw/messages/Envelope_m.o \
+    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
 
 # Message files
 MSGFILES = \
