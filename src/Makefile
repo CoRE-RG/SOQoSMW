@@ -32,6 +32,23 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/soqosmw/dispatcher/dispatcher.o \
+    $O/soqosmw/endpoints/base/IEndpoint.o \
+    $O/soqosmw/endpoints/publisher/base/IPublisher.o \
+    $O/soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.o \
+    $O/soqosmw/endpoints/publisher/realtime/base/IRTPublisher.o \
+    $O/soqosmw/endpoints/publisher/standard/base/IStdPublisher.o \
+    $O/soqosmw/endpoints/publisher/standard/tcp/TCPPublisher.o \
+    $O/soqosmw/endpoints/publisher/standard/udp/UDPPublisher.o \
+    $O/soqosmw/endpoints/publisher/web/base/IWebPublisher.o \
+    $O/soqosmw/endpoints/publisher/web/rest/RESTPublisher.o \
+    $O/soqosmw/endpoints/subscriber/base/ISubscriber.o \
+    $O/soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/standard/base/IStdSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/standard/udp/UDPSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/web/base/IWebSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/web/rest/RESTSubscriber.o \
     $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
     $O/soqosmw/servicemanager/base/IServiceManager.o \
