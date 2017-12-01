@@ -17,7 +17,8 @@
 
 namespace soqosmw {
 
-IPublisher::IPublisher() {
+IPublisher::IPublisher(std::string path) : IEndpoint (path){
+
     // TODO Auto-generated constructor stub
 
 }

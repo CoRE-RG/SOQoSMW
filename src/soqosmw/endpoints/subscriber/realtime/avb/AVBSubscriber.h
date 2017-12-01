@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class AVBSubscriber: public IRTSubscriber {
 public:
-    AVBSubscriber();
+    AVBSubscriber(std::string path);
     virtual ~AVBSubscriber();
 };
 

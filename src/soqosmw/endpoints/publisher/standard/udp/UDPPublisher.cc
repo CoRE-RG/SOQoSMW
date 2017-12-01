@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-UDPPublisher::UDPPublisher() {
+UDPPublisher::UDPPublisher(std::string path) : IStdPublisher(path) {
     // TODO Auto-generated constructor stub
 
 }

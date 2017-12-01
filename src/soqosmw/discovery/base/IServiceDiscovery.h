@@ -13,12 +13,25 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_ISERVICEDISCOVERY_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_ISERVICEDISCOVERY_H_
 
-import soqosmw.servicemanager.base.IServiceManager;
-//
-// TODO auto-generated module
-//
-moduleinterface IStdServiceManager extends IServiceManager
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace soqosmw{
+
+/**
+ * TODO - Generated class
+ */
+class IServiceDiscovery : public cSimpleModule
 {
-}
+  protected:
+    virtual void initialize();
+    virtual void handleMessage(cMessage *msg);
+};
+
+} /*end namespace soqosmw*/
+
+#endif

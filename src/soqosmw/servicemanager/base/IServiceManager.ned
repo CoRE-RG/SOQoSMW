@@ -18,6 +18,6 @@ package soqosmw.servicemanager.base;
 //
 // TODO auto-generated module
 //
-simple IServiceManager
+moduleinterface IServiceManager
 {
 }

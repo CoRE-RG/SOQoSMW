@@ -13,12 +13,12 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+package soqosmw.discovery.base;
 
-import soqosmw.servicemanager.base.IServiceManager;
 //
 // TODO auto-generated module
 //
-moduleinterface IStdServiceManager extends IServiceManager
+moduleinterface IServiceDiscovery
 {
+    
 }

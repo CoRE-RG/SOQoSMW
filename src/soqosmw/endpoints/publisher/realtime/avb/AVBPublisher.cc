@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-AVBPublisher::AVBPublisher() {
+AVBPublisher::AVBPublisher(std::string path) : IRTPublisher(path){
     // TODO Auto-generated constructor stub
 
 }

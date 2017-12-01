@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class TCPPublisher: public IStdPublisher {
 public:
-    TCPPublisher();
+    TCPPublisher(std::string path);
     virtual ~TCPPublisher();
 };
 

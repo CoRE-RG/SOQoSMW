@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class UDPSubscriber: public IStdSubscriber {
 public:
-    UDPSubscriber();
+    UDPSubscriber(std::string path);
     virtual ~UDPSubscriber();
 };
 

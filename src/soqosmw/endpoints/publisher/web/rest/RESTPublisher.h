@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class RESTPublisher: public IWebPublisher {
 public:
-    RESTPublisher();
+    RESTPublisher(std::string path);
     virtual ~RESTPublisher();
 };
 

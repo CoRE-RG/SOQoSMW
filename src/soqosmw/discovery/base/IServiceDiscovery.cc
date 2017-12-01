@@ -13,12 +13,18 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+#include "IServiceDiscovery.h"
 
-import soqosmw.servicemanager.base.IServiceManager;
-//
-// TODO auto-generated module
-//
-moduleinterface IStdServiceManager extends IServiceManager
+namespace soqosmw{
+
+void IServiceDiscovery::initialize()
 {
+    // TODO - Generated method body
 }
+
+void IServiceDiscovery::handleMessage(cMessage *msg)
+{
+    // TODO - Generated method body
+}
+
+} /*end namespace soqosmw*/

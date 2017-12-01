@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-IRTPublisher::IRTPublisher() {
+IRTPublisher::IRTPublisher(std::string path) : IPublisher (path){
     // TODO Auto-generated constructor stub
 
 }

@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-IEndpoint::IEndpoint() {
+IEndpoint::IEndpoint(std::string path) : _path(path) {
     // TODO Auto-generated constructor stub
 
 }

@@ -29,4 +29,12 @@ void AVBServiceManager::handleMessage(cMessage *msg)
     // TODO - Generated method body
 }
 
+AVBSubscriber* AVBServiceManager::createSubscriber(std::string path) {
+    return new AVBSubscriber(path);
+}
+
+AVBPublisher* AVBServiceManager::createPublisher(std::string path) {
+    return new AVBPublisher(path);
+}
+
 } /*end namespace soqosmw*/

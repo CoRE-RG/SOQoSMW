@@ -18,14 +18,18 @@ package soqosmw.nodes;
 import core4inet.nodes.inet.RTIPHost;
 
 import soqosmw.qosmanagement.negotiation.QoSNegotiationProtocol;
+import soqosmw.discovery.base.IServiceDiscovery;
 
 module SOQoSMWHost extends RTIPHost
 {
     hasUdp = true;
     submodules:
-        qosnp: QoSNegotiationProtocol {
+        qosnp : QoSNegotiationProtocol {
             @display("p=344,54");
             interfaceTableModule = default(absPath(".interfaceTable"));
+        }
+        
+        sd : <default("StaticServiceDiscovery")> like IServiceDiscovery{
         }
 
 	connections allowunconnected:

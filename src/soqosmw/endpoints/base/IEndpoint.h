@@ -16,12 +16,25 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
+#include <string>
+
 namespace soqosmw {
 
 class IEndpoint {
 public:
-    IEndpoint();
+    IEndpoint(std::string path);
     virtual ~IEndpoint();
+
+    const std::string& getPath() const {
+        return _path;
+    }
+
+    void setPath(const std::string& path) {
+        _path = path;
+    }
+
+private:
+    std::string _path;
 };
 
 } /*end namespace soqosmw*/

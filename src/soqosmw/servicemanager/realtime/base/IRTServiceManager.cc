@@ -17,8 +17,6 @@
 
 namespace soqosmw{
 
-Define_Module(IRTServiceManager);
-
 void IRTServiceManager::initialize()
 {
     // TODO - Generated method body

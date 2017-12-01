@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class IWebPublisher: public IPublisher {
 public:
-    IWebPublisher();
+    IWebPublisher(std::string path);
     virtual ~IWebPublisher();
 };
 

@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-AVBSubscriber::AVBSubscriber() {
+AVBSubscriber::AVBSubscriber(std::string path) : IRTSubscriber(path) {
     // TODO Auto-generated constructor stub
 
 }

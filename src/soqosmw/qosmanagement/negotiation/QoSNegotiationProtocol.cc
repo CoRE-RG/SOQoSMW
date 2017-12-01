@@ -30,8 +30,8 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {
-    cout << "QoSNegotiationProtocol::initialize stage " << stage;
     if(stage == MY_INIT_STAGE) {
+        cout << "QoSNegotiationProtocol::initialize ";
         handleParameterChange(nullptr);
         if (_isClient) {
             //Client Starts the Operation so create selfmsg for startsignal
@@ -45,10 +45,10 @@ void QoSNegotiationProtocol::initialize(int stage) {
         if(!isSocketBound()){
             socketSetup();
         }
+
+
+        cout << endl;
     }
-
-
-    cout << endl;
 }
 
 void QoSNegotiationProtocol::handleMessage(cMessage *msg) {

@@ -13,30 +13,41 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_AVBSERVICEMANAGER_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_AVBSERVICEMANAGER_H_
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
 
 #include <omnetpp.h>
-#include <soqosmw/servicemanager/realtime/base/IRTServiceManager.h>
-#include <soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.h>
-#include <soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <unordered_map>
+#include <soqosmw/discovery/base/IServiceDiscovery.h>
+#include <inet/networklayer/common/L3Address.h>
+
 
 using namespace omnetpp;
 
 namespace soqosmw{
-
+#define NO_OF_INIT_STAGES 15
+#define MY_INIT_STAGE 13
 /**
  * TODO - Generated class
  */
-class AVBServiceManager : public IRTServiceManager
+class StaticServiceDiscovery : public IServiceDiscovery
 {
+  public:
+    inet::L3Address& discover(std::string serviceName);
+
+    const std::unordered_map<std::string, inet::L3Address>& getRegistry() const {
+        return _registry;
+    }
+
   protected:
-    virtual void initialize();
+    virtual void initialize(int stage) override;
+    virtual int numInitStages() const override {
+        return NO_OF_INIT_STAGES;
+    }
     virtual void handleMessage(cMessage *msg);
 
-  public:
-    virtual AVBSubscriber* createSubscriber(std::string path);
-    virtual AVBPublisher* createPublisher(std::string path);
+  private:
+    std::unordered_map<std::string, inet::L3Address> _registry;
 };
 
 } /*end namespace soqosmw*/

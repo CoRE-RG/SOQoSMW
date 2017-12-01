@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-IWebPublisher::IWebPublisher() {
+IWebPublisher::IWebPublisher(std::string path) : IPublisher (path) {
     // TODO Auto-generated constructor stub
 
 }

@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-UDPSubscriber::UDPSubscriber() {
+UDPSubscriber::UDPSubscriber(std::string path) : IStdSubscriber(path) {
     // TODO Auto-generated constructor stub
 
 }

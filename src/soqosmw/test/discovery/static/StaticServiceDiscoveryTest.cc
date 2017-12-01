@@ -13,18 +13,30 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <endpoints/subscriber/realtime/base/IRTSubscriber.h>
+#include "StaticServiceDiscoveryTest.h"
+#include <string>
 
 namespace soqosmw {
 
-IRTSubscriber::IRTSubscriber(std::string path) : ISubscriber(path) {
-    // TODO Auto-generated constructor stub
+Define_Module(StaticServiceDiscoveryTest);
+
+void StaticServiceDiscoveryTest::initialize() {
+    cMessage* startSignal = new cMessage("sdTest");
+
+    scheduleAt(simTime() + 1, startSignal);
+
+    _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
+            par("sdmoduleName")));
 
 }
 
-IRTSubscriber::~IRTSubscriber() {
-    // TODO Auto-generated destructor stub
+void StaticServiceDiscoveryTest::handleMessage(cMessage *msg) {
+    if (msg->isSelfMessage() && msg->isName("sdTest")) {
+        std::cout << "Printing Registry from Test Module:" << endl;
+        for (auto& service : _sd->getRegistry()) {
+            std::cout << service.first << ": " << service.second << std::endl;
+        }
+    }
 }
 
 } /*end namespace soqosmw*/
-

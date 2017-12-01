@@ -19,6 +19,6 @@ import soqosmw.servicemanager.base.IServiceManager;
 //
 // TODO auto-generated module
 //
-simple IWebServiceManager extends IServiceManager
+moduleinterface IWebServiceManager extends IServiceManager
 {
 }

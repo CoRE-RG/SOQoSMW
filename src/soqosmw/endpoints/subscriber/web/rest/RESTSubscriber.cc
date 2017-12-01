@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-RESTSubscriber::RESTSubscriber() {
+RESTSubscriber::RESTSubscriber(std::string path) : IWebSubscriber(path) {
     // TODO Auto-generated constructor stub
 
 }

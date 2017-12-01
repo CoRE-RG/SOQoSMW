@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class TCPSubscriber: public IStdSubscriber {
 public:
-    TCPSubscriber();
+    TCPSubscriber(std::string path);
     virtual ~TCPSubscriber();
 };
 

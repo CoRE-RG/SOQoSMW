@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-ISubscriber::ISubscriber() {
+ISubscriber::ISubscriber(std::string path) : IEndpoint(path) {
     // TODO Auto-generated constructor stub
 
 }

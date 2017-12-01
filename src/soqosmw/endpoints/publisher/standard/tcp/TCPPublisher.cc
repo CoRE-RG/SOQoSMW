@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-TCPPublisher::TCPPublisher() {
+TCPPublisher::TCPPublisher(std::string path) : IStdPublisher(path) {
     // TODO Auto-generated constructor stub
 
 }

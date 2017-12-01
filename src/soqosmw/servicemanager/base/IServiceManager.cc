@@ -17,8 +17,6 @@
 
 namespace soqosmw{
 
-Define_Module(IServiceManager);
-
 void IServiceManager::initialize()
 {
     // TODO - Generated method body

@@ -13,12 +13,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+package soqosmw.discovery.static;
 
-import soqosmw.servicemanager.base.IServiceManager;
+import soqosmw.discovery.base.IServiceDiscovery;
+
 //
 // TODO auto-generated module
 //
-moduleinterface IStdServiceManager extends IServiceManager
+simple StaticServiceDiscovery like IServiceDiscovery
 {
+    parameters:
+        @class(soqosmw::StaticServiceDiscovery);
+        //this parameter holds the information of all services in the network,
+        //so each node knows where the services are located.
+        //Style:
+        //<service name="servicename" address="ip or node (if autoconfig)">
+        //</service>
+        xml services = default(xmldoc("services.xml"));
 }

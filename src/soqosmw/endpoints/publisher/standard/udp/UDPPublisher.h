@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class UDPPublisher: public IStdPublisher {
 public:
-    UDPPublisher();
+    UDPPublisher(std::string path);
     virtual ~UDPPublisher();
 };
 

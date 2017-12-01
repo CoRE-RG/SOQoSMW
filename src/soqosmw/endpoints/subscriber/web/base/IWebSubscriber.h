@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class IWebSubscriber: public ISubscriber {
 public:
-    IWebSubscriber();
+    IWebSubscriber(std::string path);
     virtual ~IWebSubscriber();
 };
 

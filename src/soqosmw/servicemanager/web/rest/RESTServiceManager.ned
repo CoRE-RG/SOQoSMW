@@ -20,6 +20,6 @@ import soqosmw.servicemanager.web.base.IWebServiceManager;
 //
 // TODO auto-generated module
 //
-simple RESTServiceManager extends IWebServiceManager
+simple RESTServiceManager like IWebServiceManager
 {
 }

@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-TCPSubscriber::TCPSubscriber() {
+TCPSubscriber::TCPSubscriber(std::string path) : IStdSubscriber(path) {
     // TODO Auto-generated constructor stub
 
 }

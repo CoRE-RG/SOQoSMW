@@ -13,12 +13,15 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+package soqosmw.test.discovery.static;
 
-import soqosmw.servicemanager.base.IServiceManager;
 //
 // TODO auto-generated module
 //
-moduleinterface IStdServiceManager extends IServiceManager
+simple StaticServiceDiscoveryTest
 {
+    
+    parameters:
+        @class(soqosmw::StaticServiceDiscoveryTest);
+   		string sdmoduleName = default("sd");
 }

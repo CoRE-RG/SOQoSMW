@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class IRTSubscriber: public ISubscriber {
 public:
-    IRTSubscriber();
+    IRTSubscriber(std::string path);
     virtual ~IRTSubscriber();
 };
 

@@ -20,6 +20,6 @@ import soqosmw.servicemanager.standard.base.IStdServiceManager;
 //
 // TODO auto-generated module
 //
-simple UDPServiceManager extends IStdServiceManager
+simple UDPServiceManager like IStdServiceManager
 {
 }

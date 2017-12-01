@@ -19,6 +19,6 @@ import soqosmw.servicemanager.realtime.base.IRTServiceManager;
 //
 // TODO auto-generated module
 //
-simple AVBServiceManager extends IRTServiceManager
+simple AVBServiceManager like IRTServiceManager
 {
 }

@@ -17,6 +17,8 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SERVICEMANAGER_H_
 
 #include <omnetpp.h>
+#include <soqosmw/endpoints/subscriber/base/ISubscriber.h>
+#include <soqosmw/endpoints/publisher/base/IPublisher.h>
 
 using namespace omnetpp;
 
@@ -30,6 +32,8 @@ class IServiceManager : public cSimpleModule
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+
+  public:
 };
 
 } /*end namespace soqosmw*/
