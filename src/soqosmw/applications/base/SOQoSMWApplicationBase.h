@@ -13,20 +13,25 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "UDPServiceManager.h"
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
 
 namespace soqosmw{
 
-Define_Module(UDPServiceManager);
-
-void UDPServiceManager::initialize()
+/**
+ * TODO - Generated class
+ */
+class SOQoSMWApplicationBase : public cSimpleModule
 {
-    // TODO - Generated method body
-}
+  protected:
+    virtual void initialize();
+    virtual void handleMessage(cMessage *msg);
+};
 
-void UDPServiceManager::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
-}
+} /* end namespace soqosmw */
 
-} /*end namespace soqosmw*/
+#endif

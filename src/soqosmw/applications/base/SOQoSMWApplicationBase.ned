@@ -13,12 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.base;
+package soqosmw.applications.base;
 
-import soqosmw.servicemanager.base.IServiceManager;
 //
 // TODO auto-generated module
 //
-moduleinterface IStdServiceManager extends IServiceManager
+simple SOQoSMWApplicationBase
 {
+    parameters:
+        @class(soqosmw::SOQoSMWApplicationBase);
 }

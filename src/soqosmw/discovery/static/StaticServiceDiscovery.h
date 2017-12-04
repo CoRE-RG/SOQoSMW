@@ -39,6 +39,8 @@ class StaticServiceDiscovery : public IServiceDiscovery
         return _registry;
     }
 
+    bool contains(std::string path);
+
   protected:
     virtual void initialize(int stage) override;
     virtual int numInitStages() const override {

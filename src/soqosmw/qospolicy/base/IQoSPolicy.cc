@@ -13,12 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.realtime.avb;
+#include <qospolicy/base/IQoSPolicy.h>
 
-import soqosmw.servicemanager.realtime.base.IRTServiceManager;
-//
-// TODO auto-generated module
-//
-simple AVBServiceManager like IRTServiceManager
-{
+IQoSPolicy::IQoSPolicy() {
+    // TODO Auto-generated constructor stub
+
 }
+
+IQoSPolicy::~IQoSPolicy() {
+    // TODO Auto-generated destructor stub
+}
+

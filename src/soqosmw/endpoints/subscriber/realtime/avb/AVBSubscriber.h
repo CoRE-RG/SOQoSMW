@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class AVBSubscriber: public IRTSubscriber {
 public:
-    AVBSubscriber(std::string path);
+    AVBSubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies);
     virtual ~AVBSubscriber();
 };
 

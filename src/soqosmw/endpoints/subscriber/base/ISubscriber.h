@@ -17,13 +17,26 @@
 #define SOQOSMW_ENDPOINTS_SUBSCRIBER_BASE_ISUBSCRIBER_H_
 
 #include <soqosmw/endpoints/base/IEndpoint.h>
+#include <vector>
+#include <soqosmw/qospolicy/base/IQoSPolicy.h>
 
 namespace soqosmw {
 
 class ISubscriber : public IEndpoint {
 public:
-    ISubscriber(std::string path);
+    ISubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies);
     virtual ~ISubscriber();
+
+    const std::vector<IQoSPolicy>& getQos() const {
+        return _qos;
+    }
+
+    void setQos(const std::vector<IQoSPolicy>& qos) {
+        _qos = qos;
+    }
+
+private:
+    std::vector<IQoSPolicy> _qos;
 };
 
 } /*end namespace soqosmw*/

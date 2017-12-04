@@ -13,26 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_RESTSERVICEMANAGER_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_RESTSERVICEMANAGER_H_
+package soqosmw.servicemanager;
 
-#include <omnetpp.h>
-#include <soqosmw/servicemanager/web/base/IWebServiceManager.h>
-
-using namespace omnetpp;
-
-namespace soqosmw{
-
-/**
- * TODO - Generated class
- */
-class RESTServiceManager : public IWebServiceManager
+//
+// TODO auto-generated module
+//
+simple LocalServiceManager
 {
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
-};
-
-} /*end namespace soqosmw*/
-
-#endif
+    parameters:
+        @class(soqosmw::LocalServiceManager);
+        string sdmoduleName = default("sd");
+}

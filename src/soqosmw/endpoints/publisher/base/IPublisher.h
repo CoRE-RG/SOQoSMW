@@ -17,13 +17,26 @@
 #define SOQOSMW_ENDPOINTS_PUBLISHER_BASE_IPUBLISHER_H_
 
 #include <soqosmw/endpoints/base/IEndpoint.h>
+#include <vector>
+#include <soqosmw/qospolicy/base/IQoSPolicy.h>
 
 namespace soqosmw {
 
 class IPublisher : public IEndpoint{
 public:
-    IPublisher(std::string path);
+    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies);
     virtual ~IPublisher();
+
+    const std::vector<IQoSPolicy>& getQos() const {
+        return _qos;
+    }
+
+    void setQos(const std::vector<IQoSPolicy>& qos) {
+        _qos = qos;
+    }
+
+private:
+    std::vector<IQoSPolicy> _qos;
 };
 
 } /*end namespace soqosmw*/

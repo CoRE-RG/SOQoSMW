@@ -13,18 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "IRTServiceManager.h"
+#ifndef SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_
+#define SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_
 
-namespace soqosmw{
+class IQoSPolicy {
+public:
+    IQoSPolicy();
+    virtual ~IQoSPolicy();
+};
 
-void IRTServiceManager::initialize()
-{
-    // TODO - Generated method body
-}
-
-void IRTServiceManager::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
-}
-
-} /*end namespace soqosmw*/
+#endif /* SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_ */

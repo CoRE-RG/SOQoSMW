@@ -17,7 +17,7 @@
 
 namespace soqosmw {
 
-AVBPublisher::AVBPublisher(std::string path) : IRTPublisher(path){
+AVBPublisher::AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies) : IRTPublisher(path, qosPolicies){
     // TODO Auto-generated constructor stub
 
 }

@@ -13,13 +13,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.servicemanager.standard.tcp;
+#include "SOQoSMWApplicationBase.h"
 
-import soqosmw.servicemanager.standard.base.IStdServiceManager;
+namespace soqosmw{
 
-//
-// TODO auto-generated module
-//
-simple TCPServiceManager like IStdServiceManager
+Define_Module(SOQoSMWApplicationBase);
+
+void SOQoSMWApplicationBase::initialize()
 {
+    // TODO - Generated method body
 }
+
+void SOQoSMWApplicationBase::handleMessage(cMessage *msg)
+{
+    // TODO - Generated method body
+}
+
+} /* end namespace soqosmw */

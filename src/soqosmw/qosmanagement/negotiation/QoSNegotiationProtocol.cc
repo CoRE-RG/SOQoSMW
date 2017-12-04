@@ -27,6 +27,7 @@ QoSNegotiationProtocol::QoSNegotiationProtocol() {
 
 QoSNegotiationProtocol::~QoSNegotiationProtocol() {
     socketClose();
+    delete _broker;
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {

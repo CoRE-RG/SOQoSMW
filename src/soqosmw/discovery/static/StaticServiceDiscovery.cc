@@ -59,6 +59,10 @@ inet::L3Address& StaticServiceDiscovery::discover(std::string serviceName) {
     return _registry[serviceName];
 }
 
+bool StaticServiceDiscovery::contains(std::string path) {
+    return _registry.count(path)>0;
+}
+
 void StaticServiceDiscovery::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body

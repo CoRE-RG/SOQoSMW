@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for $(LIB_PREFIX)Hauptprojekt-Timo_Haeckel
 #
 # This file was generated with the command:
-#  opp_makemake --make-so -f --deep -S -KCORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET -KINET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet -KFICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways -I. -Isoqosmw -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways -Xsoqosmw/endpoints/publisher/standard -Xsoqosmw/endpoints/publisher/web -Xsoqosmw/endpoints/subscriber/standard -Xsoqosmw/endpoints/subscriber/web -Xsoqosmw/servicemanager/standard -Xsoqosmw/servicemanager/web
+#  opp_makemake --make-so -f --deep -S -KCORE4INET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/CoRE4INET -KINET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/inet -KFICO4OMNET_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=C:/Users/skrec/Documents/omnetpp_workspace/SignalsAndGateways -I. -Isoqosmw -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways -Xsoqosmw/endpoints/publisher/standard -Xsoqosmw/endpoints/publisher/web -Xsoqosmw/endpoints/subscriber/standard -Xsoqosmw/endpoints/subscriber/web
 #
 
 # Name of target to be created (-o option)
@@ -31,6 +31,7 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
 OBJS = \
+    $O/soqosmw/applications/base/SOQoSMWApplicationBase.o \
     $O/soqosmw/discovery/base/IServiceDiscovery.o \
     $O/soqosmw/discovery/static/StaticServiceDiscovery.o \
     $O/soqosmw/endpoints/base/IEndpoint.o \
@@ -42,9 +43,8 @@ OBJS = \
     $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \
     $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
-    $O/soqosmw/servicemanager/base/IServiceManager.o \
-    $O/soqosmw/servicemanager/realtime/avb/AVBServiceManager.o \
-    $O/soqosmw/servicemanager/realtime/base/IRTServiceManager.o \
+    $O/soqosmw/qospolicy/base/IQoSPolicy.o \
+    $O/soqosmw/servicemanager/LocalServiceManager.o \
     $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
     $O/soqosmw/messages/Envelope_m.o \
     $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o

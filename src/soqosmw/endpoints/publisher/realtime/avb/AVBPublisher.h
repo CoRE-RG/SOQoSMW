@@ -22,7 +22,7 @@ namespace soqosmw {
 
 class AVBPublisher: public IRTPublisher {
 public:
-    AVBPublisher(std::string path);
+    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies);
     virtual ~AVBPublisher();
 };
 
