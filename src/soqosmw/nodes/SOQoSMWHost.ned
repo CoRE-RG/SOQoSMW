@@ -26,7 +26,6 @@ module SOQoSMWHost extends RTIPHost
     submodules:
         qosnp : QoSNegotiationProtocol {
             @display("p=344,54");
-            interfaceTableModule = default(absPath(".interfaceTable"));
         }
         
         sd : <default("StaticServiceDiscovery")> like IServiceDiscovery{

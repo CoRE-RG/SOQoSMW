@@ -33,7 +33,6 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/soqosmw/discovery/base/IServiceDiscovery.o \
     $O/soqosmw/discovery/static/StaticServiceDiscovery.o \
-    $O/soqosmw/dispatcher/dispatcher.o \
     $O/soqosmw/endpoints/base/IEndpoint.o \
     $O/soqosmw/endpoints/publisher/base/IPublisher.o \
     $O/soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.o \
