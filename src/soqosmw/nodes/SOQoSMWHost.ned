@@ -19,20 +19,37 @@ import core4inet.nodes.inet.RTIPHost;
 
 import soqosmw.qosmanagement.negotiation.QoSNegotiationProtocol;
 import soqosmw.discovery.base.IServiceDiscovery;
+import soqosmw.servicemanager.LocalServiceManager;
+import soqosmw.applications.base.ISOQoSMWApplication;
 
 module SOQoSMWHost extends RTIPHost
 {
-    hasUdp = true;
+    parameters:
+    	hasUdp = true; //needed for qosnp
+    	int numServices = default(0);
+    	
     submodules:
-        qosnp : QoSNegotiationProtocol {
-            @display("p=344,54");
+        
+        services [numServices] : <> like ISOQoSMWApplication {
+            
         }
         
-        sd : <default("StaticServiceDiscovery")> like IServiceDiscovery{
+        qosnp: QoSNegotiationProtocol {
+            @display("p=344,45");
         }
 
-	connections allowunconnected:
-	    
+        lsm: LocalServiceManager {
+
+            @display("p=276,45");
+        }
+
+        sd: <default("StaticServiceDiscovery")> like IServiceDiscovery {
+
+            @display("p=213,45");
+        }
+
+    connections allowunconnected:
+
         qosnp.udpOut --> udp.appIn++;
         qosnp.udpIn <-- udp.appOut++;
 

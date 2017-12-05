@@ -15,18 +15,31 @@
 
 #include "SOQoSMWApplicationBase.h"
 
-namespace soqosmw{
+namespace soqosmw {
 
-Define_Module(SOQoSMWApplicationBase);
-
-void SOQoSMWApplicationBase::initialize()
+SOQoSMWApplicationBase::~SOQoSMWApplicationBase()
 {
-    // TODO - Generated method body
+
 }
 
-void SOQoSMWApplicationBase::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
+void SOQoSMWApplicationBase::initialize() {
+}
+
+void SOQoSMWApplicationBase::handleMessage(cMessage *msg) {
+    // do nothing...
+}
+
+void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
+    if (!parname || !strcmp(parname, "serviceManagerModule")) {
+        _localServiceManager =
+                dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
+                        par("serviceManagerModule")));
+        if (!_localServiceManager) {
+            throw cRuntimeError(
+                    "Configuration problem of parameter serviceManagerModule in module %s.",
+                    this->getFullName());
+        }
+    }
 }
 
 } /* end namespace soqosmw */

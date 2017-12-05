@@ -15,14 +15,8 @@
 
 package soqosmw.applications.base;
 
-import soqosmw.applications.base.ISOQoSMWApplication;
-
-//
-// TODO auto-generated module
-//
-simple SOQoSMWApplicationBase like ISOQoSMWApplication
-{
+moduleinterface ISOQoSMWApplication {
     parameters:
-        @class(soqosmw::SOQoSMWApplicationBase);
-        string serviceManagerModule = default ("lsm");
+        string serviceManagerModule;
+    
 }

@@ -17,19 +17,54 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
 #include <omnetpp.h>
+#include <soqosmw/servicemanager/LocalServiceManager.h>
 
 using namespace omnetpp;
 
-namespace soqosmw{
+namespace soqosmw {
 
 /**
- * TODO - Generated class
+ * @brief Base class for a SOQoSMW-Application.
+ *
+ * contains the module connection to the LocalServiceManager
+ *
+ * @ingroup Applications
+ *
+ * @author Timo Haeckel
  */
-class SOQoSMWApplicationBase : public cSimpleModule
-{
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+class SOQoSMWApplicationBase: public virtual cSimpleModule {
+public:
+    virtual ~SOQoSMWApplicationBase();
+
+    LocalServiceManager* getLocalServiceManager() const {
+        return _localServiceManager;
+    }
+
+protected:
+    /**
+     * @brief Initialization of the module.
+     */
+    virtual void initialize() override;
+
+    /**
+     * @brief This method should be called from subclasses unless the module
+     * resets the bag on its own.
+     *
+     * @param msg Parameter must be forwarded from subclass
+     */
+    virtual void handleMessage(cMessage *msg) override;
+
+    /**
+     * @brief Indicates a parameter has changed.
+     *
+     * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
+     *
+     * @throws cRuntimeError When buffer module and application module do not have the same parent module
+     */
+    virtual void handleParameterChange(const char* parname) override;
+
+private:
+    LocalServiceManager* _localServiceManager;
 };
 
 } /* end namespace soqosmw */

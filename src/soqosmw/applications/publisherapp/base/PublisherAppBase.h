@@ -1,0 +1,128 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
+
+#include <omnetpp.h>
+#include <soqosmw/applications/base/SOQoSMWApplicationBase.h>
+#include <soqosmw/endpoints/publisher/base/IPublisher.h>
+
+using namespace omnetpp;
+
+namespace soqosmw {
+
+#define START_MSG_NAME "Start Message"
+#define SEND_MSG_NAME "Send Message"
+
+/**
+ * @brief Base class for a soqosmw publisher application.
+ *
+ * @ingroup Applications
+ *
+ * @author Timo Haeckel
+ */
+class PublisherAppBase: public virtual SOQoSMWApplicationBase {
+private:
+    /**
+     * Caches enabled parameter
+     */
+    bool enabled;
+
+    /**
+     * Caches payload parameter
+     */
+    size_t payload;
+
+    /**
+     * Save the responsible publisher
+     */
+    IPublisher* _publisher;
+
+    /**
+     * Name of the service to publish.
+     */
+    std::string serviceName;
+
+    /**
+     * Caches QoS Policy parameters
+     */
+    std::vector<IQoSPolicy> qosPolicies;
+
+    /**
+     * Caches the start time parameter
+     */
+    double startTime;
+
+    /**
+     * Caches the interval length parameter
+     */
+    double interval;
+
+    /**
+     * Caches the number of Messages per Interval parameter.
+     */
+    int messagesPerInterval;
+
+public:
+    PublisherAppBase();
+
+    virtual ~PublisherAppBase();
+
+    /**
+     * @brief Indicated that PublisherApp is enabled
+     *
+     * @return true when enabled, otherwise false
+     */
+    bool isEnabled();
+
+    /**
+     * @brief Returns the number of bytes of the payload desired
+     *
+     * @return Size of payload in bytes
+     */
+    size_t getPayloadBytes();
+
+protected:
+    /**
+     * @brief Signal that is emitted each time the payload is used.
+     */
+    static simsignal_t sigPayload;
+
+    /**
+     * @brief Initialization of the module. Sends activator message
+     */
+    virtual void initialize();
+
+    /**
+     * @brief This method should be called from subclasses unless the module
+     * resets the bag on its own.
+     *
+     * @param msg Parameter must be forwarded from subclass
+     */
+    virtual void handleMessage(cMessage *msg) override;
+
+    /**
+     * @brief Indicates a parameter has changed.
+     *
+     * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
+     */
+    virtual void handleParameterChange(const char* parname) override;
+
+};
+
+} /* end namespace soqosmw */
+
+#endif

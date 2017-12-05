@@ -22,14 +22,11 @@ namespace soqosmw {
 Define_Module(LocalServiceManager);
 
 void LocalServiceManager::initialize() {
-    // TODO - Generated method body
-    //TODO get the reference to the service registry.
     _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
             par("sdmoduleName")));
 }
 
 void LocalServiceManager::handleMessage(cMessage *msg) {
-    // TODO - Generated method body
     delete msg;
 }
 

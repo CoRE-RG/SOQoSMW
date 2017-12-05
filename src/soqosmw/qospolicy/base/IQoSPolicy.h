@@ -20,6 +20,7 @@ class IQoSPolicy {
 public:
     IQoSPolicy();
     virtual ~IQoSPolicy();
+
 };
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_ */

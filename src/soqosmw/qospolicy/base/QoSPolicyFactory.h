@@ -13,16 +13,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.applications.base;
+#ifndef SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_
+#define SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_
 
-import soqosmw.applications.base.ISOQoSMWApplication;
+#include <vector>
+#include <soqosmw/qospolicy/base/IQoSPolicy.h>
 
-//
-// TODO auto-generated module
-//
-simple SOQoSMWApplicationBase like ISOQoSMWApplication
-{
-    parameters:
-        @class(soqosmw::SOQoSMWApplicationBase);
-        string serviceManagerModule = default ("lsm");
-}
+#include <omnetpp.h>
+
+class QoSPolicyFactory {
+public:
+    QoSPolicyFactory();
+    virtual ~QoSPolicyFactory();
+
+    static std::vector<IQoSPolicy> extractPolicyFromPar(omnetpp::cPar& parameter);
+};
+
+#endif /* SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_ */
