@@ -13,6 +13,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <algorithm>
+
 #include "LocalServiceManager.h"
 #include <soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.h>
 #include <soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.h>
@@ -30,34 +32,35 @@ void LocalServiceManager::handleMessage(cMessage *msg) {
     delete msg;
 }
 
-IPublisher* LocalServiceManager::createPublisher(std::string path,
+IPublisher* LocalServiceManager::createPublisher(std::string& publisherPath,
         std::vector<IQoSPolicy> qosPolicies) {
     IPublisher* publisher = nullptr;
     //TODO check if service already exists.
 
     //TODO check qosPolicies to know which publisher should be created...
 
-    publisher = new AVBPublisher(path, qosPolicies);
+    publisher = new AVBPublisher(publisherPath, qosPolicies);
     _publishers.push_back(publisher);
 
     return publisher;
-
 }
 
-ISubscriber* LocalServiceManager::createSubscriber(std::string path,
-        std::vector<IQoSPolicy> qosPolicies) {
+ISubscriber* LocalServiceManager::createSubscriber(std::string& subscriberPath,
+        std::string& publisherPath, std::vector<IQoSPolicy>& qosPolicies) {
     ISubscriber* subscriber = nullptr;
     //TODO check if service exists in the network
-    if (_sd->contains(path)) {
+    if (_sd->contains(subscriberPath)) {
 
         //TODO check qosPolicies to know which subscriber should be created...
 
-        subscriber = new AVBSubscriber(path, qosPolicies);
+        //TODO check if such an subscriber exists already to reuse it.
+
+        subscriber = new AVBSubscriber(subscriberPath, publisherPath,
+                qosPolicies);
         _subscribers.push_back(subscriber);
     }
 
     return subscriber;
-
 }
 
 LocalServiceManager::~LocalServiceManager() {
@@ -71,6 +74,57 @@ LocalServiceManager::~LocalServiceManager() {
         delete (*it);
     }
     _subscribers.clear();
+}
+
+//int LocalServiceManager::existsPublisher(std::string& publisherPath = NULL,
+//        std::vector<IQoSPolicy> qosPolicies = NULL) {
+//    const bool pubPathSet = publisherPath != NULL;
+//    const bool qosSet = qosPolicies != NULL;
+//
+//    //If no arguments are passed,
+//    if(!pubPathSet && !qosSet){
+//        //this method checks if any publisher exists on this node.
+//        return _publishers.size();
+//    }
+//    //If the publisherPath is set,
+//    else {
+//        //this method checks if a publisher with matching path exists.
+//        int count = 0;
+//        for (std::vector<IPublisher*>::iterator it = _publishers.begin();
+//                it != _publishers.end(); ++it) {
+//            if((*it)->matches(publisherPath, qosPolicies)){
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
+//
+//}
+
+//int LocalServiceManager::existsSubscriber(std::string& subscriberPath,
+//        std::vector<IQoSPolicy>& qosPolicies, std::string& publisherPath) {
+//}
+
+bool LocalServiceManager::removePublisher(IPublisher* publisher) {
+    bool removed = false;
+    auto it = find(_publishers.begin(), _publishers.end(), publisher);
+    if (it != _publishers.end()) {
+        _publishers.erase(it);
+        delete publisher;
+        removed = true;
+    }
+    return removed;
+}
+
+bool LocalServiceManager::removeSubscriber(ISubscriber* subscriber) {
+    bool removed = false;
+    auto it = find(_subscribers.begin(), _subscribers.end(), subscriber);
+    if (it != _subscribers.end()) {
+        _subscribers.erase(it);
+        delete subscriber;
+        removed = true;
+    }
+    return removed;
 }
 
 } /* end namespace  */

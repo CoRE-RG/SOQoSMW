@@ -16,25 +16,41 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
+//STD
 #include <string>
+#include <vector>
+
+//SOQOSMW
+#include <soqosmw/qospolicy/base/IQoSPolicy.h>
 
 namespace soqosmw {
 
 class IEndpoint {
 public:
-    IEndpoint(std::string path);
+    IEndpoint(std::string endpointPath, std::vector<IQoSPolicy> qosPolicies);
     virtual ~IEndpoint();
 
-    const std::string& getPath() const {
-        return _path;
+    const std::string& getEndpointPath() const {
+        return _endpointPath;
     }
 
-    void setPath(const std::string& path) {
-        _path = path;
+    void setEndpointPath(const std::string& path) {
+        _endpointPath = path;
     }
+
+    const std::vector<IQoSPolicy>& getQos() const {
+        return _qos;
+    }
+
+    void setQos(const std::vector<IQoSPolicy>& qos) {
+        _qos = qos;
+    }
+
+//    virtual bool mathes(std::string& path, std::vector<IQoSPolicy>& qos);
 
 private:
-    std::string _path;
+    std::string _endpointPath;
+    std::vector<IQoSPolicy> _qos;
 };
 
 } /*end namespace soqosmw*/

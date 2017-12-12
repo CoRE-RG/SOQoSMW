@@ -17,7 +17,8 @@
 
 namespace soqosmw {
 
-IRTSubscriber::IRTSubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies) : ISubscriber(path, qosPolicies) {
+IRTSubscriber::IRTSubscriber(std::string subscriberPath, std::string publisherPath,
+        std::vector<IQoSPolicy> qosPolicies) : ISubscriber(subscriberPath, publisherPath, qosPolicies) {
     // TODO Auto-generated constructor stub
 
 }

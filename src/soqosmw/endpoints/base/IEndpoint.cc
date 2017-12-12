@@ -16,8 +16,9 @@
 #include <endpoints/base/IEndpoint.h>
 
 namespace soqosmw {
+using namespace std;
 
-IEndpoint::IEndpoint(std::string path) : _path(path) {
+IEndpoint::IEndpoint(string endpointPath, vector<IQoSPolicy> qosPolicies) : _endpointPath(endpointPath), _qos(qosPolicies) {
     // TODO Auto-generated constructor stub
 
 }
@@ -25,6 +26,23 @@ IEndpoint::IEndpoint(std::string path) : _path(path) {
 IEndpoint::~IEndpoint() {
     // TODO Auto-generated destructor stub
 }
+
+//bool IEndpoint::mathes(string& path = NULL,
+//        vector<IQoSPolicy>& qos = NULL) {
+//    bool pathMatches = false;
+//    bool qosMatches = false;
+//
+//    if(path == NULL || path == _endpointPath){
+//        pathMatches = true;
+//    }
+//    if(qos == NULL) {
+//        qosMatches = true;
+//    } else {
+//        //TODO check if QOS are the same.
+//    }
+//
+//    return pathMatches && qosMatches;
+//}
 
 } /*end namespace soqosmw*/
 

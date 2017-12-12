@@ -17,7 +17,9 @@
 
 namespace soqosmw {
 
-ISubscriber::ISubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies) : IEndpoint(path), _qos(qosPolicies) {
+ISubscriber::ISubscriber(std::string subscriberPath, std::string publisherPath,
+        std::vector<IQoSPolicy> qosPolicies) :
+        IEndpoint(subscriberPath, qosPolicies), _publisherPath(publisherPath){
     // TODO Auto-generated constructor stub
 
 }

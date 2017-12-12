@@ -28,20 +28,113 @@ using namespace omnetpp;
 namespace soqosmw {
 
 /**
- * TODO - Generated class
+ * @brief The LocalServiceManager is used to create, find and remove local Services.
+ *
+ * @author Timo Haeckel
  */
-class LocalServiceManager : public cSimpleModule
-{
-  protected:
+class LocalServiceManager: public cSimpleModule {
+protected:
+    /**
+     * @brief Initialization of the module.
+     */
     virtual void initialize();
+
+    /**
+     * @brief This module should receive any messages.
+     *
+     * @param msg Parameter
+     */
     virtual void handleMessage(cMessage *msg);
 
-  public:
+public:
     virtual ~LocalServiceManager();
-    virtual IPublisher* createPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies);
-    virtual ISubscriber* createSubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies);
 
-  private:
+    /**
+     * @brief This Method creates a new Publisher according to the QoSPolicies.
+     *
+     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
+     * @param qosPolicies The QoS Policies for the Publisher.
+     *
+     * @return If a publisher could be created it returns a pointer to the Publisher. Else nullptr.
+     */
+    IPublisher* createPublisher(std::string& publisherPath,
+            std::vector<IQoSPolicy> qosPolicies);
+
+    /**
+     * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
+     *
+     * @param subscriberPath Path of the Subscriber Service (e.g. "bordcomputer")
+     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
+     * @param qosPolicies The QoS Policies for the Subscriber.
+     *
+     * @return If a subscriber could be created it returns a pointer to the Subscriber. Else nullptr.
+     */
+    ISubscriber* createSubscriber(std::string& subscriberPath,
+            std::string& publisherPath, std::vector<IQoSPolicy>& qosPolicies);
+
+    /**
+     * @brief Check if a publisher exists.
+     *  If no arguments are passed,
+     *             this method checks if any publisher exists on this node.
+     *  If the publisherPath is set,
+     *             this method checks if a publisher with matching path exists.
+     *  If the publisherPath and the qosPolicies are set,
+     *             this method checks if a publisher with matching path and matching qosPolicies exists.
+     *
+     * @param publisherPath The path of the publisher to find.
+     * @param qosPolicies The QoS Policies of the publisher to find. //NOT YET IMPLEMENTED
+     *
+     * @return the number of matches.
+     */
+//    int existsPublisher(std::string& publisherPath = "",
+//            std::vector<IQoSPolicy> qosPolicies = NULL);
+
+    /**
+     * @brief Check if a subscriber exists.
+     *  If no arguments are passed,
+     *             this method checks if any subscriber exists on this node.
+     *  If the subscriberPath is set,
+     *             this method checks if a subscriber with matching subscriberPath exists.
+     *  If the subscriberPath and the qosPolicies are set,
+     *             this method checks if a subscriber with matching subscriberPath and matching qosPolicies exists.
+     *  If the publisherPath is set,
+     *             this method checks if a subscriber with matching publisherPath exists.
+     *  If the publisherPath and the qosPolicies are set,
+     *             this method checks if a subscriber with matching publisherPath and matching qosPolicies exists.
+     *  If the subscriberPath, the qosPolicies and the publisherPath are set,
+     *             this method checks if a subscriber with matching subscriberPath, matching qosPolicies and matching publisherPath exists.
+     *
+     * @param subscriberPath The subscriberPath of the subscriber to find.
+     * @param qosPolicies The QoS Policies of the subscriber to find. //NOT YET IMPLEMENTED
+     * @param publisherPath The publisherPath of the subscriber to find.
+     *
+     * @return the number of matches.
+     */
+//    int existsSubscriber(std::string& subscriberPath = "",
+//            std::vector<IQoSPolicy>& qosPolicies = NULL,
+//            std::string& publisherPath = "");
+
+    /**
+     * @brief This method removes the given publisher.
+     * NOTE the publisher pointer is no longer valid now and will be set to a nullptr.
+     *
+     * @param publisher A pointer to the publisher that should be removed.
+     *
+     * @return true if the publisher was removed, false if not found.
+     */
+    bool removePublisher(IPublisher* publisher);
+
+    /**
+     * @brief This method removes the given subscriber.
+     * NOTE the subscriber pointer is no longer valid now and will be set to a nullptr.
+     *
+     * @param subscriber A pointer to the subscriber that should be removed.
+     *
+     * @return true if the subscriber was removed, false if not found.
+     */
+    bool removeSubscriber(ISubscriber* subscriber);
+
+private:
     std::vector<IPublisher*> _publishers;
     std::vector<ISubscriber*> _subscribers;
 
@@ -49,6 +142,5 @@ class LocalServiceManager : public cSimpleModule
 };
 
 } /* end namespace  */
-
 
 #endif

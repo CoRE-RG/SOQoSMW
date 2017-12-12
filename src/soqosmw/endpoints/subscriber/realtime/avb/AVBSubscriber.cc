@@ -17,7 +17,8 @@
 
 namespace soqosmw {
 
-AVBSubscriber::AVBSubscriber(std::string path, std::vector<IQoSPolicy> qosPolicies) : IRTSubscriber(path, qosPolicies) {
+AVBSubscriber::AVBSubscriber(std::string subscriberPath, std::string publisherPath,
+        std::vector<IQoSPolicy> qosPolicies) : IRTSubscriber(subscriberPath, publisherPath, qosPolicies) {
     // TODO Auto-generated constructor stub
 
 }
