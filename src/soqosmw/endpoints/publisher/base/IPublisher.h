@@ -16,15 +16,40 @@
 #ifndef SOQOSMW_ENDPOINTS_PUBLISHER_BASE_IPUBLISHER_H_
 #define SOQOSMW_ENDPOINTS_PUBLISHER_BASE_IPUBLISHER_H_
 
-#include <soqosmw/endpoints/base/IEndpoint.h>
+#include <endpoints/base/IEndpoint.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <vector>
+
+namespace omnetpp {
+class cPacket;
+} /* namespace omnetpp */
 
 namespace soqosmw {
 
+/**
+ * @brief Publisher interface. Base class for all publishing modules. Provides the behavior the application knows about.
+ *
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel
+ */
 class IPublisher: public IEndpoint {
 public:
-    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+    /**
+     * Constructor.
+     * @param path from IEndpoint.
+     * @param qosPolicies from IEndpoint.
+     * @param owner from IEndpoint.
+     */
+    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies,
+            SOQoSMWApplicationBase* owner);
     virtual ~IPublisher();
 
+    /**
+     * Publish a payloud to all subscribers. This needs to be implemented by all subclasses.
+     * @param payload
+     */
     virtual void publish(omnetpp::cPacket* payload) = 0;
 };
 

@@ -16,33 +16,58 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 
-#include <omnetpp.h>
+#include <base/EndpointDescription.h>
 #include <string>
 
-#include <soqosmw/messages/Envelope_m.h>
-#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <soqosmw/base/EndpointDescription.h>
+namespace inet {
+class UDPSocket;
+} /* namespace inet */
 
-//INET
-#include "inet/transportlayer/contract/udp/UDPSocket.h"
+namespace soqosmw {
+class Envelope;
+class QoSNegotiationEstablish;
+class QoSNegotiationFinalise;
+class QoSNegotiationProtocolMsg;
+class QoSNegotiationRequest;
+class QoSNegotiationResponse;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
 namespace soqosmw {
 
 /**
- * TODO - Generated class
+ * @brief QoSBroker handles the negotiation for a connection.
+ *
+ * @ingroup soqosmw/qosmanagement
+ *
+ * @author Timo Haeckel
  */
-class QoSBroker
-{
-  public:
-    QoSBroker(UDPSocket* socket, EndpointDescription local, EndpointDescription remote, bool isClient);
+class QoSBroker {
+public:
+    /**
+     * Constructor.
+     * @param socket The UDP socket for outgoing messages.
+     * @param local The local endpoint description.
+     * @param remote The remote endpoint description.
+     * @param isClient Is this the client?
+     */
+    QoSBroker(inet::UDPSocket* socket, EndpointDescription local,
+            EndpointDescription remote, bool isClient);
     virtual ~QoSBroker();
 
+    /**
+     * Handle a QoSNegotiationProtocol Message.
+     * @param msg The message to handle.
+     */
     virtual void handleMessage(QoSNegotiationProtocolMsg *msg);
+
+    /**
+     * handle the start signal, only if client!
+     */
     void handleStartSignal();
 
-  protected:
+protected:
 
     /**
      * Statemachine for Broker.
@@ -58,31 +83,90 @@ class QoSBroker
         CLIENT_PENDING_CONNECTION,
         CLIENT_FAILURE,
         CLIENT_SUCCESS
-    }QoSBrokerStates_t;
+    } QoSBrokerStates_t;
 
-  private:
+private:
+    /**
+     * Handle the request, emits a response.
+     * @param request The request to handle.
+     */
     void handleRequest(QoSNegotiationRequest* request);
+
+    /**
+     * Handle the response, emits a establish if successful.
+     * @param response The response to handle.
+     */
     void handleResponse(QoSNegotiationResponse* response);
+
+    /**
+     * Handle the establish, emits a finalise if successful.
+     * @param establish The establish to handle.
+     */
     void handleEstablish(QoSNegotiationEstablish* establish);
+
+    /**
+     * Handle the finalise, returns to the application with negotiation status.
+     * @param finalise The finalise to handle.
+     */
     void handleFinalise(QoSNegotiationFinalise* finalise);
 
+    /**
+     * Check if a request is acceptable.
+     * @param request The request to check.
+     * @return true if acceptable, otherwise false.
+     */
     bool isRequestAcceptable(QoSNegotiationRequest* request);
+
+    /**
+     * Check if an establish is acceptable.
+     * @param establish The establish to check.
+     * @return true if acceptable, otherwise false.
+     */
     bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
 
-    void fillEnvelope(soqosmw::Envelope* envelope);
+    /**
+     * Fill the soqosmw envelope with the endpoint descriptions.
+     * @param envelope The envelope to fill.
+     */
+    void fillEnvelope(Envelope* envelope);
+
+    /**
+     * Send a QoSNegotiationProtocolMsg via UDP.
+     * @param msg The message to send.
+     */
     void sendMessage(QoSNegotiationProtocolMsg* msg);
 
+    /**
+     * Getter for the state.
+     * @return the name of the current state.
+     */
     std::string getStateAsName();
+
+    /**
+     * Holds the current state.
+     */
     QoSBrokerStates_t _state;
 
+    /**
+     * Holds a pointer to the UDPSocket.
+     */
+    inet::UDPSocket* _socket;
 
-    UDPSocket* _socket;
-
+    /**
+     * My Endpoint.
+     */
     EndpointDescription _me;
+
+    /**
+     * Your Endpoint.
+     */
     EndpointDescription _you;
+
+    /**
+     * Is this a client?
+     */
     bool _isClient;
 
-    bool _parametersInitialized; //first initialization of parameters finished?
 };
 
 } /* namespace soqosmw */

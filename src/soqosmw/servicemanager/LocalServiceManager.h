@@ -16,19 +16,21 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 
-#include <omnetpp.h>
+#include <endpoints/publisher/base/IPublisher.h>
+#include <endpoints/subscriber/base/ISubscriber.h>
+#include <omnetpp/csimplemodule.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
 #include <vector>
 
-#include <soqosmw/endpoints/publisher/base/IPublisher.h>
-#include <soqosmw/endpoints/subscriber/base/ISubscriber.h>
-#include <soqosmw/discovery/static/StaticServiceDiscovery.h>
-#include <soqosmw/applications/base/SOQoSMWApplicationBase.h>
+namespace soqosmw {
+class SOQoSMWApplicationBase;
+class StaticServiceDiscovery;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
 namespace soqosmw {
-
-class SOQoSMWApplicationBase;
 
 /**
  * @brief The LocalServiceManager is used to create, find and remove local Services.
@@ -142,9 +144,19 @@ public:
     bool removeSubscriber(ISubscriber* subscriber, SOQoSMWApplicationBase* executingApplication);
 
 private:
+    /**
+     * Contains pointers to the existing publishers on a node.
+     */
     std::vector<IPublisher*> _publishers;
+
+    /**
+     * contains pointers to the existing subscribers on a node.
+     */
     std::vector<ISubscriber*> _subscribers;
 
+    /**
+     * A pointer to the service discovery.
+     */
     StaticServiceDiscovery* _sd;
 };
 

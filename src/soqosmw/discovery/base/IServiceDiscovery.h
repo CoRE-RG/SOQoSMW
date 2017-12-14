@@ -20,16 +20,19 @@
 
 using namespace omnetpp;
 
-namespace soqosmw{
+namespace soqosmw {
 
 /**
- * TODO - Generated class
+ * @brief Base class for the service discovery module of soqosmw to switch from dynamic to static service discovery.
+ *
+ * @ingroup soqosmw/discovery
+ *
+ * @author Timo Haeckel
  */
-class IServiceDiscovery : public cSimpleModule
-{
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
+class IServiceDiscovery: public cSimpleModule {
+protected:
+    virtual void initialize(){};
+    virtual void handleMessage(cMessage *msg){};
 };
 
 } /*end namespace soqosmw*/

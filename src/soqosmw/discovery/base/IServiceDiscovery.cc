@@ -17,14 +17,4 @@
 
 namespace soqosmw{
 
-void IServiceDiscovery::initialize()
-{
-    // TODO - Generated method body
-}
-
-void IServiceDiscovery::handleMessage(cMessage *msg)
-{
-    // TODO - Generated method body
-}
-
 } /*end namespace soqosmw*/

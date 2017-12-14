@@ -13,11 +13,24 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.h>
+#include <base/EndpointDescription.h>
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <omnetpp/cmessage.h>
+#include <omnetpp/cobjectfactory.h>
+#include <omnetpp/cpar.h>
+#include <omnetpp/csimulation.h>
+#include <omnetpp/regmacros.h>
+#include <qosmanagement/negotiation/broker/QoSBroker.h>
+#include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
+#include <string>
+#include <iostream>
 
-#include "inet/networklayer/common/L3AddressResolver.h"
+#include <inet/networklayer/common/L3AddressResolver.h>
+
 
 namespace soqosmw {
+using namespace std;
+using namespace inet;
 
 Define_Module(QoSNegotiationProtocol);
 
@@ -113,11 +126,6 @@ void QoSNegotiationProtocol::handleParameterChange(const char* parname) {
     //update parameters if nullptr or parameter specified.
     if (!parname || !strcmp(parname, "isClient")) { //is this a client?
         _isClient = this->par("isClient").boolValue();
-    }
-
-    //first initialization before startup finished?
-    if (!parname && !_parametersInitialized) {
-        _parametersInitialized = true;
     }
 
 }

@@ -16,39 +16,63 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
 
-#include <omnetpp.h>
+//SOQOSMW
+#include <discovery/base/IServiceDiscovery.h>
+
+//STD
+#include <string>
 #include <unordered_map>
-#include <soqosmw/discovery/base/IServiceDiscovery.h>
+
+//INET
 #include <inet/networklayer/common/L3Address.h>
 
+namespace soqosmw {
 
-using namespace omnetpp;
-
-namespace soqosmw{
 #define NO_OF_INIT_STAGES 15
 #define MY_INIT_STAGE 13
-/**
- * TODO - Generated class
- */
-class StaticServiceDiscovery : public IServiceDiscovery
-{
-  public:
-    inet::L3Address& discover(std::string serviceName);
 
+/**
+ * @brief This class provides a static ServiceDiscovery Module via XML.
+ *
+ * @ingroup soqosmw/discovery
+ *
+ * @author Timo Haeckel
+ */
+class StaticServiceDiscovery: public IServiceDiscovery {
+public:
+    /**
+     * Find a Service in the Registry.
+     * @param path The name/path of the service to find.
+     * @return The network address of the node running the service.
+     */
+    inet::L3Address& discover(std::string path);
+
+    /**
+     * Get all registry entries as a map.
+     * @return the registry.
+     */
     const std::unordered_map<std::string, inet::L3Address>& getRegistry() const {
         return _registry;
     }
 
+    /**
+     * Check if the registry contains a service with the given path.
+     * @param path The name/path of the service to find
+     * @return True if the registry contains the service, otherwise false.
+     */
     bool contains(std::string path);
 
-  protected:
+protected:
     virtual void initialize(int stage) override;
     virtual int numInitStages() const override {
         return NO_OF_INIT_STAGES;
     }
     virtual void handleMessage(cMessage *msg);
 
-  private:
+private:
+    /**
+     * The static registry.
+     */
     std::unordered_map<std::string, inet::L3Address> _registry;
 };
 

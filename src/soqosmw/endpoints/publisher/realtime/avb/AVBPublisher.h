@@ -17,21 +17,49 @@
 #define SOQOSMW_ENDPOINTS_PUBLISHER_REALTIME_AVB_AVBPUBLISHER_H_
 
 #include <endpoints/publisher/realtime/base/IRTPublisher.h>
+#include <omnetpp/clistener.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <vector>
 
-#include <core4inet/services/avb/SRP/SRPTable.h>
+#include <inet/linklayer/common/MACAddress.h>
+
+namespace CoRE4INET {
+class SRPTable;
+} /* namespace CoRE4INET */
 
 namespace soqosmw {
 
+/**
+ * @brief AVBPublisher class provides an avb protocol specific implementation of the publish subscribe pattern.
+ *
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel
+ */
 class AVBPublisher: public IRTPublisher, cListener {
 public:
-    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner, CoRE4INET::SRPTable* srpTable);
+    /**
+     * Constructor.
+     * @param path from IEndpoint.
+     * @param qosPolicies from IEndpoint.
+     * @param owner from IEndpoint.
+     */
+    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies,
+            SOQoSMWApplicationBase* owner);
     virtual ~AVBPublisher();
 
     virtual void publish(omnetpp::cPacket* payload) override;
 
 private:
+    /**
+     * The SRP Table to register a talker and be notified about new listeners.
+     */
     CoRE4INET::SRPTable *_srpTable;
 
+    /**
+     * the multicast address of the Stream.
+     */
     inet::MACAddress _multicastMAC;
 };
 

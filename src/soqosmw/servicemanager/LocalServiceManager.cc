@@ -13,11 +13,18 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <discovery/static/StaticServiceDiscovery.h>
+#include <endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
+#include <omnetpp/cexception.h>
+#include <omnetpp/checkandcast.h>
+#include <omnetpp/cmessage.h>
+#include <omnetpp/cobjectfactory.h>
+#include <omnetpp/cpar.h>
+#include <omnetpp/regmacros.h>
+#include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
-
-#include "LocalServiceManager.h"
-#include <soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.h>
-#include <soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.h>
+#include <iterator>
 
 #include <core4inet/services/avb/SRP/SRPTable.h>
 
@@ -47,7 +54,7 @@ IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
     SRPTable *srpTable = check_and_cast<SRPTable *>(getParentModule()->getSubmodule("srpTable"));
     if(srpTable){
 
-        publisher = new AVBPublisher(publisherPath, qosPolicies, executingApplication, srpTable);
+        publisher = new AVBPublisher(publisherPath, qosPolicies, executingApplication);
         _publishers.push_back(publisher);
 
     } else {

@@ -16,9 +16,16 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 
-#include <omnetpp.h>
-#include <soqosmw/applications/base/SOQoSMWApplicationBase.h>
-#include <soqosmw/endpoints/publisher/base/IPublisher.h>
+#include <applications/base/SOQoSMWApplicationBase.h>
+#include <crtdefs.h>
+#include <omnetpp/clistener.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <vector>
+
+namespace soqosmw {
+class IPublisher;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
@@ -30,7 +37,7 @@ namespace soqosmw {
 /**
  * @brief Base class for a soqosmw publisher application.
  *
- * @ingroup Applications
+ * @ingroup soqosmw/applications
  *
  * @author Timo Haeckel
  */
@@ -82,14 +89,14 @@ public:
     virtual ~PublisherAppBase();
 
     /**
-     * @brief Indicated that PublisherApp is enabled
+     * Indicated that PublisherApp is enabled
      *
      * @return true when enabled, otherwise false
      */
     bool isEnabled();
 
     /**
-     * @brief Returns the number of bytes of the payload desired
+     * Returns the number of bytes of the payload desired
      *
      * @return Size of payload in bytes
      */
@@ -97,17 +104,17 @@ public:
 
 protected:
     /**
-     * @brief Signal that is emitted each time the payload is used.
+     * Signal that is emitted each time the payload is used.
      */
     static simsignal_t sigPayload;
 
     /**
-     * @brief Initialization of the module. Sends activator message
+     * Initialization of the module. Sends activator message
      */
     virtual void initialize();
 
     /**
-     * @brief This method should be called from subclasses unless the module
+     * This method should be called from subclasses unless the module
      * resets the bag on its own.
      *
      * @param msg Parameter must be forwarded from subclass
@@ -115,7 +122,7 @@ protected:
     virtual void handleMessage(cMessage *msg) override;
 
     /**
-     * @brief Indicates a parameter has changed.
+     * Indicates a parameter has changed.
      *
      * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
      */

@@ -13,9 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <soqosmw/qosmanagement/negotiation/broker/QoSBroker.h>
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <qosmanagement/negotiation/broker/QoSBroker.h>
+#include <iostream>
+
+#include <inet/networklayer/common/L3Address.h>
+#include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
+using namespace inet;
+using namespace std;
 
 QoSBroker::QoSBroker(UDPSocket* socket, EndpointDescription local,
         EndpointDescription remote, bool isClient) :

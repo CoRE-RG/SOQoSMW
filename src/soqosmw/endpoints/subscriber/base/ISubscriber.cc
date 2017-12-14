@@ -17,7 +17,6 @@
 
 namespace soqosmw {
 using namespace std;
-using namespace omnetpp;
 
 ISubscriber::ISubscriber(string subscriberPath, string publisherPath,
         vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :

@@ -16,13 +16,30 @@
 #ifndef SOQOSMW_ENDPOINTS_PUBLISHER_REALTIME_BASE_IRTPUBLISHER_H_
 #define SOQOSMW_ENDPOINTS_PUBLISHER_REALTIME_BASE_IRTPUBLISHER_H_
 
-#include <soqosmw/endpoints/publisher/base/IPublisher.h>
+#include <endpoints/publisher/base/IPublisher.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <vector>
 
 namespace soqosmw {
 
-class IRTPublisher : public IPublisher{
+/**
+ * @brief RTPublisher interfaces. Base class for all publishers with realtime Requirements.
+ *
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel
+ */
+class IRTPublisher: public IPublisher {
 public:
-    IRTPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+    /**
+     * Constructor.
+     * @param path from IEndpoint.
+     * @param qosPolicies from IEndpoint.
+     * @param owner from IEndpoint.
+     */
+    IRTPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies,
+            SOQoSMWApplicationBase* owner);
     virtual ~IRTPublisher();
 
 };

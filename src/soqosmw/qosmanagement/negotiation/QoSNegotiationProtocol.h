@@ -16,17 +16,20 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 
-#include <omnetpp.h>
+#include <omnetpp/csimplemodule.h>
 #include <string>
-#include <list>
 
-#include <soqosmw/messages/Envelope_m.h>
-#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <soqosmw/qosmanagement/negotiation/broker/QoSBroker.h>
+#include <inet/networklayer/common/L3Address.h>
+#include <inet/transportlayer/contract/udp/UDPSocket.h>
 
-//INET
-#include "inet/networklayer/common/L3Address.h"
-#include "inet/transportlayer/contract/udp/UDPSocket.h"
+namespace soqosmw {
+class Envelope;
+class QoSBroker;
+class QoSNegotiationEstablish;
+class QoSNegotiationFinalise;
+class QoSNegotiationRequest;
+class QoSNegotiationResponse;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
@@ -36,54 +39,97 @@ namespace soqosmw {
 #define MY_INIT_STAGE 13
 
 /**
- * TODO - Generated class
+ * @brief QoSNegotiationProtocol provides all functionality to negotiatiate the QoS Policies for a connection of to @class{IEndpoints}.
+ *
+ * @ingroup soqosmw/qosmanagement
+ *
+ * @author Timo Haeckel
  */
-class QoSNegotiationProtocol : public cSimpleModule
-{
-  public:
+class QoSNegotiationProtocol: public cSimpleModule {
+public:
     QoSNegotiationProtocol();
     virtual ~QoSNegotiationProtocol();
 
-  protected:
+protected:
     virtual void initialize(int stage) override;
     virtual int numInitStages() const override {
         return NO_OF_INIT_STAGES;
     }
     virtual void handleMessage(cMessage *msg) override;
-    virtual void handleParameterChange(const char* parname);
+    virtual void handleParameterChange(const char* parname) override;
 
-  private:
+private:
+    /**
+     * Fills the soqosmw message envelope with endpoint descriptions.
+     * @param envelope
+     */
+    void fillEnvelope(Envelope* envelope);
 
-    void handleStartSignal();
-    void handleRequest(QoSNegotiationRequest* request);
-    void handleResponse(QoSNegotiationResponse* response);
-    void handleEstablish(QoSNegotiationEstablish* establish);
-    void handleFinalise(QoSNegotiationFinalise* finalise);
-
-    bool isRequestAcceptable(QoSNegotiationRequest* request);
-    bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
-
-    void fillEnvelope(soqosmw::Envelope* envelope);
+    /**
+     * Sends a message via UDP.
+     * @param msg the message to send.
+     */
     void sendMessage(cPacket* msg);
 
-    //udp specific
+    /**
+     * Sets up the UDP socket.
+     */
     void socketSetup();
+
+    /**
+     * Checks if a socket is bound.
+     * @return true if the socket is bound, otherwise false.
+     */
     bool isSocketBound();
+
+    /**
+     * Closes the UDP connection.
+     */
     void socketClose();
 
+    /**
+     * Caches the isClient parameter.
+     */
     bool _isClient; //is client or server? TODO remove...
 
-    L3Address _localAddress;
-    string _localPath;
-    L3Address _destAddress;
-    string _destPath;
+    /**
+     * Caches the localAddress parameter.
+     */
+    inet::L3Address _localAddress;
+
+    /**
+     * Caches the localPath parameter.
+     */
+    std::string _localPath;
+
+    /**
+     * Caches the destAddress parameter.
+     */
+    inet::L3Address _destAddress;
+
+    /**
+     * Caches the destPath parameter.
+     */
+    std::string _destPath;
+
+    /**
+     * Caches the protocolPort parameter.
+     */
     int _protocolPort;
 
-    bool _parametersInitialized; //first initialization of parameters finished?
+    /**
+     * The UDP Socket for sending and receiving messages.
+     */
+    inet::UDPSocket _socket;
 
-    UDPSocket _socket;
+    /**
+     * Check if the socket is bound.
+     */
     bool _socketBound;
 
+    /**
+     * A QoS Broker that handles the negotiation.
+     */
     QoSBroker* _broker;
 };
 

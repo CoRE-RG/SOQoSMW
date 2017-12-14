@@ -16,21 +16,32 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
-#include <omnetpp.h>
-
-//STD
+#include <qospolicy/base/IQoSPolicy.h>
 #include <string>
 #include <vector>
 
-//SOQOSMW
-#include <soqosmw/qospolicy/base/IQoSPolicy.h>
+namespace soqosmw {
+class SOQoSMWApplicationBase;
+} /* namespace soqosmw */
+
 
 namespace soqosmw {
 
-class SOQoSMWApplicationBase;
-
+/**
+ * @brief Endpoint interface. Baseclass of all soqosmw communication endpoints.
+ *
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel
+ */
 class IEndpoint {
 public:
+    /**
+     * Constructor
+     * @param endpointPath The path/name of the endpoint
+     * @param qosPolicies The QoS Policies describing the communication behavior of the endpoint.
+     * @param owner The executing application.
+     */
     IEndpoint(std::string endpointPath, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
     virtual ~IEndpoint();
 
@@ -52,9 +63,18 @@ public:
 
     //    virtual bool mathes(std::string& path, std::vector<IQoSPolicy>& qos);
 
+    /**
+     * Check if an application is the executer of this endpoint
+     * @param application The application pointer.
+     * @return True if the application is the executer.
+     */
     bool isExecutedBy (SOQoSMWApplicationBase* application);
 
 protected:
+    /**
+     * Get the owning application.
+     * @return The executing application.
+     */
     const SOQoSMWApplicationBase* getOwner() const {
         return _owner;
     }

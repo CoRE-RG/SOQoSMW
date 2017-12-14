@@ -16,12 +16,29 @@
 #ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_BASE_ISUBSCRIBER_H_
 #define SOQOSMW_ENDPOINTS_SUBSCRIBER_BASE_ISUBSCRIBER_H_
 
-#include <soqosmw/endpoints/base/IEndpoint.h>
+#include <endpoints/base/IEndpoint.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <vector>
 
 namespace soqosmw {
 
+/**
+ * @brief Subscriber interface. Base class for all subscribers.
+ *
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel
+ */
 class ISubscriber : public IEndpoint {
 public:
+    /**
+     * Constructor.
+     * @param subscriberPath from IEndpoint.
+     * @param publisherPath Path/name of the publisher.
+     * @param qosPolicies from IEndpoint.
+     * @param owner fromIEndpoint.
+     */
     ISubscriber(std::string subscriberPath, std::string publisherPath,
             std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
     virtual ~ISubscriber();
@@ -35,6 +52,9 @@ public:
     }
 
 private:
+    /**
+     * The path/name of the publisher.
+     */
     std::string _publisherPath;
 };
 

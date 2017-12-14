@@ -17,7 +17,6 @@
 
 namespace soqosmw {
 using namespace std;
-using namespace omnetpp;
 
 IEndpoint::IEndpoint(string endpointPath, vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
         _endpointPath(endpointPath), _qos(qosPolicies), _owner(owner){

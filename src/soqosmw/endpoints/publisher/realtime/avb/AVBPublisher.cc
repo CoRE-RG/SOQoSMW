@@ -13,14 +13,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <applications/base/SOQoSMWApplicationBase.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <omnetpp/checkandcast.h>
 
-//CoRE4INET
-#include "core4inet/base/NotifierConsts.h"
-#include "core4inet/base/avb/AVBDefs.h"
-
-//INET
-#include "inet/linklayer/common/MACAddress.h"
+#include "core4inet/services/avb/SRP/SRPTable.h"
 
 using namespace std;
 using namespace omnetpp;
@@ -29,9 +26,10 @@ using namespace CoRE4INET;
 namespace soqosmw {
 
 AVBPublisher::AVBPublisher(string path,
-        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner,
-        SRPTable* srpTable) :
-        IRTPublisher(path, qosPolicies, owner), _srpTable(srpTable) {
+        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
+        IRTPublisher(path, qosPolicies, owner) {
+
+    _srpTable = check_and_cast<SRPTable *>(owner->getParentModule()->getSubmodule("srpTable"));
 
     /*_multicastMAC = inet::MACAddress::generateAutoAddress();
      _multicastMAC.setAddressByte(0, (multicastMAC.getAddressByte(1) | 0x01));

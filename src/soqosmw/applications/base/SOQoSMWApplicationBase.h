@@ -16,12 +16,15 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
-#include <omnetpp.h>
+#include <omnetpp/csimplemodule.h>
 
 using namespace omnetpp;
 
 namespace soqosmw {
 
+/**
+ * forward declaration of LocalServiceManager to let them know each other.
+ */
 class LocalServiceManager;
 
 /**
@@ -29,7 +32,7 @@ class LocalServiceManager;
  *
  * contains the module connection to the LocalServiceManager
  *
- * @ingroup Applications
+ * @ingroup soqosmw/applications
  *
  * @author Timo Haeckel
  */
@@ -37,18 +40,22 @@ class SOQoSMWApplicationBase: public virtual cSimpleModule {
 public:
     virtual ~SOQoSMWApplicationBase();
 
+    /**
+     * This method returns the LocalServiceManager reference to interact with soqosmw services.
+     * @return
+     */
     LocalServiceManager* getLocalServiceManager() const {
         return _localServiceManager;
     }
 
 protected:
     /**
-     * @brief Initialization of the module.
+     * Initialization of the module.
      */
     virtual void initialize() override;
 
     /**
-     * @brief This method should be called from subclasses unless the module
+     * This method should be called from subclasses unless the module
      * resets the bag on its own.
      *
      * @param msg Parameter must be forwarded from subclass
@@ -56,15 +63,18 @@ protected:
     virtual void handleMessage(cMessage *msg) override;
 
     /**
-     * @brief Indicates a parameter has changed.
+     * Indicates a parameter has changed.
      *
      * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
      *
-     * @throws cRuntimeError When buffer module and application module do not have the same parent module
+     * @throws cRuntimeError When needed parameters could not be found.
      */
     virtual void handleParameterChange(const char* parname) override;
 
 private:
+    /**
+     * Reference to the LocalServiceManager.
+     */
     LocalServiceManager* _localServiceManager;
 };
 
