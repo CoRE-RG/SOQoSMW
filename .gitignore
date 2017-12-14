@@ -10,3 +10,6 @@ out/
 *_m.cc
 *_m.h
 examples/soqosmw_rtip_host/small_network/results/
+doc/doxy/
+doc/neddoc/
+doc/index.html
