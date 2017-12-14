@@ -16,8 +16,12 @@
 #include <endpoints/publisher/base/IPublisher.h>
 
 namespace soqosmw {
+using namespace std;
+using namespace omnetpp;
 
-IPublisher::IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies) : IEndpoint (path, qosPolicies){
+IPublisher::IPublisher(string subscriberPath, vector<IQoSPolicy> qosPolicies,
+        SOQoSMWApplicationBase* owner) :
+        IEndpoint(subscriberPath, qosPolicies, owner) {
 
     // TODO Auto-generated constructor stub
 

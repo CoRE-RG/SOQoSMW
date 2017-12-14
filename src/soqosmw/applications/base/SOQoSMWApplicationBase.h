@@ -17,11 +17,12 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
 #include <omnetpp.h>
-#include <soqosmw/servicemanager/LocalServiceManager.h>
 
 using namespace omnetpp;
 
 namespace soqosmw {
+
+class LocalServiceManager;
 
 /**
  * @brief Base class for a SOQoSMW-Application.

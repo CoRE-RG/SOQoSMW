@@ -16,9 +16,12 @@
 #include <endpoints/subscriber/realtime/base/IRTSubscriber.h>
 
 namespace soqosmw {
+using namespace std;
+using namespace omnetpp;
 
-IRTSubscriber::IRTSubscriber(std::string subscriberPath, std::string publisherPath,
-        std::vector<IQoSPolicy> qosPolicies) : ISubscriber(subscriberPath, publisherPath, qosPolicies) {
+IRTSubscriber::IRTSubscriber(string subscriberPath, string publisherPath,
+        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
+        ISubscriber(subscriberPath, publisherPath, qosPolicies, owner) {
     // TODO Auto-generated constructor stub
 
 }

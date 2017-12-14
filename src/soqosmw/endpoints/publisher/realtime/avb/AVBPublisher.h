@@ -18,12 +18,21 @@
 
 #include <endpoints/publisher/realtime/base/IRTPublisher.h>
 
+#include <core4inet/services/avb/SRP/SRPTable.h>
+
 namespace soqosmw {
 
-class AVBPublisher: public IRTPublisher {
+class AVBPublisher: public IRTPublisher, cListener {
 public:
-    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies);
+    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner, CoRE4INET::SRPTable* srpTable);
     virtual ~AVBPublisher();
+
+    virtual void publish(omnetpp::cPacket* payload) override;
+
+private:
+    CoRE4INET::SRPTable *_srpTable;
+
+    inet::MACAddress _multicastMAC;
 };
 
 } /*end namespace soqosmw*/

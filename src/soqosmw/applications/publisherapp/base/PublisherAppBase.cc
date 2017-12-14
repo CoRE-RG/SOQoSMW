@@ -13,8 +13,9 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/publisherapp/base/PublisherAppBase.h>
+#include <soqosmw/applications/publisherapp/base/PublisherAppBase.h>
 #include <soqosmw/qospolicy/base/QoSPolicyFactory.h>
+#include <soqosmw/servicemanager/LocalServiceManager.h>
 
 //CoRE4INET
 #include "core4inet/utilities/ConfigFunctions.h"
@@ -109,13 +110,20 @@ void PublisherAppBase::handleMessage(cMessage *msg){
 
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         //register this as new publisher app!
-        _publisher = getLocalServiceManager()->createPublisher(this->serviceName, this->qosPolicies);
+        _publisher = getLocalServiceManager()->createPublisher(this->serviceName, this->qosPolicies, this);
 
         //schedule next send event
         scheduleAt(simTime() + (this->interval / this->messagesPerInterval), new cMessage(SEND_MSG_NAME));
     } else if (msg->isSelfMessage() && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
         if(_publisher){
+            cPacket *payloadPacket = new cPacket;
+            payloadPacket->setTimestamp();
+            payloadPacket->setByteLength(static_cast<int64_t>(getPayloadBytes()));
 
+            _publisher->publish(payloadPacket);
+
+            //schedule next send event
+            scheduleAt(simTime() + (this->interval / this->messagesPerInterval), new cMessage(SEND_MSG_NAME));
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
         }

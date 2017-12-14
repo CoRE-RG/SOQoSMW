@@ -17,9 +17,10 @@
 
 namespace soqosmw {
 using namespace std;
+using namespace omnetpp;
 
-IEndpoint::IEndpoint(string endpointPath, vector<IQoSPolicy> qosPolicies) : _endpointPath(endpointPath), _qos(qosPolicies) {
-    // TODO Auto-generated constructor stub
+IEndpoint::IEndpoint(string endpointPath, vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
+        _endpointPath(endpointPath), _qos(qosPolicies), _owner(owner){
 
 }
 
@@ -44,5 +45,8 @@ IEndpoint::~IEndpoint() {
 //    return pathMatches && qosMatches;
 //}
 
+bool IEndpoint::isExecutedBy(SOQoSMWApplicationBase* application) {
+    return _owner == application;
+}
 } /*end namespace soqosmw*/
 

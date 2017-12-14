@@ -14,6 +14,7 @@
 // 
 
 #include "SOQoSMWApplicationBase.h"
+#include <soqosmw/servicemanager/LocalServiceManager.h>
 
 namespace soqosmw {
 

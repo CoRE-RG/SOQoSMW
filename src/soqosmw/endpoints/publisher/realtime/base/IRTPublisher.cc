@@ -16,8 +16,12 @@
 #include <endpoints/publisher/realtime/base/IRTPublisher.h>
 
 namespace soqosmw {
+using namespace omnetpp;
+using namespace std;
 
-IRTPublisher::IRTPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies) : IPublisher (path, qosPolicies){
+IRTPublisher::IRTPublisher(string path, vector<IQoSPolicy> qosPolicies,
+        SOQoSMWApplicationBase* owner) :
+        IPublisher(path, qosPolicies, owner) {
     // TODO Auto-generated constructor stub
 
 }

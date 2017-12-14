@@ -16,10 +16,12 @@
 #include <endpoints/subscriber/base/ISubscriber.h>
 
 namespace soqosmw {
+using namespace std;
+using namespace omnetpp;
 
-ISubscriber::ISubscriber(std::string subscriberPath, std::string publisherPath,
-        std::vector<IQoSPolicy> qosPolicies) :
-        IEndpoint(subscriberPath, qosPolicies), _publisherPath(publisherPath){
+ISubscriber::ISubscriber(string subscriberPath, string publisherPath,
+        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
+        IEndpoint(subscriberPath, qosPolicies, owner), _publisherPath(publisherPath){
     // TODO Auto-generated constructor stub
 
 }

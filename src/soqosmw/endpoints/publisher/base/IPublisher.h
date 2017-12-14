@@ -20,12 +20,12 @@
 
 namespace soqosmw {
 
-class IPublisher : public IEndpoint{
-    friend class LocalServiceManager;
+class IPublisher: public IEndpoint {
 public:
-    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies);
+    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
     virtual ~IPublisher();
 
+    virtual void publish(omnetpp::cPacket* payload) = 0;
 };
 
 } /*end namespace soqosmw*/

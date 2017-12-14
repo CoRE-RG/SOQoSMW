@@ -16,6 +16,8 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
+#include <omnetpp.h>
+
 //STD
 #include <string>
 #include <vector>
@@ -25,9 +27,11 @@
 
 namespace soqosmw {
 
+class SOQoSMWApplicationBase;
+
 class IEndpoint {
 public:
-    IEndpoint(std::string endpointPath, std::vector<IQoSPolicy> qosPolicies);
+    IEndpoint(std::string endpointPath, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
     virtual ~IEndpoint();
 
     const std::string& getEndpointPath() const {
@@ -46,11 +50,31 @@ public:
         _qos = qos;
     }
 
-//    virtual bool mathes(std::string& path, std::vector<IQoSPolicy>& qos);
+    //    virtual bool mathes(std::string& path, std::vector<IQoSPolicy>& qos);
+
+    bool isExecutedBy (SOQoSMWApplicationBase* application);
+
+protected:
+    const SOQoSMWApplicationBase* getOwner() const {
+        return _owner;
+    }
 
 private:
+    /**
+     * The name of the endpoint as a path for better specifying (e.g. "Reifendruck/links").
+     */
     std::string _endpointPath;
+
+    /**
+     * QoS Policies set for this Endpoint.
+     */
     std::vector<IQoSPolicy> _qos;
+
+    /**
+     * Owner Module of this Endpoint.
+     */
+    SOQoSMWApplicationBase* _owner;
+
 };
 
 } /*end namespace soqosmw*/

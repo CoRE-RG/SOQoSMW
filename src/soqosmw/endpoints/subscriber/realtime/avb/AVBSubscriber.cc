@@ -16,9 +16,12 @@
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
 
 namespace soqosmw {
+using namespace std;
+using namespace omnetpp;
 
-AVBSubscriber::AVBSubscriber(std::string subscriberPath, std::string publisherPath,
-        std::vector<IQoSPolicy> qosPolicies) : IRTSubscriber(subscriberPath, publisherPath, qosPolicies) {
+AVBSubscriber::AVBSubscriber(string subscriberPath, string publisherPath,
+        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
+        IRTSubscriber(subscriberPath, publisherPath, qosPolicies, owner) {
     // TODO Auto-generated constructor stub
 
 }

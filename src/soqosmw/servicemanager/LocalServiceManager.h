@@ -22,10 +22,13 @@
 #include <soqosmw/endpoints/publisher/base/IPublisher.h>
 #include <soqosmw/endpoints/subscriber/base/ISubscriber.h>
 #include <soqosmw/discovery/static/StaticServiceDiscovery.h>
+#include <soqosmw/applications/base/SOQoSMWApplicationBase.h>
 
 using namespace omnetpp;
 
 namespace soqosmw {
+
+class SOQoSMWApplicationBase;
 
 /**
  * @brief The LocalServiceManager is used to create, find and remove local Services.
@@ -54,11 +57,12 @@ public:
      *
      * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
      * @param qosPolicies The QoS Policies for the Publisher.
+     * @param executingModule The omnetpp::cModule executing the request.
      *
      * @return If a publisher could be created it returns a pointer to the Publisher. Else nullptr.
      */
     IPublisher* createPublisher(std::string& publisherPath,
-            std::vector<IQoSPolicy> qosPolicies);
+            std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
@@ -66,11 +70,12 @@ public:
      * @param subscriberPath Path of the Subscriber Service (e.g. "bordcomputer")
      * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
      * @param qosPolicies The QoS Policies for the Subscriber.
+     * @param executingModule The omnetpp::cModule executing the request.
      *
      * @return If a subscriber could be created it returns a pointer to the Subscriber. Else nullptr.
      */
     ISubscriber* createSubscriber(std::string& subscriberPath,
-            std::string& publisherPath, std::vector<IQoSPolicy>& qosPolicies);
+            std::string& publisherPath, std::vector<IQoSPolicy>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief Check if a publisher exists.
@@ -119,20 +124,22 @@ public:
      * NOTE the publisher pointer is no longer valid now and will be set to a nullptr.
      *
      * @param publisher A pointer to the publisher that should be removed.
+     * @param executingModule The omnetpp::cModule executing the request.
      *
      * @return true if the publisher was removed, false if not found.
      */
-    bool removePublisher(IPublisher* publisher);
+    bool removePublisher(IPublisher* publisher, SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief This method removes the given subscriber.
      * NOTE the subscriber pointer is no longer valid now and will be set to a nullptr.
      *
      * @param subscriber A pointer to the subscriber that should be removed.
+     * @param executingModule The omnetpp::cModule executing the request.
      *
      * @return true if the subscriber was removed, false if not found.
      */
-    bool removeSubscriber(ISubscriber* subscriber);
+    bool removeSubscriber(ISubscriber* subscriber, SOQoSMWApplicationBase* executingApplication);
 
 private:
     std::vector<IPublisher*> _publishers;

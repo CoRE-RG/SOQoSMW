@@ -47,7 +47,7 @@ module SOQoSMWHost extends RTIPHost
 
             @display("p=213,45");
         }
-
+        
     connections allowunconnected:
 
         qosnp.udpOut --> udp.appIn++;

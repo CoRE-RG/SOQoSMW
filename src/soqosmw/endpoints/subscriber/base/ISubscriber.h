@@ -21,10 +21,9 @@
 namespace soqosmw {
 
 class ISubscriber : public IEndpoint {
-    friend class LocalServiceManager;
 public:
     ISubscriber(std::string subscriberPath, std::string publisherPath,
-            std::vector<IQoSPolicy> qosPolicies);
+            std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
     virtual ~ISubscriber();
 
     const std::string& getPublisherPath() const {
