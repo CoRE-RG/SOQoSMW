@@ -17,14 +17,63 @@
 #define SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_AVB_AVBSUBSCRIBER_H_
 
 #include <endpoints/subscriber/realtime/base/IRTSubscriber.h>
+#include <omnetpp/clistener.h>
+#include <omnetpp/simtime_t.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <unordered_map>
+
+namespace CoRE4INET {
+class SRPTable;
+} /* namespace CoRE4INET */
 
 namespace soqosmw {
 
-class AVBSubscriber: public IRTSubscriber {
+class AVBSubscriber: public IRTSubscriber, public virtual cListener {
 public:
     AVBSubscriber(std::string subscriberPath, std::string publisherPath,
-            std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+            std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~AVBSubscriber();
+
+protected:
+
+    /**
+     * Receives Stream Reservation Protocol signals
+     */
+    virtual void receiveSignal(cComponent *src, simsignal_t id, cObject *obj, cObject *details) override;
+
+private:
+    /**
+     * sets Default values for all Attributes.
+     */
+    void setupDefaultAttributes();
+
+    /**
+     * Sets the SRP listeners and talkers.
+     */
+    void setupSRP();
+
+private:
+    /**
+     * The SRP Table to register a talker and be notified about new listeners.
+     */
+    CoRE4INET::SRPTable *_srpTable;
+
+    /**
+     * Stream update interval.
+     */
+    simtime_t _updateInterval;
+
+    /**
+     * Retry interval if registration fails.
+     */
+    simtime_t _retryInterval;
+
+    /**
+     * Stream ID.
+     */
+    unsigned long _streamID;
+
 };
 
 } /*end namespace soqosmw*/

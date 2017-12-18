@@ -13,21 +13,36 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <endpoints/subscriber/base/ISubscriber.h>
+#ifndef SOQOSMW_QOSPOLICY_GROUP_QOSGROUP_H_
+#define SOQOSMW_QOSPOLICY_GROUP_QOSGROUP_H_
+
+#include <qospolicy/base/IQoSPolicy.h>
 
 namespace soqosmw {
-using namespace std;
 
-ISubscriber::ISubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
-        IEndpoint(subscriberPath, qosPolicies, executingApplication), _publisherPath(publisherPath){
-    // TODO Auto-generated constructor stub
+enum QoSGroups {
+    WEB, STD, RT
+};
 
-}
+const std::string QoSGroup_NAME = "QoSGroup";
 
-ISubscriber::~ISubscriber() {
-    // TODO Auto-generated destructor stub
-}
+class QoSGroup: public soqosmw::IQoSPolicy {
+public:
+    QoSGroup(QoSGroups group);
+    virtual ~QoSGroup();
 
-} /*end namespace soqosmw*/
+    static const std::string& getName(){
+        return QoSGroup_NAME;
+    }
 
+    QoSGroups getGroup() const {
+        return _group;
+    }
+
+private:
+    QoSGroups _group;
+};
+
+}/* end namespace soqosmw */
+
+#endif /* SOQOSMW_QOSPOLICY_GROUP_QOSGROUP_H_ */

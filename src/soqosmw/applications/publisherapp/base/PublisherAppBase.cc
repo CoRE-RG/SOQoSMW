@@ -13,17 +13,35 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <soqosmw/applications/publisherapp/base/PublisherAppBase.h>
-#include <soqosmw/qospolicy/base/QoSPolicyFactory.h>
-#include <soqosmw/servicemanager/LocalServiceManager.h>
+#include <applications/publisherapp/base/PublisherAppBase.h>
+#include <endpoints/publisher/base/IPublisher.h>
+#include <omnetpp/cdisplaystring.h>
+#include <omnetpp/cenvir.h>
+#include <omnetpp/cexception.h>
+#include <omnetpp/cmessage.h>
+#include <omnetpp/cnamedobject.h>
+#include <omnetpp/cobjectfactory.h>
+#include <omnetpp/cpacket.h>
+#include <omnetpp/cpar.h>
+#include <omnetpp/csimulation.h>
+#include <omnetpp/regmacros.h>
+#include <omnetpp/simtime.h>
+#include <omnetpp/simtime_t.h>
+#include <qospolicy/group/QoSGroup.h>
+#include <servicemanager/LocalServiceManager.h>
+#include <cstdint>
+#include <cstring>
+#include <vector>
 
-//CoRE4INET
-#include "core4inet/utilities/ConfigFunctions.h"
-
-//INET
-#include "inet/linklayer/ethernet/Ethernet.h"
+#include <core4inet/base/CoRE4INET_Defs.h>
+#include <core4inet/utilities/ConfigFunctions.h>
+#include <inet/linklayer/ethernet/Ethernet.h>
 
 namespace soqosmw {
+using namespace inet;
+using namespace CoRE4INET;
+using namespace std;
+
 
 simsignal_t PublisherAppBase::sigPayload = registerSignal("payloadSignal");
 
@@ -31,8 +49,8 @@ Define_Module(PublisherAppBase);
 
 PublisherAppBase::PublisherAppBase()
 {
-    this->enabled = false;
-    this->payload = 0;
+    this->_enabled = false;
+    this->_payload = 0;
 }
 
 PublisherAppBase::~PublisherAppBase()
@@ -40,22 +58,31 @@ PublisherAppBase::~PublisherAppBase()
 
 }
 
-
 bool PublisherAppBase::isEnabled()
 {
-    return this->enabled;
+    return this->_enabled;
 }
 
 size_t PublisherAppBase::getPayloadBytes(){
     handleParameterChange("payload");
-    emit(sigPayload,static_cast<unsigned long>(this->payload));
-    return this->payload;
+    emit(sigPayload,static_cast<unsigned long>(this->_payload));
+    return this->_payload;
 }
 
 void PublisherAppBase::initialize()
 {
     SOQoSMWApplicationBase::initialize();
     handleParameterChange(nullptr);
+
+    if (getPayloadBytes() <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES - ETHER_8021Q_TAG_BYTES))
+    {
+        _framesize = MIN_ETHERNET_FRAME_BYTES;
+    }
+    else
+    {
+        _framesize = getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
+    }
+
     if (isEnabled())
     {
         scheduleAt(simTime() + par("startTime").doubleValue(), new cMessage(START_MSG_NAME));
@@ -79,41 +106,43 @@ void PublisherAppBase::handleParameterChange(const char* parname)
 
     if (!parname || !strcmp(parname, "enabled"))
     {
-        this->enabled = par("enabled").boolValue();
+        this->_enabled = par("enabled").boolValue();
     }
     if (!parname || !strcmp(parname, "startTime"))
     {
-        this->startTime = CoRE4INET::parameterDoubleCheckRange(par("startTime"), 0, SIMTIME_MAX.dbl());
+        this->_startTime = CoRE4INET::parameterDoubleCheckRange(par("startTime"), 0, SIMTIME_MAX.dbl());
     }
     if (!parname || !strcmp(parname, "payload"))
     {
-        this->payload = CoRE4INET::parameterULongCheckRange(par("payload"), 0,
+        this->_payload = CoRE4INET::parameterULongCheckRange(par("payload"), 0,
                 MAX_ETHERNET_DATA_BYTES);
     }
     if (!parname || !strcmp(parname, "serviceName"))
     {
-        this->serviceName = par("serviceName").stdstringValue();
+        this->_serviceName = par("serviceName").stdstringValue();
     }
     if (!parname || !strcmp(parname, "interval"))
     {
-        this->interval = CoRE4INET::parameterDoubleCheckRange(par("interval"), 0, SIMTIME_MAX.dbl());;
+        this->_interval = CoRE4INET::parameterDoubleCheckRange(par("interval"), 0, SIMTIME_MAX.dbl());;
     }
     if (!parname || !strcmp(parname, "messagesPerInterval"))
     {
-        this->messagesPerInterval = par("messagesPerInterval");
+        this->_messagesPerInterval = par("messagesPerInterval");
     }
-    //TODO add real QoS Policies
-    qosPolicies = QoSPolicyFactory::extractPolicyFromPar(par("qosPolicies"));
 }
 
 void PublisherAppBase::handleMessage(cMessage *msg){
 
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
+
+        setQoS();
+
         //register this as new publisher app!
-        _publisher = getLocalServiceManager()->createPublisher(this->serviceName, this->qosPolicies, this);
+        _publisher = getLocalServiceManager()->createPublisher(this->_serviceName, this->_qosPolicies, this);
 
         //schedule next send event
-        scheduleAt(simTime() + (this->interval / this->messagesPerInterval), new cMessage(SEND_MSG_NAME));
+        scheduleAt(simTime() + (this->_interval / this->_messagesPerInterval), new cMessage(SEND_MSG_NAME));
+
     } else if (msg->isSelfMessage() && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
         if(_publisher){
             cPacket *payloadPacket = new cPacket;
@@ -123,12 +152,16 @@ void PublisherAppBase::handleMessage(cMessage *msg){
             _publisher->publish(payloadPacket);
 
             //schedule next send event
-            scheduleAt(simTime() + (this->interval / this->messagesPerInterval), new cMessage(SEND_MSG_NAME));
+            scheduleAt(simTime() + (this->_interval / this->_messagesPerInterval), new cMessage(SEND_MSG_NAME));
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
         }
     }
 
+}
+
+void PublisherAppBase::setQoS() {
+    _qosPolicies[QoSGroup::getName()] = QoSGroup (QoSGroups::RT);
 }
 
 } /* end namespace soqosmw */

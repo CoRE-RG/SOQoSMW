@@ -20,8 +20,9 @@
 #include <omnetpp/clistener.h>
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
+#include <core4inet/base/avb/AVBDefs.h>
 #include <inet/linklayer/common/MACAddress.h>
 
 namespace CoRE4INET {
@@ -37,19 +38,37 @@ namespace soqosmw {
  *
  * @author Timo Haeckel
  */
-class AVBPublisher: public IRTPublisher, cListener {
+class AVBPublisher: public IRTPublisher, public virtual cListener {
 public:
     /**
      * Constructor.
      * @param path from IEndpoint.
      * @param qosPolicies from IEndpoint.
-     * @param owner from IEndpoint.
+     * @param executingApplication from IEndpoint.
      */
-    AVBPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies,
-            SOQoSMWApplicationBase* owner);
+    AVBPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy> qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
     virtual ~AVBPublisher();
 
     virtual void publish(omnetpp::cPacket* payload) override;
+
+protected:
+
+    /**
+     * Receives Stream Reservation Protocol signals
+     */
+    virtual void receiveSignal(cComponent *src, simsignal_t id, cObject *obj, cObject *details) override;
+
+private:
+    /**
+     * sets Default values for all Attributes.
+     */
+    void setupDefaultAttributes();
+
+    /**
+     * Sets the SRP listeners and talkers.
+     */
+    void setupSRP();
 
 private:
     /**
@@ -61,6 +80,26 @@ private:
      * the multicast address of the Stream.
      */
     inet::MACAddress _multicastMAC;
+
+    /**
+     * Is this publisher streaming?
+     */
+    bool _isStreaming;
+
+    /**
+     * The SR_CLASS of this publishers stream.
+     */
+    CoRE4INET::SR_CLASS _srClass;
+
+    /**
+     * Stream ID.
+     */
+    unsigned long _streamID;
+
+    /**
+     * Output module for AVB traffic.
+     */
+    cModule *_avbOutCTC;
 };
 
 } /*end namespace soqosmw*/

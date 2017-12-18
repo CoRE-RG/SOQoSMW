@@ -16,17 +16,14 @@
 #include <discovery/static/StaticServiceDiscovery.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
-#include <omnetpp/cexception.h>
-#include <omnetpp/checkandcast.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
+#include <qospolicy/group/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
 #include <iterator>
-
-#include <core4inet/services/avb/SRP/SRPTable.h>
 
 using namespace CoRE4INET;
 using namespace std;
@@ -46,37 +43,51 @@ void LocalServiceManager::handleMessage(cMessage *msg) {
 }
 
 IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
-        vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) {
+        unordered_map<string, IQoSPolicy>& qosPolicies,
+        SOQoSMWApplicationBase* executingApplication) {
     IPublisher* publisher = nullptr;
     //TODO check if service already exists.
-
-    //TODO check qosPolicies to know which publisher should be created...
-    SRPTable *srpTable = check_and_cast<SRPTable *>(getParentModule()->getSubmodule("srpTable"));
-    if(srpTable){
-
-        publisher = new AVBPublisher(publisherPath, qosPolicies, executingApplication);
+    QoSGroup group = static_cast<QoSGroup&>(qosPolicies[QoSGroup::getName()]);
+    switch (group.getGroup()) {
+    case QoSGroups::WEB:
+        break;
+    case QoSGroups::STD:
+        break;
+    case QoSGroups::RT:
+        publisher = new AVBPublisher(publisherPath, qosPolicies,
+                executingApplication);
         _publishers.push_back(publisher);
-
-    } else {
-        throw cRuntimeError("Could not create AVBPublisher, because SRPTable could not be found.");
+        break;
+    default:
+        break;
     }
 
     return publisher;
 }
 
 ISubscriber* LocalServiceManager::createSubscriber(string& subscriberPath,
-        string& publisherPath, vector<IQoSPolicy>& qosPolicies, SOQoSMWApplicationBase* executingApplication) {
+        string& publisherPath, unordered_map<string, IQoSPolicy>& qosPolicies,
+        SOQoSMWApplicationBase* executingApplication) {
     ISubscriber* subscriber = nullptr;
     //TODO check if service exists in the network
-    if (_sd->contains(subscriberPath)) {
+    if (_sd->contains(publisherPath)) {
 
-        //TODO check qosPolicies to know which subscriber should be created...
+        QoSGroup group = static_cast<QoSGroup&>(qosPolicies[QoSGroup::getName()]);
+        switch (group.getGroup()) {
+        case QoSGroups::WEB:
+            break;
+        case QoSGroups::STD:
+            break;
+        case QoSGroups::RT:
+            //TODO check if such an subscriber exists already to reuse it.
+            subscriber = new AVBSubscriber(subscriberPath, publisherPath,
+                    qosPolicies, executingApplication);
+            _subscribers.push_back(subscriber);
+            break;
+        default:
+            break;
+        }
 
-        //TODO check if such an subscriber exists already to reuse it.
-
-        subscriber = new AVBSubscriber(subscriberPath, publisherPath,
-                qosPolicies, executingApplication);
-        _subscribers.push_back(subscriber);
     }
 
     return subscriber;
@@ -124,10 +135,12 @@ LocalServiceManager::~LocalServiceManager() {
 //        std::vector<IQoSPolicy>& qosPolicies, std::string& publisherPath) {
 //}
 
-bool LocalServiceManager::removePublisher(IPublisher* publisher, SOQoSMWApplicationBase* executingApplication) {
+bool LocalServiceManager::removePublisher(IPublisher* publisher,
+        SOQoSMWApplicationBase* executingApplication) {
     bool removed = false;
     auto it = find(_publishers.begin(), _publishers.end(), publisher);
-    if (it != _publishers.end() && publisher->isExecutedBy(executingApplication)) {
+    if (it != _publishers.end()
+            && publisher->isExecutedBy(executingApplication)) {
         _publishers.erase(it);
         delete publisher;
         removed = true;
@@ -135,10 +148,12 @@ bool LocalServiceManager::removePublisher(IPublisher* publisher, SOQoSMWApplicat
     return removed;
 }
 
-bool LocalServiceManager::removeSubscriber(ISubscriber* subscriber, SOQoSMWApplicationBase* executingApplication) {
+bool LocalServiceManager::removeSubscriber(ISubscriber* subscriber,
+        SOQoSMWApplicationBase* executingApplication) {
     bool removed = false;
     auto it = find(_subscribers.begin(), _subscribers.end(), subscriber);
-    if (it != _subscribers.end() && subscriber->isExecutedBy(executingApplication)) {
+    if (it != _subscribers.end()
+            && subscriber->isExecutedBy(executingApplication)) {
         _subscribers.erase(it);
         delete subscriber;
         removed = true;

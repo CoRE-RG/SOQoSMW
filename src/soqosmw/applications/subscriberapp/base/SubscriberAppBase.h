@@ -13,61 +13,46 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
+#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
+#define __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <crtdefs.h>
 #include <omnetpp/clistener.h>
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
 #include <unordered_map>
 
-
 namespace soqosmw {
-class IPublisher;
+class ISubscriber;
 } /* namespace soqosmw */
+
+namespace omnetpp {
+class cMessage;
+} /* namespace omnetpp */
 
 using namespace omnetpp;
 
 namespace soqosmw {
 
-#define START_MSG_NAME "Start Message"
-#define SEND_MSG_NAME "Send Message"
-
 /**
- * @brief Base class for a soqosmw publisher application.
- *
- * @ingroup soqosmw/applications
- *
- * @author Timo Haeckel
+ * TODO - Generated class
  */
-class PublisherAppBase: public virtual SOQoSMWApplicationBase {
+class SubscriberAppBase: public virtual SOQoSMWApplicationBase {
 private:
     /**
-     * Caches enabled parameter
+     * Signal that is emitted every time a frame was sent.
      */
-    bool _enabled;
+    static simsignal_t _rxPkSignal;
 
     /**
-     * Caches payload parameter
+     * Name of this subscriber service.
      */
-    size_t _payload;
+    std::string _subscriberName;
 
     /**
-     * size of the ethernet frame calculated from the payload.
+     * Name of the publishing service to subscribe to.
      */
-    size_t _framesize;
-
-    /**
-     * Save the responsible publisher
-     */
-    IPublisher* _publisher;
-
-    /**
-     * Name of the service to publish.
-     */
-    std::string _serviceName;
+    std::string _publisherName;
 
     /**
      * Caches QoS Policy parameters
@@ -80,40 +65,11 @@ private:
     double _startTime;
 
     /**
-     * Caches the interval length parameter
+     * Reference to the soqosmw subscriber module.
      */
-    double _interval;
-
-    /**
-     * Caches the number of Messages per Interval parameter.
-     */
-    int _messagesPerInterval;
-
-public:
-    PublisherAppBase();
-
-    virtual ~PublisherAppBase();
-
-    /**
-     * Indicated that PublisherApp is enabled
-     *
-     * @return true when enabled, otherwise false
-     */
-    bool isEnabled();
-
-    /**
-     * Returns the number of bytes of the payload desired
-     *
-     * @return Size of payload in bytes
-     */
-    size_t getPayloadBytes();
+    ISubscriber *_subscriber;
 
 protected:
-    /**
-     * Signal that is emitted each time the payload is used.
-     */
-    static simsignal_t sigPayload;
-
     /**
      * Initialization of the module. Sends activator message
      */
@@ -134,10 +90,14 @@ protected:
      */
     virtual void handleParameterChange(const char* parname) override;
 
+public:
+    SubscriberAppBase();
+    virtual ~SubscriberAppBase();
+
 private:
     void setQoS();
 };
 
-} /* end namespace soqosmw */
+}/* end namespace soqosmw */
 
 #endif

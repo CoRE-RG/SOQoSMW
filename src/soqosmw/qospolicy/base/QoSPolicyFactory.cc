@@ -15,6 +15,10 @@
 
 #include <qospolicy/base/QoSPolicyFactory.h>
 
+namespace soqosmw {
+
+using namespace std;
+
 QoSPolicyFactory::QoSPolicyFactory() {
     // TODO Auto-generated constructor stub
 
@@ -25,9 +29,11 @@ QoSPolicyFactory::~QoSPolicyFactory() {
 
 }
 
-std::vector<IQoSPolicy> QoSPolicyFactory::extractPolicyFromPar(
+unordered_map<string, IQoSPolicy>& QoSPolicyFactory::extractPolicyFromPar(
         omnetpp::cPar& parameter) {
-    std::vector<IQoSPolicy> policies;
+    unordered_map<string, IQoSPolicy> policies;
 
     return policies;
 }
+
+} /* end namepsace soqosmw */

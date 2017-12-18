@@ -18,7 +18,7 @@
 
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 namespace soqosmw {
 class SOQoSMWApplicationBase;
@@ -40,9 +40,9 @@ public:
      * Constructor
      * @param endpointPath The path/name of the endpoint
      * @param qosPolicies The QoS Policies describing the communication behavior of the endpoint.
-     * @param owner The executing application.
+     * @param executingApplication The executing application.
      */
-    IEndpoint(std::string endpointPath, std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+    IEndpoint(std::string endpointPath, std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~IEndpoint();
 
     const std::string& getEndpointPath() const {
@@ -53,15 +53,15 @@ public:
         _endpointPath = path;
     }
 
-    const std::vector<IQoSPolicy>& getQos() const {
+    const std::unordered_map<std::string, IQoSPolicy>& getQos() const {
         return _qos;
     }
 
-    void setQos(const std::vector<IQoSPolicy>& qos) {
+    void setQos(const std::unordered_map<std::string, IQoSPolicy>& qos) {
         _qos = qos;
     }
 
-    //    virtual bool mathes(std::string& path, std::vector<IQoSPolicy>& qos);
+    //    virtual bool mathes(std::string& path, std::unordered_map<std::string, IQoSPolicy>& qos);
 
     /**
      * Check if an application is the executer of this endpoint
@@ -75,8 +75,8 @@ protected:
      * Get the owning application.
      * @return The executing application.
      */
-    const SOQoSMWApplicationBase* getOwner() const {
-        return _owner;
+    SOQoSMWApplicationBase* getExecutingApplication() const {
+        return _executingApplication;
     }
 
 private:
@@ -88,12 +88,12 @@ private:
     /**
      * QoS Policies set for this Endpoint.
      */
-    std::vector<IQoSPolicy> _qos;
+    std::unordered_map<std::string, IQoSPolicy> _qos;
 
     /**
      * Owner Module of this Endpoint.
      */
-    SOQoSMWApplicationBase* _owner;
+    SOQoSMWApplicationBase* _executingApplication;
 
 };
 

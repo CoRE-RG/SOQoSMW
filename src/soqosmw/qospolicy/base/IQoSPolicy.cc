@@ -15,12 +15,13 @@
 
 #include <qospolicy/base/IQoSPolicy.h>
 
-IQoSPolicy::IQoSPolicy() {
-    // TODO Auto-generated constructor stub
+namespace soqosmw {
 
+IQoSPolicy::IQoSPolicy(){
 }
 
 IQoSPolicy::~IQoSPolicy() {
     // TODO Auto-generated destructor stub
 }
 
+} /* end namepsace soqosmw */

@@ -19,7 +19,7 @@
 #include <endpoints/base/IEndpoint.h>
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 namespace omnetpp {
 class cPacket;
@@ -40,10 +40,10 @@ public:
      * Constructor.
      * @param path from IEndpoint.
      * @param qosPolicies from IEndpoint.
-     * @param owner from IEndpoint.
+     * @param executingApplication from IEndpoint.
      */
-    IPublisher(std::string path, std::vector<IQoSPolicy> qosPolicies,
-            SOQoSMWApplicationBase* owner);
+    IPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy> qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
     virtual ~IPublisher();
 
     /**

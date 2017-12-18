@@ -33,6 +33,7 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/soqosmw/applications/base/SOQoSMWApplicationBase.o \
     $O/soqosmw/applications/publisherapp/base/PublisherAppBase.o \
+    $O/soqosmw/applications/subscriberapp/base/SubscriberAppBase.o \
     $O/soqosmw/discovery/base/IServiceDiscovery.o \
     $O/soqosmw/discovery/static/StaticServiceDiscovery.o \
     $O/soqosmw/endpoints/base/IEndpoint.o \
@@ -46,6 +47,7 @@ OBJS = \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
     $O/soqosmw/qospolicy/base/IQoSPolicy.o \
     $O/soqosmw/qospolicy/base/QoSPolicyFactory.o \
+    $O/soqosmw/qospolicy/group/QoSGroup.o \
     $O/soqosmw/servicemanager/LocalServiceManager.o \
     $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
     $O/soqosmw/messages/Envelope_m.o \

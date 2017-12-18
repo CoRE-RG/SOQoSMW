@@ -16,14 +16,19 @@
 #ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
 #define SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
 
+
+
 #include <endpoints/subscriber/base/ISubscriber.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <unordered_map>
 
 namespace soqosmw {
 
 class IRTSubscriber: public ISubscriber {
 public:
     IRTSubscriber(std::string subscriberPath, std::string publisherPath,
-            std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+            std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~IRTSubscriber();
 };
 

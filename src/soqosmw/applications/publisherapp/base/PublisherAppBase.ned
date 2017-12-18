@@ -23,7 +23,7 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 simple PublisherAppBase extends SOQoSMWApplicationBase
 {
     parameters:
-        @class(soqosmw::PublisherApp);
+        @class(soqosmw::PublisherAppBase);
         @display("i=block/source");
         
         // PublisherApp enabled or disabled

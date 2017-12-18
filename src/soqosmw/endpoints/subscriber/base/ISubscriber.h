@@ -19,7 +19,7 @@
 #include <endpoints/base/IEndpoint.h>
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 namespace soqosmw {
 
@@ -37,10 +37,10 @@ public:
      * @param subscriberPath from IEndpoint.
      * @param publisherPath Path/name of the publisher.
      * @param qosPolicies from IEndpoint.
-     * @param owner fromIEndpoint.
+     * @param executingApplication fromIEndpoint.
      */
     ISubscriber(std::string subscriberPath, std::string publisherPath,
-            std::vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner);
+            std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~ISubscriber();
 
     const std::string& getPublisherPath() const {

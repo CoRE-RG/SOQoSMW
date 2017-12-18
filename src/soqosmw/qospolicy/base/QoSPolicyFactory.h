@@ -16,17 +16,24 @@
 #ifndef SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_
 #define SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_
 
-#include <vector>
-#include <soqosmw/qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/IQoSPolicy.h>
+#include <string>
+#include <unordered_map>
 
-#include <omnetpp.h>
+namespace omnetpp {
+class cPar;
+} /* namespace omnetpp */
+
+namespace soqosmw {
 
 class QoSPolicyFactory {
 public:
     QoSPolicyFactory();
     virtual ~QoSPolicyFactory();
 
-    static std::vector<IQoSPolicy> extractPolicyFromPar(omnetpp::cPar& parameter);
+    static std::unordered_map<std::string, IQoSPolicy>& extractPolicyFromPar(omnetpp::cPar& parameter);
 };
+
+} /* end namepsace soqosmw */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_QOSPOLICYFACTORY_H_ */

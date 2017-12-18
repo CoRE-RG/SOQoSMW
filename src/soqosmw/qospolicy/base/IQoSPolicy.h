@@ -16,11 +16,19 @@
 #ifndef SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_
 
+#include <string>
+
+namespace soqosmw {
+
 class IQoSPolicy {
 public:
     IQoSPolicy();
     virtual ~IQoSPolicy();
 
+private:
+
 };
+
+} /* end namepsace soqosmw */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_IQOSPOLICY_H_ */

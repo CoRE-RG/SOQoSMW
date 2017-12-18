@@ -18,8 +18,8 @@
 namespace soqosmw {
 using namespace std;
 
-IEndpoint::IEndpoint(string endpointPath, vector<IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* owner) :
-        _endpointPath(endpointPath), _qos(qosPolicies), _owner(owner){
+IEndpoint::IEndpoint(string endpointPath, unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
+        _endpointPath(endpointPath), _qos(qosPolicies), _executingApplication(executingApplication){
 
 }
 
@@ -28,7 +28,7 @@ IEndpoint::~IEndpoint() {
 }
 
 //bool IEndpoint::mathes(string& path = NULL,
-//        vector<IQoSPolicy>& qos = NULL) {
+//        unordered_map<string, IQoSPolicy>& qos = NULL) {
 //    bool pathMatches = false;
 //    bool qosMatches = false;
 //
@@ -45,7 +45,7 @@ IEndpoint::~IEndpoint() {
 //}
 
 bool IEndpoint::isExecutedBy(SOQoSMWApplicationBase* application) {
-    return _owner == application;
+    return _executingApplication == application;
 }
 } /*end namespace soqosmw*/
 
