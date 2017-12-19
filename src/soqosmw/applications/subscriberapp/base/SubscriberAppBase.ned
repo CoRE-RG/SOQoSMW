@@ -38,7 +38,10 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         @statistic[rxLatencyInner](title="End-to-end latency inner"; source="messageAge(innerMessage(rxPk))"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
         
         // Start time
-        double startTime @unit(s) = default(1s);
+        double startTime @unit(s) = default(0s);
+        
+        // ID of the AVB Stream
+        int streamID = default(0);     
         
         string subscriberName = default("SubscriberService");
         

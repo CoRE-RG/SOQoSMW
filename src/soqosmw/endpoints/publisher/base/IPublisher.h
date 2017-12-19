@@ -42,7 +42,7 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication from IEndpoint.
      */
-    IPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy> qosPolicies,
+    IPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy*> qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
     virtual ~IPublisher();
 

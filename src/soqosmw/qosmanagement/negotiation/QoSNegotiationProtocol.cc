@@ -39,7 +39,6 @@ QoSNegotiationProtocol::QoSNegotiationProtocol() {
 }
 
 QoSNegotiationProtocol::~QoSNegotiationProtocol() {
-    socketClose();
     delete _broker;
 }
 

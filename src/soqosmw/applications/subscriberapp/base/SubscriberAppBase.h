@@ -57,12 +57,17 @@ private:
     /**
      * Caches QoS Policy parameters
      */
-    std::unordered_map<std::string, IQoSPolicy> _qosPolicies;
+    std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
 
     /**
      * Caches the start time parameter
      */
     double _startTime;
+
+    /**
+     * Caches the stream ID.
+     */
+    int _streamID;
 
     /**
      * Reference to the soqosmw subscriber module.

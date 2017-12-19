@@ -19,7 +19,7 @@ namespace soqosmw {
 using namespace std;
 using namespace omnetpp;
 
-IPublisher::IPublisher(string subscriberPath, unordered_map<string, IQoSPolicy> qosPolicies,
+IPublisher::IPublisher(string subscriberPath, unordered_map<string, IQoSPolicy*> qosPolicies,
         SOQoSMWApplicationBase* executingApplication) :
         IEndpoint(subscriberPath, qosPolicies, executingApplication) {
 

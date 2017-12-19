@@ -32,7 +32,7 @@ namespace soqosmw {
 class AVBSubscriber: public IRTSubscriber, public virtual cListener {
 public:
     AVBSubscriber(std::string subscriberPath, std::string publisherPath,
-            std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~AVBSubscriber();
 
 protected:
@@ -73,6 +73,8 @@ private:
      * Stream ID.
      */
     unsigned long _streamID;
+
+    uint16_t _vlanID;
 
 };
 

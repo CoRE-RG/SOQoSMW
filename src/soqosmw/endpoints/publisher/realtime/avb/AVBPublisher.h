@@ -46,7 +46,7 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication from IEndpoint.
      */
-    AVBPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy> qosPolicies,
+    AVBPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy*> qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
     virtual ~AVBPublisher();
 
@@ -87,14 +87,11 @@ private:
     bool _isStreaming;
 
     /**
-     * The SR_CLASS of this publishers stream.
-     */
-    CoRE4INET::SR_CLASS _srClass;
-
-    /**
      * Stream ID.
      */
     unsigned long _streamID;
+
+    uint16_t _vlanID;
 
     /**
      * Output module for AVB traffic.

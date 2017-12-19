@@ -33,9 +33,13 @@ simple PublisherAppBase extends SOQoSMWApplicationBase
         // Interval of new messages
         double interval @unit(s) = default(125us);
         // Number of frames per interval
-        int messagesPerInterval = default(1);
+        int intervalFrames = default(1);     
         //Size of the payload of the message (size of encapsulated cPacket) that is being generated
         volatile int payload @unit(Byte) = default(46Byte);
+        // ID of the AVB Stream
+        int streamID = default(0);     
+        // Stream Reservation Class of the AVB Stream
+        string srClass = default("A");
         
         @signal[payloadSignal];
     

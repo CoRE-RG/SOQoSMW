@@ -16,10 +16,11 @@
 #include <applications/base/SOQoSMWApplicationBase.h>
 #include <endpoints/base/IEndpoint.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
-#include <omnetpp/cenvir.h>
 #include <omnetpp/cexception.h>
 #include <omnetpp/checkandcast.h>
-#include <omnetpp/csimulation.h>
+#include <qospolicy/avb/StreamIDQoSPolicy.h>
+#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <iostream>
 
 #include <core4inet/base/NotifierConsts.h>
 #include <core4inet/services/avb/SRP/SRPTable.h>
@@ -32,7 +33,7 @@ using namespace CoRE4INET;
 #define SUBSCRIBER_MSG_UPDATE "updateSubscription"
 
 AVBSubscriber::AVBSubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
+        unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
         IRTSubscriber(subscriberPath, publisherPath, qosPolicies, executingApplication) {
 
     setupDefaultAttributes();
@@ -48,7 +49,8 @@ AVBSubscriber::~AVBSubscriber() {
 void AVBSubscriber::setupDefaultAttributes() {
     _srpTable = check_and_cast<SRPTable *>(
             getExecutingApplication()->getParentModule()->getSubmodule("srpTable"));
-    _streamID = 47; //TODO set via qos
+    _streamID = (dynamic_cast<StreamIDQoSPolicy*>(_qos[QoSPolicyNames::StreamID]))->getValue();
+    _vlanID = 7;
 }
 
 void AVBSubscriber::setupSRP() {
@@ -69,11 +71,13 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
         SRPTable::TalkerEntry *tentry = check_and_cast<SRPTable::TalkerEntry*>(obj);
 
         //If talker for the desired stream, register Listener
-        if (tentry->streamId == _streamID)
+        if (tentry->streamId == _streamID && tentry->vlan_id == _vlanID)
         {
             SRPTable *signal_srpTable = check_and_cast<SRPTable *>(src);
 
-            signal_srpTable->updateListenerWithStreamId(tentry->streamId, getExecutingApplication());
+            signal_srpTable->updateListenerWithStreamId(tentry->streamId, getExecutingApplication(), _vlanID);
+
+            cout << _endpointPath << ": Registered AVBListener for streamID " << _streamID << endl;
 //            if (_updateInterval != 0)
 //            {
 //                scheduleAt(simTime() + _updateInterval, new cMessage(SUBSCRIBER_MSG_UPDATE));
@@ -83,10 +87,12 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
     else if (id == NF_AVB_LISTENER_REGISTRATION_TIMEOUT)
     {
         SRPTable::ListenerEntry *lentry = check_and_cast<SRPTable::ListenerEntry*>(obj);
-        if (lentry->streamId == _streamID)
+        if (lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
             if (lentry->module == getExecutingApplication())
             {
+
+                cout << _endpointPath << ": Registration failed for AVBListener streamID " << _streamID << endl;
 //                if (_retryInterval != 0)
 //                {
 //                    scheduleAt(simTime() + _retryInterval, new cMessage(SUBSCRIBER_MSG_RETRY));

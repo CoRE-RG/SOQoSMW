@@ -40,7 +40,7 @@ public:
      * @param executingApplication fromIEndpoint.
      */
     ISubscriber(std::string subscriberPath, std::string publisherPath,
-            std::unordered_map<std::string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
     virtual ~ISubscriber();
 
     const std::string& getPublisherPath() const {

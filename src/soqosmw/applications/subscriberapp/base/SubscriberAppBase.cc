@@ -24,14 +24,15 @@
 #include <omnetpp/regmacros.h>
 #include <omnetpp/simtime.h>
 #include <omnetpp/simtime_t.h>
-#include <qospolicy/base/QoSPolicyFactory.h>
-#include <qospolicy/group/QoSGroup.h>
+#include <qospolicy/avb/StreamIDQoSPolicy.h>
+#include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
 
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/EtherFrame_m.h>
+#include <core4inet/base/avb/AVBDefs.h>
 
 
 namespace soqosmw {
@@ -90,7 +91,8 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
 }
 
 void SubscriberAppBase::setQoS() {
-    _qosPolicies[QoSGroup::getName()] = QoSGroup (QoSGroups::RT);
+    _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::RT);
+    _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
 }
 
 void SubscriberAppBase::handleParameterChange(const char* parname)
@@ -110,9 +112,10 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
     {
         this->_startTime = CoRE4INET::parameterDoubleCheckRange(par("startTime"), 0, SIMTIME_MAX.dbl());
     }
-
-    //TODO add real QoS Policies
-    _qosPolicies = QoSPolicyFactory::extractPolicyFromPar(par("qosPolicies"));
+    if (!parname || !strcmp(parname, "streamID")) {
+        this->_streamID = parameterULongCheckRange(par("streamID"), 0,
+                MAX_STREAM_ID);
+    }
 }
 
 }/* end namespace soqosmw */

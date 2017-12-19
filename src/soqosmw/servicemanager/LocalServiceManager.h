@@ -65,7 +65,7 @@ public:
      * @return If a publisher could be created it returns a pointer to the Publisher. Else nullptr.
      */
     IPublisher* createPublisher(std::string& publisherPath,
-            std::unordered_map<std::string, IQoSPolicy>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
@@ -78,7 +78,7 @@ public:
      * @return If a subscriber could be created it returns a pointer to the Subscriber. Else nullptr.
      */
     ISubscriber* createSubscriber(std::string& subscriberPath,
-            std::string& publisherPath, std::unordered_map<std::string, IQoSPolicy>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::string& publisherPath, std::unordered_map<std::string, IQoSPolicy*>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief Check if a publisher exists.

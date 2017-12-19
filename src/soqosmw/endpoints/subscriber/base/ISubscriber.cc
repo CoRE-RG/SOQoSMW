@@ -19,7 +19,7 @@ namespace soqosmw {
 using namespace std;
 
 ISubscriber::ISubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
+        unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
         IEndpoint(subscriberPath, qosPolicies, executingApplication), _publisherPath(publisherPath){
     // TODO Auto-generated constructor stub
 

@@ -20,7 +20,8 @@
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
-#include <qospolicy/group/QoSGroup.h>
+#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
 #include <iterator>
@@ -43,17 +44,18 @@ void LocalServiceManager::handleMessage(cMessage *msg) {
 }
 
 IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
-        unordered_map<string, IQoSPolicy>& qosPolicies,
+        unordered_map<string, IQoSPolicy*>& qosPolicies,
         SOQoSMWApplicationBase* executingApplication) {
     IPublisher* publisher = nullptr;
+
     //TODO check if service already exists.
-    QoSGroup group = static_cast<QoSGroup&>(qosPolicies[QoSGroup::getName()]);
-    switch (group.getGroup()) {
-    case QoSGroups::WEB:
+
+    switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
+    case QoSGroup::WEB:
         break;
-    case QoSGroups::STD:
+    case QoSGroup::STD:
         break;
-    case QoSGroups::RT:
+    case QoSGroup::RT:
         publisher = new AVBPublisher(publisherPath, qosPolicies,
                 executingApplication);
         _publishers.push_back(publisher);
@@ -66,20 +68,21 @@ IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
 }
 
 ISubscriber* LocalServiceManager::createSubscriber(string& subscriberPath,
-        string& publisherPath, unordered_map<string, IQoSPolicy>& qosPolicies,
+        string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
         SOQoSMWApplicationBase* executingApplication) {
     ISubscriber* subscriber = nullptr;
+
     //TODO check if service exists in the network
     if (_sd->contains(publisherPath)) {
+        switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
+        case QoSGroup::WEB:
+            break;
+        case QoSGroup::STD:
+            break;
+        case QoSGroup::RT:
 
-        QoSGroup group = static_cast<QoSGroup&>(qosPolicies[QoSGroup::getName()]);
-        switch (group.getGroup()) {
-        case QoSGroups::WEB:
-            break;
-        case QoSGroups::STD:
-            break;
-        case QoSGroups::RT:
             //TODO check if such an subscriber exists already to reuse it.
+
             subscriber = new AVBSubscriber(subscriberPath, publisherPath,
                     qosPolicies, executingApplication);
             _subscribers.push_back(subscriber);

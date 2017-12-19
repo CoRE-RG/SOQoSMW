@@ -21,7 +21,13 @@
 #include <omnetpp/clog.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cpacket.h>
-#include <omnetpp/simutil.h>
+#include <qospolicy/avb/FramesizeQoSPolicy.h>
+#include <qospolicy/avb/IntervalFramesQoSPolicy.h>
+#include <qospolicy/avb/SRClassQoSPolicy.h>
+#include <qospolicy/avb/StreamIDQoSPolicy.h>
+#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <qospolicy/base/types/SizeQoSPolicy.h>
+#include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <cstdio>
 #include <iostream>
 #include <list>
@@ -37,7 +43,7 @@ using namespace CoRE4INET;
 
 namespace soqosmw {
 
-AVBPublisher::AVBPublisher(string path, unordered_map<string, IQoSPolicy> qosPolicies,
+AVBPublisher::AVBPublisher(string path, unordered_map<string, IQoSPolicy*> qosPolicies,
         SOQoSMWApplicationBase* executingApplication) :
         IRTPublisher(path, qosPolicies, executingApplication) {
 
@@ -53,8 +59,7 @@ void AVBPublisher::setupDefaultAttributes() {
     _multicastMAC = inet::MACAddress::generateAutoAddress();
     _multicastMAC.setAddressByte(0, (_multicastMAC.getAddressByte(1) | 0x01));
     _isStreaming = false;
-    _srClass = SR_CLASS::A; //TODO set via qos
-    _streamID = 47; //TODO set via qos
+    _streamID = (dynamic_cast<StreamIDQoSPolicy*>(_qos[QoSPolicyNames::StreamID]))->getValue();
     _avbOutCTC =
             this->getExecutingApplication()->getParentModule()->getSubmodule(
                     "avbCTC");
@@ -62,12 +67,19 @@ void AVBPublisher::setupDefaultAttributes() {
 
 void AVBPublisher::setupSRP() {
     if (_srpTable) {
+        //get parameters.
+        auto srClass = dynamic_cast<SRClassQoSPolicy*>(_qos[QoSPolicyNames::SRClass])->getValue();
+        auto framesize = (dynamic_cast<FramesizeQoSPolicy*>(_qos[QoSPolicyNames::Framesize]))->getValue();
+        auto intervalFrames = (dynamic_cast<IntervalFramesQoSPolicy*>(_qos[QoSPolicyNames::IntervalFrames]))->getValue();
+        _vlanID = 7;
+
         EV_INFO << "Register Talker in node" << std::endl;
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTERED, this);
         _srpTable->subscribe(NF_AVB_LISTENER_UNREGISTERED, this);
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
         _srpTable->updateTalkerWithStreamId(_streamID, getExecutingApplication(),
-                _multicastMAC);
+                _multicastMAC, srClass, framesize, intervalFrames, _vlanID);
+        cout << _endpointPath << ": Registered AVBTalker with streamID " << _streamID << endl;
     } else {
         throw cRuntimeError("srpTable module required for stream reservation");
     }
@@ -85,6 +97,7 @@ void AVBPublisher::publish(cPacket* payload) {
         outFrame->setTimestamp();
         outFrame->setStreamID(_streamID);
         outFrame->setDest(_multicastMAC);
+        outFrame->setVID(_vlanID);
 
         outFrame->encapsulate(payload);
         //Padding
@@ -102,11 +115,12 @@ void AVBPublisher::receiveSignal(__attribute__((unused))   cComponent *src,
         SRPTable::ListenerEntry *lentry = dynamic_cast<SRPTable::ListenerEntry*>(obj);
 
         //If talker for the desired stream, register Listener
-        if (lentry && lentry->streamId == _streamID)
+        if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
             EV_INFO << "Listener for stream " << lentry->streamId << " registered!" << std::endl;
 
             _isStreaming = true;
+            cout << _endpointPath << "Listener Registered at stream " << _streamID << endl;
         }
     }
     else if (id == NF_AVB_LISTENER_REGISTRATION_TIMEOUT || id == NF_AVB_LISTENER_UNREGISTERED)
@@ -114,10 +128,11 @@ void AVBPublisher::receiveSignal(__attribute__((unused))   cComponent *src,
         SRPTable::ListenerEntry *lentry = dynamic_cast<SRPTable::ListenerEntry*>(obj);
 
         //If talker for the desired stream, unregister Listener
-        if (lentry && lentry->streamId == _streamID)
+        if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
+            cout << _endpointPath << "Listener Removed at stream " << _streamID << endl;
             //check whether there are listeners left
-            if (_srpTable->getListenersForStreamId(_streamID).size() == 0)
+            if (_srpTable->getListenersForStreamId(_streamID, _vlanID).size() == 0)
             {
                 EV_INFO << "No more Listeners Registered for " << _streamID << "!" << std::endl;
                 _isStreaming = false;

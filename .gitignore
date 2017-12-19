@@ -14,3 +14,4 @@ doc/doxy/
 doc/neddoc/
 doc/index.html
 examples/soqosmw_pubsub/small_network/results/
+*.anf

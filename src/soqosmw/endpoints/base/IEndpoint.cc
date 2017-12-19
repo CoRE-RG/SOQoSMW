@@ -18,7 +18,7 @@
 namespace soqosmw {
 using namespace std;
 
-IEndpoint::IEndpoint(string endpointPath, unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
+IEndpoint::IEndpoint(string endpointPath, unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
         _endpointPath(endpointPath), _qos(qosPolicies), _executingApplication(executingApplication){
 
 }
@@ -28,7 +28,7 @@ IEndpoint::~IEndpoint() {
 }
 
 //bool IEndpoint::mathes(string& path = NULL,
-//        unordered_map<string, IQoSPolicy>& qos = NULL) {
+//        unordered_map<string, IQoSPolicy*>& qos = NULL) {
 //    bool pathMatches = false;
 //    bool qosMatches = false;
 //

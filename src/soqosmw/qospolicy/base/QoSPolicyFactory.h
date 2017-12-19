@@ -31,7 +31,7 @@ public:
     QoSPolicyFactory();
     virtual ~QoSPolicyFactory();
 
-    static std::unordered_map<std::string, IQoSPolicy>& extractPolicyFromPar(omnetpp::cPar& parameter);
+    static std::unordered_map<std::string, IQoSPolicy*>& extractPolicyFromPar(omnetpp::cPar& parameter);
 };
 
 } /* end namepsace soqosmw */

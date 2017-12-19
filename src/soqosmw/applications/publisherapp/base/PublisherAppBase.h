@@ -22,6 +22,7 @@
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
 #include <unordered_map>
+#include <core4inet/base/avb/AVBDefs.h>
 
 
 namespace soqosmw {
@@ -72,7 +73,7 @@ private:
     /**
      * Caches QoS Policy parameters
      */
-    std::unordered_map<std::string, IQoSPolicy> _qosPolicies;
+    std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
 
     /**
      * Caches the start time parameter
@@ -87,7 +88,17 @@ private:
     /**
      * Caches the number of Messages per Interval parameter.
      */
-    int _messagesPerInterval;
+    int _intervalFrames;
+
+    /**
+     * Caches the AVB SR Class.
+     */
+    CoRE4INET::SR_CLASS _srClass;
+
+    /**
+     * Caches the stream ID.
+     */
+    int _streamID;
 
 public:
     PublisherAppBase();
@@ -136,6 +147,7 @@ protected:
 
 private:
     void setQoS();
+    void printQoS();
 };
 
 } /* end namespace soqosmw */

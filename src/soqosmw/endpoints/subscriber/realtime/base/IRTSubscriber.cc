@@ -19,7 +19,7 @@ namespace soqosmw {
 using namespace std;
 
 IRTSubscriber::IRTSubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
+        unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
         ISubscriber(subscriberPath, publisherPath, qosPolicies, executingApplication) {
     // TODO Auto-generated constructor stub
 

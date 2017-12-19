@@ -29,9 +29,9 @@ QoSPolicyFactory::~QoSPolicyFactory() {
 
 }
 
-unordered_map<string, IQoSPolicy>& QoSPolicyFactory::extractPolicyFromPar(
+unordered_map<string, IQoSPolicy*>& QoSPolicyFactory::extractPolicyFromPar(
         omnetpp::cPar& parameter) {
-    unordered_map<string, IQoSPolicy> policies;
+    unordered_map<string, IQoSPolicy*> policies;
 
     return policies;
 }
