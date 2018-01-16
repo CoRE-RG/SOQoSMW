@@ -23,4 +23,5 @@ simple LocalServiceManager
     parameters:
         @class(soqosmw::LocalServiceManager);
         string sdmoduleName = default("sd");
+        string qosnpmoduleName = default("qosnp");
 }

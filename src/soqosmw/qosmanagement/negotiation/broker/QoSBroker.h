@@ -19,6 +19,10 @@
 #include <base/EndpointDescription.h>
 #include <string>
 
+namespace soqosmw {
+class Request;
+} /* namespace soqosmw */
+
 namespace inet {
 class UDPSocket;
 } /* namespace inet */
@@ -53,7 +57,7 @@ public:
      * @param isClient Is this the client?
      */
     QoSBroker(inet::UDPSocket* socket, EndpointDescription local,
-            EndpointDescription remote, bool isClient);
+            EndpointDescription remote, Request* request);
     virtual ~QoSBroker();
 
     /**
@@ -155,17 +159,12 @@ private:
     /**
      * My Endpoint.
      */
-    EndpointDescription _me;
+    EndpointDescription _local;
 
     /**
      * Your Endpoint.
      */
-    EndpointDescription _you;
-
-    /**
-     * Is this a client?
-     */
-    bool _isClient;
+    EndpointDescription _remote;
 
 };
 

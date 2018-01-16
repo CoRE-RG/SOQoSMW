@@ -15,14 +15,14 @@
 
 #include <base/EndpointDescription.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <omnetpp/cmessage.h>
+#include <omnetpp/clog.h>
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
-#include <omnetpp/csimulation.h>
 #include <omnetpp/regmacros.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
+#include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
-#include <string>
+#include <cstring>
 #include <iostream>
 
 #include <inet/networklayer/common/L3AddressResolver.h>
@@ -44,39 +44,17 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 
 void QoSNegotiationProtocol::initialize(int stage) {
     if(stage == MY_INIT_STAGE) {
-        cout << "QoSNegotiationProtocol::initialize ";
         handleParameterChange(nullptr);
-        if (_isClient) {
-            //Client Starts the Operation so create selfmsg for startsignal
-            cMessage* startSignal = new cMessage("startSignal");
 
-            scheduleAt(simTime(), startSignal);
-            cout << "is Client so setup start message.";
-        } else {
-            //nothing to do
-        }
         if(!isSocketBound()){
             socketSetup();
         }
-
-
-        cout << endl;
     }
 }
 
 void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
-    cout << "QoSNegotiationProtocol:" << " --> message received";
 
-    if(msg->isSelfMessage()) {
-        //create a new client broker and start negotiation
-        if(_broker == 0){
-            //create new broker
-            EndpointDescription remote(_destPath, _destAddress, _protocolPort);
-            EndpointDescription local(_localPath, _localAddress, _protocolPort);
-            _broker = new QoSBroker(&_socket, local, remote, true);
-        }
-        _broker->handleStartSignal();
-    } else if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
+    if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
         //is in soqosmw::Envelope --> check other types
         if (auto as_negotiation = dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
             //TODO check if it is a request --> create new broker else forward to all brokers to handle it.
@@ -84,21 +62,19 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
             if(_broker == 0){
 
                 //create new broker
-                _broker = new QoSBroker(&_socket, as_negotiation->getReceiver(), as_negotiation->getSender(), false);
+                _broker = new QoSBroker(&_socket, as_negotiation->getReceiver(), as_negotiation->getSender(), nullptr);
             }
 
             //let broker handle the message.
             _broker->handleMessage(as_negotiation->dup());
 
         } else {
-            cout << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!";
+            EV_WARN << "QoSNegotiationProtocol:" << " --> message received" << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!" << endl;
         }
     } else {
-        cout << " --> not in soqosmw::Envelope --> ignore it!";
+        EV_WARN << "QoSNegotiationProtocol:" << " --> message received" << " --> not in soqosmw::Envelope --> ignore it!" << endl;
     }
 
-    //cleanup
-    cout << endl;
     delete msg;
 }
 
@@ -127,6 +103,10 @@ void QoSNegotiationProtocol::handleParameterChange(const char* parname) {
         _isClient = this->par("isClient").boolValue();
     }
 
+}
+
+int QoSNegotiationProtocol::getProtocolPort(){
+    return _protocolPort;
 }
 
 void QoSNegotiationProtocol::fillEnvelope(soqosmw::Envelope* envelope){
@@ -163,6 +143,11 @@ bool QoSNegotiationProtocol::isSocketBound(){
 void QoSNegotiationProtocol::socketClose() {
     _socket.close();
     _socketBound = false;
+}
+
+void QoSNegotiationProtocol::createQoSBroker(Request* request) {
+    QoSBroker* broker = new QoSBroker(&_socket, request->getLocal(), request->getRemote(), request);
+    //Add broker to list.
 }
 
 } /* namespace soqosmw */

@@ -79,7 +79,7 @@ void AVBPublisher::setupSRP() {
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
         _srpTable->updateTalkerWithStreamId(_streamID, getExecutingApplication(),
                 _multicastMAC, srClass, framesize, intervalFrames, _vlanID);
-        cout << _endpointPath << ": Registered AVBTalker with streamID " << _streamID << endl;
+        EV_INFO << _endpointPath << ": Registered AVBTalker with streamID " << _streamID << endl;
     } else {
         throw cRuntimeError("srpTable module required for stream reservation");
     }
@@ -117,10 +117,9 @@ void AVBPublisher::receiveSignal(__attribute__((unused))   cComponent *src,
         //If talker for the desired stream, register Listener
         if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
-            EV_INFO << "Listener for stream " << lentry->streamId << " registered!" << std::endl;
+            EV_INFO << _endpointPath << ": Listener for stream " << lentry->streamId << " registered!" << std::endl;
 
             _isStreaming = true;
-            cout << _endpointPath << "Listener Registered at stream " << _streamID << endl;
         }
     }
     else if (id == NF_AVB_LISTENER_REGISTRATION_TIMEOUT || id == NF_AVB_LISTENER_UNREGISTERED)
@@ -130,11 +129,11 @@ void AVBPublisher::receiveSignal(__attribute__((unused))   cComponent *src,
         //If talker for the desired stream, unregister Listener
         if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
-            cout << _endpointPath << "Listener Removed at stream " << _streamID << endl;
+            EV_INFO << _endpointPath << ": Listener Removed at stream " << _streamID << endl;
             //check whether there are listeners left
             if (_srpTable->getListenersForStreamId(_streamID, _vlanID).size() == 0)
             {
-                EV_INFO << "No more Listeners Registered for " << _streamID << "!" << std::endl;
+                EV_DEBUG << _endpointPath << ": No more Listeners Registered for " << _streamID << "!" << std::endl;
                 _isStreaming = false;
             }
         }

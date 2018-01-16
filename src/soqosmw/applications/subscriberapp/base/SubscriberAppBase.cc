@@ -16,6 +16,7 @@
 #include <applications/subscriberapp/base/SubscriberAppBase.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
+#include <omnetpp/clog.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cnamedobject.h>
 #include <omnetpp/cobjectfactory.h>
@@ -78,7 +79,7 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         _subscriber = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
 
     } else {
-        cout << "SUBSCRIBER RECEIVED A MESSAGE :-D" << endl;
+        EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
         if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
         {

@@ -19,10 +19,16 @@
 #include <endpoints/publisher/base/IPublisher.h>
 #include <endpoints/subscriber/base/ISubscriber.h>
 #include <omnetpp/csimplemodule.h>
+#include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/base/IQoSPolicy.h>
+#include <atomic>
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+namespace soqosmw {
+class QoSNegotiationProtocol;
+} /* namespace soqosmw */
 
 namespace soqosmw {
 class SOQoSMWApplicationBase;
@@ -53,6 +59,7 @@ protected:
     virtual void handleMessage(cMessage *msg);
 
 public:
+    LocalServiceManager();
     virtual ~LocalServiceManager();
 
     /**
@@ -65,7 +72,13 @@ public:
      * @return If a publisher could be created it returns a pointer to the Publisher. Else nullptr.
      */
     IPublisher* createPublisher(std::string& publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
+
+    int requestSubscription(std::string& subscriberPath,
+            std::string& publisherPath,
+            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
+            cGate *notificationGate);
 
     /**
      * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
@@ -78,7 +91,9 @@ public:
      * @return If a subscriber could be created it returns a pointer to the Subscriber. Else nullptr.
      */
     ISubscriber* createSubscriber(std::string& subscriberPath,
-            std::string& publisherPath, std::unordered_map<std::string, IQoSPolicy*>& qosPolicies, SOQoSMWApplicationBase* executingApplication);
+            std::string& publisherPath,
+            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief Check if a publisher exists.
@@ -96,7 +111,6 @@ public:
      */
 //    int existsPublisher(std::string& publisherPath = "",
 //            std::vector<IQoSPolicy> qosPolicies = NULL);
-
     /**
      * @brief Check if a subscriber exists.
      *  If no arguments are passed,
@@ -121,7 +135,6 @@ public:
 //    int existsSubscriber(std::string& subscriberPath = "",
 //            std::vector<IQoSPolicy>& qosPolicies = NULL,
 //            std::string& publisherPath = "");
-
     /**
      * @brief This method removes the given publisher.
      * NOTE the publisher pointer is no longer valid now and will be set to a nullptr.
@@ -131,7 +144,8 @@ public:
      *
      * @return true if the publisher was removed, false if not found.
      */
-    bool removePublisher(IPublisher* publisher, SOQoSMWApplicationBase* executingApplication);
+    bool removePublisher(IPublisher* publisher,
+            SOQoSMWApplicationBase* executingApplication);
 
     /**
      * @brief This method removes the given subscriber.
@@ -142,7 +156,8 @@ public:
      *
      * @return true if the subscriber was removed, false if not found.
      */
-    bool removeSubscriber(ISubscriber* subscriber, SOQoSMWApplicationBase* executingApplication);
+    bool removeSubscriber(ISubscriber* subscriber,
+            SOQoSMWApplicationBase* executingApplication);
 
 private:
     /**
@@ -159,6 +174,21 @@ private:
      * A pointer to the service discovery.
      */
     StaticServiceDiscovery* _sd;
+
+    /**
+     * A pointer to the QoS Negotiation Protocol module.
+     */
+    QoSNegotiationProtocol* _qosnp;
+
+    /**
+     * Static ID for created Requests.
+     */
+    std::atomic<int> _requestID;
+
+    /**
+     * Stores all issued requests.
+     */
+    std::vector<Request*> _requests;
 };
 
 } /* end namespace  */

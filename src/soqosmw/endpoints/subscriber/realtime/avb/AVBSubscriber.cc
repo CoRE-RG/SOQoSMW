@@ -77,7 +77,7 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
 
             signal_srpTable->updateListenerWithStreamId(tentry->streamId, getExecutingApplication(), _vlanID);
 
-            cout << _endpointPath << ": Registered AVBListener for streamID " << _streamID << endl;
+            EV_INFO << _endpointPath << ": Registered AVBListener for streamID " << _streamID << endl;
 //            if (_updateInterval != 0)
 //            {
 //                scheduleAt(simTime() + _updateInterval, new cMessage(SUBSCRIBER_MSG_UPDATE));
@@ -92,7 +92,7 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
             if (lentry->module == getExecutingApplication())
             {
 
-                cout << _endpointPath << ": Registration failed for AVBListener streamID " << _streamID << endl;
+                EV_ERROR << _endpointPath << ": Registration failed for AVBListener streamID " << _streamID << endl;
 //                if (_retryInterval != 0)
 //                {
 //                    scheduleAt(simTime() + _retryInterval, new cMessage(SUBSCRIBER_MSG_RETRY));

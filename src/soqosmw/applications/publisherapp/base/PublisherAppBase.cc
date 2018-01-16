@@ -18,6 +18,7 @@
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
 #include <omnetpp/cexception.h>
+#include <omnetpp/clog.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cnamedobject.h>
 #include <omnetpp/cobjectfactory.h>
@@ -31,11 +32,15 @@
 #include <qospolicy/avb/IntervalFramesQoSPolicy.h>
 #include <qospolicy/avb/SRClassQoSPolicy.h>
 #include <qospolicy/avb/StreamIDQoSPolicy.h>
+#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <qospolicy/base/types/SizeQoSPolicy.h>
+#include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstdint>
 #include <cstring>
 #include <iostream>
+#include <utility>
 
 #include <core4inet/base/CoRE4INET_Defs.h>
 #include <core4inet/utilities/ConfigFunctions.h>
@@ -160,7 +165,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
                     static_cast<int64_t>(getPayloadBytes()));
 
             _publisher->publish(payloadPacket);
-            cout << _serviceName << ": Message Published." << endl;
+            EV_DEBUG << _serviceName << ": Message Published." << endl;
 
             //schedule next send event
             scheduleAt(

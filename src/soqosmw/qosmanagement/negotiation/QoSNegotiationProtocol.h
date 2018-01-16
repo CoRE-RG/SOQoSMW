@@ -23,6 +23,10 @@
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
+class Request;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 class Envelope;
 class QoSBroker;
 class QoSNegotiationEstablish;
@@ -46,6 +50,7 @@ namespace soqosmw {
  * @author Timo Haeckel
  */
 class QoSNegotiationProtocol: public cSimpleModule {
+    friend class LocalServiceManager;
 public:
     QoSNegotiationProtocol();
     virtual ~QoSNegotiationProtocol();
@@ -59,6 +64,11 @@ protected:
     virtual void handleParameterChange(const char* parname) override;
 
 private:
+
+    int getProtocolPort();
+
+    void createQoSBroker(Request* request);
+
     /**
      * Fills the soqosmw message envelope with endpoint descriptions.
      * @param envelope

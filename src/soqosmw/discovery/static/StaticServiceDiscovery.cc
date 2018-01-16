@@ -13,10 +13,17 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "StaticServiceDiscovery.h"
+#include <crtdefs.h>
+#include <discovery/static/StaticServiceDiscovery.h>
+#include <omnetpp/clog.h>
+#include <omnetpp/cobjectfactory.h>
+#include <omnetpp/cpar.h>
+#include <omnetpp/cxmlelement.h>
+#include <omnetpp/regmacros.h>
+#include <iostream>
+#include <vector>
 
 #include "inet/networklayer/common/L3AddressResolver.h"
-#include <string>
 
 namespace soqosmw{
 
@@ -27,22 +34,22 @@ Define_Module(StaticServiceDiscovery);
 void StaticServiceDiscovery::initialize(int stage)
 {
     if(stage == MY_INIT_STAGE) {
-        cout << "Initialising SD:";
+        EV_DEBUG << "Initialising SD:";
         cXMLElement *config = par("services").xmlValue();
-        cout << " read config: " << config->str();
+        EV_DEBUG << " read config: " << config->str();
         //navigate to services and get all entries
         cXMLElementList services = config->getChildrenByTagName("service");
         if(services.empty()){
-            cout << " --> list is empty";
+            EV_DEBUG << " --> list is empty";
         }
         for (size_t i = 0; i < services.size(); i++){
             //check each element and get the service name and the node
-            cout << " --> element " << i << ": ";
+            EV_DEBUG << " --> element " << i << ": ";
             cXMLElement* service = services[i];
             const char* name = service->getAttribute("name");
             const char* node = service->getAttribute("node");
 
-            cout << name << " at " << node;
+            EV_DEBUG << name << " at " << node;
 
             //ressolve the address
             const inet::L3Address address = inet::L3AddressResolver().resolve(node);
@@ -50,16 +57,16 @@ void StaticServiceDiscovery::initialize(int stage)
             //add entry to map
             _registry[name] = address;
         }
-        cout << endl;
+        EV_DEBUG << endl;
     }
 
 }
 
-inet::L3Address& StaticServiceDiscovery::discover(std::string serviceName) {
+inet::L3Address& StaticServiceDiscovery::discover(string serviceName) {
     return _registry[serviceName];
 }
 
-bool StaticServiceDiscovery::contains(std::string path) {
+bool StaticServiceDiscovery::contains(string path) {
     return _registry.count(path)>0;
 }
 

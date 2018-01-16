@@ -16,11 +16,14 @@
 #include <discovery/static/StaticServiceDiscovery.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
+#include <omnetpp/cexception.h>
+#include <omnetpp/cgate.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <qosmanagement/negotiation/datatypes/Request.h>
+#include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
 #include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
@@ -33,9 +36,17 @@ namespace soqosmw {
 
 Define_Module(LocalServiceManager);
 
+LocalServiceManager::LocalServiceManager() {
+    _requestID = 0;
+}
+
 void LocalServiceManager::initialize() {
     _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
             par("sdmoduleName")));
+
+    _qosnp =
+            dynamic_cast<QoSNegotiationProtocol*>(getParentModule()->getSubmodule(
+                    par("qosnpmoduleName")));
 
 }
 
@@ -65,6 +76,40 @@ IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
     }
 
     return publisher;
+}
+
+int LocalServiceManager::requestSubscription(string& subscriberPath,
+        string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
+        cGate *notificationGate) {
+
+    int id = -1; // if an error occurs...
+
+    //check if publisher exists in the network.
+    if (_sd->contains(publisherPath)) {
+        //create the request
+
+        EndpointDescription local(subscriberPath, inet::L3Address(),
+                _qosnp->getProtocolPort());
+
+        EndpointDescription remote(publisherPath, _sd->discover(publisherPath),
+                _qosnp->getProtocolPort());
+        Request * request = new Request(_requestID++, local, remote,
+                qosPolicies, notificationGate);
+
+        //create qos broker for the request
+        _qosnp->createQoSBroker(request);
+
+        //create an entry in table to store request.
+        _requests.push_back(request);
+        id = request->getId();
+
+    } else {
+        throw cRuntimeError(
+                "The publisher you are requesting is unknown and has no entry in the ServiceRegistry.");
+    }
+
+    return id;
+
 }
 
 ISubscriber* LocalServiceManager::createSubscriber(string& subscriberPath,

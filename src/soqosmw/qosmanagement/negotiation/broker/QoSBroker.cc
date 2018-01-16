@@ -14,6 +14,7 @@
 // 
 
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <omnetpp/clog.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <iostream>
 
@@ -21,14 +22,18 @@
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
+class Request;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 using namespace inet;
 using namespace std;
 
 QoSBroker::QoSBroker(UDPSocket* socket, EndpointDescription local,
-        EndpointDescription remote, bool isClient) :
-        _socket(socket), _me(local), _you(remote), _isClient(isClient) {
+        EndpointDescription remote, Request* request) :
+        _socket(socket), _local(local), _remote(remote){
     // is there anything todo?
-    if (_isClient) {
+    if (request != nullptr) {
         _state = QoSBrokerStates_t::CLIENT_STARTUP;
     } else {
         _state = QoSBrokerStates_t::SERVER_NO_SESSION;
@@ -39,13 +44,12 @@ QoSBroker::~QoSBroker() {
 }
 
 void QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
-    cout << " QoSBroker:" << " --> message received";
 
-    if (!(msg->getReceiver().getPath() == _me.getPath())) {
+    if (!(msg->getReceiver().getPath() == _local.getPath())) {
         //i am not responsible do nothing...
-        cout << " --> I am not the receiver";
+        EV_WARN << "QoSBroker:" << " --> message received" << " --> I am not the receiver" << endl;
     } else {
-        cout << " --> I am the receiver";
+        EV_DEBUG << "QoSBroker:" << " --> message received"  << " --> I am the receiver" << endl;
 
         switch (msg->getMessageType()) {
         case QoSNegotiationMsgType::QoS_Request:
@@ -65,8 +69,7 @@ void QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
                     dynamic_cast<soqosmw::QoSNegotiationFinalise*>(msg));
             break;
         default:
-            cout
-                    << " --> Message type not set, this should not happen --> ignore it!";
+            EV_ERROR << "QoSBroker:" << " --> message received" << " --> ERROR: Message type not set! --> ignore it!" << endl;
             break;
         }
     }
@@ -227,17 +230,17 @@ bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish) {
 
 void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope) {
     //set receiver
-    EndpointDescription receiver(_you);
+    EndpointDescription receiver(_remote);
     envelope->setReceiver(receiver);
     //set sender
-    EndpointDescription sender(_me);
+    EndpointDescription sender(_local);
     envelope->setSender(sender);
 }
 
 void QoSBroker::sendMessage(QoSNegotiationProtocolMsg* payload_packet) {
     //payload_packet->setByteLength(sizeof(*payload_packet));
-    _socket->sendTo(payload_packet, _you.getNetworkAddr(),
-            _you.getNetworkPort());
+    _socket->sendTo(payload_packet, _remote.getNetworkAddr(),
+            _remote.getNetworkPort());
 }
 
 string QoSBroker::getStateAsName() {
