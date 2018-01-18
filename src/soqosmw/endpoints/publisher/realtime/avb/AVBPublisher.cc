@@ -105,6 +105,8 @@ void AVBPublisher::publish(cPacket* payload) {
             outFrame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
         }
         getExecutingApplication()->sendDirect(outFrame, _avbOutCTC->gate("in"));
+    } else {
+        delete payload;
     }
 }
 

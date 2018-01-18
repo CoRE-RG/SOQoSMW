@@ -16,6 +16,7 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
+#include <messages/application/ApplicationCallbacks_m.h>
 #include <omnetpp/csimplemodule.h>
 
 using namespace omnetpp;
@@ -46,6 +47,10 @@ public:
      */
     LocalServiceManager* getLocalServiceManager() const {
         return _localServiceManager;
+    }
+
+    void notify(ApplicationCallback* msg){
+        delete msg;
     }
 
 protected:

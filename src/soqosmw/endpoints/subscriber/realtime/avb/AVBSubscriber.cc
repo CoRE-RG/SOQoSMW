@@ -57,6 +57,7 @@ void AVBSubscriber::setupSRP() {
     if (_srpTable) {
         _srpTable->subscribe(NF_AVB_TALKER_REGISTERED, this);
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
+        _srpTable->updateListenerWithStreamId(_streamID, getExecutingApplication(), _vlanID);
     } else {
         throw cRuntimeError("srpTable module required for stream reservation");
     }

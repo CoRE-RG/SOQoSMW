@@ -63,10 +63,12 @@ void StaticServiceDiscovery::initialize(int stage)
 }
 
 inet::L3Address& StaticServiceDiscovery::discover(string serviceName) {
+    Enter_Method("SD::discover()");
     return _registry[serviceName];
 }
 
 bool StaticServiceDiscovery::contains(string path) {
+    Enter_Method("SD::contains()");
     return _registry.count(path)>0;
 }
 

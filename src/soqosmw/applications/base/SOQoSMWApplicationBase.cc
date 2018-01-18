@@ -13,8 +13,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "SOQoSMWApplicationBase.h"
-#include <soqosmw/servicemanager/LocalServiceManager.h>
+#include <applications/base/SOQoSMWApplicationBase.h>
+#include <omnetpp/cexception.h>
+#include <omnetpp/cpar.h>
+#include <servicemanager/LocalServiceManager.h>
+#include <cstring>
 
 namespace soqosmw {
 

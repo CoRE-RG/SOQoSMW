@@ -18,15 +18,13 @@
 
 #include <omnetpp/csimplemodule.h>
 #include <string>
+#include <vector>
 
 #include <inet/networklayer/common/L3Address.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
 class Request;
-} /* namespace soqosmw */
-
-namespace soqosmw {
 class Envelope;
 class QoSBroker;
 class QoSNegotiationEstablish;
@@ -51,6 +49,7 @@ namespace soqosmw {
  */
 class QoSNegotiationProtocol: public cSimpleModule {
     friend class LocalServiceManager;
+    friend class QoSBroker;
 public:
     QoSNegotiationProtocol();
     virtual ~QoSNegotiationProtocol();
@@ -98,29 +97,9 @@ private:
     void socketClose();
 
     /**
-     * Caches the isClient parameter.
-     */
-    bool _isClient; //is client or server? TODO remove...
-
-    /**
      * Caches the localAddress parameter.
      */
     inet::L3Address _localAddress;
-
-    /**
-     * Caches the localPath parameter.
-     */
-    std::string _localPath;
-
-    /**
-     * Caches the destAddress parameter.
-     */
-    inet::L3Address _destAddress;
-
-    /**
-     * Caches the destPath parameter.
-     */
-    std::string _destPath;
 
     /**
      * Caches the protocolPort parameter.
@@ -140,7 +119,7 @@ private:
     /**
      * A QoS Broker that handles the negotiation.
      */
-    QoSBroker* _broker;
+    std::vector<QoSBroker*> _brokers;
 };
 
 } /* namespace soqosmw */

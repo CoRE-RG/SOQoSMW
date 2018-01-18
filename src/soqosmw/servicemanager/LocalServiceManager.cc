@@ -13,6 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <base/EndpointDescription.h>
 #include <discovery/static/StaticServiceDiscovery.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
@@ -22,15 +23,19 @@
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
-#include <qosmanagement/negotiation/datatypes/Request.h>
+#include <omnetpp/simutil.h>
 #include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
 #include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
+#include <cstring>
 #include <iterator>
+
+#include <inet/networklayer/common/L3AddressResolver.h>
 
 using namespace CoRE4INET;
 using namespace std;
+using namespace inet;
 
 namespace soqosmw {
 
@@ -40,18 +45,34 @@ LocalServiceManager::LocalServiceManager() {
     _requestID = 0;
 }
 
-void LocalServiceManager::initialize() {
-    _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
-            par("sdmoduleName")));
+void LocalServiceManager::initialize(int stage) {
 
-    _qosnp =
-            dynamic_cast<QoSNegotiationProtocol*>(getParentModule()->getSubmodule(
-                    par("qosnpmoduleName")));
+
+    if (stage == MY_INIT_STAGE) {
+        _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
+                   par("sdmoduleName")));
+
+       _qosnp =
+               dynamic_cast<QoSNegotiationProtocol*>(getParentModule()->getSubmodule(
+                       par("qosnpmoduleName")));
+
+        handleParameterChange(nullptr);
+    }
 
 }
 
 void LocalServiceManager::handleMessage(cMessage *msg) {
     delete msg;
+}
+
+void LocalServiceManager::handleParameterChange(const char* parname) {
+
+    //read UDP Common Parameters
+    if (!parname || !strcmp(parname, "localAddress")) {
+        const char* localAddr = par("localAddress");
+        _localAddress = L3AddressResolver().resolve(localAddr);
+    }
+
 }
 
 IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
@@ -81,14 +102,13 @@ IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
 int LocalServiceManager::requestSubscription(string& subscriberPath,
         string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
         cGate *notificationGate) {
-
+    Enter_Method("LSM:requestSubscription()");
     int id = -1; // if an error occurs...
 
     //check if publisher exists in the network.
     if (_sd->contains(publisherPath)) {
         //create the request
-
-        EndpointDescription local(subscriberPath, inet::L3Address(),
+        EndpointDescription local(subscriberPath, _localAddress,
                 _qosnp->getProtocolPort());
 
         EndpointDescription remote(publisherPath, _sd->discover(publisherPath),
@@ -98,10 +118,6 @@ int LocalServiceManager::requestSubscription(string& subscriberPath,
 
         //create qos broker for the request
         _qosnp->createQoSBroker(request);
-
-        //create an entry in table to store request.
-        _requests.push_back(request);
-        id = request->getId();
 
     } else {
         throw cRuntimeError(

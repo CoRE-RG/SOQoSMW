@@ -76,6 +76,14 @@ public:
         _path = path;
     }
 
+    std::string toString(){
+        std::string ret = "EndpointDescription[";
+        ret.append(" path:").append(_path);
+        ret.append(" networkAddr:").append(_networkAddr.str());
+        ret.append(" networkPort").append(std::to_string(_networkPort));
+        return ret.append(" ]");
+    }
+
 private:
     /**
      * The name of the Endpoint as a path.

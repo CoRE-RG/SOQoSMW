@@ -27,6 +27,8 @@ module SOQoSMWHost extends RTIPHost
     parameters:
     	hasUdp = true; //needed for qosnp
     	int numServices = default(0);
+    	string localAddress = default("");
+    	*.localAddress = localAddress;
     	
     submodules:
         

@@ -26,6 +26,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <inet/networklayer/common/L3Address.h>
+
 namespace soqosmw {
 class QoSNegotiationProtocol;
 } /* namespace soqosmw */
@@ -39,6 +41,9 @@ using namespace omnetpp;
 
 namespace soqosmw {
 
+#define NO_OF_INIT_STAGES 15
+#define MY_INIT_STAGE 13
+
 /**
  * @brief The LocalServiceManager is used to create, find and remove local Services.
  *
@@ -49,7 +54,10 @@ protected:
     /**
      * @brief Initialization of the module.
      */
-    virtual void initialize();
+    virtual void initialize(int stage) override;
+    virtual int numInitStages() const override {
+        return NO_OF_INIT_STAGES;
+    }
 
     /**
      * @brief This module should receive any messages.
@@ -57,6 +65,8 @@ protected:
      * @param msg Parameter
      */
     virtual void handleMessage(cMessage *msg);
+
+    virtual void handleParameterChange(const char* parname) override;
 
 public:
     LocalServiceManager();
@@ -78,7 +88,7 @@ public:
     int requestSubscription(std::string& subscriberPath,
             std::string& publisherPath,
             std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
-            cGate *notificationGate);
+            omnetpp::cGate *executingApplication);
 
     /**
      * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
@@ -189,6 +199,11 @@ private:
      * Stores all issued requests.
      */
     std::vector<Request*> _requests;
+
+    /**
+     * Caches the localAddress parameter.
+     */
+    inet::L3Address _localAddress;
 };
 
 } /* end namespace  */

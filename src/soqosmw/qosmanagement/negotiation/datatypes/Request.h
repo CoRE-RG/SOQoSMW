@@ -13,6 +13,10 @@
 #include <string>
 #include <unordered_map>
 
+namespace soqosmw {
+class SOQoSMWApplicationBase;
+} /* namespace soqosmw */
+
 namespace omnetpp {
 class cGate;
 } /* namespace omnetpp */
@@ -22,7 +26,6 @@ namespace soqosmw {
 enum RequestStatus {
     CREATED,
     REQUEST_SEND,
-    ACKKNOWLEDGED_SUCCESS,
     ACKKNOWLEDGED_FAILURE,
     ESTABLISH_SEND,
     FINALISED_SUCCESS,
@@ -40,6 +43,7 @@ public:
                     notificationGate) {
         this->setStatus(CREATED);
     }
+
     virtual ~Request(){
 
     }
@@ -48,7 +52,7 @@ public:
         return _id;
     }
 
-    const omnetpp::cGate* getNotificationGate() const {
+    omnetpp::cGate* getNotificationGate() {
         return _notificationGate;
     }
 
@@ -77,7 +81,7 @@ private:
     const EndpointDescription _local;
     const EndpointDescription _remote;
     const std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
-    const omnetpp::cGate *_notificationGate;
+    omnetpp::cGate *_notificationGate;
     RequestStatus _status;
 };
 

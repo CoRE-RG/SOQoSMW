@@ -50,12 +50,14 @@ OBJS = \
     $O/soqosmw/servicemanager/LocalServiceManager.o \
     $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
     $O/soqosmw/messages/Envelope_m.o \
-    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
+    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o \
+    $O/soqosmw/messages/application/ApplicationCallbacks_m.o
 
 # Message files
 MSGFILES = \
     soqosmw/messages/Envelope.msg \
-    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg
+    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg \
+    soqosmw/messages/application/ApplicationCallbacks.msg
 
 # SM files
 SMFILES =

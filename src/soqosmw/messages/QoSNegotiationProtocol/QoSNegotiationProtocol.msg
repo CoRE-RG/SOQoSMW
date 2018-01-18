@@ -89,5 +89,5 @@ packet QoSNegotiationFinalise extends QoSNegotiationProtocolMsg {
     //sender; inherited from Envelope
     messageType = QoSNegotiationMsgType::QoS_Finalise; //inherited from QoSNegotiationProtocol
     //qosClass; inherited form QoSNegotiationProtocol
-    //TODO add how to connect
+    int finalStatus @enum(QoSNegotiationStatus);
 }

@@ -99,6 +99,8 @@ public:
     SubscriberAppBase();
     virtual ~SubscriberAppBase();
 
+    void notify(ApplicationCallback* msg);
+
 private:
     void setQoS();
 };

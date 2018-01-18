@@ -13,20 +13,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.applications.base;
-
-import soqosmw.applications.base.ISOQoSMWApplication;
-
 //
-// TODO auto-generated module
+// TODO generated message class
 //
-simple SOQoSMWApplicationBase like ISOQoSMWApplication
-{
-    parameters:
-        @class(soqosmw::SOQoSMWApplicationBase);
-        string serviceManagerModule = default ("lsm");
-        string appCallbackGateName = default ("appCallback");
-        
-    gates:
-        input appCallback;
+cplusplus {{
+#include "soqosmw/qosmanagement/negotiation/datatypes/Request.h"
+}}
+namespace soqosmw;
+
+enum RequestStatus;
+
+packet ApplicationCallback {
+    
+}
+
+packet QoSNegotiationResult extends ApplicationCallback {
+    int requestStatus @enum(RequestStatus);
 }

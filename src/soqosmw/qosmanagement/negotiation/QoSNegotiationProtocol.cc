@@ -27,7 +27,6 @@
 
 #include <inet/networklayer/common/L3AddressResolver.h>
 
-
 namespace soqosmw {
 using namespace std;
 using namespace inet;
@@ -35,18 +34,17 @@ using namespace inet;
 Define_Module(QoSNegotiationProtocol);
 
 QoSNegotiationProtocol::QoSNegotiationProtocol() {
-    _broker = nullptr;
 }
 
 QoSNegotiationProtocol::~QoSNegotiationProtocol() {
-    delete _broker;
+
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {
-    if(stage == MY_INIT_STAGE) {
+    if (stage == MY_INIT_STAGE) {
         handleParameterChange(nullptr);
 
-        if(!isSocketBound()){
+        if (!isSocketBound()) {
             socketSetup();
         }
     }
@@ -56,23 +54,52 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
 
     if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
         //is in soqosmw::Envelope --> check other types
-        if (auto as_negotiation = dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
-            //TODO check if it is a request --> create new broker else forward to all brokers to handle it.
-            //if broker not set create a new one
-            if(_broker == 0){
+        if (auto as_negotiation =
+                dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
 
+            //let the right broker handle the message.
+            bool handled = false;
+            for (std::vector<QoSBroker*>::iterator broker = _brokers.begin();
+                    broker != _brokers.end(); ++broker) {
+                if ((*broker)->isResponsibleFor(as_negotiation->getReceiver(),
+                        as_negotiation->getSender())) {
+                    handled = (*broker)->handleMessage(as_negotiation);
+                    if ((*broker)->isNegotiationFinished()) {
+                        _brokers.erase(broker);
+                        delete (*broker);
+                    }
+                    break;
+                }
+            }
+            //check if message was handled, else we need a new broker.
+            if (!handled) {
                 //create new broker
-                _broker = new QoSBroker(&_socket, as_negotiation->getReceiver(), as_negotiation->getSender(), nullptr);
+                QoSBroker* broker = new QoSBroker(&_socket,
+                        as_negotiation->getReceiver(),
+                        as_negotiation->getSender(), nullptr);
+
+                handled = broker->handleMessage(as_negotiation);
+                if (!handled) {
+                    // broker is not needed because request was invalid.
+                    delete broker;
+                    EV_ERROR << "QoSNegotiationProtocol:"
+                                    << " --> message received"
+                                    << " --> Message could not be handled by any Broker.";
+                } else {
+                    // handled so broker will be needed for ongoing negotiation.
+                    _brokers.push_back(broker);
+                }
             }
 
-            //let broker handle the message.
-            _broker->handleMessage(as_negotiation->dup());
-
         } else {
-            EV_WARN << "QoSNegotiationProtocol:" << " --> message received" << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!" << endl;
+            EV_WARN << "QoSNegotiationProtocol:" << " --> message received"
+                           << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!"
+                           << endl;
         }
     } else {
-        EV_WARN << "QoSNegotiationProtocol:" << " --> message received" << " --> not in soqosmw::Envelope --> ignore it!" << endl;
+        EV_WARN << "QoSNegotiationProtocol:" << " --> message received"
+                       << " --> not in soqosmw::Envelope --> ignore it!"
+                       << endl;
     }
 
     delete msg;
@@ -81,53 +108,19 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
 void QoSNegotiationProtocol::handleParameterChange(const char* parname) {
 
     //read UDP Common Parameters
-    if(!parname || !strcmp(parname, "protocolPort")){
+    if (!parname || !strcmp(parname, "protocolPort")) {
         _protocolPort = par("protocolPort");
     }
-    if(!parname || !strcmp(parname, "destAddress")){
-        const char* destAddr = par("destAddress");
-        _destAddress = L3AddressResolver().resolve(destAddr);
-    }
-    if(!parname || !strcmp(parname, "destPath")){
-        _destPath = par("destPath").stdstringValue();
-    }
-    if(!parname || !strcmp(parname, "localAddress")){
+    if (!parname || !strcmp(parname, "localAddress")) {
         const char* localAddr = par("localAddress");
         _localAddress = L3AddressResolver().resolve(localAddr);
     }
-    if(!parname || !strcmp(parname, "localPath")){
-        _localPath = par("localPath").stdstringValue();
-    }
-    //update parameters if nullptr or parameter specified.
-    if (!parname || !strcmp(parname, "isClient")) { //is this a client?
-        _isClient = this->par("isClient").boolValue();
-    }
 
 }
 
-int QoSNegotiationProtocol::getProtocolPort(){
+int QoSNegotiationProtocol::getProtocolPort() {
+    Enter_Method("QOSNP::getProtocolPort()");
     return _protocolPort;
-}
-
-void QoSNegotiationProtocol::fillEnvelope(soqosmw::Envelope* envelope){
-    //set receiver
-    EndpointDescription receiver;
-    receiver.setNetworkAddr(_destAddress);
-    receiver.setNetworkPort(_protocolPort);
-    envelope->setReceiver(receiver);
-    //set sender
-    EndpointDescription sender;
-    sender.setNetworkAddr(_localAddress);
-    sender.setNetworkPort(_protocolPort);
-    envelope->setSender(sender);
-}
-
-void QoSNegotiationProtocol::sendMessage(cPacket* payload_packet) {
-    if(!isSocketBound()){
-        socketSetup();
-    }
-    //payload_packet->setByteLength(sizeof(*payload_packet));
-    _socket.sendTo(payload_packet, _destAddress, _protocolPort);
 }
 
 void QoSNegotiationProtocol::socketSetup() {
@@ -136,7 +129,7 @@ void QoSNegotiationProtocol::socketSetup() {
     _socketBound = true;
 }
 
-bool QoSNegotiationProtocol::isSocketBound(){
+bool QoSNegotiationProtocol::isSocketBound() {
     return _socketBound;
 }
 
@@ -146,8 +139,18 @@ void QoSNegotiationProtocol::socketClose() {
 }
 
 void QoSNegotiationProtocol::createQoSBroker(Request* request) {
+    Enter_Method("QOSNP::createQoSBroker()");
+    //create broker as requestet
     QoSBroker* broker = new QoSBroker(&_socket, request->getLocal(), request->getRemote(), request);
-    //Add broker to list.
+
+    //tell broker to start the request.
+    bool handled = broker->startNegotiation();
+
+    if(handled) {
+        //Add broker to list.
+        _brokers.push_back(broker);
+    }
 }
 
-} /* namespace soqosmw */
+}
+/* namespace soqosmw */

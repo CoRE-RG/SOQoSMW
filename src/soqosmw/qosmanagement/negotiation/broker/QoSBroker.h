@@ -64,12 +64,25 @@ public:
      * Handle a QoSNegotiationProtocol Message.
      * @param msg The message to handle.
      */
-    virtual void handleMessage(QoSNegotiationProtocolMsg *msg);
+    virtual bool handleMessage(QoSNegotiationProtocolMsg *msg);
 
     /**
      * handle the start signal, only if client!
      */
-    void handleStartSignal();
+    bool startNegotiation();
+
+    /**
+     * Checks whether this Broker is responsible for the negotiation between local and remote Endpoint.
+     * @return true if Broker is responsible.
+     */
+    bool isResponsibleFor(EndpointDescription& local, EndpointDescription& remote);
+
+    /**
+     * Checks whether the Negotiation has been finished and the broker can be removed.
+     */
+    bool isNegotiationFinished() {
+        return _negotiationFinished;
+    }
 
 protected:
 
@@ -94,25 +107,25 @@ private:
      * Handle the request, emits a response.
      * @param request The request to handle.
      */
-    void handleRequest(QoSNegotiationRequest* request);
+    bool handleRequest(QoSNegotiationRequest* request);
 
     /**
      * Handle the response, emits a establish if successful.
      * @param response The response to handle.
      */
-    void handleResponse(QoSNegotiationResponse* response);
+    bool handleResponse(QoSNegotiationResponse* response);
 
     /**
      * Handle the establish, emits a finalise if successful.
      * @param establish The establish to handle.
      */
-    void handleEstablish(QoSNegotiationEstablish* establish);
+    bool handleEstablish(QoSNegotiationEstablish* establish);
 
     /**
      * Handle the finalise, returns to the application with negotiation status.
      * @param finalise The finalise to handle.
      */
-    void handleFinalise(QoSNegotiationFinalise* finalise);
+    bool handleFinalise(QoSNegotiationFinalise* finalise);
 
     /**
      * Check if a request is acceptable.
@@ -141,6 +154,11 @@ private:
     void sendMessage(QoSNegotiationProtocolMsg* msg);
 
     /**
+     * finish negotiation and allow this QoSBroker to be deleted.
+     */
+    void finishNegotiation();
+
+    /**
      * Getter for the state.
      * @return the name of the current state.
      */
@@ -165,6 +183,16 @@ private:
      * Your Endpoint.
      */
     EndpointDescription _remote;
+
+    /**
+     * The Request reference.
+     */
+    Request* _request;
+
+    /**
+     * True if negotiation has finished and broker is no longer needed.
+     */
+    bool _negotiationFinished;
 
 };
 

@@ -176,6 +176,8 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
         }
     }
 
+    delete msg;
+
 }
 
 void PublisherAppBase::setQoS() {
