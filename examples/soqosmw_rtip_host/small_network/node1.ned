@@ -16,13 +16,13 @@
 package soqosmw.examples.soqosmw_rtip_host.small_network;
 
 
-import soqosmw.nodes.SOQoSMWRTIPHost;
+import soqosmw.nodes.SOQoSMWHost;
 import core4inet.buffer.AS6802.RCQueueBuffer;
 import core4inet.incoming.AS6802.RCIncoming;
 import core4inet.buffer.AS6802.TTQueueBuffer;
 import core4inet.incoming.AS6802.TTIncoming;
 
-module Node1 extends SOQoSMWRTIPHost
+module Node1 extends SOQoSMWHost
 {
     submodules:
         vl_100_ctc: RCIncoming {

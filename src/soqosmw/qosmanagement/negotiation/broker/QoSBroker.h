@@ -16,88 +16,184 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 
-#include <omnetpp.h>
+#include <base/EndpointDescription.h>
 #include <string>
 
-#include <soqosmw/messages/Envelope_m.h>
-#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+namespace soqosmw {
+class Request;
+} /* namespace soqosmw */
 
-//INET
-#include "inet/networklayer/common/L3Address.h"
-#include "inet/transportlayer/contract/udp/UDPSocket.h"
+namespace inet {
+class UDPSocket;
+} /* namespace inet */
+
+namespace soqosmw {
+class Envelope;
+class QoSNegotiationEstablish;
+class QoSNegotiationFinalise;
+class QoSNegotiationProtocolMsg;
+class QoSNegotiationRequest;
+class QoSNegotiationResponse;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
 namespace soqosmw {
 
 /**
- * Statemachine for Broker.
+ * @brief QoSBroker handles the negotiation for a connection.
+ *
+ * @ingroup soqosmw/qosmanagement
+ *
+ * @author Timo Haeckel
  */
-typedef enum QoSBrokerStates {
-    SERVER_NO_SESSION,
-    SERVER_PENDING_ACCEPT,
-    SERVER_SESSION_ESTABLISHED,
-
-    CLIENT_STARTUP,
-    CLIENT_PENDING_REQUEST,
-    CLIENT_PENDING_CONNECTION,
-    CLIENT_FAILURE,
-    CLIENT_SUCCESS
-}QoSBrokerStates_t;
-
-#define NO_OF_INIT_STAGES 15
-#define MY_INIT_STAGE 13
-
-/**
- * TODO - Generated class
- */
-class QoSBroker : public cSimpleModule
-{
-  public:
-    QoSBroker();
+class QoSBroker {
+public:
+    /**
+     * Constructor.
+     * @param socket The UDP socket for outgoing messages.
+     * @param local The local endpoint description.
+     * @param remote The remote endpoint description.
+     * @param isClient Is this the client?
+     */
+    QoSBroker(inet::UDPSocket* socket, EndpointDescription local,
+            EndpointDescription remote, Request* request);
     virtual ~QoSBroker();
 
-  protected:
-    virtual void initialize(int stage) override;
-    virtual int numInitStages() const override {
-        return NO_OF_INIT_STAGES;
+    /**
+     * Handle a QoSNegotiationProtocol Message.
+     * @param msg The message to handle.
+     */
+    virtual bool handleMessage(QoSNegotiationProtocolMsg *msg);
+
+    /**
+     * handle the start signal, only if client!
+     */
+    bool startNegotiation();
+
+    /**
+     * Checks whether this Broker is responsible for the negotiation between local and remote Endpoint.
+     * @return true if Broker is responsible.
+     */
+    bool isResponsibleFor(EndpointDescription& local, EndpointDescription& remote);
+
+    /**
+     * Checks whether the Negotiation has been finished and the broker can be removed.
+     */
+    bool isNegotiationFinished() {
+        return _negotiationFinished;
     }
-    virtual void handleMessage(cMessage *msg) override;
-    virtual void handleParameterChange(const char* parname);
 
-  private:
+protected:
 
-    void handleStartSignal();
-    void handleRequest(QoSNegotiationRequest* request);
-    void handleResponse(QoSNegotiationResponse* response);
-    void handleEstablish(QoSNegotiationEstablish* establish);
-    void handleFinalise(QoSNegotiationFinalise* finalise);
+    /**
+     * Statemachine for Broker.
+     */
+    typedef enum QoSBrokerStates {
+        SERVER_NO_SESSION,
+        SERVER_PENDING_ACCEPT,
+        SERVER_SESSION_ESTABLISHED,
+        SERVER_FAILURE,
 
+        CLIENT_STARTUP,
+        CLIENT_PENDING_REQUEST,
+        CLIENT_PENDING_CONNECTION,
+        CLIENT_FAILURE,
+        CLIENT_SUCCESS
+    } QoSBrokerStates_t;
+
+private:
+    /**
+     * Handle the request, emits a response.
+     * @param request The request to handle.
+     */
+    bool handleRequest(QoSNegotiationRequest* request);
+
+    /**
+     * Handle the response, emits a establish if successful.
+     * @param response The response to handle.
+     */
+    bool handleResponse(QoSNegotiationResponse* response);
+
+    /**
+     * Handle the establish, emits a finalise if successful.
+     * @param establish The establish to handle.
+     */
+    bool handleEstablish(QoSNegotiationEstablish* establish);
+
+    /**
+     * Handle the finalise, returns to the application with negotiation status.
+     * @param finalise The finalise to handle.
+     */
+    bool handleFinalise(QoSNegotiationFinalise* finalise);
+
+    /**
+     * Check if a request is acceptable.
+     * @param request The request to check.
+     * @return true if acceptable, otherwise false.
+     */
     bool isRequestAcceptable(QoSNegotiationRequest* request);
+
+    /**
+     * Check if an establish is acceptable.
+     * @param establish The establish to check.
+     * @return true if acceptable, otherwise false.
+     */
     bool isEstablishAcceptable(QoSNegotiationEstablish* establish);
 
-    void fillEnvelope(soqosmw::Envelope* envelope);
-    void sendMessage(cPacket* msg);
+    /**
+     * Fill the soqosmw envelope with the endpoint descriptions.
+     * @param envelope The envelope to fill.
+     */
+    void fillEnvelope(Envelope* envelope);
 
+    /**
+     * Send a QoSNegotiationProtocolMsg via UDP.
+     * @param msg The message to send.
+     */
+    void sendMessage(QoSNegotiationProtocolMsg* msg);
+
+    /**
+     * finish negotiation and allow this QoSBroker to be deleted.
+     */
+    void finishNegotiation();
+
+    /**
+     * Getter for the state.
+     * @return the name of the current state.
+     */
     std::string getStateAsName();
+
+    /**
+     * Holds the current state.
+     */
     QoSBrokerStates_t _state;
 
-    //udp specific
-    void socketSetup();
-    bool isSocketBound();
-    void socketClose();
+    /**
+     * Holds a pointer to the UDPSocket.
+     */
+    inet::UDPSocket* _socket;
 
-    bool _isClient; //is client or server? TODO remove...
+    /**
+     * My Endpoint.
+     */
+    EndpointDescription _local;
 
-    L3Address _localAddress;
-    int _localPort;
-    L3Address _destAddress;
-    int _destPort;
+    /**
+     * Your Endpoint.
+     */
+    EndpointDescription _remote;
 
-    bool _parametersInitialized; //first initialization of parameters finished?
+    /**
+     * The Request reference.
+     */
+    Request* _request;
 
-    UDPSocket _socket;
-    bool _socketBound;
+    /**
+     * True if negotiation has finished and broker is no longer needed.
+     */
+    bool _negotiationFinished;
+
 };
 
 } /* namespace soqosmw */

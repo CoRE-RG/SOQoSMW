@@ -31,17 +31,33 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
 OBJS = \
-    $O/soqosmw/dispatcher/dispatcher.o \
+    $O/soqosmw/applications/base/SOQoSMWApplicationBase.o \
+    $O/soqosmw/applications/publisherapp/base/PublisherAppBase.o \
+    $O/soqosmw/applications/subscriberapp/base/SubscriberAppBase.o \
+    $O/soqosmw/discovery/base/IServiceDiscovery.o \
+    $O/soqosmw/discovery/static/StaticServiceDiscovery.o \
+    $O/soqosmw/endpoints/base/IEndpoint.o \
+    $O/soqosmw/endpoints/publisher/base/IPublisher.o \
+    $O/soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.o \
+    $O/soqosmw/endpoints/publisher/realtime/base/IRTPublisher.o \
+    $O/soqosmw/endpoints/subscriber/base/ISubscriber.o \
+    $O/soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.o \
+    $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \
+    $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/state/Session.o \
-    $O/soqosmw/qosmanagement/negotiation/broker/state/SessionsDB.o \
+    $O/soqosmw/qospolicy/base/IQoSPolicy.o \
+    $O/soqosmw/qospolicy/base/QoSPolicyFactory.o \
+    $O/soqosmw/servicemanager/LocalServiceManager.o \
+    $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
     $O/soqosmw/messages/Envelope_m.o \
-    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
+    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o \
+    $O/soqosmw/messages/application/ApplicationCallbacks_m.o
 
 # Message files
 MSGFILES = \
     soqosmw/messages/Envelope.msg \
-    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg
+    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg \
+    soqosmw/messages/application/ApplicationCallbacks.msg
 
 # SM files
 SMFILES =

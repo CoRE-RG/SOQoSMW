@@ -8,19 +8,28 @@
 #ifndef SOQOSMW_BASE_ENDPOINTDESCRIPTION_H_
 #define SOQOSMW_BASE_ENDPOINTDESCRIPTION_H_
 
-#include "soqosmw/base/QoS_Defines.h"
 #include <string>
-#include "inet/networklayer/common/L3Address.h"
 
-using namespace inet;
-using namespace std;
+#include <inet/networklayer/common/L3Address.h>
 
 namespace soqosmw {
 
+/**
+ * @brief This class describes an Endpoint for soqosmw messages.
+ *
+ * @ingroup soqosmw/base
+ *
+ * @author Timo Haeckel
+ */
 class EndpointDescription {
 public:
+    EndpointDescription(std::string path, inet::L3Address networkAddr, int networkPort) : _path(path), _networkAddr (networkAddr), _networkPort(networkPort){
+
+    }
+
     EndpointDescription() {
     }
+
     virtual ~EndpointDescription() {
     }
 
@@ -43,11 +52,11 @@ public:
         return !(*this == other);
     }
 
-    const L3Address& getNetworkAddr() const {
+    const inet::L3Address& getNetworkAddr() const {
         return _networkAddr;
     }
 
-    void setNetworkAddr(const L3Address& networkAddr) {
+    void setNetworkAddr(const inet::L3Address& networkAddr) {
         _networkAddr = networkAddr;
     }
 
@@ -59,17 +68,36 @@ public:
         _networkPort = networkPort;
     }
 
-    const string& getPath() const {
+    const std::string& getPath() const {
         return _path;
     }
 
-    void setPath(const string& path) {
+    void setPath(const std::string& path) {
         _path = path;
     }
 
+    std::string toString(){
+        std::string ret = "EndpointDescription[";
+        ret.append(" path:").append(_path);
+        ret.append(" networkAddr:").append(_networkAddr.str());
+        ret.append(" networkPort").append(std::to_string(_networkPort));
+        return ret.append(" ]");
+    }
+
 private:
-    string _path;
-    L3Address _networkAddr;
+    /**
+     * The name of the Endpoint as a path.
+     */
+    std::string _path;
+
+    /**
+     * The network address of the node running the Endpoint.
+     */
+    inet::L3Address _networkAddr;
+
+    /**
+     * The network port of the Endpoint.
+     */
     int _networkPort;
 };
 

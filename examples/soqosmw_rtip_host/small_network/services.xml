@@ -1,0 +1,7 @@
+<services>
+	<service name="service1" node="node1" />
+	<service name="service2" node="node2" />
+	<service name="service3" node="node3" />
+	<service name="service4" node="node2" />
+	<service name="service5" node="node2" />
+</services>

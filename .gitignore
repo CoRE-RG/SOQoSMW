@@ -6,3 +6,12 @@
 *.bak*
 *.vux
 out/
+*.dll
+*_m.cc
+*_m.h
+examples/soqosmw_rtip_host/small_network/results/
+doc/doxy/
+doc/neddoc/
+doc/index.html
+examples/soqosmw_pubsub/small_network/results/
+*.anf

@@ -1,1 +1,0 @@
-This folder contains all files managing the state of the SOQoS MW.

@@ -20,6 +20,7 @@ template <typename C> class Singleton
     virtual
     ~Singleton ()
     {
+       delete _instance;
        _instance = 0;
     }
  private:

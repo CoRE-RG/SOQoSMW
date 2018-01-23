@@ -36,7 +36,7 @@ network small_network
             @display("p=39,70");
         }
 
-        node2: RTIPHost {
+        node2: Node1 {
             @display("p=249,30");
         }
 
