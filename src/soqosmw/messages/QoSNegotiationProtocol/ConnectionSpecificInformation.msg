@@ -13,20 +13,24 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <qospolicy/base/QoSPolicyFactory.h>
+//
+// TODO generated message class
+//
+namespace soqosmw;
 
-namespace soqosmw {
-
-using namespace std;
-
-QoSPolicyFactory::QoSPolicyFactory() {
-    // TODO Auto-generated constructor stub
-
+//Type of ConenctionSpecificInformation
+enum ConnectionType{
+    ct_udp			= 0;
+    ct_tcp			= 1;
+    ct_http			= 2;
+    ct_avb			= 3;
 }
 
-QoSPolicyFactory::~QoSPolicyFactory() {
-    // TODO Auto-generated destructor stub
-
+packet ConnectionSpecificInformation {
+    
 }
 
-} /* end namepsace soqosmw */
+packet CSI_AVB extends ConnectionSpecificInformation {
+    long streamID;
+    int vlanID;
+}

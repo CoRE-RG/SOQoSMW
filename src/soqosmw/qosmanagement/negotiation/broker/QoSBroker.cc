@@ -13,10 +13,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/base/SOQoSMWApplicationBase.h>
 #include <messages/application/ApplicationCallbacks_m.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include <omnetpp/cgate.h>
 #include <omnetpp/clog.h>
+#include <omnetpp/csimulation.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/management/QoSGroup.h>
@@ -30,9 +31,9 @@ namespace soqosmw {
 using namespace inet;
 using namespace std;
 
-QoSBroker::QoSBroker(UDPSocket* socket, EndpointDescription local,
+QoSBroker::QoSBroker(UDPSocket* socket, LocalServiceManager* lsm, EndpointDescription local,
         EndpointDescription remote, Request* request) :
-        _socket(socket), _local(local), _remote(remote), _request(request) {
+        _socket(socket), _lsm(lsm), _local(local), _remote(remote), _request(request) {
     _negotiationFinished = false;
     if (request != nullptr) {
         _state = QoSBrokerStates_t::CLIENT_STARTUP;
@@ -137,6 +138,8 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
     bool handled = false;
     if (request) {
         if (_state == QoSBrokerStates_t::SERVER_NO_SESSION) {
+            //get matching publishers from local service manager
+            _lsm->getPublishersForPath(_local.getPath());
             //request received --> check requirements
             bool requestAcceptables = isRequestAcceptable(request);
 

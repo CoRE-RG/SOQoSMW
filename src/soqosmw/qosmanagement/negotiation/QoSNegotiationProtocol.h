@@ -17,7 +17,7 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 
 #include <omnetpp/csimplemodule.h>
-#include <string>
+#include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <vector>
 
 #include <inet/networklayer/common/L3Address.h>
@@ -120,6 +120,11 @@ private:
      * A QoS Broker that handles the negotiation.
      */
     std::vector<QoSBroker*> _brokers;
+
+    /**
+     * Reference to the local service manager.
+     */
+    LocalServiceManager* _lsm;
 };
 
 } /* namespace soqosmw */

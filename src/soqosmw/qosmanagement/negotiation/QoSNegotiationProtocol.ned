@@ -29,6 +29,7 @@ simple QoSNegotiationProtocol like IUDPApp
        	//local specifics
        	int protocolPort = default(5005);  // local port (-1: use ephemeral port)
         string localAddress = default("");
+        string lsmmoduleName = default("lsm");
         
     gates:
         //UDP Transport Protocol gates
