@@ -19,11 +19,13 @@
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
-#include <qosmanagement/negotiation/broker/QoSBroker.h>
+#include <omnetpp/simutil.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
+#include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 
 #include <inet/networklayer/common/L3AddressResolver.h>
 
@@ -43,7 +45,8 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 void QoSNegotiationProtocol::initialize(int stage) {
     if (stage == MY_INIT_STAGE) {
         handleParameterChange(nullptr);
-
+        _lsm = dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
+                               par("lsmmoduleName")));
         if (!isSocketBound()) {
             socketSetup();
         }
@@ -74,7 +77,7 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
             //check if message was handled, else we need a new broker.
             if (!handled) {
                 //create new broker
-                QoSBroker* broker = new QoSBroker(&_socket,
+                QoSBroker* broker = new QoSBroker(&_socket, _lsm,
                         as_negotiation->getReceiver(),
                         as_negotiation->getSender(), nullptr);
 
@@ -141,7 +144,7 @@ void QoSNegotiationProtocol::socketClose() {
 void QoSNegotiationProtocol::createQoSBroker(Request* request) {
     Enter_Method("QOSNP::createQoSBroker()");
     //create broker as requestet
-    QoSBroker* broker = new QoSBroker(&_socket, request->getLocal(), request->getRemote(), request);
+    QoSBroker* broker = new QoSBroker(&_socket, _lsm, request->getLocal(), request->getRemote(), request);
 
     //tell broker to start the request.
     bool handled = broker->startNegotiation();

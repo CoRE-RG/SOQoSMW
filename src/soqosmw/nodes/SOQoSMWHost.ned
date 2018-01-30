@@ -29,6 +29,9 @@ module SOQoSMWHost extends RTIPHost
     	int numServices = default(0);
     	string localAddress = default("");
     	*.localAddress = localAddress;
+    	*.lsmmoduleName = "lsm";
+    	*.sdmoduleName = "sd";
+    	*.qosnpmoduleName = "qosnp";
     	
     submodules:
         

@@ -20,6 +20,10 @@
 #include <string>
 
 namespace soqosmw {
+class LocalServiceManager;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 class Request;
 } /* namespace soqosmw */
 
@@ -56,7 +60,7 @@ public:
      * @param remote The remote endpoint description.
      * @param isClient Is this the client?
      */
-    QoSBroker(inet::UDPSocket* socket, EndpointDescription local,
+    QoSBroker(inet::UDPSocket* socket, LocalServiceManager* lsm, EndpointDescription local,
             EndpointDescription remote, Request* request);
     virtual ~QoSBroker();
 
@@ -173,6 +177,11 @@ private:
      * Holds a pointer to the UDPSocket.
      */
     inet::UDPSocket* _socket;
+
+    /**
+     * Reference to the local service manager.
+     */
+    LocalServiceManager* _lsm;
 
     /**
      * My Endpoint.

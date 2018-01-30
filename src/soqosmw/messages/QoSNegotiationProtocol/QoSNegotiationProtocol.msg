@@ -18,9 +18,11 @@
 //
 cplusplus {{
 #include "soqosmw/messages/Envelope_m.h"
+#include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
 }}
 packet soqosmw::Envelope;
 enum SOQoSMWProtocols;
+enum soqosmw::ConnectionType;
 
 namespace soqosmw;
 
@@ -44,6 +46,7 @@ enum QoSNegotiationStatus{
  	Failure	= 0;
  	Success	= 1;
 }
+
 
 //Message type for all Protocol message of the qos negotiation
 packet QoSNegotiationProtocolMsg extends soqosmw::Envelope {
@@ -90,4 +93,5 @@ packet QoSNegotiationFinalise extends QoSNegotiationProtocolMsg {
     messageType = QoSNegotiationMsgType::QoS_Finalise; //inherited from QoSNegotiationProtocol
     //qosClass; inherited form QoSNegotiationProtocol
     int finalStatus @enum(QoSNegotiationStatus);
+    int connectionType @enum(ConnectionType);
 }

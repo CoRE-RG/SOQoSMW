@@ -29,11 +29,4 @@ QoSPolicyFactory::~QoSPolicyFactory() {
 
 }
 
-unordered_map<string, IQoSPolicy*>& QoSPolicyFactory::extractPolicyFromPar(
-        omnetpp::cPar& parameter) {
-    unordered_map<string, IQoSPolicy*> policies;
-
-    return policies;
-}
-
 } /* end namepsace soqosmw */
