@@ -139,7 +139,7 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
     if (request) {
         if (_state == QoSBrokerStates_t::SERVER_NO_SESSION) {
             //get matching publishers from local service manager
-            _lsm->getPublishersForPath(_local.getPath());
+            //_lsm->getPublishersForPath(_local.getPath());
             //request received --> check requirements
             bool requestAcceptables = isRequestAcceptable(request);
 
