@@ -43,7 +43,7 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         // ID of the AVB Stream
         int streamID = default(0);     
         
-        string subscriberName = default("SubscriberService");
+        string subscriberName = default("SubscriberService");//nicht benötigt?
         
         string publisherName = default("PublisherService");
         

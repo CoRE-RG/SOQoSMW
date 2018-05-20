@@ -17,9 +17,11 @@
 #define SOQOSMW_ENDPOINTS_PUBLISHER_BASE_IPUBLISHER_H_
 
 #include <endpoints/base/IEndpoint.h>
-#include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <unordered_map>
+
+namespace soqosmw {
+class PublisherWriter;
+} /* namespace soqosmw */
 
 namespace omnetpp {
 class cPacket;
@@ -42,8 +44,7 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication from IEndpoint.
      */
-    IPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy*> qosPolicies,
-            SOQoSMWApplicationBase* executingApplication);
+    IPublisher(std::string path,  PublisherWriter* writer);
     virtual ~IPublisher();
 
     /**
@@ -51,6 +52,17 @@ public:
      * @param payload
      */
     virtual void publish(omnetpp::cPacket* payload) = 0;
+
+    PublisherWriter* getWriter() {
+        return _writer;
+    }
+
+    void setWriter( PublisherWriter* writer) {
+        _writer = writer;
+    }
+
+private:
+    PublisherWriter* _writer;
 };
 
 } /*end namespace soqosmw*/

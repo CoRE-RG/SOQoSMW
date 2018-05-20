@@ -19,11 +19,9 @@ namespace soqosmw {
 using namespace std;
 using namespace omnetpp;
 
-IPublisher::IPublisher(string subscriberPath, unordered_map<string, IQoSPolicy*> qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) :
-        IEndpoint(subscriberPath, qosPolicies, executingApplication) {
+IPublisher::IPublisher(string path, PublisherWriter* writer) :
+        IEndpoint(path), _writer(writer) {
 
-    // TODO Auto-generated constructor stub
 
 }
 

@@ -14,7 +14,7 @@
 // 
 
 #include <applications/publisherapp/base/PublisherAppBase.h>
-#include <endpoints/publisher/base/IPublisher.h>
+#include <connector/pubsub/writer/PublisherWriter.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
 #include <omnetpp/cexception.h>
@@ -37,7 +37,6 @@
 #include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
-#include <cstdint>
 #include <cstring>
 #include <iostream>
 #include <utility>
@@ -45,7 +44,6 @@
 #include <core4inet/base/CoRE4INET_Defs.h>
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/Ethernet.h>
-
 namespace soqosmw {
 using namespace inet;
 using namespace CoRE4INET;
@@ -61,7 +59,7 @@ PublisherAppBase::PublisherAppBase() {
 }
 
 PublisherAppBase::~PublisherAppBase() {
-
+    delete _writer;
 }
 
 bool PublisherAppBase::isEnabled() {
@@ -146,10 +144,10 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
     if (msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)) {
 
         setQoS();
-        printQoS();
+        //printQoS();
 
         //register this as new publisher app!
-        _publisher = getLocalServiceManager()->createPublisher(
+        _writer = getLocalServiceManager()->createPublisher(
                 this->_serviceName, this->_qosPolicies, this);
 
         //schedule next send event
@@ -158,13 +156,13 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
     } else if (msg->isSelfMessage()
             && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
-        if (_publisher) {
+        if (_writer) {
             cPacket *payloadPacket = new cPacket;
             payloadPacket->setTimestamp();
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
 
-            _publisher->publish(payloadPacket);
+            _writer->write(payloadPacket);
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
             //schedule next send event

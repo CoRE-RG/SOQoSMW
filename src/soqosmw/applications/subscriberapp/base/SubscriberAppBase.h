@@ -23,7 +23,7 @@
 #include <unordered_map>
 
 namespace soqosmw {
-class ISubscriber;
+class SubscriptionReader;
 } /* namespace soqosmw */
 
 namespace omnetpp {
@@ -67,12 +67,12 @@ private:
     /**
      * Caches the stream ID.
      */
-    int _streamID;
+    unsigned long _streamID;
 
     /**
-     * Reference to the soqosmw subscriber module.
+     * Reference to the soqosmw subscriberReader module.
      */
-    ISubscriber *_subscriber;
+    SubscriptionReader *_reader;
 
 protected:
     /**
@@ -98,8 +98,6 @@ protected:
 public:
     SubscriberAppBase();
     virtual ~SubscriberAppBase();
-
-    void notify(ApplicationCallback* msg);
 
 private:
     void setQoS();

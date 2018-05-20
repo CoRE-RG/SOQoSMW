@@ -27,10 +27,11 @@ enum ConnectionType{
 }
 
 packet ConnectionSpecificInformation {
-    
+    int connectionType @enum(ConnectionType);
 }
 
 packet CSI_AVB extends ConnectionSpecificInformation {
+    connectionType = ConnectionType::ct_avb;
     long streamID;
     int vlanID;
 }

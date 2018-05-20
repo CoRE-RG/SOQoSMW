@@ -36,7 +36,7 @@ public:
     /**
      * comparing operators
      */
-    inline bool operator==(const EndpointDescription& other) {
+    inline bool operator==(EndpointDescription& other) {
         bool value = false;
         if (_networkAddr == other.getNetworkAddr()) {
             if (_networkPort == other.getNetworkPort()) {
@@ -48,19 +48,19 @@ public:
         return value;
     }
 
-    inline bool operator!=(const EndpointDescription& other) {
+    inline bool operator!= (EndpointDescription& other) {
         return !(*this == other);
     }
 
-    const inet::L3Address& getNetworkAddr() const {
+    inet::L3Address& getNetworkAddr() {
         return _networkAddr;
     }
 
-    void setNetworkAddr(const inet::L3Address& networkAddr) {
+    void setNetworkAddr(inet::L3Address& networkAddr) {
         _networkAddr = networkAddr;
     }
 
-    int getNetworkPort() const {
+    int getNetworkPort() {
         return _networkPort;
     }
 
@@ -68,11 +68,11 @@ public:
         _networkPort = networkPort;
     }
 
-    const std::string& getPath() const {
+    std::string& getPath() {
         return _path;
     }
 
-    void setPath(const std::string& path) {
+    void setPath(std::string& path) {
         _path = path;
     }
 

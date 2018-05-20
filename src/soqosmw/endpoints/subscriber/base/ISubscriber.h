@@ -22,6 +22,10 @@
 #include <unordered_map>
 
 namespace soqosmw {
+class SubscriptionReader;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 
 /**
  * @brief Subscriber interface. Base class for all subscribers.
@@ -39,8 +43,7 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication fromIEndpoint.
      */
-    ISubscriber(std::string subscriberPath, std::string publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+    ISubscriber(std::string publisherPath, SubscriptionReader* reader);
     virtual ~ISubscriber();
 
     const std::string& getPublisherPath() const {
@@ -51,11 +54,24 @@ public:
         _publisherPath = publisherPath;
     }
 
+    SubscriptionReader* getReader()  {
+        return _reader;
+    }
+
+    void setReader(SubscriptionReader* reader) {
+        _reader = reader;
+    }
+
 private:
     /**
      * The path/name of the publisher.
      */
     std::string _publisherPath;
+
+    /**
+     * reader for subscription
+     */
+   SubscriptionReader* _reader;
 };
 
 } /*end namespace soqosmw*/

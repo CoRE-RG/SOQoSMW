@@ -13,7 +13,12 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <connector/pubsub/reader/SubscriptionReader.h>
+#include <connector/pubsub/writer/PublisherWriter.h>
+#include <endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
 #include <messages/application/ApplicationCallbacks_m.h>
+#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 #include <omnetpp/cgate.h>
 #include <omnetpp/clog.h>
@@ -21,12 +26,12 @@
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/management/QoSGroup.h>
+#include <servicemanager/LocalServiceManager.h>
 #include <iostream>
 #include <unordered_map>
 
 #include <inet/networklayer/common/L3Address.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
-
 namespace soqosmw {
 using namespace inet;
 using namespace std;
@@ -138,8 +143,7 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
     bool handled = false;
     if (request) {
         if (_state == QoSBrokerStates_t::SERVER_NO_SESSION) {
-            //get matching publishers from local service manager
-            //_lsm->getPublishersForPath(_local.getPath());
+
             //request received --> check requirements
             bool requestAcceptables = isRequestAcceptable(request);
 
@@ -235,10 +239,51 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
             finalise->setQosClass(establish->getQosClass());
 
             if (isEstablishAcceptable(establish)) {
-                // successfull negotiation
-                finalise->setFinalStatus(QoSNegotiationStatus::Success);
-                EV_DEBUG << " --> finalise success" << endl;
-                _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
+                ConnectionSpecificInformation* connection = nullptr;
+                //create according endpoint.
+                //switch(establish->getCommunicationPattern()){
+                //...
+                //publishsubscribe
+                    switch(establish->getQosClass()){
+                    case QoSGroups::RT: {
+                        //get path
+                        string& path = _local.getPath();
+                        //get responsible writer
+                        PublisherWriter* writer = _lsm->getPublisherWriterForName(path);
+
+                        //Create AVB Publisher!
+                        AVBPublisher* publisher = new AVBPublisher(path, writer);
+
+                        //connect endpoint to the writer
+                        writer->addPublisher(publisher);
+
+                        //get endpoint details
+                        connection = publisher->getConnectionSpecificInformation();
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+
+
+                //}
+
+                if(connection){
+                    //pack details to message
+                    finalise->encapsulate(connection);
+
+                    // successfull negotiation
+                    finalise->setFinalStatus(QoSNegotiationStatus::Success);
+                    EV_DEBUG << " --> finalise success" << endl;
+                    _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
+
+                } else {
+                    // negotiation failed. QUIT
+                    finalise->setFinalStatus(QoSNegotiationStatus::Failure);
+                    EV_DEBUG << " --> finalise failed" << endl;
+                    _state = QoSBrokerStates_t::SERVER_FAILURE;
+                }
+
             } else {
                 // negotiation failed. QUIT
                 finalise->setFinalStatus(QoSNegotiationStatus::Failure);
@@ -263,9 +308,42 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
     if (finalise) {
         if (_state == QoSBrokerStates_t::CLIENT_PENDING_CONNECTION) {
             cout << "QoSBroker: full cycle successfull" << endl;
+
             if(finalise->getFinalStatus() == QoSNegotiationStatus::Success){
                 _state = QoSBrokerStates_t::CLIENT_SUCCESS;
                 _request->setStatus(RequestStatus::FINALISED_SUCCESS);
+
+                //get connection specific information
+                cPacket* enc = finalise->decapsulate();
+                if(enc){
+                    ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(enc);
+
+                    // evatluate communication pattern
+                    //...
+
+                    //-> pub sub
+
+                    ISubscriber* subscriber = nullptr;
+                    switch(info->getConnectionType()){
+                    case ConnectionType::ct_avb: {
+                        //get path
+                        string& path = _remote.getPath();
+                        //get responsible writer
+                        SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+
+                        //create according endpoint
+                        subscriber = new AVBSubscriber(_remote.getPath(), reader, info);
+
+                        //connect endpoint to the writer
+                        reader->addSubscriber(subscriber);
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+                }
+
+
             }else{
                 _state = QoSBrokerStates_t::CLIENT_FAILURE;
                 _request->setStatus(RequestStatus::FINALISED_FAILURE);
@@ -344,14 +422,6 @@ bool QoSBroker::isResponsibleFor(EndpointDescription& local,
 }
 
 void QoSBroker::finishNegotiation() {
-    if(_request != nullptr){
-        cout << "request set and broker status " << getStateAsName() << " request status: " << _request->getStatus() << endl;
-        QoSNegotiationResult * msg = new QoSNegotiationResult();
-        msg->setRequestStatus(_request->getStatus());
-        _request->getNotificationGate()->deliver(msg,simTime());
-    } else {
-        cout << "request null and broker status " << getStateAsName() << endl;
-    }
     _negotiationFinished = true;
 }
 

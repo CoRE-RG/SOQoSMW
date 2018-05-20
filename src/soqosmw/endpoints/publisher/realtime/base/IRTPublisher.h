@@ -38,8 +38,7 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication from IEndpoint.
      */
-    IRTPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy*> qosPolicies,
-            SOQoSMWApplicationBase* executingApplication);
+    IRTPublisher(std::string path, PublisherWriter* writer);
     virtual ~IRTPublisher();
 
 };

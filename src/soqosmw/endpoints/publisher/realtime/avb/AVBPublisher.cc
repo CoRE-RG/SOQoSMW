@@ -14,8 +14,11 @@
 // 
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <endpoints/base/IEndpoint.h>
+#include <connector/base/IConnector.h>
+#include <connector/pubsub/writer/PublisherWriter.h>
+#include <endpoints/publisher/base/IPublisher.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 #include <omnetpp/cexception.h>
 #include <omnetpp/checkandcast.h>
 #include <omnetpp/clog.h>
@@ -43,9 +46,8 @@ using namespace CoRE4INET;
 
 namespace soqosmw {
 
-AVBPublisher::AVBPublisher(string path, unordered_map<string, IQoSPolicy*> qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) :
-        IRTPublisher(path, qosPolicies, executingApplication) {
+AVBPublisher::AVBPublisher(string path, PublisherWriter* writer) :
+        IRTPublisher(path, writer) {
 
     setupDefaultAttributes();
 
@@ -55,29 +57,37 @@ AVBPublisher::AVBPublisher(string path, unordered_map<string, IQoSPolicy*> qosPo
 
 void AVBPublisher::setupDefaultAttributes() {
     _srpTable = check_and_cast<SRPTable *>(
-            getExecutingApplication()->getParentModule()->getSubmodule("srpTable"));
+            getWriter()->getExecutingApplication()->getParentModule()->getSubmodule("srpTable"));
     _multicastMAC = inet::MACAddress::generateAutoAddress();
     _multicastMAC.setAddressByte(0, (_multicastMAC.getAddressByte(1) | 0x01));
     _isStreaming = false;
-    _streamID = (dynamic_cast<StreamIDQoSPolicy*>(_qos[QoSPolicyNames::StreamID]))->getValue();
+    _streamID = (dynamic_cast<StreamIDQoSPolicy*>(getWriter()->getQoSValueFor(QoSPolicyNames::StreamID)))->getValue();
     _avbOutCTC =
-            this->getExecutingApplication()->getParentModule()->getSubmodule(
+            getWriter()->getExecutingApplication()->getParentModule()->getSubmodule(
                     "avbCTC");
+}
+
+ConnectionSpecificInformation* AVBPublisher::getConnectionSpecificInformation() {
+    CSI_AVB* connection = new CSI_AVB();
+    connection->setStreamID(_streamID);
+    connection->setVlanID(_vlanID);
+
+    return connection;
 }
 
 void AVBPublisher::setupSRP() {
     if (_srpTable) {
         //get parameters.
-        auto srClass = dynamic_cast<SRClassQoSPolicy*>(_qos[QoSPolicyNames::SRClass])->getValue();
-        auto framesize = (dynamic_cast<FramesizeQoSPolicy*>(_qos[QoSPolicyNames::Framesize]))->getValue();
-        auto intervalFrames = (dynamic_cast<IntervalFramesQoSPolicy*>(_qos[QoSPolicyNames::IntervalFrames]))->getValue();
+        auto srClass = dynamic_cast<SRClassQoSPolicy*>(getWriter()->getQoSValueFor(QoSPolicyNames::SRClass))->getValue();
+        auto framesize = (dynamic_cast<FramesizeQoSPolicy*>(getWriter()->getQoSValueFor(QoSPolicyNames::Framesize)))->getValue();
+        auto intervalFrames = (dynamic_cast<IntervalFramesQoSPolicy*>(getWriter()->getQoSValueFor(QoSPolicyNames::IntervalFrames)))->getValue();
         _vlanID = 7;
 
         EV_INFO << "Register Talker in node" << std::endl;
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTERED, this);
         _srpTable->subscribe(NF_AVB_LISTENER_UNREGISTERED, this);
         _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
-        _srpTable->updateTalkerWithStreamId(_streamID, getExecutingApplication(),
+        _srpTable->updateTalkerWithStreamId(_streamID, getWriter()->getExecutingApplication(),
                 _multicastMAC, srClass, framesize, intervalFrames, _vlanID);
         EV_INFO << _endpointPath << ": Registered AVBTalker with streamID " << _streamID << endl;
     } else {
@@ -104,7 +114,7 @@ void AVBPublisher::publish(cPacket* payload) {
         if (outFrame->getByteLength() < MIN_ETHERNET_FRAME_BYTES) {
             outFrame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
         }
-        getExecutingApplication()->sendDirect(outFrame, _avbOutCTC->gate("in"));
+        getWriter()->getExecutingApplication()->sendDirect(outFrame, _avbOutCTC->gate("in"));
     } else {
         delete payload;
     }

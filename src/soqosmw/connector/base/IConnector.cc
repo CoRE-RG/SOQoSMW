@@ -13,18 +13,17 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <endpoints/base/IEndpoint.h>
+#include <connector/base/IConnector.h>
 
 namespace soqosmw {
-using namespace std;
 
-IEndpoint::IEndpoint(string endpointPath) :
-        _endpointPath(endpointPath){
-
+IConnector::IConnector(SOQoSMWApplicationBase* executingApplication) {
+    _executingApplication = executingApplication;
 }
 
-IEndpoint::~IEndpoint() {
+IConnector::~IConnector() {
     // TODO Auto-generated destructor stub
 }
+
 } /*end namespace soqosmw*/
 

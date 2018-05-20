@@ -14,12 +14,14 @@
 // 
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <endpoints/base/IEndpoint.h>
+#include <connector/base/IConnector.h>
+#include <connector/pubsub/reader/SubscriptionReader.h>
+#include <endpoints/subscriber/base/ISubscriber.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
+#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 #include <omnetpp/cexception.h>
 #include <omnetpp/checkandcast.h>
-#include <qospolicy/avb/StreamIDQoSPolicy.h>
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include <omnetpp/clog.h>
 #include <iostream>
 
 #include <core4inet/base/NotifierConsts.h>
@@ -32,35 +34,30 @@ using namespace CoRE4INET;
 #define SUBSCRIBER_MSG_RETRY "retrySubscription"
 #define SUBSCRIBER_MSG_UPDATE "updateSubscription"
 
-AVBSubscriber::AVBSubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
-        IRTSubscriber(subscriberPath, publisherPath, qosPolicies, executingApplication) {
+AVBSubscriber::AVBSubscriber(string publisherPath, SubscriptionReader* reader, ConnectionSpecificInformation* info) :
+        IRTSubscriber(publisherPath, reader) {
 
-    setupDefaultAttributes();
+    if(info->getConnectionType() == ConnectionType::ct_avb){
+        CSI_AVB* connection = dynamic_cast<CSI_AVB*>(info);
+        SRPTable* srpTable = check_and_cast<SRPTable *>(
+                getReader()->getExecutingApplication()->getParentModule()->getSubmodule("srpTable"));
+        _streamID = connection->getStreamID();
+        _vlanID = connection->getVlanID();
 
-    setupSRP();
-
+        if (srpTable) {
+                srpTable->subscribe(NF_AVB_TALKER_REGISTERED, this);
+                srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
+                srpTable->updateListenerWithStreamId(_streamID, getReader()->getExecutingApplication(), _vlanID);
+            } else {
+                throw cRuntimeError("srpTable module required for stream reservation");
+            }
+    } else{
+        throw cRuntimeError("No AVB Connection information available");
+    }
 }
 
 AVBSubscriber::~AVBSubscriber() {
     // TODO Auto-generated destructor stub
-}
-
-void AVBSubscriber::setupDefaultAttributes() {
-    _srpTable = check_and_cast<SRPTable *>(
-            getExecutingApplication()->getParentModule()->getSubmodule("srpTable"));
-    _streamID = (dynamic_cast<StreamIDQoSPolicy*>(_qos[QoSPolicyNames::StreamID]))->getValue();
-    _vlanID = 7;
-}
-
-void AVBSubscriber::setupSRP() {
-    if (_srpTable) {
-        _srpTable->subscribe(NF_AVB_TALKER_REGISTERED, this);
-        _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
-        _srpTable->updateListenerWithStreamId(_streamID, getExecutingApplication(), _vlanID);
-    } else {
-        throw cRuntimeError("srpTable module required for stream reservation");
-    }
 }
 
 void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
@@ -76,7 +73,7 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
         {
             SRPTable *signal_srpTable = check_and_cast<SRPTable *>(src);
 
-            signal_srpTable->updateListenerWithStreamId(tentry->streamId, getExecutingApplication(), _vlanID);
+            signal_srpTable->updateListenerWithStreamId(tentry->streamId, getReader()->getExecutingApplication(), _vlanID);
 
             EV_INFO << _endpointPath << ": Registered AVBListener for streamID " << _streamID << endl;
 //            if (_updateInterval != 0)
@@ -90,7 +87,7 @@ void AVBSubscriber::receiveSignal(cComponent *src, simsignal_t id, cObject *obj,
         SRPTable::ListenerEntry *lentry = check_and_cast<SRPTable::ListenerEntry*>(obj);
         if (lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
-            if (lentry->module == getExecutingApplication())
+            if (lentry->module == getReader()->getExecutingApplication())
             {
 
                 EV_ERROR << _endpointPath << ": Registration failed for AVBListener streamID " << _streamID << endl;

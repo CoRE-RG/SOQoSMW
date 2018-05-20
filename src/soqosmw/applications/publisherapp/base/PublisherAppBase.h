@@ -20,13 +20,13 @@
 #include <crtdefs.h>
 #include <omnetpp/clistener.h>
 #include <qospolicy/base/IQoSPolicy.h>
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 #include <core4inet/base/avb/AVBDefs.h>
 
-
 namespace soqosmw {
-class IPublisher;
+class PublisherWriter;
 } /* namespace soqosmw */
 
 using namespace omnetpp;
@@ -61,9 +61,9 @@ private:
     size_t _framesize;
 
     /**
-     * Save the responsible publisher
+     * Save the responsible writer to publish
      */
-    IPublisher* _publisher;
+    PublisherWriter* _writer;
 
     /**
      * Name of the service to publish.
@@ -98,7 +98,7 @@ private:
     /**
      * Caches the stream ID.
      */
-    int _streamID;
+    unsigned long _streamID;
 
 public:
     PublisherAppBase();

@@ -14,18 +14,16 @@
 // 
 
 #include <base/EndpointDescription.h>
+#include <connector/pubsub/reader/SubscriptionReader.h>
+#include <connector/pubsub/writer/PublisherWriter.h>
 #include <discovery/static/StaticServiceDiscovery.h>
-#include <endpoints/publisher/realtime/avb/AVBPublisher.h>
-#include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
 #include <omnetpp/cexception.h>
-#include <omnetpp/cgate.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
 #include <omnetpp/regmacros.h>
 #include <omnetpp/simutil.h>
 #include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
-#include <qospolicy/management/QoSGroup.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
 #include <cstring>
@@ -33,7 +31,6 @@
 
 #include <inet/networklayer/common/L3AddressResolver.h>
 
-using namespace CoRE4INET;
 using namespace std;
 using namespace inet;
 
@@ -43,6 +40,9 @@ Define_Module(LocalServiceManager);
 
 LocalServiceManager::LocalServiceManager() {
     _requestID = 0;
+}
+
+LocalServiceManager::~LocalServiceManager() {
 }
 
 void LocalServiceManager::initialize(int stage) {
@@ -75,37 +75,24 @@ void LocalServiceManager::handleParameterChange(const char* parname) {
 
 }
 
-IPublisher* LocalServiceManager::createPublisher(string& publisherPath,
+PublisherWriter* LocalServiceManager::createPublisher(string& publisherPath,
         unordered_map<string, IQoSPolicy*>& qosPolicies,
         SOQoSMWApplicationBase* executingApplication) {
-    IPublisher* publisher = nullptr;
+    PublisherWriter* writer = new PublisherWriter(executingApplication, qosPolicies);
 
-    //TODO check if service already exists.
+    //save the writer so that new endpoints can be connected to the application.
+    _publisherWriters[publisherPath] = writer;
 
-    switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
-    case QoSGroup::WEB:
-        break;
-    case QoSGroup::STD:
-        break;
-    case QoSGroup::RT:
-        publisher = new AVBPublisher(publisherPath, qosPolicies,
-                executingApplication);
-        _publishers.push_back(publisher);
-        break;
-    default:
-        break;
-    }
-
-    return publisher;
+    return writer;
 }
 
-int LocalServiceManager::requestSubscription(string& subscriberPath,
+SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath,
         string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
-        cGate *notificationGate) {
-    Enter_Method("LSM:requestSubscription()");
-    int id = -1; // if an error occurs...
+        SOQoSMWApplicationBase* executingApplication) {
 
-    //check if publisher exists in the network.
+    Enter_Method("LSM:createSubscriber()");
+
+    //check if publisher exists in the network and start the negotiation with a request.
     if (_sd->contains(publisherPath)) {
         //create the request
         EndpointDescription local(subscriberPath, _localAddress,
@@ -114,7 +101,7 @@ int LocalServiceManager::requestSubscription(string& subscriberPath,
         EndpointDescription remote(publisherPath, _sd->discover(publisherPath),
                 _qosnp->getProtocolPort());
         Request * request = new Request(_requestID++, local, remote,
-                qosPolicies, notificationGate);
+                qosPolicies, nullptr);
 
         //create qos broker for the request
         _qosnp->createQoSBroker(request);
@@ -124,84 +111,39 @@ int LocalServiceManager::requestSubscription(string& subscriberPath,
                 "The publisher you are requesting is unknown and has no entry in the ServiceRegistry.");
     }
 
-    return id;
+    //create the writer
+    SubscriptionReader* reader = new SubscriptionReader(executingApplication);
 
+    // save the reader so that new endpoints can be connected to the application.
+    _subscriptionReaders[publisherPath] = reader;
+
+    return reader;
 }
 
-ISubscriber* LocalServiceManager::createSubscriber(string& subscriberPath,
-        string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) {
-    ISubscriber* subscriber = nullptr;
+PublisherWriter* LocalServiceManager::getPublisherWriterForName(
+        std::string& publisherPath) {
 
-    //TODO check if service exists in the network
-    if (_sd->contains(publisherPath)) {
-        switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
-        case QoSGroup::WEB:
-            break;
-        case QoSGroup::STD:
-            break;
-        case QoSGroup::RT:
-
-            //TODO check if such an subscriber exists already to reuse it.
-
-            subscriber = new AVBSubscriber(subscriberPath, publisherPath,
-                    qosPolicies, executingApplication);
-            _subscribers.push_back(subscriber);
-            break;
-        default:
-            break;
-        }
-
-    }
-
-    return subscriber;
+    return _publisherWriters[publisherPath];
 }
 
-LocalServiceManager::~LocalServiceManager() {
-    for (std::vector<IPublisher*>::iterator it = _publishers.begin();
-            it != _publishers.end(); ++it) {
-        delete (*it);
-    }
-    _publishers.clear();
-    for (std::vector<ISubscriber*>::iterator it = _subscribers.begin();
-            it != _subscribers.end(); ++it) {
-        delete (*it);
-    }
-    _subscribers.clear();
+
+SubscriptionReader* LocalServiceManager::getSubscriptionReaderForName(
+        std::string& publisherPath) {
+
+    return _subscriptionReaders[publisherPath];
 }
 
-//int LocalServiceManager::existsPublisher(std::string& publisherPath = NULL,
-//        std::vector<IQoSPolicy> qosPolicies = NULL) {
-//    const bool pubPathSet = publisherPath != NULL;
-//    const bool qosSet = qosPolicies != NULL;
-//
-//    //If no arguments are passed,
-//    if(!pubPathSet && !qosSet){
-//        //this method checks if any publisher exists on this node.
-//        return _publishers.size();
-//    }
-//    //If the publisherPath is set,
-//    else {
-//        //this method checks if a publisher with matching path exists.
-//        int count = 0;
-//        for (std::vector<IPublisher*>::iterator it = _publishers.begin();
-//                it != _publishers.end(); ++it) {
-//            if((*it)->matches(publisherPath, qosPolicies)){
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
-//
-//}
 
-//int LocalServiceManager::existsSubscriber(std::string& subscriberPath,
-//        std::vector<IQoSPolicy>& qosPolicies, std::string& publisherPath) {
-//}
+bool LocalServiceManager::removePublisher(PublisherWriter* publisher,
+        SOQoSMWApplicationBase* executingApplication){
+    //dummy
+    return true;
+}
 
-bool LocalServiceManager::removePublisher(IPublisher* publisher,
+/**bool LocalServiceManager::removePublisher(PublisherWriter* publisher,
         SOQoSMWApplicationBase* executingApplication) {
     bool removed = false;
+    _publisherWriters.erase("sasd");
     auto it = find(_publishers.begin(), _publishers.end(), publisher);
     if (it != _publishers.end()
             && publisher->isExecutedBy(executingApplication)) {
@@ -210,9 +152,15 @@ bool LocalServiceManager::removePublisher(IPublisher* publisher,
         removed = true;
     }
     return removed;
-}
+}**/
 
-bool LocalServiceManager::removeSubscriber(ISubscriber* subscriber,
+bool LocalServiceManager::removeSubscriber(SubscriptionReader* subscriber,
+        SOQoSMWApplicationBase* executingApplication) {
+    //dummy
+    return true;
+}
+/**
+bool LocalServiceManager::removeSubscriber(SubscriptionReader* subscriber,
         SOQoSMWApplicationBase* executingApplication) {
     bool removed = false;
     auto it = find(_subscribers.begin(), _subscribers.end(), subscriber);
@@ -223,6 +171,6 @@ bool LocalServiceManager::removeSubscriber(ISubscriber* subscriber,
         removed = true;
     }
     return removed;
-}
+}**/
 
 } /* end namespace  */

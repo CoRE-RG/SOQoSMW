@@ -22,7 +22,6 @@ cplusplus {{
 }}
 packet soqosmw::Envelope;
 enum SOQoSMWProtocols;
-enum soqosmw::ConnectionType;
 
 namespace soqosmw;
 
@@ -93,5 +92,4 @@ packet QoSNegotiationFinalise extends QoSNegotiationProtocolMsg {
     messageType = QoSNegotiationMsgType::QoS_Finalise; //inherited from QoSNegotiationProtocol
     //qosClass; inherited form QoSNegotiationProtocol
     int finalStatus @enum(QoSNegotiationStatus);
-    int connectionType @enum(ConnectionType);
 }

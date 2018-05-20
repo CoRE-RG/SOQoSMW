@@ -27,8 +27,7 @@ namespace soqosmw {
 
 class IRTSubscriber: public ISubscriber {
 public:
-    IRTSubscriber(std::string subscriberPath, std::string publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+    IRTSubscriber(std::string publisherPath, SubscriptionReader* reader);
     virtual ~IRTSubscriber();
 };
 

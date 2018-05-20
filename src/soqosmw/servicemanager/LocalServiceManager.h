@@ -16,8 +16,6 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 
-#include <endpoints/publisher/base/IPublisher.h>
-#include <endpoints/subscriber/base/ISubscriber.h>
 #include <omnetpp/csimplemodule.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/base/IQoSPolicy.h>
@@ -27,6 +25,11 @@
 #include <vector>
 
 #include <inet/networklayer/common/L3Address.h>
+
+namespace soqosmw {
+class PublisherWriter;
+class SubscriptionReader;
+} /* namespace soqosmw */
 
 namespace soqosmw {
 class QoSNegotiationProtocol;
@@ -79,16 +82,11 @@ public:
      * @param qosPolicies The QoS Policies for the Publisher.
      * @param executingModule The omnetpp::cModule executing the request.
      *
-     * @return If a publisher could be created it returns a pointer to the Publisher. Else nullptr.
+     * @return If a publisher could be created it returns a pointer to the PublisherWriter. Else nullptr.
      */
-    IPublisher* createPublisher(std::string& publisherPath,
+    PublisherWriter* createPublisher(std::string& publisherPath,
             std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
-
-    int requestSubscription(std::string& subscriberPath,
-            std::string& publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
-            omnetpp::cGate *executingApplication);
 
     /**
      * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
@@ -98,53 +96,18 @@ public:
      * @param qosPolicies The QoS Policies for the Subscriber.
      * @param executingModule The omnetpp::cModule executing the request.
      *
-     * @return If a subscriber could be created it returns a pointer to the Subscriber. Else nullptr.
+     * @return If a subscriber could be created it returns a pointer to the SubscriptionReader. Else nullptr.
      */
-    ISubscriber* createSubscriber(std::string& subscriberPath,
+    SubscriptionReader* createSubscriber(std::string& subscriberPath,
             std::string& publisherPath,
             std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
 
-    /**
-     * @brief Check if a publisher exists.
-     *  If no arguments are passed,
-     *             this method checks if any publisher exists on this node.
-     *  If the publisherPath is set,
-     *             this method checks if a publisher with matching path exists.
-     *  If the publisherPath and the qosPolicies are set,
-     *             this method checks if a publisher with matching path and matching qosPolicies exists.
-     *
-     * @param publisherPath The path of the publisher to find.
-     * @param qosPolicies The QoS Policies of the publisher to find. //NOT YET IMPLEMENTED
-     *
-     * @return the number of matches.
-     */
-//    int existsPublisher(std::string& publisherPath = "",
-//            std::vector<IQoSPolicy> qosPolicies = NULL);
-    /**
-     * @brief Check if a subscriber exists.
-     *  If no arguments are passed,
-     *             this method checks if any subscriber exists on this node.
-     *  If the subscriberPath is set,
-     *             this method checks if a subscriber with matching subscriberPath exists.
-     *  If the subscriberPath and the qosPolicies are set,
-     *             this method checks if a subscriber with matching subscriberPath and matching qosPolicies exists.
-     *  If the publisherPath is set,
-     *             this method checks if a subscriber with matching publisherPath exists.
-     *  If the publisherPath and the qosPolicies are set,
-     *             this method checks if a subscriber with matching publisherPath and matching qosPolicies exists.
-     *  If the subscriberPath, the qosPolicies and the publisherPath are set,
-     *             this method checks if a subscriber with matching subscriberPath, matching qosPolicies and matching publisherPath exists.
-     *
-     * @param subscriberPath The subscriberPath of the subscriber to find.
-     * @param qosPolicies The QoS Policies of the subscriber to find. //NOT YET IMPLEMENTED
-     * @param publisherPath The publisherPath of the subscriber to find.
-     *
-     * @return the number of matches.
-     */
-//    int existsSubscriber(std::string& subscriberPath = "",
-//            std::vector<IQoSPolicy>& qosPolicies = NULL,
-//            std::string& publisherPath = "");
+    PublisherWriter* getPublisherWriterForName (std::string& publisherPath);
+
+    SubscriptionReader* getSubscriptionReaderForName (std::string& publisherPath);
+
+
     /**
      * @brief This method removes the given publisher.
      * NOTE the publisher pointer is no longer valid now and will be set to a nullptr.
@@ -154,7 +117,7 @@ public:
      *
      * @return true if the publisher was removed, false if not found.
      */
-    bool removePublisher(IPublisher* publisher,
+    bool removePublisher(PublisherWriter* publisher,
             SOQoSMWApplicationBase* executingApplication);
 
     /**
@@ -166,19 +129,19 @@ public:
      *
      * @return true if the subscriber was removed, false if not found.
      */
-    bool removeSubscriber(ISubscriber* subscriber,
+    bool removeSubscriber(SubscriptionReader* subscriber,
             SOQoSMWApplicationBase* executingApplication);
 
 private:
     /**
      * Contains pointers to the existing publishers on a node.
      */
-    std::vector<IPublisher*> _publishers;
+    std::unordered_map<std::string, PublisherWriter*> _publisherWriters;
 
     /**
      * contains pointers to the existing subscribers on a node.
      */
-    std::vector<ISubscriber*> _subscribers;
+    std::unordered_map<std::string, SubscriptionReader*> _subscriptionReaders;
 
     /**
      * A pointer to the service discovery.

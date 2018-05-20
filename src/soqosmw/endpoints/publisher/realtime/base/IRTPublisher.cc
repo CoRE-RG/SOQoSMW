@@ -19,9 +19,8 @@ namespace soqosmw {
 using namespace omnetpp;
 using namespace std;
 
-IRTPublisher::IRTPublisher(string path, unordered_map<string, IQoSPolicy*> qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) :
-        IPublisher(path, qosPolicies, executingApplication) {
+IRTPublisher::IRTPublisher(string path, PublisherWriter* writer) :
+        IPublisher(path, writer) {
     // TODO Auto-generated constructor stub
 
 }

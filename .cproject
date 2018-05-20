@@ -24,8 +24,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.640659090" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1500634044" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1002477668" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Hauptprojekt-Timo_Haeckel/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Hauptprojekt-Timo_Haeckel/src/soqosmw}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SOQoSMW/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SOQoSMW/src/soqosmw}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.717581202" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>

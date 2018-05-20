@@ -18,12 +18,15 @@
 
 #include <endpoints/publisher/realtime/base/IRTPublisher.h>
 #include <omnetpp/clistener.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <cstdint>
 #include <string>
-#include <unordered_map>
 
 #include <core4inet/base/avb/AVBDefs.h>
 #include <inet/linklayer/common/MACAddress.h>
+
+namespace soqosmw {
+class ConnectionSpecificInformation;
+} /* namespace soqosmw */
 
 namespace CoRE4INET {
 class SRPTable;
@@ -46,11 +49,12 @@ public:
      * @param qosPolicies from IEndpoint.
      * @param executingApplication from IEndpoint.
      */
-    AVBPublisher(std::string path, std::unordered_map<std::string, IQoSPolicy*> qosPolicies,
-            SOQoSMWApplicationBase* executingApplication);
+    AVBPublisher(std::string path, PublisherWriter* writer);
     virtual ~AVBPublisher();
 
     virtual void publish(omnetpp::cPacket* payload) override;
+
+    ConnectionSpecificInformation* getConnectionSpecificInformation();
 
 protected:
 

@@ -19,9 +19,12 @@
 #include <endpoints/subscriber/realtime/base/IRTSubscriber.h>
 #include <omnetpp/clistener.h>
 #include <omnetpp/simtime_t.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <cstdint>
 #include <string>
-#include <unordered_map>
+
+namespace soqosmw {
+class ConnectionSpecificInformation;
+} /* namespace soqosmw */
 
 namespace CoRE4INET {
 class SRPTable;
@@ -29,10 +32,9 @@ class SRPTable;
 
 namespace soqosmw {
 
-class AVBSubscriber: public IRTSubscriber, public virtual cListener {
+class AVBSubscriber: public IRTSubscriber, public virtual omnetpp::cListener{
 public:
-    AVBSubscriber(std::string subscriberPath, std::string publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+    AVBSubscriber(std::string publisherPath, SubscriptionReader* reader, ConnectionSpecificInformation* info);
     virtual ~AVBSubscriber();
 
 protected:
@@ -43,21 +45,6 @@ protected:
     virtual void receiveSignal(cComponent *src, simsignal_t id, cObject *obj, cObject *details) override;
 
 private:
-    /**
-     * sets Default values for all Attributes.
-     */
-    void setupDefaultAttributes();
-
-    /**
-     * Sets the SRP listeners and talkers.
-     */
-    void setupSRP();
-
-private:
-    /**
-     * The SRP Table to register a talker and be notified about new listeners.
-     */
-    CoRE4INET::SRPTable *_srpTable;
 
     /**
      * Stream update interval.

@@ -14,13 +14,13 @@
 // 
 
 #include <endpoints/subscriber/base/ISubscriber.h>
+#include <connector/pubsub/reader/SubscriptionReader.h>
 
 namespace soqosmw {
 using namespace std;
 
-ISubscriber::ISubscriber(string subscriberPath, string publisherPath,
-        unordered_map<string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication) :
-        IEndpoint(subscriberPath, qosPolicies, executingApplication), _publisherPath(publisherPath){
+ISubscriber::ISubscriber(string publisherPath, SubscriptionReader* reader) :
+        IEndpoint(publisherPath), _reader(reader){
     // TODO Auto-generated constructor stub
 
 }

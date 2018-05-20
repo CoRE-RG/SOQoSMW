@@ -18,7 +18,6 @@
 
 #include <qospolicy/base/IQoSPolicy.h>
 #include <string>
-#include <unordered_map>
 
 namespace soqosmw {
 class SOQoSMWApplicationBase;
@@ -42,7 +41,7 @@ public:
      * @param qosPolicies The QoS Policies describing the communication behavior of the endpoint.
      * @param executingApplication The executing application.
      */
-    IEndpoint(std::string endpointPath, std::unordered_map<std::string, IQoSPolicy*> qosPolicies, SOQoSMWApplicationBase* executingApplication);
+    IEndpoint(std::string endpointPath);
     virtual ~IEndpoint();
 
     const std::string& getEndpointPath() const {
@@ -53,47 +52,11 @@ public:
         _endpointPath = path;
     }
 
-    const std::unordered_map<std::string, IQoSPolicy*>& getQos() const {
-        return _qos;
-    }
-
-    void setQos(const std::unordered_map<std::string, IQoSPolicy*>& qos) {
-        _qos = qos;
-    }
-
-    //    virtual bool mathes(std::string& path, std::unordered_map<std::string, IQoSPolicy*>& qos);
-
-    /**
-     * Check if an application is the executer of this endpoint
-     * @param application The application pointer.
-     * @return True if the application is the executer.
-     */
-    bool isExecutedBy (SOQoSMWApplicationBase* application);
-
-protected:
-    /**
-     * Get the owning application.
-     * @return The executing application.
-     */
-    SOQoSMWApplicationBase* getExecutingApplication() const {
-        return _executingApplication;
-    }
-
 protected:
     /**
      * The name of the endpoint as a path for better specifying (e.g. "Reifendruck/links").
      */
     std::string _endpointPath;
-
-    /**
-     * QoS Policies set for this Endpoint.
-     */
-    std::unordered_map<std::string, IQoSPolicy*> _qos;
-
-    /**
-     * Owner Module of this Endpoint.
-     */
-    SOQoSMWApplicationBase* _executingApplication;
 
 };
 

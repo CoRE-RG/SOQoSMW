@@ -14,6 +14,7 @@
 // 
 
 #include <applications/subscriberapp/base/SubscriberAppBase.h>
+#include <connector/pubsub/reader/SubscriptionReader.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
 #include <omnetpp/clog.h>
@@ -47,10 +48,12 @@ Define_Module(SubscriberAppBase);
 simsignal_t SubscriberAppBase::_rxPkSignal = registerSignal("rxPk");
 
 SubscriberAppBase::SubscriberAppBase() {
-    _subscriber = nullptr;
+    _reader = nullptr;
 }
 
 SubscriberAppBase::~SubscriberAppBase() {
+
+    delete _reader;
 }
 
 void SubscriberAppBase::initialize()
@@ -75,18 +78,11 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
     SOQoSMWApplicationBase::handleMessage(msg);
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         setQoS();
+        //create a subscriber
+        _reader = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
 
-        getLocalServiceManager()->requestSubscription(this->_subscriberName, this->_publisherName, this->_qosPolicies, gate(par("appCallbackGateName").stringValue()));
+        //TODO set the gate at the reader to get all messages
 
-    } else if (auto negotiationResult = dynamic_cast<soqosmw::QoSNegotiationResult*>(msg)) {
-        switch(negotiationResult->getRequestStatus()){
-        case FINALISED_SUCCESS:
-            //create a subscriber
-            _subscriber = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
-            break;
-        default:
-            break;
-        }
     } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
