@@ -56,7 +56,6 @@ public:
     }
 
     virtual void notify(omnetpp::cMessage* notification){
-
     }
 
 protected:

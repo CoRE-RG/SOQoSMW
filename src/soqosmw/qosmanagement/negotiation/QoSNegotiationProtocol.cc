@@ -69,7 +69,6 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
                     handled = (*broker)->handleMessage(as_negotiation);
                     if ((*broker)->isNegotiationFinished()) {
                         _brokers.erase(broker);
-                        delete (*broker);
                     }
                     break;
                 }

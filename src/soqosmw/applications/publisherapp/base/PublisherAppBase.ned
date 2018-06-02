@@ -45,8 +45,5 @@ simple PublisherAppBase extends SOQoSMWApplicationBase
     
     	//Service Description
     	string serviceName = default("PublisherService");
-    	
-    	//QoS Policies
-    	string qosPolicies; //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
     
 }

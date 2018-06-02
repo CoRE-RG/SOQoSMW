@@ -14,7 +14,8 @@
 // 
 
 #include <connector/pubsub/writer/PublisherWriter.h>
-#include <omnetpp/cmessage.h>
+#include <endpoints/base/IEndpoint.h>
+#include <omnetpp/cpacket.h>
 #include <algorithm>
 #include <iterator>
 
@@ -33,8 +34,9 @@ PublisherWriter::~PublisherWriter() {
 void PublisherWriter::write(cPacket* packet) {
     for (auto publisher : _publishers){
         //Todo add priority for real-time.
-        publisher->publish(packet);
+        publisher->publish(packet->dup());
     }
+    delete packet;
 }
 
 void PublisherWriter::addPublisher(IPublisher* publisher) {

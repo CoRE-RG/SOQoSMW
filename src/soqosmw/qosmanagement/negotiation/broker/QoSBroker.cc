@@ -97,7 +97,7 @@ bool QoSBroker::startNegotiation() {
     bool handled = false;
     if (_state == QoSBrokerStates_t::CLIENT_STARTUP) {
         //create QoS Request Message
-        QoSNegotiationRequest* request = new QoSNegotiationRequest();
+        QoSNegotiationRequest* request = new QoSNegotiationRequest("QoSNegotiationRequest");
         //fill envelope
         fillEnvelope(request);
         std::unordered_map<std::string, IQoSPolicy*> qosPolicies =
@@ -148,7 +148,7 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
             bool requestAcceptables = isRequestAcceptable(request);
 
             //create response
-            QoSNegotiationResponse* response = new QoSNegotiationResponse();
+            QoSNegotiationResponse* response = new QoSNegotiationResponse("QoSNegotiationResponse");
             fillEnvelope(response);
             response->setQosClass(request->getQosClass());
 
@@ -201,7 +201,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
 
                 //create Connection request
                 QoSNegotiationEstablish* establish =
-                        new QoSNegotiationEstablish();
+                        new QoSNegotiationEstablish("QoSNegotiationEstablish");
                 fillEnvelope(establish);
                 establish->setQosClass(response->getQosClass());
 
@@ -234,7 +234,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
         if (_state == QoSBrokerStates_t::SERVER_PENDING_ACCEPT) {
             EV_DEBUG << "QoSBroker: received establish";
             //create response
-            QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise();
+            QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise("QoSNegotiationFinalise");
             fillEnvelope(finalise);
             finalise->setQosClass(establish->getQosClass());
 

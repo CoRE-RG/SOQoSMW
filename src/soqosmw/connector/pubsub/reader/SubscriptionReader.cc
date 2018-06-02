@@ -68,8 +68,9 @@ IQoSPolicy* SubscriptionReader::getQoSValueFor(std::string property) {
 
 void SubscriptionReader::notify(cMessage* msg) {
     for (auto sub : _subscribers){
-        sub->notify(msg);
+        sub->notify(msg->dup());
     }
+    delete msg;
 }
 
 
