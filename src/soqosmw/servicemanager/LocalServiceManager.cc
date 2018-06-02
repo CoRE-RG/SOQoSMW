@@ -112,7 +112,7 @@ SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath
     }
 
     //create the writer
-    SubscriptionReader* reader = new SubscriptionReader(executingApplication);
+    SubscriptionReader* reader = new SubscriptionReader(executingApplication, qosPolicies);
 
     // save the reader so that new endpoints can be connected to the application.
     _subscriptionReaders[publisherPath] = reader;

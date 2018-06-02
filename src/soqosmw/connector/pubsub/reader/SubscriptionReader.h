@@ -18,7 +18,9 @@
 
 #include <connector/base/IConnector.h>
 #include <endpoints/subscriber/base/ISubscriber.h>
+#include <qospolicy/base/IQoSPolicy.h>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace soqosmw {
@@ -27,6 +29,7 @@ class SubscriberAppBase;
 
 namespace omnetpp {
 class cPacket;
+class cMessage;
 } /* namespace omnetpp */
 
 namespace soqosmw {
@@ -34,7 +37,7 @@ namespace soqosmw {
 class SubscriptionReader : public virtual IConnector {
     //todo add friends for access...
 public:
-    SubscriptionReader(SOQoSMWApplicationBase* executingApplication);
+    SubscriptionReader(SOQoSMWApplicationBase* executingApplication, std::unordered_map<std::string, IQoSPolicy*> qos);
     virtual ~SubscriptionReader();
 
     virtual omnetpp::cPacket* get();
@@ -46,11 +49,20 @@ public:
     void addSubscriber(ISubscriber* subscriber);
     void removeSubscriber(ISubscriber* subscriber);
 
+    IQoSPolicy* getQoSValueFor(std::string property);
+
+    void notify (omnetpp::cMessage* msg);
+
 private:
     /**
      * Contains pointers to the registered subscribers on this writer.
      */
     std::vector<ISubscriber*> _subscribers;
+
+    /**
+     * QoS Policies set for this Endpoint.
+     */
+    std::unordered_map<std::string, IQoSPolicy*> _qos;
 
     /**
      * Name of the delivery gate to the executing Application

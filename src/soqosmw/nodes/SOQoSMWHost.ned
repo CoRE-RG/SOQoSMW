@@ -26,6 +26,7 @@ module SOQoSMWHost extends RTIPHost
 {
     parameters:
     	hasUdp = true; //needed for qosnp
+    	hasTcp = true; //needed for tcp based communication
     	int numServices = default(0);
     	string localAddress = default("");
     	*.localAddress = localAddress;
@@ -57,5 +58,12 @@ module SOQoSMWHost extends RTIPHost
 
         qosnp.udpOut --> udp.appIn++;
         qosnp.udpIn <-- udp.appOut++;
+        
+        for i=0..numServices-1 {
+            services[i].std_tcpOut --> tcp.appIn++;
+            services[i].std_tcpIn <-- tcp.appOut++;
+            services[i].std_udpOut --> udp.appIn++;
+            services[i].std_udpIn <-- udp.appOut++;
+        }
 
 }

@@ -13,23 +13,19 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
-#define SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
-
-
+#ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_BASE_ISTDSUBSCRIBER_H_
+#define SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_BASE_ISTDSUBSCRIBER_H_
 
 #include <endpoints/subscriber/base/ISubscriber.h>
-#include <qospolicy/base/IQoSPolicy.h>
-#include <unordered_map>
 
 namespace soqosmw {
 
-class IRTSubscriber: public ISubscriber {
+class ISTDSubscriber: public soqosmw::ISubscriber {
 public:
-    IRTSubscriber(std::string publisherPath, SubscriptionReader* reader);
-    virtual ~IRTSubscriber();
+    ISTDSubscriber(std::string publisherPath, SubscriptionReader* reader);
+    virtual ~ISTDSubscriber();
 };
 
 } /*end namespace soqosmw*/
 
-#endif /* SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_ */
+#endif /* SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_BASE_ISTDSUBSCRIBER_H_ */

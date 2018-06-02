@@ -16,8 +16,9 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
-#include <messages/application/ApplicationCallbacks_m.h>
+#include <omnetpp/cpacket.h>
 #include <omnetpp/csimplemodule.h>
+#include <string>
 
 using namespace omnetpp;
 
@@ -49,8 +50,32 @@ public:
         return _localServiceManager;
     }
 
-    void notify(ApplicationCallback* msg){
+    virtual void notify(cPacket* msg){
         delete msg;
+    }
+
+    const std::string& getLocalAddress() const {
+        return _localAddress;
+    }
+
+    void setLocalAddress(const std::string& localAddress) {
+        _localAddress = localAddress;
+    }
+
+    int getTcpPort() const {
+        return _tcpPort;
+    }
+
+    void setTcpPort(int tcpPort) {
+        _tcpPort = tcpPort;
+    }
+
+    int getUdpPort() const {
+        return _udpPort;
+    }
+
+    void setUdpPort(int udpPort) {
+        _udpPort = udpPort;
     }
 
 protected:
@@ -81,6 +106,10 @@ private:
      * Reference to the LocalServiceManager.
      */
     LocalServiceManager* _localServiceManager;
+
+    int _tcpPort;
+    int _udpPort;
+    std::string _localAddress;
 };
 
 } /* end namespace soqosmw */

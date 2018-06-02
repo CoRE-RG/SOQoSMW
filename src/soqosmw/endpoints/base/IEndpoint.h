@@ -16,8 +16,11 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
-#include <qospolicy/base/IQoSPolicy.h>
 #include <string>
+
+namespace omnetpp {
+class cMessage;
+} /* namespace omnetpp */
 
 namespace soqosmw {
 class SOQoSMWApplicationBase;
@@ -50,6 +53,10 @@ public:
 
     void setEndpointPath(const std::string& path) {
         _endpointPath = path;
+    }
+
+    virtual void notify(omnetpp::cMessage* notification){
+
     }
 
 protected:

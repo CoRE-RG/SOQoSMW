@@ -14,7 +14,9 @@
 // 
 
 #include <connector/pubsub/writer/PublisherWriter.h>
+#include <omnetpp/cmessage.h>
 #include <algorithm>
+#include <iterator>
 
 using namespace std;
 using namespace omnetpp;
@@ -53,6 +55,13 @@ void PublisherWriter::removePublisher(IPublisher* publisher) {
 
 IQoSPolicy* PublisherWriter::getQoSValueFor(std::string property) {
     return _qos[property];
+}
+
+
+void PublisherWriter::notify(cMessage* msg) {
+    for (auto pub : _publishers){
+        pub->notify(msg);
+    }
 }
 
 } /*end namespace soqosmw*/

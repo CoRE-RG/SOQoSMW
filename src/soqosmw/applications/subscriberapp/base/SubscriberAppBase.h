@@ -23,6 +23,10 @@
 #include <unordered_map>
 
 namespace soqosmw {
+class QoSGroup;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 class SubscriptionReader;
 } /* namespace soqosmw */
 
@@ -65,14 +69,11 @@ private:
     double _startTime;
 
     /**
-     * Caches the stream ID.
-     */
-    unsigned long _streamID;
-
-    /**
      * Reference to the soqosmw subscriberReader module.
      */
     SubscriptionReader *_reader;
+
+    QoSGroup* _qosGroup;
 
 protected:
     /**
@@ -98,6 +99,8 @@ protected:
 public:
     SubscriberAppBase();
     virtual ~SubscriberAppBase();
+
+    virtual void notify(cPacket* msg) override;
 
 private:
     void setQoS();

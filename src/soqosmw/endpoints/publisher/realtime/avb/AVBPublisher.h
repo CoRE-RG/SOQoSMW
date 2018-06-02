@@ -54,7 +54,7 @@ public:
 
     virtual void publish(omnetpp::cPacket* payload) override;
 
-    ConnectionSpecificInformation* getConnectionSpecificInformation();
+    virtual ConnectionSpecificInformation* getConnectionSpecificInformation() override;
 
 protected:
 

@@ -16,13 +16,12 @@
 #include <connector/pubsub/reader/SubscriptionReader.h>
 #include <connector/pubsub/writer/PublisherWriter.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
+#include <endpoints/publisher/standard/tcp/TCPPublisher.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
-#include <messages/application/ApplicationCallbacks_m.h>
+#include <endpoints/subscriber/standard/tcp/TCPSubscriber.h>
 #include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <omnetpp/cgate.h>
 #include <omnetpp/clog.h>
-#include <omnetpp/csimulation.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/management/QoSGroup.h>
@@ -32,6 +31,7 @@
 
 #include <inet/networklayer/common/L3Address.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
+
 namespace soqosmw {
 using namespace inet;
 using namespace std;
@@ -244,28 +244,38 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 //switch(establish->getCommunicationPattern()){
                 //...
                 //publishsubscribe
+
+                    //get path
+                    string& path = _local.getPath();
+                    //get responsible writer
+                    PublisherWriter* writer = _lsm->getPublisherWriterForName(path);
+                    //create generic publisher
+                    IPublisher* publisher = nullptr;
+
                     switch(establish->getQosClass()){
-                    case QoSGroups::RT: {
-                        //get path
-                        string& path = _local.getPath();
-                        //get responsible writer
-                        PublisherWriter* writer = _lsm->getPublisherWriterForName(path);
+                    case QoSGroups::RT:
 
                         //Create AVB Publisher!
-                        AVBPublisher* publisher = new AVBPublisher(path, writer);
+                        publisher = new AVBPublisher(path, writer);
+                        break;
+                    case QoSGroups::STD:
+                        //check if UDP or TCP is required
 
+                        //Create TCP Publisher!
+                        publisher = new TCPPublisher(path, writer);
+                        break;
+
+                    default:
+                        break;
+                    }
+
+                    if(publisher){
                         //connect endpoint to the writer
                         writer->addPublisher(publisher);
 
                         //get endpoint details
                         connection = publisher->getConnectionSpecificInformation();
-                        break;
                     }
-                    default:
-                        break;
-                    }
-
-
                 //}
 
                 if(connection){
@@ -324,23 +334,28 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                     //-> pub sub
 
                     ISubscriber* subscriber = nullptr;
+                    //get path
+                    string& path = _remote.getPath();
+                    //get responsible writer
+                    SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+
                     switch(info->getConnectionType()){
-                    case ConnectionType::ct_avb: {
-                        //get path
-                        string& path = _remote.getPath();
-                        //get responsible writer
-                        SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+                    case ConnectionType::ct_avb:
 
                         //create according endpoint
                         subscriber = new AVBSubscriber(_remote.getPath(), reader, info);
-
-                        //connect endpoint to the writer
-                        reader->addSubscriber(subscriber);
                         break;
-                    }
+                    case ConnectionType::ct_tcp:
+
+                        //create according endpoint
+                        subscriber = new TCPSubscriber(_remote.getPath(), reader, info);
+                        break;
                     default:
                         break;
                     }
+
+                    //connect endpoint to the reader
+                    reader->addSubscriber(subscriber);
                 }
 
 

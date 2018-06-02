@@ -18,5 +18,14 @@ package soqosmw.applications.base;
 moduleinterface ISOQoSMWApplication {
     parameters:
         string serviceManagerModule;
-    
+    	string localAddress;
+    	int applicationTCPPort;
+    	int applicationUDPPort;
+    	
+    gates:
+        input std_tcpIn @labels(TCPCommand/up);
+        output std_tcpOut @labels(TCPCommand/down);
+        input std_udpIn @labels(UDPCommand/up);
+        output std_udpOut @labels(UDPCommand/down);
+        
 }

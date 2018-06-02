@@ -25,6 +25,7 @@
 
 namespace omnetpp {
 class cPacket;
+class cMessage;
 } /* namespace omnetpp */
 
 namespace soqosmw {
@@ -43,6 +44,8 @@ public:
     void removePublisher(IPublisher* publisher);
 
     IQoSPolicy* getQoSValueFor(std::string property);
+
+    void notify (omnetpp::cMessage* msg);
 
 private:
     /**

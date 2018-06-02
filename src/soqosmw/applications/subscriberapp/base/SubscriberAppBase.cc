@@ -15,19 +15,24 @@
 
 #include <applications/subscriberapp/base/SubscriberAppBase.h>
 #include <connector/pubsub/reader/SubscriptionReader.h>
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
+#include <omnetpp/cgate.h>
 #include <omnetpp/clog.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cnamedobject.h>
 #include <omnetpp/cobjectfactory.h>
 #include <omnetpp/cpar.h>
+#include <omnetpp/csimplemodule.h>
 #include <omnetpp/csimulation.h>
 #include <omnetpp/regmacros.h>
 #include <omnetpp/simtime.h>
 #include <omnetpp/simtime_t.h>
-#include <qospolicy/avb/StreamIDQoSPolicy.h>
+#include <omnetpp/simutil.h>
 #include <qospolicy/management/QoSGroup.h>
+#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
+#include <qospolicy/tcp/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
@@ -35,7 +40,6 @@
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/EtherFrame_m.h>
 #include <core4inet/base/avb/AVBDefs.h>
-
 
 namespace soqosmw {
 using namespace std;
@@ -76,29 +80,52 @@ void SubscriberAppBase::initialize()
 void SubscriberAppBase::handleMessage(cMessage *msg)
 {
     SOQoSMWApplicationBase::handleMessage(msg);
-    if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
+    if(msg->arrivedOn("tcpForward")){
+        send(msg, gate("std_tcpOut"));
+    } else if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         setQoS();
         //create a subscriber
         _reader = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
 
         //TODO set the gate at the reader to get all messages
 
-    } else {
+        delete msg;
+    }else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
-        if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
+
+        if(msg->arrivedOn("std_tcpIn")){
+            //send(msg, gate("std_tcpIn")->getNextGate());
+
+            _reader->notify(msg);
+
+        }else if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
         {
             emit(_rxPkSignal, frame);
+            delete msg;
+        } else {
+            delete msg;
         }
 
+    }
+}
+
+void SubscriberAppBase::notify(cPacket* msg) {
+    Enter_Method("SubscriberAppBase::notify()");
+    EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
+
+    if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
+    {
+        emit(_rxPkSignal, frame);
     }
 
     delete msg;
 }
 
 void SubscriberAppBase::setQoS() {
-    _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::RT);
-    _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
+    _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
+    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
+    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
 }
 
 void SubscriberAppBase::handleParameterChange(const char* parname)
@@ -118,10 +145,22 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
     {
         this->_startTime = CoRE4INET::parameterDoubleCheckRange(par("startTime"), 0, SIMTIME_MAX.dbl());
     }
-    if (!parname || !strcmp(parname, "streamID")) {
-        this->_streamID = parameterULongCheckRange(par("streamID"), 0,
-                MAX_STREAM_ID);
+
+    if (!parname || !strcmp(parname, "qosGroup")) {
+        string group = par("qosGroup").stdstringValue();
+        if(group == "WS"){
+            _qosGroup = new QoSGroup(QoSGroup::WEB);
+        } else if(group == "STD"){
+            _qosGroup = new QoSGroup(QoSGroup::STD);
+        } else if(group == "RT"){
+            _qosGroup = new QoSGroup(QoSGroup::RT);
+        }
+
     }
+
+
+
+
 }
 
 }/* end namespace soqosmw */

@@ -20,6 +20,10 @@
 #include <string>
 
 namespace soqosmw {
+class ConnectionSpecificInformation;
+} /* namespace soqosmw */
+
+namespace soqosmw {
 class PublisherWriter;
 } /* namespace soqosmw */
 
@@ -52,6 +56,7 @@ public:
      * @param payload
      */
     virtual void publish(omnetpp::cPacket* payload) = 0;
+    virtual ConnectionSpecificInformation* getConnectionSpecificInformation() = 0;
 
     PublisherWriter* getWriter() {
         return _writer;

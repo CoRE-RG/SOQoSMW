@@ -38,16 +38,13 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         @statistic[rxLatencyInner](title="End-to-end latency inner"; source="messageAge(innerMessage(rxPk))"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
         
         // Start time
-        double startTime @unit(s) = default(0s);
-        
-        // ID of the AVB Stream
-        int streamID = default(0);     
+        double startTime @unit(s) = default(0s);  
         
         string subscriberName = default("SubscriberService");//nicht benötigt?
         
         string publisherName = default("PublisherService");
         
-        string qosPolicies; //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
+        string qosGroup = default("STD"); //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
 	
 	gates:
 	    input AVBin;

@@ -1,4 +1,5 @@
 <services>
 	<service name="PublisherService" node="node1" />
-	<service name="SubscriberService" node="node3" />
+	<service name="TCPSubscriberService" node="node3" />
+	<service name="AVBSubscriberService" node="node2" />
 </services>

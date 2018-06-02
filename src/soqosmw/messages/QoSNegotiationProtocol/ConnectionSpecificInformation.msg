@@ -30,6 +30,12 @@ packet ConnectionSpecificInformation {
     int connectionType @enum(ConnectionType);
 }
 
+packet CSI_TCP extends ConnectionSpecificInformation {
+    connectionType = ConnectionType::ct_tcp;
+    string address;
+    int port;
+}
+
 packet CSI_AVB extends ConnectionSpecificInformation {
     connectionType = ConnectionType::ct_avb;
     long streamID;

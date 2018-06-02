@@ -27,6 +27,15 @@ simple SOQoSMWApplicationBase like ISOQoSMWApplication
         string serviceManagerModule = default ("lsm");
         string appCallbackGateName = default ("appCallback");
         
+        string localAddress = default("");
+    	int applicationTCPPort = default(3333);
+    	int applicationUDPPort = default(6666);
+        
     gates:
         input appCallback;
+    	
+        input std_tcpIn @labels(TCPCommand/up);
+        output std_tcpOut @labels(TCPCommand/down);
+        input std_udpIn @labels(UDPCommand/up);
+        output std_udpOut @labels(UDPCommand/down);
 }

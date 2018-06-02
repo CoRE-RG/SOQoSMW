@@ -30,11 +30,12 @@ void SOQoSMWApplicationBase::initialize() {
 }
 
 void SOQoSMWApplicationBase::handleMessage(cMessage *msg) {
+
     // do nothing...
 }
 
 void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
-    if (!parname || !strcmp(parname, "serviceManagerModule")) {
+    if (!parname || strcmp(parname, "serviceManagerModule")) {
         _localServiceManager =
                 dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
                         par("serviceManagerModule")));
@@ -43,6 +44,15 @@ void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
                     "Configuration problem of parameter serviceManagerModule in module %s.",
                     this->getFullName());
         }
+    }
+    if (!parname || !strcmp(parname, "applicationUDPPort")) {
+        _tcpPort = par("applicationUDPPort");
+    }
+    if (!parname || !strcmp(parname, "applicationTCPPort")) {
+        _udpPort = par("applicationTCPPort");
+    }
+    if (!parname || !strcmp(parname, "localAddress")) {
+        _localAddress = par("localAddress").stdstringValue();
     }
 }
 

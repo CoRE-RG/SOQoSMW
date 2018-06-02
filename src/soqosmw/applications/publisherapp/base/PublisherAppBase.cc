@@ -36,6 +36,8 @@
 #include <qospolicy/base/types/SizeQoSPolicy.h>
 #include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <qospolicy/management/QoSGroup.h>
+#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
+#include <qospolicy/tcp/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
@@ -44,6 +46,7 @@
 #include <core4inet/base/CoRE4INET_Defs.h>
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/Ethernet.h>
+
 namespace soqosmw {
 using namespace inet;
 using namespace CoRE4INET;
@@ -141,6 +144,7 @@ void PublisherAppBase::handleParameterChange(const char* parname) {
 
 void PublisherAppBase::handleMessage(cMessage *msg) {
 
+    SOQoSMWApplicationBase::handleMessage(msg);
     if (msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)) {
 
         setQoS();
@@ -153,6 +157,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
         //schedule next send event
         scheduleAt(simTime() + (this->_interval / this->_intervalFrames),
                 new cMessage(SEND_MSG_NAME));
+        delete msg;
 
     } else if (msg->isSelfMessage()
             && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
@@ -172,14 +177,26 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
         }
-    }
+        delete msg;
 
-    delete msg;
+
+    } else {
+        cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
+                                msg->getFullPath() << endl;
+        if(msg->arrivedOn("std_tcpIn")){
+            //send(msg, gate("std_tcpIn")->getNextGate());
+            _writer->notify(msg);
+        } else{
+            delete msg;
+        }
+    }
 
 }
 
 void PublisherAppBase::setQoS() {
-    _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup(QoSGroup::RT);
+    _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD);
+    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
+    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
     _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
     _qosPolicies[QoSPolicyNames::SRClass] = new SRClassQoSPolicy(_srClass);
     _qosPolicies[QoSPolicyNames::Framesize] = new FramesizeQoSPolicy(_framesize);

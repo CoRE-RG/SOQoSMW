@@ -6,30 +6,29 @@
 // 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PASTDICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
-#define SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_
+#include <endpoints/publisher/standard/base/ISTDPublisher.h>
 
-
-
-#include <endpoints/subscriber/base/ISubscriber.h>
-#include <qospolicy/base/IQoSPolicy.h>
-#include <unordered_map>
+using namespace omnetpp;
+using namespace std;
 
 namespace soqosmw {
 
-class IRTSubscriber: public ISubscriber {
-public:
-    IRTSubscriber(std::string publisherPath, SubscriptionReader* reader);
-    virtual ~IRTSubscriber();
-};
+ISTDPublisher::ISTDPublisher(string path, PublisherWriter* writer) :
+        IPublisher(path, writer) {
+    // TODO Auto-generated constructor stub
+
+}
+
+ISTDPublisher::~ISTDPublisher() {
+    // TODO Auto-generated destructor stub
+}
 
 } /*end namespace soqosmw*/
 
-#endif /* SOQOSMW_ENDPOINTS_SUBSCRIBER_REALTIME_BASE_IRTSUBSCRIBER_H_ */

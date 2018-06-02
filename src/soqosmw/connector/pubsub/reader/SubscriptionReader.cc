@@ -13,7 +13,10 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <applications/base/SOQoSMWApplicationBase.h>
 #include <connector/pubsub/reader/SubscriptionReader.h>
+#include <endpoints/base/IEndpoint.h>
+#include <omnetpp/cmessage.h>
 #include <algorithm>
 #include <iterator>
 
@@ -21,7 +24,8 @@ using namespace std;
 using namespace omnetpp;
 namespace soqosmw {
 
-SubscriptionReader::SubscriptionReader(SOQoSMWApplicationBase* executingApplication) : IConnector(executingApplication){
+SubscriptionReader::SubscriptionReader(SOQoSMWApplicationBase* executingApplication, std::unordered_map<std::string, IQoSPolicy*> qos) :
+                IConnector(executingApplication), _qos(qos){
 
 }
 
@@ -33,6 +37,7 @@ SubscriptionReader::~SubscriptionReader() {
 
 void SubscriptionReader::put(cPacket* packet) {
     //todo forward to application gate if notify is active.
+    getExecutingApplication()->notify(packet);
     //todo save otherwise.
 }
 
@@ -56,5 +61,16 @@ void SubscriptionReader::removeSubscriber(ISubscriber* subscriber) {
     }
 }
 
-} /*end namespace soqosmw*/
+IQoSPolicy* SubscriptionReader::getQoSValueFor(std::string property) {
+    return _qos[property];
+}
 
+
+void SubscriptionReader::notify(cMessage* msg) {
+    for (auto sub : _subscribers){
+        sub->notify(msg);
+    }
+}
+
+
+} /*end namespace soqosmw*/
