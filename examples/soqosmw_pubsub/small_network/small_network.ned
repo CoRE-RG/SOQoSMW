@@ -15,38 +15,40 @@
 
 package soqosmw.examples.soqosmw_pubsub.small_network;
 
-import core4inet.nodes.inet.RTIPHost;
-import soqosmw.examples.soqosmw_rtip_host.small_network.Node1;
-import soqosmw.examples.soqosmw_rtip_host.small_network.Node3;
+import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
+import soqosmw.nodes.SOQoSMWHost;
 
 import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
 
 //
 // Small sample network with three hosts and one switch that shows how to 
+
 // configure the TTEthernet Model. Configuration in omnetpp.ini
+
 // - Uses 5ms Cycletime
+
 // - 80ns Tick length
 //
 network small_network
 {
-    @display("bgb=,,white");
+    @display("bgb=490,262,white,black");
     submodules:
-        node1: Node1 {
-            @display("p=39,70");
+        Publisher: SOQoSMWHost {
+            @display("p=86,197;i=block/source;is=l");
         }
 
-        node2: Node1 {
-            @display("p=249,30");
+        RTSubscriber: SOQoSMWHost {
+            @display("p=243,30;i=block/sink,#FF8080,50;is=l");
         }
 
-        node3: Node3 {
-            @display("p=249,102");
+        STDSubscriber: SOQoSMWHost {
+            @display("p=404,197;i=block/sink,#0080FF;is=l");
         }
 
-        switch1: Switch1 {
+        Switch: TTEAVBEtherSwitch {
             parameters:
-                @display("p=147,70");
+                @display("p=243,137;is=l");
             gates:
                 ethg[3];
         }
@@ -58,7 +60,7 @@ network small_network
         //
         // The example uses a simple star topology
         //
-        node1.ethg <--> Eth100M {  length = 20m; } <--> switch1.ethg[0];
-        node2.ethg <--> Eth100M {  length = 10m; } <--> switch1.ethg[1];
-        node3.ethg <--> Eth100M {  length = 5m; } <--> switch1.ethg[2];
+        Publisher.ethg <--> Eth100M {  length = 20m; } <--> Switch.ethg[0];
+        RTSubscriber.ethg <--> Eth100M {  length = 10m; } <--> Switch.ethg[1];
+        STDSubscriber.ethg <--> Eth100M {  length = 5m; } <--> Switch.ethg[2];
 }

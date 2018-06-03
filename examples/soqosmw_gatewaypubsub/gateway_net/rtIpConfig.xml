@@ -56,15 +56,15 @@
 	     -->
 	     
 	      
-	<node id="Publisher">
+	<node id="GatewaySource">
 	</node>
 	
 	
-	<node id="STDSubscriber">
+	<node id="GatewaySink">
 	</node>
 	
 	
-	<node id="RTSubscriber">
+	<node id="InfotainmentSystem">
 	</node>
 	 
 	
