@@ -34,40 +34,40 @@ import fico4omnet.nodes.can.CanNode;
 //
 network gateway_net
 {
-    @display("bgb=936,484,white");
+    @display("bgb=789.6,293.75,white");
     submodules:
         //CAN
         FahrwerkCan: CanBus {
-            @display("i=block/network;p=241,311");
+            @display("i=block/network;p=164.5,210.325;is=l");
         }
         Reifen: CanNode {
 
-            @display("p=164,310");
+            @display("p=88.125,209.15;is=l");
         }
         AktiveSafety: CanBus {
-            @display("i=block/network;p=663,311");
+            @display("i=block/network;p=643.89996,210.325;is=l");
         }
         Fahrdynamik: CanNode {
-            @display("p=746,310");
+            @display("p=726.14996,209.15;is=l");
         }
 
         //GATEWAYS
         GatewaySource: SOQoSMWGatewayHost {
-            @display("p=332,311;i=block/source");
+            @display("p=256.15,210.325;i=block/source;is=l");
         }
 
         GatewaySink: SOQoSMWGatewayHost {
-            @display("p=564,311;i=block/sink");
+            @display("p=545.2,210.325;i=block/sink,#FF8080;is=l");
         }
 
         //ETH
         InfotainmentSystem: SOQoSMWHost {
-            @display("p=449,130;i=device/server");
+            @display("p=400.675,29.375;i=device/server");
         }
 
         ethswitch: TTEAVBEtherSwitch {
             parameters:
-                @display("p=449,245");
+                @display("p=400.675,144.525;is=l");
             gates:
                 ethg[3];
         }

@@ -139,7 +139,7 @@ void TCPPublisher::sendPacket(cPacket* pkt) {
     int numBytes = pkt->getByteLength();
 
     for (auto processor : _processors){
-        processor->deliver(pkt);
+        processor->deliver(pkt, "PubMessage");
     }
 
     delete pkt;
