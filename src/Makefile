@@ -52,6 +52,7 @@ OBJS = \
     $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \
     $O/soqosmw/endpoints/subscriber/standard/base/ISTDSubscriber.o \
     $O/soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriber.o \
+    $O/soqosmw/factory/ServiceEndpointFactory.o \
     $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
     $O/soqosmw/qospolicy/base/IQoSPolicy.o \

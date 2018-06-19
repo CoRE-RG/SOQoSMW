@@ -34,40 +34,40 @@ import fico4omnet.nodes.can.CanNode;
 //
 network gateway_net
 {
-    @display("bgb=789.6,293.75,white");
+    @display("bgb=703,293,white");
     submodules:
         //CAN
-        FahrwerkCan: CanBus {
-            @display("i=block/network;p=164.5,210.325;is=l");
+        Fahrwerk: CanBus {
+            @display("i=block/network;p=156,144;is=l");
         }
         Reifen: CanNode {
 
-            @display("p=88.125,209.15;is=l");
+            @display("p=89,86;is=l");
         }
-        AktiveSafety: CanBus {
-            @display("i=block/network;p=643.89996,210.325;is=l");
+        Fahrdynamik: CanBus {
+            @display("i=block/network;p=579,144;is=l");
         }
-        Fahrdynamik: CanNode {
-            @display("p=726.14996,209.15;is=l");
+        Controller: CanNode {
+            @display("p=647,86;is=l");
         }
 
         //GATEWAYS
         GatewaySource: SOQoSMWGatewayHost {
-            @display("p=256.15,210.325;i=block/source;is=l");
+            @display("p=222,210;i=block/source;is=l");
         }
 
         GatewaySink: SOQoSMWGatewayHost {
-            @display("p=545.2,210.325;i=block/sink,#FF8080;is=l");
+            @display("p=511,210;i=block/sink,#FF8080;is=l");
         }
 
         //ETH
         InfotainmentSystem: SOQoSMWHost {
-            @display("p=400.675,29.375;i=device/server");
+            @display("p=366,29;i=device/server");
         }
 
         ethswitch: TTEAVBEtherSwitch {
             parameters:
-                @display("p=400.675,144.525;is=l");
+                @display("p=366,144;is=l");
             gates:
                 ethg[3];
         }
@@ -77,11 +77,11 @@ network gateway_net
             @display("p=89,22");
         }
     connections:
-        FahrwerkCan.gate++ <--> Reifen.gate;
-        GatewaySource.cang[0] <--> FahrwerkCan.gate++;
+        Fahrwerk.gate++ <--> Reifen.gate;
+        GatewaySource.cang[0] <--> Fahrwerk.gate++;
 
-        AktiveSafety.gate++ <--> Fahrdynamik.gate;
-        GatewaySink.cang[0] <--> AktiveSafety.gate++;
+        Fahrdynamik.gate++ <--> Controller.gate;
+        GatewaySink.cang[0] <--> Fahrdynamik.gate++;
 
 
         GatewaySource.ethg <--> Eth100M {  length = 20m; } <--> ethswitch.ethg[0];

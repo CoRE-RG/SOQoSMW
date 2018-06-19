@@ -17,3 +17,5 @@ examples/soqosmw_pubsub/small_network/results/
 *.anf
 *.pdf
 *.tks
+*.sca
+*.vci
