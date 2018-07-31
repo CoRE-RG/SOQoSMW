@@ -8,7 +8,6 @@
 #ifndef SOQOSMW_QOSPOLICY_BASE_TYPES_SIZEQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_BASE_TYPES_SIZEQOSPOLICY_H_
 
-#include <crtdefs.h>
 #include <qospolicy/base/IQoSPolicy.h>
 
 namespace soqosmw {

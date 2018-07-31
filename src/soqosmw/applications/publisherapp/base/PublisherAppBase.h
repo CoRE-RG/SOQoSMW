@@ -17,7 +17,6 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <crtdefs.h>
 #include <omnetpp/clistener.h>
 #include <qospolicy/base/IQoSPolicy.h>
 #include <cstdint>

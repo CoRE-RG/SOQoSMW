@@ -13,7 +13,6 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <crtdefs.h>
 #include <discovery/static/StaticServiceDiscovery.h>
 #include <omnetpp/clog.h>
 #include <omnetpp/cobjectfactory.h>

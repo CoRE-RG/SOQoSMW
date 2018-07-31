@@ -5,7 +5,7 @@
 *.vpp.lck
 *.bak*
 *.vux
-out/
+out/*
 *.dll
 *_m.cc
 *_m.h
@@ -20,3 +20,4 @@ examples/soqosmw_pubsub/small_network/results/
 *.sca
 *.vci
 *.vec
+*.so

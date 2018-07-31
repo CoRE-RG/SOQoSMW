@@ -17,10 +17,9 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <crtdefs.h>
 #include <omnetpp/clistener.h>
 #include <qospolicy/base/IQoSPolicy.h>
-#include <cstdint>
+#include <stddef.h>
 #include <string>
 #include <unordered_map>
 #include <core4inet/base/avb/AVBDefs.h>
