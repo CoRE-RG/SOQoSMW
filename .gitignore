@@ -19,3 +19,4 @@ examples/soqosmw_pubsub/small_network/results/
 *.tks
 *.sca
 *.vci
+*.vec

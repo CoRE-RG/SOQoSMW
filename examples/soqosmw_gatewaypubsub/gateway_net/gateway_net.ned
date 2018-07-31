@@ -40,14 +40,14 @@ network gateway_net
         Fahrwerk: CanBus {
             @display("i=block/network;p=156,144;is=l");
         }
-        Reifen: CanNode {
+        Reifen[3]: CanNode {
 
             @display("p=89,86;is=l");
         }
         Fahrdynamik: CanBus {
             @display("i=block/network;p=579,144;is=l");
         }
-        Controller: CanNode {
+        Controller[3]: CanNode {
             @display("p=647,86;is=l");
         }
 
@@ -77,10 +77,14 @@ network gateway_net
             @display("p=89,22");
         }
     connections:
-        Fahrwerk.gate++ <--> Reifen.gate;
+        Fahrwerk.gate++ <--> Reifen[0].gate;
+        Fahrwerk.gate++ <--> Reifen[1].gate;
+        Fahrwerk.gate++ <--> Reifen[2].gate;
         GatewaySource.cang[0] <--> Fahrwerk.gate++;
 
-        Fahrdynamik.gate++ <--> Controller.gate;
+        Fahrdynamik.gate++ <--> Controller[0].gate;
+        Fahrdynamik.gate++ <--> Controller[1].gate;
+        Fahrdynamik.gate++ <--> Controller[2].gate;
         GatewaySink.cang[0] <--> Fahrdynamik.gate++;
 
 

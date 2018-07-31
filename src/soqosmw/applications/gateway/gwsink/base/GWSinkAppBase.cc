@@ -96,8 +96,10 @@ void GWSinkAppBase::handleMessage(cMessage *msg)
 
         }else if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
         {
+
+            send(msg, "upperLayerOut");
+
             emit(_rxPkSignal, frame);
-            delete msg;
         } else {
             delete msg;
         }

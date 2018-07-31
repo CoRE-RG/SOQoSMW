@@ -274,6 +274,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
             }
             finishNegotiation();
             sendMessage(finalise);
+            handled = true;
         } else {
             EV_ERROR
                             << "QoSBroker: not in correct state to handle new request. State is: "

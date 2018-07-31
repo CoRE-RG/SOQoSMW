@@ -48,6 +48,7 @@
 #include <core4inet/base/CoRE4INET_Defs.h>
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/Ethernet.h>
+#include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
 
 namespace soqosmw {
 using namespace inet;
@@ -162,20 +163,18 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
         delete msg;
     }  else if(msg->arrivedOn("upperLayerIn")){
         if (_writer) {
-            //TODO now send dummy packet
-            cPacket *payloadPacket = new cPacket;
-            payloadPacket->setTimestamp();
-            payloadPacket->setByteLength(
-                    static_cast<int64_t>(getPayloadBytes()));
-            //TODO implement forwarding of CAN message
-
-            _writer->write(payloadPacket);
+            SignalsAndGateways::GatewayAggregationMessage* gwam = dynamic_cast<SignalsAndGateways::GatewayAggregationMessage*>(msg);
+            if(gwam){
+                _writer->write(gwam);
+            } else {
+                delete msg;
+            }
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
+            delete msg;
         }
-        delete msg;
     } else {
         cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
                                 msg->getFullPath() << endl;

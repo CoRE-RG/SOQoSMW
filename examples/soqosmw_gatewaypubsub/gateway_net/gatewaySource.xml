@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<!DOCTYPE config SYSTEM "../../src/signalsandgateways/gateway/GatewayConfig.dtd">-->
 <config>
-	<gateway id="gateway1">
+	<gateway id="GatewaySource">
 		<routing>
 			<route source="0" destination="1">
 				<canframe canId="2"/>
 			</route>
-			<route source="1" destination="0">
-				<ttframe ctId="30"/>
-				<ttframe ctId="300"/>
+			<route source="0" destination="1">
+				<canframe canId="100"/>
+			</route>
+			<route source="0" destination="1">
+				<canframe canId="101"/>
 			</route>
 		</routing>
 		
-		<transformation destination="0" type="toCan">
-			<ttframe ctId="30"/>
-			<ttframe ctId="300"/>
-		</transformation>
-
-		<transformation destination="1" type="toEthernet">
-			<ttframe ctId="33">
+		<transformation destination="1" type="toMisc">
+			<rawdata id="2">
 				<canframe canId="2"/>
-			</ttframe>
+			</rawdata>
+			<rawdata id="100">
+				<canframe canId="100"/>
+			</rawdata>
+			<rawdata id="101">
+				<canframe canId="101"/>
+			</rawdata>
 		</transformation>
 	</gateway>
 </config>
