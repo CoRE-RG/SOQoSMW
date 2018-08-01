@@ -79,17 +79,16 @@ TCPPublisher::TCPPublisher(string path, PublisherWriter* writer) : ISTDPublisher
 
 TCPPublisher::~TCPPublisher() {
     // TODO Auto-generated destructor stub
-
 }
 
 void TCPPublisher::publish(omnetpp::cPacket* payload) {
     Enter_Method("TCPPublisher::publish()");
     //maybe pack package?!
     if(isConnected){
-
         sendPacket(payload);
+    } else {
+        delete payload;
     }
-    //delete payload;
 }
 
 void TCPPublisher::handleMessage(cMessage* msg) {
@@ -194,8 +193,10 @@ void TCPPublisher::notify(omnetpp::cMessage* notification) {
     Enter_Method("TCPPublisher::handleMessage()");
 
     TCPCommand *ind = dynamic_cast<TCPCommand *>(notification->getControlInfo());
-    if (!ind)
+    if (!ind) {
+        delete notification;
         return;
+    }
     //check if for server
     if (_serverSocket.belongsToSocket(notification)) {// match message and socket
         _serverSocket.processMessage(notification);

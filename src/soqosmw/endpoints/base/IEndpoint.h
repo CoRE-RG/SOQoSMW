@@ -16,11 +16,8 @@
 #ifndef SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 #define SOQOSMW_ENDPOINTS_BASE_IENDPOINT_H_
 
+#include <omnetpp/cmessage.h>
 #include <string>
-
-namespace omnetpp {
-class cMessage;
-} /* namespace omnetpp */
 
 namespace soqosmw {
 class SOQoSMWApplicationBase;
@@ -56,6 +53,7 @@ public:
     }
 
     virtual void notify(omnetpp::cMessage* notification){
+//        delete notification;
     }
 
 protected:

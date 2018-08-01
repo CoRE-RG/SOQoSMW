@@ -54,6 +54,7 @@ AVBSubscriber::AVBSubscriber(string publisherPath, SubscriptionReader* reader, C
     } else{
         throw cRuntimeError("No AVB Connection information available");
     }
+    delete info;
 }
 
 AVBSubscriber::~AVBSubscriber() {

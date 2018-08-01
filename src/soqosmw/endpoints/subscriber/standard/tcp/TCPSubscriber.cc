@@ -73,10 +73,12 @@ TCPSubscriber::TCPSubscriber(string publisherPath, SubscriptionReader* reader, C
     } else{
         throw cRuntimeError("No AVB Connection information available");
     }
+    delete info;
 }
 
 TCPSubscriber::~TCPSubscriber() {
     // TODO Auto-generated destructor stub
+
 }
 
 void TCPSubscriber::connect() {
@@ -170,18 +172,11 @@ void TCPSubscriber::handleMessage(cMessage* msg) {
 
 void TCPSubscriber::notify(omnetpp::cMessage* notification) {
     Enter_Method("TCPSubscriber::notify()");
-
-
-
-        if (socket.belongsToSocket(notification)) {// match message and socket
-            socket.processMessage(notification); // invoke callback interface
-        } else {
-            TCPCommand* ctrlInfo = dynamic_cast<TCPCommand *>(notification->getControlInfo());
-            if(ctrlInfo) {
-                ctrlInfo->setConnId(socket.getConnectionId());
-            }
-    //        delete notification;
-        }
+    if (socket.belongsToSocket(notification)) {// match message and socket
+        socket.processMessage(notification); // invoke callback interface
+    } else {
+        delete notification;
+    }
 }
 
 void TCPSubscriber::socketFailure(int connId, void* yourPtr, int code) {

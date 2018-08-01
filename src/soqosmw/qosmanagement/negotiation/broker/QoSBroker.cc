@@ -290,7 +290,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
     bool handled = false;
     if (finalise) {
         if (_state == QoSBrokerStates_t::CLIENT_PENDING_CONNECTION) {
-            cout << "QoSBroker: full cycle successfull" << endl;
+//            cout << "QoSBroker: full cycle successfull" << endl;
 
             if(finalise->getFinalStatus() == QoSNegotiationStatus::Success){
                 _state = QoSBrokerStates_t::CLIENT_SUCCESS;

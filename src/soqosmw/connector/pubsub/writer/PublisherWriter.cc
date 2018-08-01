@@ -64,6 +64,7 @@ void PublisherWriter::notify(cMessage* msg) {
     for (auto pub : _publishers){
         pub->notify(msg);
     }
+//    delete msg;
 }
 
 } /*end namespace soqosmw*/

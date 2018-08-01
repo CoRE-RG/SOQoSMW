@@ -176,8 +176,8 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
             delete msg;
         }
     } else {
-        cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
-                                msg->getFullPath() << endl;
+//        cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
+//                                msg->getFullPath() << endl;
         if(msg->arrivedOn("std_tcpIn")){
             //send(msg, gate("std_tcpIn")->getNextGate());
             _writer->notify(msg);

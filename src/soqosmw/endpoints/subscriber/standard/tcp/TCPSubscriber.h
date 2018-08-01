@@ -64,7 +64,7 @@ private:
 
 private:
     omnetpp::cGate* _tcpOut;
-    omnetpp::cGate* _tcpIn;
+//    omnetpp::cGate* _tcpIn;
     inet::TCPSocket socket;
     std::string _localAddress;
     int _localPort;
