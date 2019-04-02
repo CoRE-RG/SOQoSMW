@@ -46,10 +46,20 @@ void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
         }
     }
     if (!parname || !strcmp(parname, "applicationUDPPort")) {
-        _tcpPort = par("applicationUDPPort");
+        _udpPort = par("applicationUDPPort");
+        if (_udpPort <= 0) {
+            throw cRuntimeError(
+                    "Configuration problem of parameter applicationUDPPort in module %s.",
+                    this->getFullName());
+        }
     }
     if (!parname || !strcmp(parname, "applicationTCPPort")) {
-        _udpPort = par("applicationTCPPort");
+        _tcpPort = par("applicationTCPPort");
+        if (_tcpPort <= 0) {
+            throw cRuntimeError(
+                    "Configuration problem of parameter applicationTCPPort in module %s.",
+                    this->getFullName());
+        }
     }
     if (!parname || !strcmp(parname, "localAddress")) {
         _localAddress = par("localAddress").stdstringValue();

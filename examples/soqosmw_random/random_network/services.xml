@@ -1,0 +1,10 @@
+<services>
+	<service name="Motoroil" node="MotoroilPublisher" />
+	<service name="Motortemperature" node="MotortemperaturePublisher" />
+	
+	<service name="TCPSubscriberService" node="MotoroilSTDSubscriber" />
+	<service name="TCPSubscriberService" node="MotortemperatureSTDSubscriber" />
+	
+	<service name="AVBSubscriberService" node="MotoroilRTSubscriber" />
+	<service name="TCPSubscriberService" node="MotortemperatureSTDSubscriber" />
+</services>

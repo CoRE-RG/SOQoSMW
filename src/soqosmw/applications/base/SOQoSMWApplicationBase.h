@@ -107,8 +107,8 @@ private:
      */
     LocalServiceManager* _localServiceManager;
 
-    int _tcpPort;
-    int _udpPort;
+    int _tcpPort=-1;
+    int _udpPort=-1;
     std::string _localAddress;
 };
 

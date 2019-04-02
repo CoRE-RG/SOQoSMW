@@ -32,23 +32,23 @@ import inet.node.ethernet.Eth100M;
 //
 network small_network
 {
-    @display("bgb=490,262,white,black");
+    @display("bgb=721,473,white,black");
     submodules:
         Publisher: SOQoSMWHost {
-            @display("p=86,197;i=block/source;is=l");
+            @display("p=49,408;i=block/source;is=l");
         }
 
         RTSubscriber: SOQoSMWHost {
-            @display("p=243,30;i=block/sink,#FF8080,50;is=l");
+            @display("p=365,30;i=block/sink,#FF8080,50;is=l");
         }
 
         STDSubscriber: SOQoSMWHost {
-            @display("p=404,197;i=block/sink,#0080FF;is=l");
+            @display("p=634,400;i=block/sink,#0080FF;is=l");
         }
 
         Switch: TTEAVBEtherSwitch {
             parameters:
-                @display("p=243,137;is=l");
+                @display("p=365,236;is=l");
             gates:
                 ethg[3];
         }
