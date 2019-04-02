@@ -191,7 +191,6 @@ void TCPPublisher::handleTimer(cMessage* msg) {
 
 void TCPPublisher::notify(omnetpp::cMessage* notification) {
     Enter_Method("TCPPublisher::handleMessage()");
-
     TCPCommand *ind = dynamic_cast<TCPCommand *>(notification->getControlInfo());
     if (!ind) {
         delete notification;

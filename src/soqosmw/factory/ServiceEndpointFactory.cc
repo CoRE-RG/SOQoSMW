@@ -70,6 +70,10 @@ ISubscriber* ServiceEndpointFactory::createSubscriber(
         //create according endpoint
         subscriber = new TCPSubscriber(publisherPath, reader, csi);
         break;
+    case ConnectionType::ct_udp:
+
+        //create according endpoint
+        //TODO UDPSubscriber
     default:
         break;
     }

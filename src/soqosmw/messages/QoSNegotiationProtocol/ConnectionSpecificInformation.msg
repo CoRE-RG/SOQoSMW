@@ -36,6 +36,12 @@ packet CSI_TCP extends ConnectionSpecificInformation {
     int port;
 }
 
+packet CSI_UDP extends ConnectionSpecificInformation {
+    connectionType = ConnectionType::ct_udp;
+    string address;
+    int port;
+}
+
 packet CSI_AVB extends ConnectionSpecificInformation {
     connectionType = ConnectionType::ct_avb;
     long streamID;

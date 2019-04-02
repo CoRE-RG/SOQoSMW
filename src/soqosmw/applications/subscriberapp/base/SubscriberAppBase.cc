@@ -31,6 +31,7 @@
 #include <omnetpp/simtime_t.h>
 #include <omnetpp/simutil.h>
 #include <qospolicy/management/QoSGroup.h>
+//TODO udp header
 #include <qospolicy/tcp/LocalAddressQoSPolicy.h>
 #include <qospolicy/tcp/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
@@ -80,9 +81,7 @@ void SubscriberAppBase::initialize()
 void SubscriberAppBase::handleMessage(cMessage *msg)
 {
     SOQoSMWApplicationBase::handleMessage(msg);
-    if(msg->arrivedOn("tcpForward")){
-        send(msg, gate("std_tcpOut"));
-    } else if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
+    if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         setQoS();
         //create a subscriber
         _reader = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
@@ -94,7 +93,7 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
 
-        if(msg->arrivedOn("std_tcpIn")){
+        if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
             //send(msg, gate("std_tcpIn")->getNextGate());
 
             _reader->notify(msg);
@@ -125,7 +124,14 @@ void SubscriberAppBase::notify(cPacket* msg) {
 void SubscriberAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
-    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    std::string connectiontype = par("connectionType").stdstringValue();
+    if(connectiontype == "connectionbased") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    } else if(connectiontype == "connectionless") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
+    } else {
+        cRuntimeError("Not a valid connection type");
+    }
 }
 
 void SubscriberAppBase::handleParameterChange(const char* parname)

@@ -45,5 +45,8 @@ simple PublisherAppBase extends SOQoSMWApplicationBase
     
     	//Service Description
     	string serviceName = default("PublisherService");
+    	
+    	//Connection type {connectionbased, connectionless}
+    	string connectionType = default("connectionbased");
     
 }

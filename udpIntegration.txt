@@ -1,0 +1,13 @@
+Bereits fertig
+-> soqosmw/applications/base/*
+-> soqosmw/applications/publisherapp/base/*
+-> soqosmw/applications/subscriberapp/base/*
+-> soqosmw/messages/*
+-> soqosmw/nodes/*
+
+Noch offen
+-> soqosmw/applications/gateway/*
+-> soqosmw/endpoints/publisher/*
+-> soqosmw/endpoints/subscriber/*
+-> soqosmw/factory/*
+-> soqosmw/qospolicy/*
