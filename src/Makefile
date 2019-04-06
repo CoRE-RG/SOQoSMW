@@ -47,6 +47,7 @@ OBJS = \
     $O/soqosmw/endpoints/publisher/realtime/base/IRTPublisher.o \
     $O/soqosmw/endpoints/publisher/standard/base/ISTDPublisher.o \
     $O/soqosmw/endpoints/publisher/standard/tcp/TCPPublisher.o \
+    $O/soqosmw/endpoints/publisher/standard/udp/UDPPublisher.o \
     $O/soqosmw/endpoints/subscriber/base/ISubscriber.o \
     $O/soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.o \
     $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \

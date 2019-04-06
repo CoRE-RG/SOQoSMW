@@ -6,8 +6,8 @@ Bereits fertig
 -> soqosmw/nodes/*
 -> soqosmw/applications/gateway/*
 -> soqosmw/qospolicy/*
+-> soqosmw/endpoints/publisher/*
 
 Noch offen
--> soqosmw/endpoints/publisher/*
 -> soqosmw/endpoints/subscriber/*
 -> soqosmw/factory/*

@@ -24,7 +24,7 @@
 
 #include <inet/transportlayer/contract/tcp/TCPCommand_m.h>
 #include <inet/transportlayer/contract/tcp/TCPSocket.h>
-#include "inet/transportlayer/contract/tcp/TCPSocketMap.h"
+#include <inet/transportlayer/contract/tcp/TCPSocketMap.h>
 
 namespace soqosmw {
 
