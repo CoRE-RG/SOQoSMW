@@ -5,8 +5,8 @@
  *      Author: skrec
  */
 
-#ifndef SOQOSMW_QOSPOLICY_TCP_LOCALPORTQOSPOLICY_H_
-#define SOQOSMW_QOSPOLICY_TCP_LOCALPORTQOSPOLICY_H_
+#ifndef SOQOSMW_QOSPOLICY_STD_LOCALPORTQOSPOLICY_H_
+#define SOQOSMW_QOSPOLICY_STD_LOCALPORTQOSPOLICY_H_
 
 #include <qospolicy/base/types/IntQoSPolicy.h>
 #include <string>
@@ -31,4 +31,4 @@ public:
 
 } /* namespace soqosmw */
 
-#endif /* SOQOSMW_QOSPOLICY_TCP_LOCALPORTQOSPOLICY_H_ */
+#endif /* SOQOSMW_QOSPOLICY_STD_LOCALPORTQOSPOLICY_H_ */

@@ -29,8 +29,8 @@
 #include <omnetpp/simtime_t.h>
 #include <omnetpp/simutil.h>
 #include <qospolicy/management/QoSGroup.h>
-#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
-#include <qospolicy/tcp/LocalPortQoSPolicy.h>
+#include <qospolicy/std/LocalAddressQoSPolicy.h>
+#include <qospolicy/std/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
@@ -89,7 +89,7 @@ void GWSinkAppBase::handleMessage(cMessage *msg)
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
 
-        if(msg->arrivedOn("std_tcpIn")){
+        if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
             //send(msg, gate("std_tcpIn")->getNextGate());
 
             _reader->notify(msg);
@@ -121,7 +121,14 @@ void GWSinkAppBase::notify(cPacket* msg) {
 void GWSinkAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
-    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    std::string connectiontype = par("connectionType").stdstringValue();
+    if(connectiontype == "connectionbased") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    } else if(connectiontype == "connectionless") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
+    } else {
+        cRuntimeError("Not a valid connection type");
+    }
 }
 
 void GWSinkAppBase::handleParameterChange(const char* parname)

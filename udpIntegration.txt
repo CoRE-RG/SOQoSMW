@@ -4,10 +4,10 @@ Bereits fertig
 -> soqosmw/applications/subscriberapp/base/*
 -> soqosmw/messages/*
 -> soqosmw/nodes/*
+-> soqosmw/applications/gateway/*
+-> soqosmw/qospolicy/*
 
 Noch offen
--> soqosmw/applications/gateway/*
 -> soqosmw/endpoints/publisher/*
 -> soqosmw/endpoints/subscriber/*
 -> soqosmw/factory/*
--> soqosmw/qospolicy/*

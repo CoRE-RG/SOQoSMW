@@ -31,9 +31,8 @@
 #include <omnetpp/simtime_t.h>
 #include <omnetpp/simutil.h>
 #include <qospolicy/management/QoSGroup.h>
-//TODO udp header
-#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
-#include <qospolicy/tcp/LocalPortQoSPolicy.h>
+#include <qospolicy/std/LocalAddressQoSPolicy.h>
+#include <qospolicy/std/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>

@@ -38,8 +38,8 @@
 #include <qospolicy/base/types/SizeQoSPolicy.h>
 #include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <qospolicy/management/QoSGroup.h>
-#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
-#include <qospolicy/tcp/LocalPortQoSPolicy.h>
+#include <qospolicy/std/LocalAddressQoSPolicy.h>
+#include <qospolicy/std/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
@@ -178,7 +178,7 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
     } else {
 //        cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
 //                                msg->getFullPath() << endl;
-        if(msg->arrivedOn("std_tcpIn")){
+        if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
             //send(msg, gate("std_tcpIn")->getNextGate());
             _writer->notify(msg);
         } else{
@@ -191,7 +191,14 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
 void GWSourceAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD);
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
-    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    std::string connectiontype = par("connectionType").stdstringValue();
+    if(connectiontype == "connectionbased") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+    } else if(connectiontype == "connectionless") {
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
+    } else {
+        cRuntimeError("Not a valid connection type");
+    }
     _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
     _qosPolicies[QoSPolicyNames::SRClass] = new SRClassQoSPolicy(_srClass);
     _qosPolicies[QoSPolicyNames::Framesize] = new FramesizeQoSPolicy(_framesize);

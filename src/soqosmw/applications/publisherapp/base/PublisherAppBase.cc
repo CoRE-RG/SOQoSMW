@@ -36,9 +36,8 @@
 #include <qospolicy/base/types/SizeQoSPolicy.h>
 #include <qospolicy/base/types/UInt16QoSPolicy.h>
 #include <qospolicy/management/QoSGroup.h>
-//TODO udp header
-#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
-#include <qospolicy/tcp/LocalPortQoSPolicy.h>
+#include <qospolicy/std/LocalAddressQoSPolicy.h>
+#include <qospolicy/std/LocalPortQoSPolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>

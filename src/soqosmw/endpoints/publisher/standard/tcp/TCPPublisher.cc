@@ -27,8 +27,8 @@
 #include <omnetpp/simutil.h>
 #include <qospolicy/base/types/IntQoSPolicy.h>
 #include <qospolicy/base/types/StringQoSPolicy.h>
-#include <qospolicy/tcp/LocalAddressQoSPolicy.h>
-#include <qospolicy/tcp/LocalPortQoSPolicy.h>
+#include <qospolicy/std/LocalAddressQoSPolicy.h>
+#include <qospolicy/std/LocalPortQoSPolicy.h>
 #include <iostream>
 
 
