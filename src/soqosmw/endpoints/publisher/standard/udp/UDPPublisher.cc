@@ -61,9 +61,9 @@ UDPPublisher::UDPPublisher(string path, PublisherWriter* writer) : ISTDPublisher
     //get port
     _localPort = (dynamic_cast<LocalPortQoSPolicy*>(getWriter()->getQoSValueFor(QoSPolicyNames::LocalPort)))->getValue();
 
+    _serverSocket.setOutputGate(_udpOut);
     _serverSocket.setReuseAddress(true);
     _serverSocket.bind(*_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
-    _serverSocket.setOutputGate(_udpOut);
     isConnected = true;
 }
 

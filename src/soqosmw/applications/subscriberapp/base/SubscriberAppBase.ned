@@ -40,11 +40,11 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         // Start time
         double startTime @unit(s) = default(0s);  
         
-        string subscriberName = default("SubscriberService");//nicht ben�tigt?
+        string subscriberName = default("SubscriberService");//nicht benoetigt?
         
         string publisherName = default("PublisherService");
         
-        string qosGroup = default("STD"); //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
+        string qosGroup = default("STD_TCP"); //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
         
         string connectionType = default("connectionbased");
 	

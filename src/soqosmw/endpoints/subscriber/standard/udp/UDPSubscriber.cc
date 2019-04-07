@@ -66,7 +66,7 @@ UDPSubscriber::UDPSubscriber(string publisherPath, SubscriptionReader* reader, C
         connect();
 
     } else{
-        throw cRuntimeError("No AVB Connection information available");
+        throw cRuntimeError("No AVB Connection information available"); // TODO Shouldn't rather be UDP instead AVB?
     }
     delete info;
 }

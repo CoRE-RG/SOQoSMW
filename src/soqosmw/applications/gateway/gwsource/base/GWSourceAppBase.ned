@@ -45,5 +45,8 @@ simple GWSourceAppBase extends SOQoSMWApplicationBase
     
     	//Service Description
     	string serviceName = default("PublisherService");
+    	
+    	//Type of connection if connectionbased or connectionless
+    	string connectionType = default("connectionbased");
     
 }

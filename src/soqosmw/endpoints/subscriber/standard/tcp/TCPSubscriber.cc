@@ -71,7 +71,7 @@ TCPSubscriber::TCPSubscriber(string publisherPath, SubscriptionReader* reader, C
         connect();
 
     } else{
-        throw cRuntimeError("No AVB Connection information available");
+        throw cRuntimeError("No AVB Connection information available"); // TODO Shouldn't rather be TCP instead AVB?
     }
     delete info;
 }
