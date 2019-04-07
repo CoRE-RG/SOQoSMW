@@ -17,8 +17,10 @@
 #include <connector/pubsub/writer/PublisherWriter.h>
 #include <endpoints/publisher/realtime/avb/AVBPublisher.h>
 #include <endpoints/publisher/standard/tcp/TCPPublisher.h>
+#include <endpoints/publisher/standard/udp/UDPPublisher.h>
 #include <endpoints/subscriber/realtime/avb/AVBSubscriber.h>
 #include <endpoints/subscriber/standard/tcp/TCPSubscriber.h>
+#include <endpoints/subscriber/standard/udp/UDPSubscriber.h>
 #include <factory/ServiceEndpointFactory.h>
 #include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 
@@ -34,11 +36,15 @@ IPublisher* ServiceEndpointFactory::createPublisher(std::string& publisherPath,
             //Create AVB Publisher!
             publisher = new AVBPublisher(publisherPath, writer);
             break;
-        case QoSGroups::STD:
-            //check if UDP or TCP is required
+        case QoSGroups::STD_TCP:
 
             //Create TCP Publisher!
             publisher = new TCPPublisher(publisherPath, writer);
+            break;
+        case QoSGroups::STD_UDP:
+
+            //Create UDP Publisher!
+            publisher = new UDPPublisher(publisherPath, writer);
             break;
 
         default:
@@ -73,7 +79,7 @@ ISubscriber* ServiceEndpointFactory::createSubscriber(
     case ConnectionType::ct_udp:
 
         //create according endpoint
-        //TODO UDPSubscriber
+        subscriber = new UDPSubscriber(publisherPath, reader, csi);
     default:
         break;
     }

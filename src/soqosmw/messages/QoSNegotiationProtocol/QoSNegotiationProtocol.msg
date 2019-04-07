@@ -28,8 +28,9 @@ namespace soqosmw;
 //Groups of QoS Requirements
 enum QoSGroups {
     RT = 0; // RealTime Requirements --> AVB / TSN
-    STD = 1; // Standard Requirements --> BE TCP/UDP IP
-    WEB = 2; // Web Requirements --> HTTP
+    STD_TCP = 1; // Standard Requirements --> TCP IP
+    STD_UDP = 2; // Standard Requirements --> UDP IP
+    WEB = 3; // Web Requirements --> HTTP
 }
 
 //Type of Negotiation message for @see QoSNegotiationProtocol

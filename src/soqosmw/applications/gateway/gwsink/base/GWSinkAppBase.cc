@@ -153,8 +153,10 @@ void GWSinkAppBase::handleParameterChange(const char* parname)
         string group = par("qosGroup").stdstringValue();
         if(group == "WS"){
             _qosGroup = new QoSGroup(QoSGroup::WEB);
-        } else if(group == "STD"){
-            _qosGroup = new QoSGroup(QoSGroup::STD);
+        } else if(group == "STD_TCP"){
+            _qosGroup = new QoSGroup(QoSGroup::STD_TCP);
+        } else if(group == "STD_UDP"){
+            _qosGroup = new QoSGroup(QoSGroup::STD_UDP);
         } else if(group == "RT"){
             _qosGroup = new QoSGroup(QoSGroup::RT);
         }

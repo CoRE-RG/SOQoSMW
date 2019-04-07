@@ -23,7 +23,7 @@ class QoSGroup: public IQoSPolicy {
 public:
 
     typedef enum QoSGroups{
-        WEB, STD, RT
+        WEB, STD_TCP, STD_UDP, RT
     }QoSGroups_t;
 
     QoSGroup(QoSGroups_t value) : _value (value){

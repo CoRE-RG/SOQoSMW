@@ -189,16 +189,17 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
 }
 
 void GWSourceAppBase::setQoS() {
-    _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD);
-    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
     std::string connectiontype = par("connectionType").stdstringValue();
     if(connectiontype == "connectionbased") {
-            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
+        _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
     } else if(connectiontype == "connectionless") {
-            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
+        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_UDP);
+        _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
     } else {
         cRuntimeError("Not a valid connection type");
     }
+    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
     _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
     _qosPolicies[QoSPolicyNames::SRClass] = new SRClassQoSPolicy(_srClass);
     _qosPolicies[QoSPolicyNames::Framesize] = new FramesizeQoSPolicy(_framesize);

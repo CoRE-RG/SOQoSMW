@@ -103,8 +103,11 @@ bool QoSBroker::startNegotiation() {
         case QoSGroup::WEB:
             request->setQosClass(QoSGroups::WEB);
             break;
-        case QoSGroup::STD:
-            request->setQosClass(QoSGroups::STD);
+        case QoSGroup::STD_TCP:
+            request->setQosClass(QoSGroups::STD_TCP);
+            break;
+        case QoSGroup::STD_UDP:
+            request->setQosClass(QoSGroups::STD_UDP);
             break;
         case QoSGroup::RT:
             request->setQosClass(QoSGroups::RT);
