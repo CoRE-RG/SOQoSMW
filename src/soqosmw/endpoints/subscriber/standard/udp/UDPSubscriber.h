@@ -13,50 +13,26 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef SOQOSMW_ENDPOINTS_PUBLISHER_STANDARD_UDP_UDPPUBLISHER_H_
-#define SOQOSMW_ENDPOINTS_PUBLISHER_STANDARD_UDP_UDPPUBLISHER_H_
+#ifndef SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_UDP_UDPSUBSCRIBER_H_
+#define SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_UDP_UDPSUBSCRIBER_H_
 
-#include <endpoints/publisher/standard/base/ISTDPublisher.h>
+#include <endpoints/subscriber/standard/base/ISTDSubscriber.h>
 #include <omnetpp/csimplemodule.h>
 #include <string>
 
 #include <inet/transportlayer/contract/udp/UDPControlInfo_m.h>
-#include <inet/transportlayer/contract/udp/UDPControlInfo.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
+class ConnectionSpecificInformation;
+} /* namespace soqosmw */
 
-class UDPPublisher: public soqosmw::ISTDPublisher, public omnetpp::cSimpleModule {
-private:
-    class UDPSocketProcessor {
+namespace soqosmw {
 
-    public:
-        UDPSocketProcessor(inet::UDPSocket* socket){
-            _socket = socket;
-        }
-        virtual ~UDPSocketProcessor(){
-
-        }
-
-        void deliver(omnetpp::cPacket* payload, const char *message = ""){
-            omnetpp::cPacket* deliver = new cPacket();
-            deliver->setTimestamp();
-            deliver->setByteLength(payload->getByteLength());
-            deliver->setName(message);
-            _socket->send(deliver);
-        }
-
-    private:
-        inet::UDPSocket* _socket;
-    };
-
+class UDPSubscriber: public soqosmw::ISTDSubscriber, public omnetpp::cSimpleModule {
 public:
-    UDPPublisher(std::string path, PublisherWriter* writer);
-    virtual ~UDPPublisher();
-
-    virtual void publish(omnetpp::cPacket* payload) override;
-
-    virtual ConnectionSpecificInformation* getConnectionSpecificInformation() override;
+    UDPSubscriber(std::string publisherPath, SubscriptionReader* reader, ConnectionSpecificInformation* info);
+    virtual ~UDPSubscriber();
 
     virtual void notify(omnetpp::cMessage* notification) override;
 
@@ -68,7 +44,6 @@ protected:
      */
     virtual void handleMessage(cMessage *msg);
 
-
 private:
     /* Utility functions */
     virtual void connect();
@@ -78,13 +53,13 @@ private:
 
 private:
     omnetpp::cGate* _udpOut;
-    omnetpp::cGate* _udpIn;
-    inet::UDPSocket _serverSocket;
-    // inet::UDPSocketMap _socketMap;
-    std::vector<UDPSocketProcessor*> _processors;
+//    omnetpp::cGate* _tcpIn;
+    inet::UDPSocket socket;
     std::string _localAddress;
     int _localPort;
-    bool isConnected;
+    std::string _remoteAddress;
+    int _remotePort;
+    bool _isConnected; // TODO really necessary?
 
     // statistics
     int numSessions;
@@ -94,8 +69,9 @@ private:
     int bytesSent;
     int bytesRcvd;
 
-
 };
 
-}// end namespace soqosmw
-#endif /* SOQOSMW_ENDPOINTS_PUBLISHER_STANDARD_UDP_UDPPUBLISHER_H_ */
+} /*end namespace soqosmw*/
+
+
+#endif /* SOQOSMW_ENDPOINTS_SUBSCRIBER_STANDARD_UDP_UDPSUBSCRIBER_H_ */
