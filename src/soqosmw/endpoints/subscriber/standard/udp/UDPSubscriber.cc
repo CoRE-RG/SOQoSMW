@@ -37,73 +37,107 @@ using namespace std;
 using namespace inet;
 using namespace omnetpp;
 
-//namespace soqosmw {
+namespace soqosmw {
 
-//UDPSubscriber::UDPSubscriber(string publisherPath, SubscriptionReader* reader, ConnectionSpecificInformation info):
-//        ISTDSubscriber(publisherPath, reader) {
-//    Enter_Method("UDPSubscriber::UDPSubscriber()");
-//    if(info->getConnectionType() == ConnectionType::ct_udp){
-//        CSI_UDP* connection = dynamic_cast<CSI_UDP*>(info);
-//
-//        //set output gate for tcp connection.
-//        _udpOut = this->addGate("udpOut", cGate::Type::OUTPUT);
-//        cGate* gateOut = getReader()->getExecutingApplication()->gate("std_udpOut")->getNextGate();
-//        getReader()->getExecutingApplication()->gate("std_udpOut")->disconnect();
-//        _udpOut->connectTo(gateOut);
-//
-//        numSessions = numBroken = packetsSent = packetsRcvd = bytesSent = bytesRcvd = 0;
-//        _isConnected = false;
-//        //get address
-//        _localAddress = (dynamic_cast<LocalAddressQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalAddress)))->getValue();
-//        //get port
-//        _localPort = (dynamic_cast<LocalPortQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalPort)))->getValue();
-//
-//        _remoteAddress = connection->getAddress();
-//        _remotePort = connection->getPort();
-//
-//        socket.setOutputGate(_udpOut);
-//
-//        connect();
-//
-//    } else{
-//        throw cRuntimeError("No AVB Connection information available");
-//    }
-//    delete info;
-//}
-//
-//UDPSubscriber::~UDPSubscriber() {
-//    // TODO Auto-generated destructor stub
-//
-//}
-//
-//void UDPSubscriber::connect() {
-//    Enter_Method("UDPSubscriber::connect()");
-//
-//    socket.setReuseAddress(true);
-//    socket.bind(*_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
-//    _isConnected = true;
-//
-//    L3Address destination;
-//    L3AddressResolver().tryResolve(_remoteAddress.c_str(), destination);
-//    if (destination.isUnspecified()) {
-//        //EV_ERROR << "Connecting to " << _remoteAddress << " port=" << _remotePort << ": cannot resolve destination address\n";
-//    }
-//    else {
-//        //EV_INFO << "Connecting to " << _remoteAddress << "(" << destination << ") port=" << _remotePort << endl;
-//
-//        socket.connect(destination, _remotePort);
-//
-//        numSessions++;
-//    }
-//}
-//
-//void UDPPublisher::close() {
-//    Enter_Method("UDPPublisher::close()");
-//    EV_INFO << "issuing CLOSE command\n";
-//    _isConnected = false;
-//    //TODO shouldnt we clean up an delete this publisher?!
-//}
-//
-//} /*end namespace soqosmw*/
+UDPSubscriber::UDPSubscriber(string publisherPath, SubscriptionReader* reader, ConnectionSpecificInformation* info) :
+        ISTDSubscriber(publisherPath, reader) {
+    Enter_Method("UDPSubscriber::UDPSubscriber()");
+    if(info->getConnectionType() == ConnectionType::ct_udp){
+        CSI_UDP* connection = dynamic_cast<CSI_UDP*>(info);
+
+        //set output gate for tcp connection.
+        _udpOut = this->addGate("udpOut", cGate::Type::OUTPUT);
+        cGate* gateOut = getReader()->getExecutingApplication()->gate("std_udpOut")->getNextGate();
+        getReader()->getExecutingApplication()->gate("std_udpOut")->disconnect();
+        _udpOut->connectTo(gateOut);
+
+        numSessions = numBroken = packetsSent = packetsRcvd = bytesSent = bytesRcvd = 0;
+        _isConnected = false;
+        //get address
+        _localAddress = (dynamic_cast<LocalAddressQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalAddress)))->getValue();
+        //get port
+        _localPort = (dynamic_cast<LocalPortQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalPort)))->getValue();
+
+        _remoteAddress = connection->getAddress();
+        _remotePort = connection->getPort();
+
+        socket.setOutputGate(_udpOut);
+
+        connect();
+
+    } else{
+        throw cRuntimeError("No AVB Connection information available");
+    }
+    delete info;
+}
+
+UDPSubscriber::~UDPSubscriber() {
+    // TODO Auto-generated destructor stub
+
+}
+
+void UDPSubscriber::connect() {
+    Enter_Method("UDPSubscriber::connect()");
+
+    socket.setReuseAddress(true);
+    socket.bind(*_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
+    _isConnected = true;
+
+    L3Address destination;
+    L3AddressResolver().tryResolve(_remoteAddress.c_str(), destination);
+    if (destination.isUnspecified()) {
+        //EV_ERROR << "Connecting to " << _remoteAddress << " port=" << _remotePort << ": cannot resolve destination address\n";
+    }
+    else {
+        //EV_INFO << "Connecting to " << _remoteAddress << "(" << destination << ") port=" << _remotePort << endl;
+
+        socket.connect(destination, _remotePort);
+
+        numSessions++;
+    }
+}
+
+void UDPSubscriber::close() {
+    Enter_Method("UDPPublisher::close()");
+    EV_INFO << "issuing CLOSE command\n";
+    _isConnected = false;
+    socket.close();
+    //TODO shouldnt we clean up an delete this publisher?!
+}
+
+void UDPSubscriber::sendPacket(cPacket* pkt) {
+    Enter_Method("UDPSubscriber::sendPacket()");
+    int numBytes = pkt->getByteLength();
+    socket.send(pkt);
+
+    packetsSent++;
+    bytesSent += numBytes;
+}
+
+void UDPSubscriber::handleTimer(cMessage* msg) {
+    Enter_Method("UDPSubscriber::handleTimer()");
+    delete msg;
+}
+
+void UDPSubscriber::handleMessage(cMessage* msg) {
+    Enter_Method("UDPSubscriber::handleMessage()");
+    if (socket.belongsToSocket(msg)) {// match message and socket
+        EV << "Message: " << msg;
+    } else {
+        delete msg;
+    }
+}
+
+void UDPSubscriber::notify(omnetpp::cMessage* notification) {
+    Enter_Method("UDPSubscriber::notify()");
+    if (socket.belongsToSocket(notification)) {// match message and socket
+        EV << "Notification: " << notification;
+    } else {
+        delete notification;
+    }
+}
+
+
+} /*end namespace soqosmw*/
 
 
