@@ -205,6 +205,9 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 fillEnvelope(establish);
                 establish->setQosClass(response->getQosClass());
 
+                // TODO UDP create subsriber if udp is wanted
+                // TODO UDP encapsulate the CSI into the packet.
+
                 //send connection request
                 sendMessage(establish);
                 EV_DEBUG << " --> send establish request" << endl;
@@ -248,9 +251,12 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
 
                 //create publisher
                 IPublisher* publisher = ServiceEndpointFactory::getInstance().createPublisher(path, establish->getQosClass(), writer);
+
                 if(publisher){
                     //get endpoint details
                     connection = publisher->getConnectionSpecificInformation();
+
+                    // TODO UDP if UDP connect direktly to subscriber now.
                 }
 
                 if(connection){
@@ -304,6 +310,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                 if(enc){
                     ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(enc);
 
+                    // TODO UDP do not create another udp subscriber
 
                     //get path
                     string& path = _remote.getPath();

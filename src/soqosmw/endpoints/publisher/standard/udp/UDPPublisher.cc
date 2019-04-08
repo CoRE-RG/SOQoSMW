@@ -99,6 +99,7 @@ ConnectionSpecificInformation* UDPPublisher::getConnectionSpecificInformation() 
 }
 
 void UDPPublisher::connect() {
+    // TODO UDP add parameters to connect to subscriber direktly
     Enter_Method("UDPPublisher::connect()");
     // we need a new connId if this is not the first connection
     //socket.renewSocket();
