@@ -24,6 +24,10 @@
 #include <inet/transportlayer/contract/udp/UDPControlInfo.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
+
+#include <inet/networklayer/common/L3Address.h>
+#include <inet/networklayer/common/L3AddressResolver.h>
+
 namespace soqosmw {
 
 class UDPPublisher: public soqosmw::ISTDPublisher, public omnetpp::cSimpleModule {
@@ -31,8 +35,10 @@ private:
     class UDPSocketProcessor {
 
     public:
-        UDPSocketProcessor(inet::UDPSocket* socket){
+        UDPSocketProcessor(inet::UDPSocket* socket, const char * remoteAddress, int remotePort){
             _socket = socket;
+            _remoteAddress = inet::L3AddressResolver().resolve(remoteAddress);
+            _remotePort = remotePort;
         }
         virtual ~UDPSocketProcessor(){
 
@@ -43,11 +49,13 @@ private:
             deliver->setTimestamp();
             deliver->setByteLength(payload->getByteLength());
             deliver->setName(message);
-            _socket->send(deliver);
+            _socket->sendTo(deliver, _remoteAddress, _remotePort);
         }
 
     private:
         inet::UDPSocket* _socket;
+        inet::L3Address _remoteAddress;
+        int _remotePort;
     };
 
 public:
@@ -59,6 +67,8 @@ public:
     virtual ConnectionSpecificInformation* getConnectionSpecificInformation() override;
 
     virtual void notify(omnetpp::cMessage* notification) override;
+
+    void addConnection(ConnectionSpecificInformation* csi);
 
 protected:
 

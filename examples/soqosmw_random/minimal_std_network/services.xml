@@ -1,0 +1,4 @@
+<services>
+	<service name="Motoroil" node="MotoroilPublisher" />
+	<service name="UDPSubscriberService" node="MotoroilSTDSubscriber" />
+</services>

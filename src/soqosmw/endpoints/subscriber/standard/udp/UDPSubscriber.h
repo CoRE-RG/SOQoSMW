@@ -36,6 +36,8 @@ public:
 
     virtual void notify(omnetpp::cMessage* notification) override;
 
+    ConnectionSpecificInformation* getConnectionSpecificInformation();
+
 protected:
 
     /**

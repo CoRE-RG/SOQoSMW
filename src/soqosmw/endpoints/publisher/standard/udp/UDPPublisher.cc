@@ -143,7 +143,7 @@ void UDPPublisher::handleTimer(cMessage* msg) {
 }
 
 void UDPPublisher::notify(omnetpp::cMessage* notification) {
-    Enter_Method("UDPPublisher::handleMessage()");
+    Enter_Method("UDPPublisher::notify()");
     UDPControlInfo *ind = dynamic_cast<UDPControlInfo *>(notification->getControlInfo());
     if (!ind) {
         delete notification;
@@ -157,4 +157,14 @@ void UDPPublisher::notify(omnetpp::cMessage* notification) {
     }
 }
 
-}// end namespace soqosmw
+void UDPPublisher::addConnection(
+    ConnectionSpecificInformation* csi) {
+    if(CSI_UDP* csiUdp = dynamic_cast<CSI_UDP*>(csi)){
+        // create new processor and add to list
+        _processors.push_back(new UDPSocketProcessor(&_serverSocket, csiUdp->getAddress(), csiUdp->getPort()));
+    }
+}
+
+}
+    // end namespace soqosmw
+

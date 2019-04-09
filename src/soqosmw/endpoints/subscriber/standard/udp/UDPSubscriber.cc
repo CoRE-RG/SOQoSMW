@@ -76,6 +76,13 @@ UDPSubscriber::~UDPSubscriber() {
 
 }
 
+ConnectionSpecificInformation* UDPSubscriber::getConnectionSpecificInformation() {
+    CSI_UDP* connection = new CSI_UDP();
+    connection->setAddress(_localAddress.c_str());
+    connection->setPort(_localPort);
+    return connection;
+}
+
 void UDPSubscriber::connect() {
     Enter_Method("UDPSubscriber::connect()");
 

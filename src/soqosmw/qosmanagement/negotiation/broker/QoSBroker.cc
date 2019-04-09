@@ -15,6 +15,8 @@
 
 #include <endpoints/publisher/base/IPublisher.h>
 #include <endpoints/subscriber/base/ISubscriber.h>
+#include <endpoints/subscriber/standard/udp/UDPSubscriber.h>
+#include <endpoints/publisher/standard/udp/UDPPublisher.h>
 #include <factory/ServiceEndpointFactory.h>
 #include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
@@ -205,8 +207,23 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 fillEnvelope(establish);
                 establish->setQosClass(response->getQosClass());
 
-                // TODO UDP create subsriber if udp is wanted
-                // TODO UDP encapsulate the CSI into the packet.
+                // TODO UDP create subscriber if udp is wanted -> NOT TESTED
+                if (response->getQosClass() == QoSGroup::QoSGroups::STD_UDP) {
+
+
+                    string& path = _remote.getPath();
+                    //get responsible writer
+                    SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+
+                    //create subscriber
+                    UDPSubscriber* subscriber = dynamic_cast<UDPSubscriber*>(ServiceEndpointFactory::getInstance().createSubscriber(path, nullptr, reader));
+
+                    // TODO UDP encapsulate the CSI into the packet. -> NOT TESTED
+                    ConnectionSpecificInformation* info = subscriber->getConnectionSpecificInformation();
+                    if(info){
+                        establish->encapsulate(info);
+                    }
+                }
 
                 //send connection request
                 sendMessage(establish);
@@ -242,6 +259,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
             finalise->setQosClass(establish->getQosClass());
 
             if (isEstablishAcceptable(establish)) {
+
                 ConnectionSpecificInformation* connection = nullptr;
 
                 //get path
@@ -252,18 +270,28 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 //create publisher
                 IPublisher* publisher = ServiceEndpointFactory::getInstance().createPublisher(path, establish->getQosClass(), writer);
 
-                if(publisher){
+                if(publisher) {
+
                     //get endpoint details
                     connection = publisher->getConnectionSpecificInformation();
 
-                    // TODO UDP if UDP connect direktly to subscriber now.
+                    if(connection && connection->getConnectionType() == ConnectionType::ct_udp) {
+                        // TODO UDP if UDP connect directly to subscriber now.
+                        if(ConnectionSpecificInformation* subConnection = dynamic_cast<ConnectionSpecificInformation*>( establish->decapsulate())){
+                            if(UDPPublisher* udpPublisher = dynamic_cast<UDPPublisher*> (publisher)){
+                                udpPublisher->addConnection(subConnection);
+                            }
+                        }
+                    }
                 }
+
+
 
                 if(connection){
                     //pack details to message
                     finalise->encapsulate(connection);
 
-                    // successfull negotiation
+                    // successful negotiation
                     finalise->setFinalStatus(QoSNegotiationStatus::Success);
                     EV_DEBUG << " --> finalise success" << endl;
                     _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
@@ -310,15 +338,16 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                 if(enc){
                     ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(enc);
 
-                    // TODO UDP do not create another udp subscriber
+                    // TODO UDP do not create another udp subscriber NOT TESTED
+                    if (info->getConnectionType() != ConnectionType::ct_udp) {
+                        //get path
+                        string& path = _remote.getPath();
+                        //get responsible writer
+                        SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
 
-                    //get path
-                    string& path = _remote.getPath();
-                    //get responsible writer
-                    SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
-
-                    //create subscriber
-                    ServiceEndpointFactory::getInstance().createSubscriber(path, info, reader);
+                        //create subscriber
+                        ServiceEndpointFactory::getInstance().createSubscriber(path, info, reader);
+                    }
                 }
 
 
