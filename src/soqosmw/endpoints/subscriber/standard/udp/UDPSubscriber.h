@@ -50,7 +50,6 @@ private:
     /* Utility functions */
     virtual void connect();
     virtual void close();
-    virtual void sendPacket(cPacket *pkt);
     virtual void handleTimer(cMessage *msg);
 
 private:

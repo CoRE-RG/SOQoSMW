@@ -215,8 +215,11 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                     //get responsible writer
                     SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
 
+                    CSI_UDP* connectionType = new CSI_UDP;
+                    connectionType->setConnectionType(ConnectionType::ct_udp);
+
                     //create subscriber
-                    UDPSubscriber* subscriber = dynamic_cast<UDPSubscriber*>(ServiceEndpointFactory::getInstance().createSubscriber(path, nullptr, reader));
+                    UDPSubscriber* subscriber = dynamic_cast<UDPSubscriber*>(ServiceEndpointFactory::getInstance().createSubscriber(path, connectionType, reader));
 
                     // TODO UDP encapsulate the CSI into the packet. -> NOT TESTED
                     ConnectionSpecificInformation* info = subscriber->getConnectionSpecificInformation();

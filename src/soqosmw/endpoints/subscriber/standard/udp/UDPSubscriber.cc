@@ -43,9 +43,9 @@ UDPSubscriber::UDPSubscriber(string publisherPath, SubscriptionReader* reader, C
         ISTDSubscriber(publisherPath, reader) {
     Enter_Method("UDPSubscriber::UDPSubscriber()");
     if(info->getConnectionType() == ConnectionType::ct_udp){
-        CSI_UDP* connection = dynamic_cast<CSI_UDP*>(info);
+        //CSI_UDP* connection = dynamic_cast<CSI_UDP*>(info);
 
-        //set output gate for tcp connection.
+        //set output gate for udp connection.
         _udpOut = this->addGate("udpOut", cGate::Type::OUTPUT);
         cGate* gateOut = getReader()->getExecutingApplication()->gate("std_udpOut")->getNextGate();
         getReader()->getExecutingApplication()->gate("std_udpOut")->disconnect();
@@ -57,11 +57,6 @@ UDPSubscriber::UDPSubscriber(string publisherPath, SubscriptionReader* reader, C
         _localAddress = (dynamic_cast<LocalAddressQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalAddress)))->getValue();
         //get port
         _localPort = (dynamic_cast<LocalPortQoSPolicy*>(getReader()->getQoSValueFor(QoSPolicyNames::LocalPort)))->getValue();
-
-        _remoteAddress = connection->getAddress();
-        _remotePort = connection->getPort();
-
-        socket.setOutputGate(_udpOut);
 
         connect();
 
@@ -86,22 +81,10 @@ ConnectionSpecificInformation* UDPSubscriber::getConnectionSpecificInformation()
 void UDPSubscriber::connect() {
     Enter_Method("UDPSubscriber::connect()");
 
+    socket.setOutputGate(_udpOut);
     socket.setReuseAddress(true);
     socket.bind(*_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
     _isConnected = true;
-
-    L3Address destination;
-    L3AddressResolver().tryResolve(_remoteAddress.c_str(), destination);
-    if (destination.isUnspecified()) {
-        //EV_ERROR << "Connecting to " << _remoteAddress << " port=" << _remotePort << ": cannot resolve destination address\n";
-    }
-    else {
-        //EV_INFO << "Connecting to " << _remoteAddress << "(" << destination << ") port=" << _remotePort << endl;
-
-        socket.connect(destination, _remotePort);
-
-        numSessions++;
-    }
 }
 
 void UDPSubscriber::close() {
@@ -110,15 +93,6 @@ void UDPSubscriber::close() {
     _isConnected = false;
     socket.close();
     //TODO shouldnt we clean up an delete this publisher?!
-}
-
-void UDPSubscriber::sendPacket(cPacket* pkt) {
-    Enter_Method("UDPSubscriber::sendPacket()");
-    int numBytes = pkt->getByteLength();
-    socket.send(pkt);
-
-    packetsSent++;
-    bytesSent += numBytes;
 }
 
 void UDPSubscriber::handleTimer(cMessage* msg) {

@@ -161,7 +161,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
     } else if (msg->isSelfMessage()
             && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
-        if (_writer) {
+        if (_writer) { //TODO There is no check of registered publishers
             cPacket *payloadPacket = new cPacket;
             payloadPacket->setTimestamp();
             payloadPacket->setByteLength(
