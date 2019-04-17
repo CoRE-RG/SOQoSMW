@@ -16,20 +16,6 @@
 #include <applications/gateway/gwsource/base/GWSourceAppBase.h>
 #include <applications/publisherapp/base/PublisherAppBase.h>
 #include <connector/pubsub/writer/PublisherWriter.h>
-#include <omnetpp/cdisplaystring.h>
-#include <omnetpp/cenvir.h>
-#include <omnetpp/cexception.h>
-#include <omnetpp/cgate.h>
-#include <omnetpp/clog.h>
-#include <omnetpp/cmessage.h>
-#include <omnetpp/cnamedobject.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpacket.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/csimulation.h>
-#include <omnetpp/regmacros.h>
-#include <omnetpp/simtime.h>
-#include <omnetpp/simtime_t.h>
 #include <qospolicy/avb/FramesizeQoSPolicy.h>
 #include <qospolicy/avb/IntervalFramesQoSPolicy.h>
 #include <qospolicy/avb/SRClassQoSPolicy.h>
@@ -49,11 +35,17 @@
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/Ethernet.h>
 #include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
+#include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
 
 namespace soqosmw {
 using namespace inet;
 using namespace CoRE4INET;
+using namespace SignalsAndGateways;
 using namespace std;
+
+
+#define MY_INIT_STAGE_FIRST 1
+#define MY_INIT_STAGE_FINAL 14
 
 simsignal_t GWSourceAppBase::sigPayload = registerSignal("payloadSignal");
 
@@ -78,29 +70,47 @@ size_t GWSourceAppBase::getPayloadBytes() {
     return this->_payload;
 }
 
-void GWSourceAppBase::initialize() {
-    SOQoSMWApplicationBase::initialize();
-    handleParameterChange(nullptr);
-
-    if (getPayloadBytes()
-            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
-                    - ETHER_8021Q_TAG_BYTES)) {
-        _framesize = MIN_ETHERNET_FRAME_BYTES;
-    } else {
-        _framesize =
-                getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
-    }
-
-    if (isEnabled()) {
-        scheduleAt(simTime() + par("startTime").doubleValue(),
-                new cMessage(START_MSG_NAME));
-        if (getEnvir()->isGUI()) {
-            getDisplayString().setTagArg("i2", 0, "status/asleep");
+void GWSourceAppBase::initialize(int stage) {
+    switch(stage){
+    case MY_INIT_STAGE_FIRST:
+        SOQoSMWApplicationBase::initialize();
+        handleParameterChange(nullptr);
+        if (getPayloadBytes()
+                <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
+                        - ETHER_8021Q_TAG_BYTES)) {
+            _framesize = MIN_ETHERNET_FRAME_BYTES;
+        } else {
+            _framesize =
+                    getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
         }
-    } else {
-        if (getEnvir()->isGUI()) {
-            getDisplayString().setTagArg("i2", 0, "status/stop");
+        break;
+
+    case MY_INIT_STAGE_FINAL:
+        //get the EthernetGatewayApp to connect to it
+        if(EthernetGatewayApplication* gwApp = dynamic_cast<EthernetGatewayApplication*>(this->getParentModule()->getSubmodule("gatewayApp"))) {
+            //register CAN IDs to listen to
+            for(vector<int>::iterator id = _canIds.begin(); id != _canIds.end(); id++){
+                gwApp->registerForCANID(*id, this->gate("gwIn"));
+            }
+        } else {
+            throw cRuntimeError("Service GWSourceApp can not find EthernetGatewayApplication under the name \"gatewayApp\"");
         }
+
+        //schedule service registration
+        if (isEnabled()) {
+            scheduleAt(simTime() + par("startTime").doubleValue(),
+                    new cMessage(START_MSG_NAME));
+            if (getEnvir()->isGUI()) {
+                getDisplayString().setTagArg("i2", 0, "status/asleep");
+            }
+        } else {
+            if (getEnvir()->isGUI()) {
+                getDisplayString().setTagArg("i2", 0, "status/stop");
+            }
+        }
+        break;
+    default:
+        break;
     }
 }
 
@@ -139,6 +149,13 @@ void GWSourceAppBase::handleParameterChange(const char* parname) {
                     getFullPath().c_str(), par("srClass").stringValue());
         }
     }
+    if(!parname || !strcmp(parname, "canIds")){
+        if (par("canIds").stdstringValue() != "") {
+            //parse and add to cache
+            cStringTokenizer dataFrameIDsTokenizer(par("canIds"), ",");
+            _canIds = dataFrameIDsTokenizer.asIntVector();
+        }
+    }
     if (!parname || !strcmp(parname, "streamID")) {
         this->_streamID = parameterULongCheckRange(par("streamID"), 0,
                 MAX_STREAM_ID);
@@ -161,15 +178,16 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
 //        scheduleAt(simTime() + (this->_interval / this->_intervalFrames),
 //                new cMessage(SEND_MSG_NAME));
         delete msg;
-    }  else if(msg->arrivedOn("upperLayerIn")){
+    }  else if(msg->arrivedOn("gwIn")){
+        //msg is from gateway
         if (_writer) {
             SignalsAndGateways::GatewayAggregationMessage* gwam = dynamic_cast<SignalsAndGateways::GatewayAggregationMessage*>(msg);
             if(gwam){
                 _writer->write(gwam);
+                EV_DEBUG << _serviceName << ": Message Published." << endl;
             } else {
                 delete msg;
             }
-            EV_DEBUG << _serviceName << ": Message Published." << endl;
 
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");

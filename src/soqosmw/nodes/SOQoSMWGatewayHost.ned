@@ -17,6 +17,7 @@ package soqosmw.nodes;
 
 import signalsandgateways.gateway.GatewayBase;
 import signalsandgateways.applications.can.CanGatewayNode;
+import signalsandgateways.applications.ethernet.EthernetGatewayApplication;
 
 module SOQoSMWGatewayHost extends SOQoSMWHost
 {
@@ -32,6 +33,11 @@ module SOQoSMWGatewayHost extends SOQoSMWHost
         inout cang[countOfCanBusses];
     
      submodules:
+     	//Application for the ethernet node in the gateway
+        gatewayApp: EthernetGatewayApplication {
+            @display("p=282,37");
+        }
+         
         //bus module
         can[countOfCanBusses]: CanGatewayNode {
             @display("p=369,100,c,130");
@@ -39,7 +45,7 @@ module SOQoSMWGatewayHost extends SOQoSMWHost
         //gateway module
         gateway: GatewayBase {
             @display("p=224,100");
-            numPorts = countOfCanBusses + countOfEthernetPorts;
+            numPorts = countOfCanBusses + countOfEthernetPorts + numServices;
         }
         
     connections:
@@ -48,10 +54,12 @@ module SOQoSMWGatewayHost extends SOQoSMWHost
         	can[i].upperLayerIn <-- gateway.lowerLayerOut++;
        		can[i].gate <--> cang[i];
         }
+        
+        gatewayApp.upperLayerOut --> gateway.lowerLayerIn++;
+        gatewayApp.upperLayerIn <-- gateway.lowerLayerOut++;
+        
     	for i=0..numServices-1 {
             services[i].upperLayerOut --> gateway.lowerLayerIn++;
             services[i].upperLayerIn <-- gateway.lowerLayerOut++;
         }
-    	
-    
 }

@@ -22,6 +22,7 @@
 #include <stddef.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include <core4inet/base/avb/AVBDefs.h>
 
 namespace soqosmw {
@@ -34,6 +35,8 @@ namespace soqosmw {
 
 #define START_MSG_NAME "Start Message"
 #define SEND_MSG_NAME "Send Message"
+
+#define NO_OF_INIT_STAGES 15
 
 /**
  * @brief Base class for a soqosmw publisher application.
@@ -73,6 +76,11 @@ private:
      * Caches QoS Policy parameters
      */
     std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
+
+    /**
+     * Cachees the canIDs handled in this gateway app
+     */
+    std::vector<int> _canIds;
 
     /**
      * Caches the start time parameter
@@ -124,10 +132,14 @@ protected:
      */
     static simsignal_t sigPayload;
 
+
     /**
      * Initialization of the module. Sends activator message
      */
-    virtual void initialize();
+    virtual void initialize(int stage) override;
+    virtual int numInitStages() const override {
+        return NO_OF_INIT_STAGES;
+    }
 
     /**
      * This method should be called from subclasses unless the module

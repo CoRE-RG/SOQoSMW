@@ -1,5 +1,6 @@
 <services>
-	<service name="ReifendruckPublisher" node="GatewaySource" />
+	<service name="Reifendruck100Publisher" node="GatewaySource" />
+	<service name="Reifendruck2Publisher" node="GatewaySource" />
 	<service name="ActiveSafetyGW" node="GatewaySink" />
 	<service name="InfotainmentSystem" node="InfotainmentSystem" />
 </services>
