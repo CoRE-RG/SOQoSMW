@@ -41,6 +41,9 @@ simple GWSourceAppBase extends SOQoSMWApplicationBase
         // Stream Reservation Class of the AVB Stream
         string srClass = default("A");
         
+        //The CAN Data Frame ID(s) - String parameter (int) separated with commas
+        string canIds = default("");		
+        
         @signal[payloadSignal];
     
     	//Service Description
@@ -48,5 +51,7 @@ simple GWSourceAppBase extends SOQoSMWApplicationBase
     	
     	//Type of connection if connectionbased or connectionless
     	string connectionType = default("connectionbased");
+	gates:
+	    input gwIn;
     
 }
