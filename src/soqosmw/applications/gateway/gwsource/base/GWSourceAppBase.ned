@@ -49,8 +49,8 @@ simple GWSourceAppBase extends SOQoSMWApplicationBase
     	//Service Description
     	string serviceName = default("PublisherService");
     	
-    	//Type of connection if connectionbased or connectionless
-    	string connectionType = default("connectionbased");
+    	//QoS Group STD_TCP and STD_UDP
+    	string qosGroup = default("STD_TCP");
 	gates:
 	    input gwIn;
     

@@ -45,8 +45,6 @@ simple GWSinkAppBase extends SOQoSMWApplicationBase
         string publisherName = default("PublisherService");
         
         string qosGroup = default("STD_TCP"); //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
-
-        string connectionType = default("connectionbased");
 	
 	gates:
 	    input AVBin;

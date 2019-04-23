@@ -47,6 +47,6 @@ simple PublisherAppBase extends SOQoSMWApplicationBase
     	string serviceName = default("PublisherService");
     	
     	//Connection type {connectionbased, connectionless}
-    	string connectionType = default("connectionbased");
+    	string qosGroup = default("STD_TCP");
     
 }

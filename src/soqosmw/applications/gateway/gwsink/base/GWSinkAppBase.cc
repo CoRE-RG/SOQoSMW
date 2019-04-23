@@ -121,10 +121,10 @@ void GWSinkAppBase::notify(cPacket* msg) {
 void GWSinkAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
-    std::string connectiontype = par("connectionType").stdstringValue();
-    if(connectiontype == "connectionbased") {
+    std::string qosGroup = par("qosGroup").stdstringValue();
+    if(qosGroup == "STD_TCP") {
             _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
-    } else if(connectiontype == "connectionless") {
+    } else if(qosGroup == "STD_UDP") {
             _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
     } else {
         cRuntimeError("Not a valid connection type");

@@ -194,11 +194,11 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 }
 
 void PublisherAppBase::setQoS() {
-    std::string connectiontype = par("connectionType").stdstringValue();
-    if(connectiontype == "connectionbased") {
+    std::string qosGroup = par("qosGroup").stdstringValue();
+    if(qosGroup == "STD_TCP") {
         _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
         _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
-    } else if(connectiontype == "connectionless") {
+    } else if(qosGroup == "STD_UDP") {
         _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_UDP);
         _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
     } else {
