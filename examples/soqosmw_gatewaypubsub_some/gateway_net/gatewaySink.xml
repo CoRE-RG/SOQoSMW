@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE config SYSTEM "../../src/gateway/signalsandgateways/GatewayConfig.dtd">-->
+<config>
+	<gateway id="GatewaySink">
+	    <routing>
+			<route source="1" destination="0">
+				<avbframe streamId="47"/>
+			</route>
+		</routing>
+		
+		<transformation destination="0" type="toCan">
+			<avbframe streamId="47"/>
+		</transformation>
+
+	</gateway>
+</config>
