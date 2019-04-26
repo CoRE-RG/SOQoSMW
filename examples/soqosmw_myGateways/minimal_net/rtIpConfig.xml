@@ -56,16 +56,11 @@
 	     -->
 	     
 	      
-	<node id="GatewayFahrwerk">
+	<node id="GatewayLicht">
 	</node>
 	
 	
-	<node id="GatewayFahrdynamik">
+	<node id="GatewaySteuerung">
 	</node>
-	
-	
-	<node id="InfotainmentSystem">
-	</node>
-	 
 	
 </rtIpConfig>

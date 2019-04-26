@@ -52,12 +52,12 @@ network gateway_net
         }
 
         //GATEWAYS
-        GatewaySource: SOQoSMWGatewayHost {
-            @display("p=222,210;i=block/source;is=l");
+        GatewayFahrwerk: SOQoSMWGatewayHost {
+            @display("p=222,210;i=block/transport;is=l");
         }
 
-        GatewaySink: SOQoSMWGatewayHost {
-            @display("p=511,210;i=block/sink,#FF8080;is=l");
+        GatewayFahrdynamik: SOQoSMWGatewayHost {
+            @display("p=511,210;i=block/transport;is=l");
         }
 
         //ETH
@@ -80,15 +80,15 @@ network gateway_net
         Fahrwerk.gate++ <--> Reifen[0].gate;
         Fahrwerk.gate++ <--> Reifen[1].gate;
         Fahrwerk.gate++ <--> Reifen[2].gate;
-        GatewaySource.cang[0] <--> Fahrwerk.gate++;
+        GatewayFahrwerk.cang[0] <--> Fahrwerk.gate++;
 
         Fahrdynamik.gate++ <--> Controller[0].gate;
         Fahrdynamik.gate++ <--> Controller[1].gate;
         Fahrdynamik.gate++ <--> Controller[2].gate;
-        GatewaySink.cang[0] <--> Fahrdynamik.gate++;
+        GatewayFahrdynamik.cang[0] <--> Fahrdynamik.gate++;
 
 
-        GatewaySource.ethg <--> Eth100M {  length = 20m; } <--> ethswitch.ethg[0];
-        GatewaySink.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[1];
+        GatewayFahrwerk.ethg <--> Eth100M {  length = 20m; } <--> ethswitch.ethg[0];
+        GatewayFahrdynamik.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[1];
         InfotainmentSystem.ethg <--> Eth100M {  length = 5m; } <--> ethswitch.ethg[2];
 }

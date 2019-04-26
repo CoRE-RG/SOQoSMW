@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<!DOCTYPE config SYSTEM "../../src/gateway/signalsandgateways/GatewayConfig.dtd">-->
 <config>
-	<gateway id="GatewaySink">
+	<gateway id="GatewayFahrdynamik">
 	    <routing>
 			<route source="1" destination="0">
 				<avbframe streamId="47"/>

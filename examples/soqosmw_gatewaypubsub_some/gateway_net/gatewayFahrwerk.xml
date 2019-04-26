@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<!DOCTYPE config SYSTEM "../../src/signalsandgateways/gateway/GatewayConfig.dtd">-->
 <config>
-	<gateway id="GatewaySource">
+	<gateway id="GatewayFahrwerk">
 		<routing>
 			<route source="0" destination="1">
 				<canframe canId="2"/>
-			</route>
-			<route source="0" destination="1">
 				<canframe canId="100"/>
-			</route>
-			<route source="0" destination="1">
 				<canframe canId="101"/>
 			</route>
 		</routing>

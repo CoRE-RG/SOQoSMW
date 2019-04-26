@@ -1,0 +1,4 @@
+<services>
+	<service name="ScheinwerferPublisher" node="GatewayLicht" />
+	<service name="ScheinwerferSubscriber" node="GatewaySteuerung" />
+</services>
