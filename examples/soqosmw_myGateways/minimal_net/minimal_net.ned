@@ -59,10 +59,14 @@ network minimal_net
         }
 
         //ETH
+        InfotainmentSystem: SOQoSMWHost {
+            @display("p=277,106;i=device/server");
+        }
+
         ethswitch: TTEAVBEtherSwitch {
             @display("p=277,280");
             gates:
-                ethg[2];
+                ethg[3];
         }
 
     connections:
@@ -74,4 +78,5 @@ network minimal_net
 
         GatewayLicht.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[0];
         GatewaySteuerung.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[1];
+        InfotainmentSystem.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[2];
 }

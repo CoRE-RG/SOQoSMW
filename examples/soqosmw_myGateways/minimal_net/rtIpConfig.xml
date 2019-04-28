@@ -63,4 +63,7 @@
 	<node id="GatewaySteuerung">
 	</node>
 	
+	<node id="InfotainmentSystem">
+	</node>
+	
 </rtIpConfig>
