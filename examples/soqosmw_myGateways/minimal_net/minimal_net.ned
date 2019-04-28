@@ -30,14 +30,14 @@ network minimal_net
 {
     submodules:
         //CAN
-        Scheinwerfer[4]: CanNode {
+        Scheinwerfer: CanNode {
             @display("p=118,53");
         }
         Licht: CanBus {
             @display("i=block/network;p=118,155");
         }
 
-        Lichtregulierung[4]: CanNode {
+        Lichtregulierung: CanNode {
             @display("p=416,53");
         }
         Steuerung: CanBus {
@@ -66,16 +66,10 @@ network minimal_net
         }
 
     connections:
-        Licht.gate++ <--> Scheinwerfer[0].gate;
-        Licht.gate++ <--> Scheinwerfer[1].gate;
-        Licht.gate++ <--> Scheinwerfer[2].gate;
-        Licht.gate++ <--> Scheinwerfer[3].gate;
+        Licht.gate++ <--> Scheinwerfer.gate;
         Licht.gate++ <--> GatewayLicht.cang[0];
 
-        Steuerung.gate++ <--> Lichtregulierung[0].gate;
-        Steuerung.gate++ <--> Lichtregulierung[1].gate;
-        Steuerung.gate++ <--> Lichtregulierung[2].gate;
-        Steuerung.gate++ <--> Lichtregulierung[3].gate;
+        Steuerung.gate++ <--> Lichtregulierung.gate;
         Steuerung.gate++ <--> GatewaySteuerung.cang[0];
 
         GatewayLicht.ethg <--> Eth100M {  length = 10m; } <--> ethswitch.ethg[0];
