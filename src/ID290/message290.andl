@@ -1,0 +1,60 @@
+settings {
+	tteScheduling false;
+	rootPackage "soqosmw.simulations";
+}
+
+
+
+network network290 {
+	devices {
+		node canNode64;
+		node canNode37;
+		node canNode38;
+		canLink canbusSenders;
+		canLink canbusReceivers;
+		switch mainSwitch {
+			hardwareDelay 8us;
+		}
+		gateway gatewaySenders;
+		gateway gatewayReceivers;
+		ethernetLink ethernetSenders {
+			bandwidth 100Mb/s;
+			length 10m;
+		}
+		ethernetLink ethernetReceivers {
+			bandwidth 100Mb/s;
+			length 10m;
+		}
+	}
+
+
+	connections {
+		segment backbone {
+			gatewaySenders <--> ethernetSenders <--> mainSwitch;
+			gatewayReceivers <--> ethernetReceivers <--> mainSwitch;
+		}
+		segment canBus {
+			gatewaySenders <--> canbusSenders;
+			canNode64 <--> canbusSenders;
+			gatewayReceivers <--> canbusReceivers;
+			canNode37 <--> canbusReceivers;
+			canNode38 <--> canbusReceivers;
+			
+		}
+	}
+
+
+	communication {
+		message canmsg290 {
+			period 20ms;
+			sender canNode64;
+			receivers canNode37, canNode38;
+			payload 8B;
+			mapping {
+				canBus : can{ id 290; };
+				gatewaySenders; 
+				backbone: be;
+				gatewayReceivers;}
+		}
+	}
+}

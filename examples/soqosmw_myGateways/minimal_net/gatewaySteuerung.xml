@@ -3,7 +3,7 @@
 <config>
 	<gateway id="GatewaySteuerung">
 	    <routing>
-			<route source="1" destination="0">
+			<route source="2" destination="0">
 				<avbframe streamId="47"/>
 			</route>
 		</routing>
