@@ -1,0 +1,71 @@
+# Notwendige Änderungen zu ANDL für SOQOSMW Kompaibilität #
+---------------------------------
+
+- ANDL: inline ini code für das 'gateway'
+------------------------------------------
+...
+
+gateway GatewayLicht {
+    inline ini config General {
+```
+**.GatewayLicht.localAddress = "GatewayLicht"
+**.GatewayLicht.numServices = 1
+**.GatewayLicht.services[0].typename = "GWSourceAppBase"
+**.GatewayLicht.services[0].serviceName = "ScheinwerferPublisher"
+**.GatewayLicht.services[0].streamID = 47
+**.GatewayLicht.services[0].canIds = "100"
+**.GatewayLicht.services[0].applicationTCPPort = 5464
+**.GatewayLicht.services[0].applicationUDPPort = 5464
+**.GatewayLicht.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='GatewayLicht']")
+```
+    }
+}
+
+...
+
+
+- GATEWAY.INI: Mehrere Änderungen, s.u.
+----------------------------------------
+MAC Adresse: **.GatewayLicht.tte[0].phy[0].mac.address = "67-75-2F-39-50-FD"
+        ---> **.GatewayLicht.phy[0].mac.address = "67-75-2F-39-50-FD"
+
+Zeilen entfernen: **.GatewayLicht.tte[0].numberOfRC_Vlinks = 0
+                  **.GatewayLicht.tte[0].numberOfTT_Vlinks = 0
+                  **.GatewayLicht.tte[0].bgIn.destination_gates = "gatewayApp.in"
+                  **.GatewayLicht.tte[0].gatewayApp.buffers = "bgOut"
+
+
+- GATEWAY.XML: transformation Element
+---------------------------------------------
+        <transformation destination="1" type="toEthernet">
+            <ethernetframe dst="D5-96-08-08-B1-DF">
+                <canframe canId="100"/>
+            </ethernetframe>
+        </transformation>
+
+--->    <transformation destination="1" type="toMisc">
+            <rawdata id="100">
+                <canframe canId="100"/>
+            </rawdata>
+        </transformation>
+
+
+- GATEWAY.NED: ned files der Gateways löschen
+----------------------------------------------
+Die ned files der Gateways werden nicht gebraucht.
+
+
+- NED: Import für SOQoSMWGatewayHost hinzufügen
+------------------------------------------------
+import soqosmw.nodes.SOQoSMWGatewayHost;
+
+
+- NED: Gateway mit SOQoSMWGatewayHost instanziieren
+----------------------------------------------------
+GatewayLicht: SOQoSMWGatewayHost
+
+
+- NED: Gateway ethernet gate ist kein Vektor
+---------------------------------------------
+     GatewayLicht.ethg[0]
+---> GatewayLicht.ethg
