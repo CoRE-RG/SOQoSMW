@@ -21,6 +21,21 @@ network minimal_net_soqosmw {
 	devices {
 		node Scheinwerfer;
 		node Lichtregulierung;
+		node Infotainment { 
+			inline ini config General {
+```
+**.Infotainment.localAddress = "Infotainment"
+**.Infotainment.numServices = 1
+**.Infotainment.services[0].typename = "SubscriberAppBase"
+**.Infotainment.services[0].subscriberName = "Infotainment"
+**.Infotainment.services[0].publisherName = "ScheinwerferPublisher"
+**.Infotainment.services[0].qosGroup = "STD_UDP"
+**.Infotainment.services[0].applicationTCPPort = 7454
+**.Infotainment.services[0].applicationUDPPort = 7454
+**.Infotainment.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Infotainment']")
+```         
+            }
+		}
 		canLink Licht;
 		canLink Steuerung;
 		switch mainSwitch {
@@ -62,6 +77,7 @@ network minimal_net_soqosmw {
 		segment backbone {
 			GatewayLicht <--> { new std.ETH_100MBIT } <--> mainSwitch;
 			GatewaySteuerung <--> { new std.ETH_100MBIT } <--> mainSwitch;
+			Infotainment <--> { new std.ETH_100MBIT} <--> mainSwitch;
 		}
 		segment canbus {
 			GatewayLicht <--> Licht;
@@ -76,7 +92,7 @@ network minimal_net_soqosmw {
 		message luminosity {
 			period 20ms;
 			sender Scheinwerfer;
-			receivers Lichtregulierung;
+			receivers Lichtregulierung, Infotainment;
 			payload 8B;
 			mapping {
 				canbus : can { id 100; };

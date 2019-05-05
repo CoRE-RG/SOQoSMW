@@ -159,7 +159,6 @@ Zeilen entfernen: **.GatewaySteuerung.tte[0].numberOfRC_Vlinks = 0
 -----------------------------------------------
 Die ned files der Gateways werden nicht gebraucht.
 
-
 ###########################################
 ################ Allgemein ################
 ###########################################
@@ -191,3 +190,54 @@ import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 
 configurator: IPv4NetworkConfigurator {
 }
+
+###########################################
+############ SubscriberAppBase ############
+###########################################
+
+----------------------------------------
+- ANDL: inline ini code für eth 'node' -
+----------------------------------------
+...
+node Infotainment { 
+  inline ini config General {
+```
+**.Infotainment.localAddress = "Infotainment"
+**.Infotainment.numServices = 1
+**.Infotainment.services[0].typename = "SubscriberAppBase"
+**.Infotainment.services[0].subscriberName = "Infotainment"
+**.Infotainment.services[0].publisherName = "ScheinwerferPublisher"
+**.Infotainment.services[0].qosGroup = "STD_UDP"
+**.Infotainment.services[0].applicationTCPPort = 7454
+**.Infotainment.services[0].applicationUDPPort = 7454
+**.Infotainment.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Infotainment']")
+```         
+        }
+}
+...
+
+------------------------------------------
+- NED: Import für SOQoSMWHost hinzufügen -
+------------------------------------------
+import soqosmw.nodes.SOQoSMWHost;
+
+----------------------------------------------
+- NED: Gateway mit SOQoSMWHost instanziieren -
+----------------------------------------------
+Infotainment: SOQoSMWHost
+
+----------------------------------------------
+- RTIPCONFIG.XML: Knoten und Hosts eintragen -
+----------------------------------------------
+<node id="Infotainment">
+</node>
+
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<service name="Infotainment" node="Infotainment" />
+
+-------------------------------------------
+- SUBSCRIBERAPPBASE.NED: ned file löschen -
+-------------------------------------------
+Das ned file der SubscriberAppBase löschen
