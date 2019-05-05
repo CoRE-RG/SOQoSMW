@@ -1,8 +1,13 @@
 # Notwendige Änderungen zu ANDL für SOQOSMW Kompaibilität #
----------------------------------
+-----------------------------------------------------------
 
-- ANDL: inline ini code für das 'gateway'
-------------------------------------------
+###########################################
+############# GWSourceAppBase #############
+###########################################
+
+-------------------------------------------
+- ANDL: inline ini code für das 'gateway' -
+-------------------------------------------
 ...
 
 gateway GatewayLicht {
@@ -23,9 +28,25 @@ gateway GatewayLicht {
 
 ...
 
+-------------------------------------------------
+- NED: Import für SOQoSMWGatewayHost hinzufügen -
+-------------------------------------------------
+import soqosmw.nodes.SOQoSMWGatewayHost;
 
-- GATEWAY.INI: Mehrere Änderungen, s.u.
-----------------------------------------
+-----------------------------------------------------
+- NED: Gateway mit SOQoSMWGatewayHost instanziieren -
+-----------------------------------------------------
+GatewayLicht: SOQoSMWGatewayHost
+
+----------------------------------------------
+- NED: Gateway ethernet gate ist kein Vektor -
+----------------------------------------------
+     GatewayLicht.ethg[0]
+---> GatewayLicht.ethg
+
+-----------------------------------------
+- GATEWAY.INI: Mehrere Änderungen, s.u. -
+-----------------------------------------
 MAC Adresse: **.GatewayLicht.tte[0].phy[0].mac.address = "67-75-2F-39-50-FD"
         ---> **.GatewayLicht.phy[0].mac.address = "67-75-2F-39-50-FD"
 
@@ -34,9 +55,9 @@ Zeilen entfernen: **.GatewayLicht.tte[0].numberOfRC_Vlinks = 0
                   **.GatewayLicht.tte[0].bgIn.destination_gates = "gatewayApp.in"
                   **.GatewayLicht.tte[0].gatewayApp.buffers = "bgOut"
 
-
-- GATEWAY.XML: transformation Element
----------------------------------------------
+---------------------------------------
+- GATEWAY.XML: transformation Element -
+---------------------------------------
         <transformation destination="1" type="toEthernet">
             <ethernetframe dst="D5-96-08-08-B1-DF">
                 <canframe canId="100"/>
@@ -49,23 +70,124 @@ Zeilen entfernen: **.GatewayLicht.tte[0].numberOfRC_Vlinks = 0
             </rawdata>
         </transformation>
 
-
-- GATEWAY.NED: ned files der Gateways löschen
-----------------------------------------------
+-----------------------------------------------
+- GATEWAY.NED: ned files der Gateways löschen -
+-----------------------------------------------
 Die ned files der Gateways werden nicht gebraucht.
 
 
-- NED: Import für SOQoSMWGatewayHost hinzufügen
-------------------------------------------------
+###########################################
+############## GWSinkAppBase ##############
+###########################################
+
+-------------------------------------------
+- ANDL: inline ini code für das 'gateway' -
+-------------------------------------------
+...
+
+gateway GatewaySteuerung {
+      inline ini config General {
+```
+**.GatewaySteuerung.localAddress = "GatewaySteuerung"
+**.GatewaySteuerung.numServices = 1
+**.GatewaySteuerung.services[0].typename = "GWSinkAppBase"
+**.GatewaySteuerung.services[0].subscriberName = "ScheinwerferSubscriber"
+**.GatewaySteuerung.services[0].publisherName = "ScheinwerferPublisher"
+**.GatewaySteuerung.services[0].qosGroup = "RT"
+**.GatewaySteuerung.services[0].applicationTCPPort = 7346
+**.GatewaySteuerung.services[0].applicationUDPPort = 7346
+**.GatewaySteuerung.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='GatewaySteuerung']")
+```
+        }
+}
+
+...
+
+-------------------------------------------------
+- NED: Import für SOQoSMWGatewayHost hinzufügen -
+-------------------------------------------------
 import soqosmw.nodes.SOQoSMWGatewayHost;
 
+-----------------------------------------------------
+- NED: Gateway mit SOQoSMWGatewayHost instanziieren -
+-----------------------------------------------------
+GatewaySteuerung: SOQoSMWGatewayHost
 
-- NED: Gateway mit SOQoSMWGatewayHost instanziieren
-----------------------------------------------------
-GatewayLicht: SOQoSMWGatewayHost
+----------------------------------------------
+- NED: Gateway ethernet gate ist kein Vektor -
+----------------------------------------------
+     GatewaySteuerung.ethg[0]
+---> GatewaySteuerung.ethg
+
+-----------------------------------------
+- GATEWAY.INI: Mehrere Änderungen, s.u. -
+-----------------------------------------
+MAC Adresse: **.GatewaySteuerung.tte[0].phy[0].mac.address = "4F-34-99-2E-66-36"
+        ---> **.GatewaySteuerung.phy[0].mac.address = "4F-34-99-2E-66-36"
+
+Zeilen entfernen: **.GatewaySteuerung.tte[0].numberOfRC_Vlinks = 0
+                  **.GatewaySteuerung.tte[0].numberOfTT_Vlinks = 0
+                  **.GatewaySteuerung.tte[0].bgIn.destination_gates = "gatewayApp.in"
+                  **.GatewaySteuerung.tte[0].gatewayApp.buffers = "bgOut"
+
+------------------------------------------
+- GATEWAY.XML: Mehrere Änderungen (s.u.) -
+------------------------------------------
+      <routing>
+        <route source="1" destination="0">
+          <ethernetframe dst="4F-34-99-2E-66-36"/>
+        </route>
+      </routing>
+
+--->  <routing>
+        <route source="2" destination="0">
+          <avbframe streamId="47"/>
+        </route>
+      </routing>
+...
+      <transformation destination="0" type="toCan">
+        <ethernetframe dst="4F-34-99-2E-66-36"/>
+      </transformation>
+
+--->  <transformation destination="0" type="toCan">
+        <avbframe streamId="47"/>
+      </transformation>
 
 
-- NED: Gateway ethernet gate ist kein Vektor
----------------------------------------------
-     GatewayLicht.ethg[0]
----> GatewayLicht.ethg
+-----------------------------------------------
+- GATEWAY.NED: ned files der Gateways löschen -
+-----------------------------------------------
+Die ned files der Gateways werden nicht gebraucht.
+
+
+###########################################
+################ Allgemein ################
+###########################################
+
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<services>
+  <service name="ScheinwerferPublisher" node="GatewayLicht" />
+  <service name="ScheinwerferSubscriber" node="GatewaySteuerung" />
+</services>
+
+----------------------------------------------
+- RTIPCONFIG.XML: Knoten und Hosts eintragen -
+----------------------------------------------
+<rtIpConfig>
+  <node id="GatewayLicht">
+  </node>
+  
+  
+  <node id="GatewaySteuerung">
+  </node>
+</rtIpConfig>
+
+-------------------------------------------
+- NED: IPv4NetworkConfigurator hinzufügen -
+-------------------------------------------
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+
+configurator: IPv4NetworkConfigurator {
+}

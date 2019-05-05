@@ -41,7 +41,21 @@ network minimal_net_soqosmw {
 ```
             }
         }
-		gateway GatewaySteuerung;
+		gateway GatewaySteuerung {
+			inline ini config General {
+```
+**.GatewaySteuerung.localAddress = "GatewaySteuerung"
+**.GatewaySteuerung.numServices = 1
+**.GatewaySteuerung.services[0].typename = "GWSinkAppBase"
+**.GatewaySteuerung.services[0].subscriberName = "ScheinwerferSubscriber"
+**.GatewaySteuerung.services[0].publisherName = "ScheinwerferPublisher"
+**.GatewaySteuerung.services[0].qosGroup = "RT"
+**.GatewaySteuerung.services[0].applicationTCPPort = 7346
+**.GatewaySteuerung.services[0].applicationUDPPort = 7346
+**.GatewaySteuerung.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='GatewaySteuerung']")
+```
+            }
+		}
 	}
 	
 	connections {
