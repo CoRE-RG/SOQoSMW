@@ -300,3 +300,11 @@ Radio: SOQoSMWHost
 - PUBLISHERAPPBASE.NED: ned file löschen -
 -------------------------------------------
 Das ned file der PublisherAppBase löschen
+
+
+##########################################
+############### Generierung ##############
+##########################################
+
+In der ini kann **.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+geschrieben werden, wodurch das Eintragen des nodes in die rtIpConfig entfällt.

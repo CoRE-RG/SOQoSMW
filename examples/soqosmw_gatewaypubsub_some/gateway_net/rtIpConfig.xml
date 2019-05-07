@@ -55,10 +55,10 @@
 	     	Each subscribe element has one single "streamId" attribute which defines the stream Id to subscribe to.
 	     -->
 	     
-	      
+	<!--      
 	<node id="GatewayFahrwerk">
 	</node>
-	
+	-->
 	
 	<node id="GatewayFahrdynamik">
 	</node>
