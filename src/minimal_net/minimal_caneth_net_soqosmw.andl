@@ -136,10 +136,16 @@ network minimal_net_soqosmw {
 	    }
 	    
 	    service klaus {
-	    	publisher node1
-	    	subscriber node1, node2, node3
+	    	publisher node1;
+	    	subscriber node2;
+	    	canIds 100;
 	    	
-	    	
+	    }
+	    
+	    service klaus2 {
+	    	publisher node1;
+	    	subscriber node2, node3, node4;
+	    	canIds 101, 102;
 	    }
 	}
 }
