@@ -1,0 +1,344 @@
+# ANDL Examples #
+-----------------
+
+###########################################
+############ SubscriberAppBase ############
+###########################################
+
+--------
+- Ziel -
+--------
+
+[General]
+network = minimal_net_soqosmw
+
+**.Infotainment.phy[*].mac.address = "D5-A0-51-47-41-22"
+
+**.Infotainment.localAddress = "Infotainment"
+**.Infotainment.numServices = 2
+**.Infotainment.services[0].typename = "SubscriberAppBase"
+**.Infotainment.services[0].subscriberName = "Infotainment"
+**.Infotainment.services[0].publisherName = "ScheinwerferPublisher"
+**.Infotainment.services[0].qosGroup = "STD_UDP"
+**.Infotainment.services[0].applicationTCPPort = 7454
+**.Infotainment.services[0].applicationUDPPort = 7454
+
+
+**.Infotainment.services[1].typename = "SubscriberAppBase"
+**.Infotainment.services[1].subscriberName = "Music"
+**.Infotainment.services[1].publisherName = "RadioPublisher"
+**.Infotainment.services[1].qosGroup = "STD_UDP"
+**.Infotainment.services[1].applicationTCPPort = 9645
+**.Infotainment.services[1].applicationUDPPort = 9645
+**.Infotainment.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Infotainment']")
+
+------------------
+- Bisherige ANDL -
+------------------
+
+node Infotainment { 
+            inline ini config General {
+```
+**.Infotainment.localAddress = "Infotainment"
+**.Infotainment.numServices = 2
+**.Infotainment.services[0].typename = "SubscriberAppBase"
+**.Infotainment.services[0].subscriberName = "Infotainment"
+**.Infotainment.services[0].publisherName = "ScheinwerferPublisher"
+**.Infotainment.services[0].qosGroup = "STD_UDP"
+**.Infotainment.services[0].applicationTCPPort = 7454
+**.Infotainment.services[0].applicationUDPPort = 7454
+
+**.Infotainment.services[1].typename = "SubscriberAppBase"
+**.Infotainment.services[1].subscriberName = "Music"
+**.Infotainment.services[1].publisherName = "Radio"
+**.Infotainment.services[1].qosGroup = "STD_UDP"
+**.Infotainment.services[1].applicationTCPPort = 9645
+**.Infotainment.services[1].applicationUDPPort = 9645
+**.Infotainment.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Infotainment']")
+```         
+            }
+}
+
+-------------------
+- Gewünschte ANDL -
+-------------------
+
+node soqosmw subscriber Infotainment {
+    localAddress "Infotainment"
+    service {
+        subscriberName "Infotainment";
+        publisherName "ScheinwerferPublisher";
+        qosGroup udp|tcp;
+        port 7454;
+    }
+
+    service {
+        subscriberName "Music";
+        publisherName "Radio";
+        qosGroup rt|udp|tcp;
+        port 9645;
+    }
+}
+
+
+##########################################
+############ PublisherAppBase ############
+##########################################
+
+--------
+- Ziel -
+--------
+
+[General]
+network = minimal_net_soqosmw
+
+**.Radio.phy[*].mac.address = "C4-84-16-5C-2E-A1"
+
+**.Radio.localAddress = "Radio"
+**.Radio.numServices = 1
+**.Radio.services[0].typename = "PublisherAppBase"
+**.Radio.services[0].serviceName = "RadioPublisher"
+**.Radio.services[0].streamID = 42
+**.Radio.services[0].applicationTCPPort = 4391
+**.Radio.services[0].applicationUDPPort = 4391
+**.Radio.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+
+------------------
+- Bisherige ANDL -
+------------------
+
+node Radio {
+            inline ini config General { 
+```
+**.Radio.localAddress = "Radio"
+**.Radio.numServices = 1
+**.Radio.services[0].typename = "PublisherAppBase"
+**.Radio.services[0].serviceName = "RadioPublisher"
+**.Radio.services[0].streamID = 42
+**.Radio.services[0].applicationTCPPort = 4391
+**.Radio.services[0].applicationUDPPort = 4391
+**.Radio.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+```
+            }
+}
+
+-------------------
+- Gewünschte ANDL -
+-------------------
+
+node soqosmw publisher Radio {
+    localAddress "Radio";
+    service {
+        servicename "RadioPublisher";
+        streamID 42;
+        port 4391;
+    }
+}
+
+#########################################
+############ GWSourceAppBase ############
+#########################################
+
+--------
+- Ziel -
+--------
+
+[General]
+network = minimal_net_soqosmw
+
+**.GatewayLicht.gateway.configXML = xmldoc("GatewayLicht.xml")
+
+
+**.GatewayLicht.countOfCanBusses = 1
+**.GatewayLicht.countOfEthernetPorts = 1
+
+**.GatewayLicht.phy[0].mac.address = "C3-75-D1-EE-DF-34"
+
+# CAN module configuration
+**.GatewayLicht.can[0].bufferIn[0].destination_gates = "sinkApp[0].dataIn"
+**.GatewayLicht.can[0].bufferIn[0].idIncomingFrames = "100"
+
+# Source app for incoming can frames
+
+
+**.GatewayLicht.localAddress = "GatewayLicht"
+**.GatewayLicht.numServices = 1
+**.GatewayLicht.services[0].typename = "GWSourceAppBase"
+**.GatewayLicht.services[0].serviceName = "ScheinwerferPublisher"
+**.GatewayLicht.services[0].streamID = 47
+**.GatewayLicht.services[0].canIds = "100"
+**.GatewayLicht.services[0].applicationTCPPort = 5464
+**.GatewayLicht.services[0].applicationUDPPort = 5464
+**.GatewayLicht.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='GatewayLicht']")
+
+------------------
+- Bisherige ANDL -
+------------------
+
+gateway GatewayLicht {
+            inline ini config General {
+```
+**.GatewayLicht.localAddress = "GatewayLicht"
+**.GatewayLicht.numServices = 1
+**.GatewayLicht.services[0].typename = "GWSourceAppBase"
+**.GatewayLicht.services[0].serviceName = "ScheinwerferPublisher"
+**.GatewayLicht.services[0].streamID = 47
+**.GatewayLicht.services[0].canIds = "100"
+**.GatewayLicht.services[0].applicationTCPPort = 5464
+**.GatewayLicht.services[0].applicationUDPPort = 5464
+**.GatewayLicht.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+```
+            }
+}
+
+-------------------
+- Gewünschte ANDL -
+-------------------
+
+gateway soqosmw publisher GatewayLicht {
+    localAdress "GatewayLicht";
+    service {
+        serviceName "ScheinwerferPublisher";
+        streamID 47;
+        canIds 100;
+        port 5464;
+    }
+}
+
+#########################################
+############# GWSinkAppBase #############
+#########################################
+
+--------
+- Ziel -
+--------
+
+[General]
+network = minimal_net_soqosmw
+
+**.GatewaySteuerung.gateway.configXML = xmldoc("GatewaySteuerung.xml")
+
+
+**.GatewaySteuerung.countOfCanBusses = 1
+**.GatewaySteuerung.countOfEthernetPorts = 1
+
+**.GatewaySteuerung.phy[0].mac.address = "F6-07-1C-55-78-E1"
+
+# CAN module configuration
+# Source app for incoming can frames
+**.GatewaySteuerung.can[0].sourceApp[0].idDataFrames = "100"
+**.GatewaySteuerung.can[0].sourceApp[0].dataLengthDataFrames = "8"
+**.GatewaySteuerung.can[0].sourceApp[0].periodicityDataFrames = "0.02"
+**.GatewaySteuerung.can[0].sourceApp[0].initialDataFrameOffset = "0.0"
+
+
+**.GatewaySteuerung.localAddress = "GatewaySteuerung"
+**.GatewaySteuerung.numServices = 1
+**.GatewaySteuerung.services[0].typename = "GWSinkAppBase"
+**.GatewaySteuerung.services[0].subscriberName = "ScheinwerferSubscriber"
+**.GatewaySteuerung.services[0].publisherName = "ScheinwerferPublisher"
+**.GatewaySteuerung.services[0].qosGroup = "RT"
+**.GatewaySteuerung.services[0].applicationTCPPort = 7346
+**.GatewaySteuerung.services[0].applicationUDPPort = 7346
+**.GatewaySteuerung.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+
+------------------
+- Bisherige ANDL -
+------------------
+
+gateway GatewaySteuerung {
+    inline ini config General {
+```
+**.GatewaySteuerung.localAddress = "GatewaySteuerung"
+**.GatewaySteuerung.numServices = 1
+**.GatewaySteuerung.services[0].typename = "GWSinkAppBase"
+**.GatewaySteuerung.services[0].subscriberName = "ScheinwerferSubscriber"
+**.GatewaySteuerung.services[0].publisherName = "ScheinwerferPublisher"
+**.GatewaySteuerung.services[0].qosGroup = "RT"
+**.GatewaySteuerung.services[0].applicationTCPPort = 7346
+**.GatewaySteuerung.services[0].applicationUDPPort = 7346
+**.GatewaySteuerung.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/")
+```
+    }
+}
+
+-------------------
+- Gewünschte ANDL -
+-------------------
+
+gateway soqosmw subscriber GatewaySteuerung {
+    localAddress "GatewaySteuerung";
+    service {
+        subscriberName "ScheinwerferSubscriber";
+        publisherName "ScheinwerferPublisher";
+        qosGroup rt|udp|tcp;
+        port 7346;
+    }
+}
+
+#########################################
+############## Allgemeines ##############
+#########################################
+
+-------------------------------------------------
+- NED: Import für SOQoSMWGatewayHost hinzufügen -
+-------------------------------------------------
+import soqosmw.nodes.SOQoSMWGatewayHost;
+
+-----------------------------------------------------
+- NED: Gateway mit SOQoSMWGatewayHost instanziieren -
+-----------------------------------------------------
+GatewayLicht: SOQoSMWGatewayHost
+
+-------------------------------------------
+- NED: IPv4NetworkConfigurator hinzufügen -
+-------------------------------------------
+import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
+
+configurator: IPv4NetworkConfigurator {
+}
+
+------------------------------------------------------------------
+- GATEWAY.XML: transformation Element in Source/Publisher ändern -
+------------------------------------------------------------------
+        <transformation destination="1" type="toEthernet">
+            <ethernetframe dst="D5-96-08-08-B1-DF">
+                <canframe canId="100"/>
+            </ethernetframe>
+        </transformation>
+
+--->    <transformation destination="1" type="toMisc">
+            <rawdata id="100">
+                <canframe canId="100"/>
+            </rawdata>
+        </transformation>
+
+--------------------------------------------------------------------
+- GATEWAY.XML: Mehrere Änderungen (s.u.) in Sink/Subscrober ändern -
+--------------------------------------------------------------------
+      <routing>
+        <route source="1" destination="0">
+          <ethernetframe dst="4F-34-99-2E-66-36"/>
+        </route>
+      </routing>
+
+--->  <routing>
+        <route source="2" destination="0">
+          <avbframe streamId="47"/>
+        </route>
+      </routing>
+...
+      <transformation destination="0" type="toCan">
+        <ethernetframe dst="4F-34-99-2E-66-36"/>
+      </transformation>
+
+--->  <transformation destination="0" type="toCan">
+        <avbframe streamId="47"/>
+      </transformation>
+
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<services>
+  <service name=<serviceName|subscriberName> node=<Knotennamen> />
+</services>
