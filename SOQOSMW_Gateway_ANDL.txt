@@ -63,17 +63,15 @@ node Infotainment {
 - Gewünschte ANDL -
 -------------------
 
-node soqosmw subscriber Infotainment {
-    localAddress "Infotainment"
-    service {
-        subscriberName "Infotainment";
-        publisherName "ScheinwerferPublisher";
+node Infotainment {
+    --- localAddress "Infotainment" ---
+    service subscriber Infotainment{
+        publisherName ScheinwerferPublisher;
         qosGroup udp|tcp;
         port 7454;
     }
 
-    service {
-        subscriberName "Music";
+    service subscriber Music {
         publisherName "Radio";
         qosGroup rt|udp|tcp;
         port 9645;
@@ -314,7 +312,7 @@ configurator: IPv4NetworkConfigurator {
         </transformation>
 
 --------------------------------------------------------------------
-- GATEWAY.XML: Mehrere Änderungen (s.u.) in Sink/Subscrober ändern -
+- GATEWAY.XML: Mehrere Änderungen (s.u.) in Sink/Subscriber ändern -
 --------------------------------------------------------------------
       <routing>
         <route source="1" destination="0">

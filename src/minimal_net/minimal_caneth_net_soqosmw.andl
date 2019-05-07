@@ -134,5 +134,12 @@ network minimal_net_soqosmw {
 				backbone : be;
 			}
 	    }
+	    
+	    service klaus {
+	    	publisher node1
+	    	subscriber node1, node2, node3
+	    	
+	    	
+	    }
 	}
 }
