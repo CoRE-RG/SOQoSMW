@@ -70,6 +70,21 @@ Zeilen entfernen: **.GatewayLicht.tte[0].numberOfRC_Vlinks = 0
             </rawdata>
         </transformation>
 
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<services>
+  <service name="ScheinwerferPublisher" node="GatewayLicht" />
+</services>
+
+----------------------------------------------
+- RTIPCONFIG.XML: Knoten und Hosts eintragen -
+----------------------------------------------
+<rtIpConfig>
+  <node id="GatewayLicht">
+  </node>
+</rtIpConfig>
+
 -----------------------------------------------
 - GATEWAY.NED: ned files der Gateways löschen -
 -----------------------------------------------
@@ -153,6 +168,20 @@ Zeilen entfernen: **.GatewaySteuerung.tte[0].numberOfRC_Vlinks = 0
         <avbframe streamId="47"/>
       </transformation>
 
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<services>
+  <service name="ScheinwerferSubscriber" node="GatewaySteuerung" />
+</services>
+
+----------------------------------------------
+- RTIPCONFIG.XML: Knoten und Hosts eintragen -
+----------------------------------------------
+<rtIpConfig>
+  <node id="GatewaySteuerung">
+  </node>
+</rtIpConfig>
 
 -----------------------------------------------
 - GATEWAY.NED: ned files der Gateways löschen -
@@ -162,26 +191,6 @@ Die ned files der Gateways werden nicht gebraucht.
 ###########################################
 ################ Allgemein ################
 ###########################################
-
-------------------------------------------------------------
-- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
-------------------------------------------------------------
-<services>
-  <service name="ScheinwerferPublisher" node="GatewayLicht" />
-  <service name="ScheinwerferSubscriber" node="GatewaySteuerung" />
-</services>
-
-----------------------------------------------
-- RTIPCONFIG.XML: Knoten und Hosts eintragen -
-----------------------------------------------
-<rtIpConfig>
-  <node id="GatewayLicht">
-  </node>
-  
-  
-  <node id="GatewaySteuerung">
-  </node>
-</rtIpConfig>
 
 -------------------------------------------
 - NED: IPv4NetworkConfigurator hinzufügen -
@@ -241,3 +250,53 @@ Infotainment: SOQoSMWHost
 - SUBSCRIBERAPPBASE.NED: ned file löschen -
 -------------------------------------------
 Das ned file der SubscriberAppBase löschen
+
+##########################################
+############ PublisherAppBase ############
+##########################################
+
+----------------------------------------
+- ANDL: inline ini code für eth 'node' -
+----------------------------------------
+...
+node Radio {
+      inline ini config General { 
+```
+**.Radio.localAddress = "MotortemperaturePublisher"
+**.Radio.numServices = 1
+**.Radio.services[0].typename = "PublisherAppBase"
+**.Radio.services[0].serviceName = "Motortemperature"
+**.Radio.services[0].streamID = 42
+**.Radio.services[0].applicationTCPPort = 4391
+**.Radio.services[0].applicationUDPPort = 4391
+**.Radio.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Radio']")
+```
+        }
+    }
+...
+
+------------------------------------------
+- NED: Import für SOQoSMWHost hinzufügen -
+------------------------------------------
+import soqosmw.nodes.SOQoSMWHost;
+
+----------------------------------------------
+- NED: Gateway mit SOQoSMWHost instanziieren -
+----------------------------------------------
+Radio: SOQoSMWHost
+
+----------------------------------------------
+- RTIPCONFIG.XML: Knoten und Hosts eintragen -
+----------------------------------------------
+<node id="Radio">
+</node>
+
+------------------------------------------------------------
+- SERVICES.XML: Knoten und Hosts in services.xml eintragen -
+------------------------------------------------------------
+<service name="Radio" node="Radio" />
+
+-------------------------------------------
+- PUBLISHERAPPBASE.NED: ned file löschen -
+-------------------------------------------
+Das ned file der PublisherAppBase löschen

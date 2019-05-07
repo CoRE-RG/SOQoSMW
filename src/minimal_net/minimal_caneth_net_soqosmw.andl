@@ -25,17 +25,39 @@ network minimal_net_soqosmw {
 			inline ini config General {
 ```
 **.Infotainment.localAddress = "Infotainment"
-**.Infotainment.numServices = 1
+**.Infotainment.numServices = 2
 **.Infotainment.services[0].typename = "SubscriberAppBase"
 **.Infotainment.services[0].subscriberName = "Infotainment"
 **.Infotainment.services[0].publisherName = "ScheinwerferPublisher"
 **.Infotainment.services[0].qosGroup = "STD_UDP"
 **.Infotainment.services[0].applicationTCPPort = 7454
 **.Infotainment.services[0].applicationUDPPort = 7454
+
+**.Infotainment.services[1].typename = "SubscriberAppBase"
+**.Infotainment.services[1].subscriberName = "Music"
+**.Infotainment.services[1].publisherName = "Radio"
+**.Infotainment.services[1].qosGroup = "STD_UDP"
+**.Infotainment.services[1].applicationTCPPort = 9645
+**.Infotainment.services[1].applicationUDPPort = 9645
 **.Infotainment.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Infotainment']")
 ```         
             }
 		}
+		node Radio {
+			inline ini config General { 
+```
+**.Radio.localAddress = "Radio"
+**.Radio.numServices = 1
+**.Radio.services[0].typename = "PublisherAppBase"
+**.Radio.services[0].serviceName = "RadioPublisher"
+**.Radio.services[0].streamID = 42
+**.Radio.services[0].applicationTCPPort = 4391
+**.Radio.services[0].applicationUDPPort = 4391
+**.Radio.networkLayer.ip.filters = xmldoc("rtIpConfig.xml", "/rtIpConfig/node[@id='Radio']")
+```
+		    }
+		}
+		
 		canLink Licht;
 		canLink Steuerung;
 		switch mainSwitch {
@@ -78,6 +100,7 @@ network minimal_net_soqosmw {
 			GatewayLicht <--> { new std.ETH_100MBIT } <--> mainSwitch;
 			GatewaySteuerung <--> { new std.ETH_100MBIT } <--> mainSwitch;
 			Infotainment <--> { new std.ETH_100MBIT} <--> mainSwitch;
+			Radio <--> { new std.ETH_100MBIT } <--> mainSwitch;
 		}
 		segment canbus {
 			GatewayLicht <--> Licht;
@@ -101,5 +124,15 @@ network minimal_net_soqosmw {
 				GatewaySteuerung;
 	        }
 		}
+		
+		message music { 
+			period 40ms;
+			sender Radio;
+			receivers Infotainment;
+			payload 8B;
+			mapping { 
+				backbone : be;
+			}
+	    }
 	}
 }
