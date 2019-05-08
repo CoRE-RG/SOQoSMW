@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/gateway/gwsource/base/GWSourceAppBase.h>
+#include <applications/publisherapp/gateway/GWSourceAppBase.h>
 #include <applications/publisherapp/base/PublisherAppBase.h>
 #include <connector/pubsub/writer/PublisherWriter.h>
 #include <qospolicy/avb/FramesizeQoSPolicy.h>

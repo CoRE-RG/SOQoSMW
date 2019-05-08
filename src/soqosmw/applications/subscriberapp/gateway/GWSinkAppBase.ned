@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.applications.gateway.gwsink.base;
+package soqosmw.applications.subscriberapp.gateway;
 
 import soqosmw.applications.base.SOQoSMWApplicationBase;
 

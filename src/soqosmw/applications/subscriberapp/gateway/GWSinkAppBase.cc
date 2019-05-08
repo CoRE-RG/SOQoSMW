@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/gateway/gwsink/base/GWSinkAppBase.h>
+#include <applications/subscriberapp/gateway/GWSinkAppBase.h>
 #include <connector/pubsub/reader/SubscriptionReader.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>

@@ -32,10 +32,10 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/soqosmw/applications/base/SOQoSMWApplicationBase.o \
-    $O/soqosmw/applications/gateway/gwsink/base/GWSinkAppBase.o \
-    $O/soqosmw/applications/gateway/gwsource/base/GWSourceAppBase.o \
     $O/soqosmw/applications/publisherapp/base/PublisherAppBase.o \
+    $O/soqosmw/applications/publisherapp/gateway/GWSourceAppBase.o \
     $O/soqosmw/applications/subscriberapp/base/SubscriberAppBase.o \
+    $O/soqosmw/applications/subscriberapp/gateway/GWSinkAppBase.o \
     $O/soqosmw/connector/base/IConnector.o \
     $O/soqosmw/connector/pubsub/reader/SubscriptionReader.o \
     $O/soqosmw/connector/pubsub/writer/PublisherWriter.o \
