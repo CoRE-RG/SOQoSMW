@@ -43,6 +43,14 @@ namespace soqosmw {
  */
 class SubscriberAppBase: public virtual SOQoSMWApplicationBase {
 private:
+
+
+    /**
+     * Caches the start time parameter
+     */
+    double _startTime;
+
+protected:
     /**
      * Signal that is emitted every time a frame was sent.
      */
@@ -64,18 +72,13 @@ private:
     std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
 
     /**
-     * Caches the start time parameter
-     */
-    double _startTime;
-
-    /**
      * Reference to the soqosmw subscriberReader module.
      */
     SubscriptionReader *_reader;
 
     QoSGroup* _qosGroup;
 
-protected:
+
     /**
      * Initialization of the module. Sends activator message
      */
@@ -100,7 +103,7 @@ public:
     SubscriberAppBase();
     virtual ~SubscriberAppBase();
 
-    virtual void notify(cPacket* msg) override;
+    virtual void notify(cMessage* msg);
 
 private:
     void setQoS();

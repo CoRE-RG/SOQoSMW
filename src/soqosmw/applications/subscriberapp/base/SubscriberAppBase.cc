@@ -16,20 +16,6 @@
 #include <applications/subscriberapp/base/SubscriberAppBase.h>
 #include <connector/pubsub/reader/SubscriptionReader.h>
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <omnetpp/cdisplaystring.h>
-#include <omnetpp/cenvir.h>
-#include <omnetpp/cgate.h>
-#include <omnetpp/clog.h>
-#include <omnetpp/cmessage.h>
-#include <omnetpp/cnamedobject.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/csimplemodule.h>
-#include <omnetpp/csimulation.h>
-#include <omnetpp/regmacros.h>
-#include <omnetpp/simtime.h>
-#include <omnetpp/simtime_t.h>
-#include <omnetpp/simutil.h>
 #include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
@@ -86,27 +72,19 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         //TODO set the gate at the reader to get all messages
 
         delete msg;
-    }else {
+    } else if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
+        //send(msg, gate("std_tcpIn")->getNextGate());
+
+        _reader->notify(msg);
+
+    } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
-
-
-        if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
-            //send(msg, gate("std_tcpIn")->getNextGate());
-
-            _reader->notify(msg);
-
-        }else if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
-        {
-            emit(_rxPkSignal, frame);
-            delete msg;
-        } else {
-            delete msg;
-        }
-
+        //this is a subscription message so handle it.
+        notify(msg);
     }
 }
 
-void SubscriberAppBase::notify(cPacket* msg) {
+void SubscriberAppBase::notify(cMessage* msg) {
     Enter_Method("SubscriberAppBase::notify()");
     EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 

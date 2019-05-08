@@ -16,23 +16,7 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
 
-#include <applications/base/SOQoSMWApplicationBase.h>
-#include <omnetpp/clistener.h>
-#include <qospolicy/base/qospolicy.h>
-#include <string>
-#include <unordered_map>
-
-namespace soqosmw {
-class QoSGroup;
-} /* namespace soqosmw */
-
-namespace soqosmw {
-class SubscriptionReader;
-} /* namespace soqosmw */
-
-namespace omnetpp {
-class cMessage;
-} /* namespace omnetpp */
+#include <applications/subscriberapp/base/SubscriberAppBase.h>
 
 using namespace omnetpp;
 
@@ -41,39 +25,8 @@ namespace soqosmw {
 /**
  * TODO - Generated class
  */
-class GatewaySubscriberApp: public virtual SOQoSMWApplicationBase {
+class GatewaySubscriberApp: public virtual SubscriberAppBase {
 private:
-    /**
-     * Signal that is emitted every time a frame was sent.
-     */
-    static simsignal_t _rxPkSignal;
-
-    /**
-     * Name of this subscriber service.
-     */
-    std::string _subscriberName;
-
-    /**
-     * Name of the publishing service to subscribe to.
-     */
-    std::string _publisherName;
-
-    /**
-     * Caches QoS Policy parameters
-     */
-    std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
-
-    /**
-     * Caches the start time parameter
-     */
-    double _startTime;
-
-    /**
-     * Reference to the soqosmw subscriberReader module.
-     */
-    SubscriptionReader *_reader;
-
-    QoSGroup* _qosGroup;
 
     cGate* _toGateway;
 
@@ -83,29 +36,13 @@ protected:
      */
     virtual void initialize();
 
-    /**
-     * This method should be called from subclasses unless the module
-     * resets the bag on its own.
-     *
-     * @param msg Parameter must be forwarded from subclass
-     */
-    virtual void handleMessage(cMessage *msg) override;
-
-    /**
-     * Indicates a parameter has changed.
-     *
-     * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
-     */
-    virtual void handleParameterChange(const char* parname) override;
-
 public:
     GatewaySubscriberApp();
     virtual ~GatewaySubscriberApp();
 
-    virtual void notify(cPacket* msg) override;
+    virtual void notify(cMessage* msg) override;
 
 private:
-    void setQoS();
 };
 
 }/* end namespace soqosmw */
