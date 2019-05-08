@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/subscriberapp/gateway/GWSinkAppBase.h>
+#include <applications/subscriberapp/gateway/GatewaySubscriberApp.h>
 #include <connector/pubsub/reader/SubscriptionReader.h>
 #include <omnetpp/cdisplaystring.h>
 #include <omnetpp/cenvir.h>
@@ -46,20 +46,20 @@ using namespace CoRE4INET;
 
 #define START_MSG_NAME "Start Message"
 
-Define_Module(GWSinkAppBase);
+Define_Module(GatewaySubscriberApp);
 
-simsignal_t GWSinkAppBase::_rxPkSignal = registerSignal("rxPk");
+simsignal_t GatewaySubscriberApp::_rxPkSignal = registerSignal("rxPk");
 
-GWSinkAppBase::GWSinkAppBase() {
+GatewaySubscriberApp::GatewaySubscriberApp() {
     _reader = nullptr;
 }
 
-GWSinkAppBase::~GWSinkAppBase() {
+GatewaySubscriberApp::~GatewaySubscriberApp() {
 
     delete _reader;
 }
 
-void GWSinkAppBase::initialize()
+void GatewaySubscriberApp::initialize()
 {
     SOQoSMWApplicationBase::initialize();
     handleParameterChange(nullptr);
@@ -83,7 +83,7 @@ void GWSinkAppBase::initialize()
     }
 }
 
-void GWSinkAppBase::handleMessage(cMessage *msg)
+void GatewaySubscriberApp::handleMessage(cMessage *msg)
 {
     SOQoSMWApplicationBase::handleMessage(msg);
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
@@ -115,7 +115,7 @@ void GWSinkAppBase::handleMessage(cMessage *msg)
     }
 }
 
-void GWSinkAppBase::notify(cPacket* msg) {
+void GatewaySubscriberApp::notify(cPacket* msg) {
     Enter_Method("GWSinkAppBase::notify()");
     EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
 
@@ -126,7 +126,7 @@ void GWSinkAppBase::notify(cPacket* msg) {
     send(msg, "upperLayerOut");
 }
 
-void GWSinkAppBase::setQoS() {
+void GatewaySubscriberApp::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
     std::string qosGroup = par("qosGroup").stdstringValue();
@@ -139,7 +139,7 @@ void GWSinkAppBase::setQoS() {
     }
 }
 
-void GWSinkAppBase::handleParameterChange(const char* parname)
+void GatewaySubscriberApp::handleParameterChange(const char* parname)
 {
     SOQoSMWApplicationBase::handleParameterChange(parname);
 

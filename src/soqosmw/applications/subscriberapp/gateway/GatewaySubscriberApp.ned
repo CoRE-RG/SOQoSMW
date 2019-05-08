@@ -20,10 +20,10 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 //
 // TODO auto-generated module
 //
-simple GWSinkAppBase extends SOQoSMWApplicationBase
+simple GatewaySubscriberApp extends SOQoSMWApplicationBase
 {
     parameters:
-        @class(soqosmw::GWSinkAppBase);
+        @class(soqosmw::GatewaySubscriberApp);
         @display("i=block/sink,blue");
         
         //Signal emitted when a frame is received, contains received EtherFrame

@@ -45,7 +45,7 @@ namespace soqosmw {
  *
  * @author Timo Haeckel
  */
-class GWSourceAppBase: public virtual SOQoSMWApplicationBase {
+class GatewayPublisherApp: public virtual SOQoSMWApplicationBase {
 private:
     /**
      * Caches enabled parameter
@@ -108,9 +108,9 @@ private:
     unsigned long _streamID;
 
 public:
-    GWSourceAppBase();
+    GatewayPublisherApp();
 
-    virtual ~GWSourceAppBase();
+    virtual ~GatewayPublisherApp();
 
     /**
      * Indicated that PublisherApp is enabled

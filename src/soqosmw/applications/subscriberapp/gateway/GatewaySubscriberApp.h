@@ -41,7 +41,7 @@ namespace soqosmw {
 /**
  * TODO - Generated class
  */
-class GWSinkAppBase: public virtual SOQoSMWApplicationBase {
+class GatewaySubscriberApp: public virtual SOQoSMWApplicationBase {
 private:
     /**
      * Signal that is emitted every time a frame was sent.
@@ -99,8 +99,8 @@ protected:
     virtual void handleParameterChange(const char* parname) override;
 
 public:
-    GWSinkAppBase();
-    virtual ~GWSinkAppBase();
+    GatewaySubscriberApp();
+    virtual ~GatewaySubscriberApp();
 
     virtual void notify(cPacket* msg) override;
 

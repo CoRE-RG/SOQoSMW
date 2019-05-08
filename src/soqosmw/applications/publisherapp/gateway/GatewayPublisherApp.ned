@@ -20,10 +20,10 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 //
 // TODO auto-generated module
 //
-simple GWSourceAppBase extends SOQoSMWApplicationBase
+simple GatewayPublisherApp extends SOQoSMWApplicationBase
 {
     parameters:
-        @class(soqosmw::GWSourceAppBase);
+        @class(soqosmw::GatewayPublisherApp);
         @display("i=block/source");
         
         // PublisherApp enabled or disabled

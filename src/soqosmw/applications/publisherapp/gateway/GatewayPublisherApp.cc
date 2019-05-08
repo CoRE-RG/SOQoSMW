@@ -13,8 +13,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/publisherapp/gateway/GWSourceAppBase.h>
 #include <applications/publisherapp/base/PublisherAppBase.h>
+#include <applications/publisherapp/gateway/GatewayPublisherApp.h>
 #include <connector/pubsub/writer/PublisherWriter.h>
 #include <qospolicy/avb/FramesizeQoSPolicy.h>
 #include <qospolicy/avb/IntervalFramesQoSPolicy.h>
@@ -47,30 +47,30 @@ using namespace std;
 #define MY_INIT_STAGE_FIRST 1
 #define MY_INIT_STAGE_FINAL 14
 
-simsignal_t GWSourceAppBase::sigPayload = registerSignal("payloadSignal");
+simsignal_t GatewayPublisherApp::sigPayload = registerSignal("payloadSignal");
 
-Define_Module(GWSourceAppBase);
+Define_Module(GatewayPublisherApp);
 
-GWSourceAppBase::GWSourceAppBase() {
+GatewayPublisherApp::GatewayPublisherApp() {
     this->_enabled = false;
     this->_payload = 0;
 }
 
-GWSourceAppBase::~GWSourceAppBase() {
+GatewayPublisherApp::~GatewayPublisherApp() {
     delete _writer;
 }
 
-bool GWSourceAppBase::isEnabled() {
+bool GatewayPublisherApp::isEnabled() {
     return this->_enabled;
 }
 
-size_t GWSourceAppBase::getPayloadBytes() {
+size_t GatewayPublisherApp::getPayloadBytes() {
     handleParameterChange("payload");
     emit(sigPayload, static_cast<unsigned long>(this->_payload));
     return this->_payload;
 }
 
-void GWSourceAppBase::initialize(int stage) {
+void GatewayPublisherApp::initialize(int stage) {
     switch(stage){
     case MY_INIT_STAGE_FIRST:
         SOQoSMWApplicationBase::initialize();
@@ -114,7 +114,7 @@ void GWSourceAppBase::initialize(int stage) {
     }
 }
 
-void GWSourceAppBase::handleParameterChange(const char* parname) {
+void GatewayPublisherApp::handleParameterChange(const char* parname) {
     SOQoSMWApplicationBase::handleParameterChange(parname);
 
     if (!parname || !strcmp(parname, "enabled")) {
@@ -162,7 +162,7 @@ void GWSourceAppBase::handleParameterChange(const char* parname) {
     }
 }
 
-void GWSourceAppBase::handleMessage(cMessage *msg) {
+void GatewayPublisherApp::handleMessage(cMessage *msg) {
 
     SOQoSMWApplicationBase::handleMessage(msg);
     if (msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)) {
@@ -206,7 +206,7 @@ void GWSourceAppBase::handleMessage(cMessage *msg) {
 
 }
 
-void GWSourceAppBase::setQoS() {
+void GatewayPublisherApp::setQoS() {
     std::string qosGroup = par("qosGroup").stdstringValue();
     if(qosGroup == "STD_TCP") {
         _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
@@ -224,7 +224,7 @@ void GWSourceAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::IntervalFrames] = new IntervalFramesQoSPolicy(_intervalFrames);
 }
 
-void GWSourceAppBase::printQoS() {
+void GatewayPublisherApp::printQoS() {
     cout << "printing qos policies: [ ";
     for (auto policy : _qosPolicies){
         cout << policy.first << " ";
