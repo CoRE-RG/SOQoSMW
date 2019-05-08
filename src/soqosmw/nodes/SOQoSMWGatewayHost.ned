@@ -57,9 +57,4 @@ module SOQoSMWGatewayHost extends SOQoSMWHost
         
         gatewayApp.upperLayerOut --> gateway.lowerLayerIn++;
         gatewayApp.upperLayerIn <-- gateway.lowerLayerOut++;
-        
-    	for i=0..numServices-1 {
-            services[i].upperLayerOut --> gateway.lowerLayerIn++;
-            services[i].upperLayerIn <-- gateway.lowerLayerOut++;
-        }
 }

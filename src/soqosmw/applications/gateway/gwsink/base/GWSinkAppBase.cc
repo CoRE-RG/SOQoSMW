@@ -37,9 +37,11 @@
 
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/EtherFrame_m.h>
+#include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
 
 namespace soqosmw {
 using namespace std;
+using namespace SignalsAndGateways;
 using namespace CoRE4INET;
 
 #define START_MSG_NAME "Start Message"
@@ -72,6 +74,13 @@ void GWSinkAppBase::initialize()
     {
         getDisplayString().setTagArg("i2", 0, "status/hourglass");
     }
+
+    //find the gateway to deliver messages
+    if(EthernetGatewayApplication* gwApp = dynamic_cast<EthernetGatewayApplication*>(this->getParentModule()->getSubmodule("gatewayApp"))) {
+        _toGateway = gwApp->gate("in");
+    } else {
+        throw cRuntimeError("Service GWSinkAppBase can not find EthernetGatewayApplication under the name \"gatewayApp\"");
+    }
 }
 
 void GWSinkAppBase::handleMessage(cMessage *msg)
@@ -96,8 +105,7 @@ void GWSinkAppBase::handleMessage(cMessage *msg)
 
         }else if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
         {
-
-            send(msg, "upperLayerOut");
+            sendDirect(msg, _toGateway);
 
             emit(_rxPkSignal, frame);
         } else {

@@ -75,6 +75,8 @@ private:
 
     QoSGroup* _qosGroup;
 
+    cGate* _toGateway;
+
 protected:
     /**
      * Initialization of the module. Sends activator message

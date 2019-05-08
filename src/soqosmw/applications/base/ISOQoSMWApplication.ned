@@ -27,8 +27,4 @@ moduleinterface ISOQoSMWApplication {
         output std_tcpOut @labels(TCPCommand/down);
         input std_udpIn @labels(UDPCommand/up);
         output std_udpOut @labels(UDPCommand/down);
-        
-        input upperLayerIn;
-        output upperLayerOut;
-        
 }
