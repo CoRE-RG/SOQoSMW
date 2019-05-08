@@ -17,8 +17,7 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <omnetpp/clistener.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <cstdint>
 #include <string>
 #include <unordered_map>
@@ -43,7 +42,27 @@ namespace soqosmw {
  * @author Timo Haeckel
  */
 class PublisherAppBase: public virtual SOQoSMWApplicationBase {
-private:
+
+public:
+    PublisherAppBase();
+
+    virtual ~PublisherAppBase();
+
+    /**
+     * Indicated that PublisherApp is enabled
+     *
+     * @return true when enabled, otherwise false
+     */
+    bool isEnabled();
+
+    /**
+     * Returns the number of bytes of the payload desired
+     *
+     * @return Size of payload in bytes
+     */
+    size_t getPayloadBytes();
+
+protected:
     /**
      * Caches enabled parameter
      */
@@ -99,26 +118,6 @@ private:
      */
     unsigned long _streamID;
 
-public:
-    PublisherAppBase();
-
-    virtual ~PublisherAppBase();
-
-    /**
-     * Indicated that PublisherApp is enabled
-     *
-     * @return true when enabled, otherwise false
-     */
-    bool isEnabled();
-
-    /**
-     * Returns the number of bytes of the payload desired
-     *
-     * @return Size of payload in bytes
-     */
-    size_t getPayloadBytes();
-
-protected:
     /**
      * Signal that is emitted each time the payload is used.
      */
@@ -144,9 +143,12 @@ protected:
      */
     virtual void handleParameterChange(const char* parname) override;
 
-private:
     void setQoS();
     void printQoS();
+    void createPublisherWithQoS();
+    virtual void scheduleNextMessage();
+
+private:
 };
 
 } /* end namespace soqosmw */

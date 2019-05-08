@@ -15,29 +15,7 @@
 
 #include <applications/publisherapp/base/PublisherAppBase.h>
 #include <connector/pubsub/writer/PublisherWriter.h>
-#include <omnetpp/cdisplaystring.h>
-#include <omnetpp/cenvir.h>
-#include <omnetpp/cexception.h>
-#include <omnetpp/clog.h>
-#include <omnetpp/cmessage.h>
-#include <omnetpp/cnamedobject.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpacket.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/csimulation.h>
-#include <omnetpp/regmacros.h>
-#include <omnetpp/simtime.h>
-#include <omnetpp/simtime_t.h>
-#include <qospolicy/avb/FramesizeQoSPolicy.h>
-#include <qospolicy/avb/IntervalFramesQoSPolicy.h>
-#include <qospolicy/avb/SRClassQoSPolicy.h>
-#include <qospolicy/avb/StreamIDQoSPolicy.h>
-#include <qospolicy/base/types/IntQoSPolicy.h>
-#include <qospolicy/base/types/SizeQoSPolicy.h>
-#include <qospolicy/base/types/UInt16QoSPolicy.h>
-#include <qospolicy/management/QoSGroup.h>
-#include <qospolicy/std/LocalAddressQoSPolicy.h>
-#include <qospolicy/std/LocalPortQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>
@@ -142,21 +120,30 @@ void PublisherAppBase::handleParameterChange(const char* parname) {
     }
 }
 
+void PublisherAppBase::createPublisherWithQoS() {
+    setQoS();
+    //printQoS();
+
+    //register this as new publisher app!
+    _writer = getLocalServiceManager()->createPublisher(this->_serviceName,
+            this->_qosPolicies, this);
+}
+
+void PublisherAppBase::scheduleNextMessage() {
+    //schedule next send event
+    scheduleAt(simTime() + (this->_interval / this->_intervalFrames),
+            new cMessage(SEND_MSG_NAME));
+}
+
 void PublisherAppBase::handleMessage(cMessage *msg) {
 
     SOQoSMWApplicationBase::handleMessage(msg);
     if (msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)) {
 
-        setQoS();
-        //printQoS();
-
-        //register this as new publisher app!
-        _writer = getLocalServiceManager()->createPublisher(
-                this->_serviceName, this->_qosPolicies, this);
+        createPublisherWithQoS();
 
         //schedule next send event
-        scheduleAt(simTime() + (this->_interval / this->_intervalFrames),
-                new cMessage(SEND_MSG_NAME));
+        scheduleNextMessage();
         delete msg;
 
     } else if (msg->isSelfMessage()
@@ -171,9 +158,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
             //schedule next send event
-            scheduleAt(
-                    simTime() + (this->_interval / this->_intervalFrames),
-                    new cMessage(SEND_MSG_NAME));
+            scheduleNextMessage();
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
         }

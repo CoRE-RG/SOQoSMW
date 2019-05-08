@@ -16,25 +16,12 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 
-#include <applications/base/SOQoSMWApplicationBase.h>
-#include <omnetpp/clistener.h>
-#include <qospolicy/base/IQoSPolicy.h>
-#include <stddef.h>
-#include <string>
-#include <unordered_map>
+#include <applications/publisherapp/base/PublisherAppBase.h>
 #include <vector>
-#include <core4inet/base/avb/AVBDefs.h>
-
-namespace soqosmw {
-class PublisherWriter;
-} /* namespace soqosmw */
 
 using namespace omnetpp;
 
 namespace soqosmw {
-
-#define START_MSG_NAME "Start Message"
-#define SEND_MSG_NAME "Send Message"
 
 #define NO_OF_INIT_STAGES 15
 
@@ -45,93 +32,20 @@ namespace soqosmw {
  *
  * @author Timo Haeckel
  */
-class GatewayPublisherApp: public virtual SOQoSMWApplicationBase {
+class GatewayPublisherApp: public virtual PublisherAppBase {
 private:
-    /**
-     * Caches enabled parameter
-     */
-    bool _enabled;
-
-    /**
-     * Caches payload parameter
-     */
-    size_t _payload;
-
-    /**
-     * size of the ethernet frame calculated from the payload.
-     */
-    size_t _framesize;
-
-    /**
-     * Save the responsible writer to publish
-     */
-    PublisherWriter* _writer;
-
-    /**
-     * Name of the service to publish.
-     */
-    std::string _serviceName;
-
-    /**
-     * Caches QoS Policy parameters
-     */
-    std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
 
     /**
      * Cachees the canIDs handled in this gateway app
      */
     std::vector<int> _canIds;
 
-    /**
-     * Caches the start time parameter
-     */
-    double _startTime;
-
-    /**
-     * Caches the interval length parameter
-     */
-    double _interval;
-
-    /**
-     * Caches the number of Messages per Interval parameter.
-     */
-    int _intervalFrames;
-
-    /**
-     * Caches the AVB SR Class.
-     */
-    CoRE4INET::SR_CLASS _srClass;
-
-    /**
-     * Caches the stream ID.
-     */
-    unsigned long _streamID;
-
 public:
     GatewayPublisherApp();
 
     virtual ~GatewayPublisherApp();
 
-    /**
-     * Indicated that PublisherApp is enabled
-     *
-     * @return true when enabled, otherwise false
-     */
-    bool isEnabled();
-
-    /**
-     * Returns the number of bytes of the payload desired
-     *
-     * @return Size of payload in bytes
-     */
-    size_t getPayloadBytes();
-
 protected:
-    /**
-     * Signal that is emitted each time the payload is used.
-     */
-    static simsignal_t sigPayload;
-
 
     /**
      * Initialization of the module. Sends activator message
@@ -156,9 +70,9 @@ protected:
      */
     virtual void handleParameterChange(const char* parname) override;
 
+    virtual void scheduleNextMessage() override;
+
 private:
-    void setQoS();
-    void printQoS();
 };
 
 } /* end namespace soqosmw */

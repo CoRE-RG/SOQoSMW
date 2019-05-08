@@ -15,42 +15,18 @@
 
 package soqosmw.applications.publisherapp.gateway;
 
-import soqosmw.applications.base.SOQoSMWApplicationBase;
+import soqosmw.applications.publisherapp.base.PublisherAppBase;
 
 //
 // TODO auto-generated module
 //
-simple GatewayPublisherApp extends SOQoSMWApplicationBase
+simple GatewayPublisherApp extends PublisherAppBase
 {
     parameters:
         @class(soqosmw::GatewayPublisherApp);
-        @display("i=block/source");
-        
-        // PublisherApp enabled or disabled
-        bool enabled = default(true);
-        // Start time
-        double startTime @unit(s) = default(0s);
-        // Interval of new messages
-        double interval @unit(s) = default(125us);
-        // Number of frames per interval
-        int intervalFrames = default(1);     
-        //Size of the payload of the message (size of encapsulated cPacket) that is being generated
-        volatile int payload @unit(Byte) = default(46Byte);
-        // ID of the AVB Stream
-        int streamID = default(0);     
-        // Stream Reservation Class of the AVB Stream
-        string srClass = default("A");
-        
+                
         //The CAN Data Frame ID(s) - String parameter (int) separated with commas
         string canIds = default("");		
-        
-        @signal[payloadSignal];
-    
-    	//Service Description
-    	string serviceName = default("PublisherService");
-    	
-    	//QoS Group STD_TCP and STD_UDP
-    	string qosGroup = default("STD_TCP");
 	gates:
 	    input gwIn;
     
