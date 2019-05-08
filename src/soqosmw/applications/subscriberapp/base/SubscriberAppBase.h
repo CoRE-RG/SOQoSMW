@@ -18,7 +18,7 @@
 
 #include <applications/base/SOQoSMWApplicationBase.h>
 #include <omnetpp/clistener.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <string>
 #include <unordered_map>
 

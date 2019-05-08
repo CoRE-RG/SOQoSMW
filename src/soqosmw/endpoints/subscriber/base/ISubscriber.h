@@ -17,7 +17,7 @@
 #define SOQOSMW_ENDPOINTS_SUBSCRIBER_BASE_ISUBSCRIBER_H_
 
 #include <endpoints/base/IEndpoint.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <string>
 #include <unordered_map>
 

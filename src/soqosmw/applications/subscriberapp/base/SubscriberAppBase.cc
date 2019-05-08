@@ -30,9 +30,7 @@
 #include <omnetpp/simtime.h>
 #include <omnetpp/simtime_t.h>
 #include <omnetpp/simutil.h>
-#include <qospolicy/management/QoSGroup.h>
-#include <qospolicy/std/LocalAddressQoSPolicy.h>
-#include <qospolicy/std/LocalPortQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 #include <iostream>

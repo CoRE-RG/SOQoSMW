@@ -18,7 +18,7 @@
 
 #include <omnetpp/csimplemodule.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <atomic>
 #include <string>
 #include <unordered_map>

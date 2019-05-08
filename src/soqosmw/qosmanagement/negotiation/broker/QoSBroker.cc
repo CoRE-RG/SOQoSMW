@@ -23,7 +23,7 @@
 #include <omnetpp/clog.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <qosmanagement/negotiation/datatypes/Request.h>
-#include <qospolicy/management/QoSGroup.h>
+#include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <iostream>
 #include <unordered_map>

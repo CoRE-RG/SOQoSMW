@@ -10,7 +10,7 @@
 
 #include <qospolicy/base/types/IntQoSPolicy.h>
 #include <string>
-
+#include <core4inet/base/avb/AVBDefs.h>
 
 namespace soqosmw {
 

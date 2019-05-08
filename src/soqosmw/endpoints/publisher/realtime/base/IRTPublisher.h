@@ -17,7 +17,7 @@
 #define SOQOSMW_ENDPOINTS_PUBLISHER_REALTIME_BASE_IRTPUBLISHER_H_
 
 #include <endpoints/publisher/base/IPublisher.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <string>
 #include <unordered_map>
 

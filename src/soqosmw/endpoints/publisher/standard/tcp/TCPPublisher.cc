@@ -25,10 +25,7 @@
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cpacket.h>
 #include <omnetpp/simutil.h>
-#include <qospolicy/base/types/IntQoSPolicy.h>
-#include <qospolicy/base/types/StringQoSPolicy.h>
-#include <qospolicy/std/LocalAddressQoSPolicy.h>
-#include <qospolicy/std/LocalPortQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <iostream>
 
 

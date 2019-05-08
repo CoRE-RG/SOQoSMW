@@ -24,13 +24,7 @@
 #include <omnetpp/clog.h>
 #include <omnetpp/cmessage.h>
 #include <omnetpp/cpacket.h>
-#include <qospolicy/avb/FramesizeQoSPolicy.h>
-#include <qospolicy/avb/IntervalFramesQoSPolicy.h>
-#include <qospolicy/avb/SRClassQoSPolicy.h>
-#include <qospolicy/avb/StreamIDQoSPolicy.h>
-#include <qospolicy/base/types/IntQoSPolicy.h>
-#include <qospolicy/base/types/SizeQoSPolicy.h>
-#include <qospolicy/base/types/UInt16QoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <cstdio>
 #include <iostream>
 #include <list>

@@ -18,7 +18,7 @@
 
 #include <connector/base/IConnector.h>
 #include <endpoints/subscriber/base/ISubscriber.h>
-#include <qospolicy/base/IQoSPolicy.h>
+#include <qospolicy/base/qospolicy.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
