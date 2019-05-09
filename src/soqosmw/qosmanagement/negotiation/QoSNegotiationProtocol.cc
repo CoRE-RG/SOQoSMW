@@ -32,6 +32,7 @@
 namespace soqosmw {
 using namespace std;
 using namespace inet;
+#define QOSNP_INIT_STAGE 14
 
 Define_Module(QoSNegotiationProtocol);
 
@@ -43,7 +44,9 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {
-    if (stage == MY_INIT_STAGE) {
+    if(stage == 1) {
+    }
+    if (stage == QOSNP_INIT_STAGE) {
         handleParameterChange(nullptr);
         _lsm = dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
                                par("lsmmoduleName")));

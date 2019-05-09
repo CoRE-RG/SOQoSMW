@@ -35,6 +35,8 @@ using namespace std;
 using namespace inet;
 
 namespace soqosmw {
+#define LSM_INIT_STAGE_1 1
+#define LSM_INIT_STAGE 14
 
 Define_Module(LocalServiceManager);
 
@@ -47,18 +49,17 @@ LocalServiceManager::~LocalServiceManager() {
 
 void LocalServiceManager::initialize(int stage) {
 
-
-    if (stage == MY_INIT_STAGE) {
+    if(stage == LSM_INIT_STAGE_1) {
+    }
+    if (stage == LSM_INIT_STAGE) {
+        handleParameterChange(nullptr);
         _sd = dynamic_cast<StaticServiceDiscovery*>(getParentModule()->getSubmodule(
                    par("sdmoduleName")));
 
        _qosnp =
                dynamic_cast<QoSNegotiationProtocol*>(getParentModule()->getSubmodule(
                        par("qosnpmoduleName")));
-
-        handleParameterChange(nullptr);
     }
-
 }
 
 void LocalServiceManager::handleMessage(cMessage *msg) {

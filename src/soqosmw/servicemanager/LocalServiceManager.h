@@ -45,7 +45,6 @@ using namespace omnetpp;
 namespace soqosmw {
 
 #define NO_OF_INIT_STAGES 15
-#define MY_INIT_STAGE 13
 
 /**
  * @brief The LocalServiceManager is used to create, find and remove local Services.
