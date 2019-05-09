@@ -180,15 +180,18 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
 void PublisherAppBase::setQoS() {
     std::string qosGroup = par("qosGroup").stdstringValue();
-    if(qosGroup == "STD_TCP") {
-        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
+
+    //TODO fix here! Publisher doesn't need to know its QoS Group because he doesn't have a fixed one.
+//    if(qosGroup == "STD_TCP") {
+//        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
         _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
-    } else if(qosGroup == "STD_UDP") {
-        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_UDP);
+//    } else if(qosGroup == "STD_UDP") {
+//        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_UDP);
         _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
-    } else {
-        cRuntimeError("Not a valid connection type");
-    }
+//    } else {
+        //TODO fix here! Error if RT Services are in use...
+//        cRuntimeError("Not a valid connection type");
+//    }
     _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
     _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
     _qosPolicies[QoSPolicyNames::SRClass] = new SRClassQoSPolicy(_srClass);

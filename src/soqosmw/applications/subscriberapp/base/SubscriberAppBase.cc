@@ -105,7 +105,8 @@ void SubscriberAppBase::setQoS() {
     } else if(qosGroup == "STD_UDP") {
             _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
     } else {
-        cRuntimeError("Not a valid connection type");
+        //TODO fix here! Error if RT Services are in use.
+//        cRuntimeError("Not a valid connection type");
     }
 }
 
@@ -137,6 +138,8 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
             _qosGroup = new QoSGroup(QoSGroup::STD_UDP);
         } else if(group == "RT"){
             _qosGroup = new QoSGroup(QoSGroup::RT);
+        } else {
+            cRuntimeError("Not a valid connection type");
         }
 
     }
