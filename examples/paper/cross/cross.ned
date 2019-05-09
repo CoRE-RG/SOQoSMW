@@ -15,14 +15,16 @@
 
 package soqosmw.examples.paper.cross;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
+
 import soqosmw.nodes.SOQoSMWHost;
-import soqosmw.nodes.SOQoSMWGatewayHost;
+
+import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
 import core4inet.nodes.inet.RTIPHost;
 
 import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
 
+import signalsandgateways.BusEthernetGateway;
 
 import fico4omnet.bus.can.CanBus;
 import fico4omnet.nodes.can.CanNode;
@@ -59,11 +61,11 @@ network cross
         }
 
         //GATEWAYS
-        GatewaySource: SOQoSMWGatewayHost {
+        GatewaySource: BusEthernetGateway {
             @display("p=280.125,217.87498;i=block/source;is=l");
         }
 
-        GatewaySink: SOQoSMWGatewayHost {
+        GatewaySink: BusEthernetGateway {
             @display("p=702.18,217.87498;i=block/sink,#FF8080;is=l");
         }
 
@@ -97,6 +99,8 @@ network cross
 		//NET
         configurator: IPv4NetworkConfigurator {
             @display("p=89,22");
+            dumpAddresses = true;
+            dumpConfig = "ipConfig.xml";
         }
     connections:
         Fahrwerk.gate++ <--> Reifen[0].gate;
@@ -110,12 +114,12 @@ network cross
         GatewaySink.cang[0] <--> Fahrdynamik.gate++;
 
 
-        Switch1.ethg[0] <--> cable <--> GatewaySource.ethg;
+        Switch1.ethg[0] <--> cable <--> GatewaySource.ethg[0];
         Switch1.ethg[1] <--> cable <--> Camera.ethg;
 
         Switch1.ethg[2] <--> cable <--> Switch2.ethg[3];
 
-        Switch2.ethg[0] <--> cable <--> GatewaySink.ethg;
+        Switch2.ethg[0] <--> cable <--> GatewaySink.ethg[0];
         Switch2.ethg[1] <--> cable <--> SensorFusion.ethg;
         Switch2.ethg[2] <--> cable <--> InfotainmentSystem.ethg;
 }
