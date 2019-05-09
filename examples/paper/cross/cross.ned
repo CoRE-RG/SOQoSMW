@@ -99,8 +99,6 @@ network cross
 		//NET
         configurator: IPv4NetworkConfigurator {
             @display("p=89,22");
-            dumpAddresses = true;
-            dumpConfig = "ipConfig.xml";
         }
     connections:
         Fahrwerk.gate++ <--> Reifen[0].gate;
