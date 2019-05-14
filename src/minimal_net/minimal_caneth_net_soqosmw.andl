@@ -103,7 +103,7 @@ network minimal_net_soqosmw {
 			Radio <--> { new std.ETH_100MBIT } <--> mainSwitch;
 		}
 		segment canbus {
-			GatewayLicht <--> Licht;
+			mainSwitch <--> Licht;
 			Scheinwerfer <--> Licht;
 			GatewaySteuerung <--> Steuerung;
 			Lichtregulierung <--> Steuerung;
