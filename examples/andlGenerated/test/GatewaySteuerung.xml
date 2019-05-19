@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<gateway id="GatewaySteuerung">
+		<routing>
+			<route source="1" destination="0">
+				<avbframe streamId="100"/>
+				<avbframe streamId="200"/>
+			</route>
+		</routing>
+		<buffering>
+		</buffering>
+		<transformation destination="0" type="toCan">
+			<avbframe streamId="100"/>
+			<avbframe streamId="200"/>
+		</transformation>
+	</gateway>
+
+</config>
