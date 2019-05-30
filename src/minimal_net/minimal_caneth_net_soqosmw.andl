@@ -134,21 +134,5 @@ network minimal_net_soqosmw {
 				backbone : be;
 			}
 	    }
-	    
-	    service klaus {
-	    	publisher node1;
-	    	subscriber node2,;
-	    	canIds 100;
-	    	
-	    }
-	    
-	    service klaus2 {
-	    	publisher node1;
-	    	subscriber {
-	    		tcp node2, node3;
-	    		udp node4;
-	    	}
-	    	canIds 101, 102;
-	    }
 	}
 }
