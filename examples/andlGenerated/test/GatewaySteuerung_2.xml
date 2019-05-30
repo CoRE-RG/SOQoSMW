@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<gateway id="GatewaySteuerung">
+	<gateway id="GatewaySteuerung_2">
 		<routing>
 			<route source="2" destination="0">
-				<avbframe streamId="100"/>
+				<avbframe streamId="500"/>
 			</route>
 			<route source="2" destination="1">
-				<avbframe streamId="200"/>
+				<avbframe streamId="600"/>
 			</route>
 		</routing>
 		<buffering>
 		</buffering>
 		<transformation destination="0" type="toCan">
-			<avbframe streamId="100"/>
+			<avbframe streamId="500"/>
 		</transformation>
 		<transformation destination="1" type="toCan">
-			<avbframe streamId="200"/>
+			<avbframe streamId="600"/>
 		</transformation>
 	</gateway>
 

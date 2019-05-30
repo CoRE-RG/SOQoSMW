@@ -2,6 +2,9 @@
 	<node id="Infotainment">
 	</node>
 
+	<node id="GatewaySteuerung_2">
+	</node>
+
 	<node id="GatewayLicht">
 	</node>
 
