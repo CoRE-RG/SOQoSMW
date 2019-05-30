@@ -154,4 +154,5 @@ network minimal_net_soqosmw
         Lichtregulierung_3.gate <--> Steuerung_3.gate[1];
         Lichtregulierung_4.gate <--> Steuerung_4.gate[1];
 
+
 }
