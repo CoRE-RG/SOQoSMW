@@ -1,0 +1,17 @@
+<rtIpConfig>
+	<node id="Infotainment">
+	</node>
+
+	<node id="GatewaySteuerung_2">
+	</node>
+
+	<node id="GatewayLicht">
+	</node>
+
+	<node id="GatewaySteuerung">
+	</node>
+
+	<node id="Radio">
+	</node>
+
+</rtIpConfig>

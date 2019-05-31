@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<gateway id="GatewayLicht">
+		<routing>
+			<route source="0" destination="2">
+				<canframe canId="100"/>
+			</route>
+			<route source="1" destination="2">
+				<canframe canId="200"/>
+			</route>
+			<route source="0" destination="3">
+				<canframe canId="500"/>
+			</route>
+			<route source="1" destination="3">
+				<canframe canId="600"/>
+			</route>
+		</routing>
+		<buffering>
+		</buffering>
+		<transformation destination="2" type="toMisc">
+			<rawdata id="100">
+				<canframe canId="100"/>
+			</rawdata>
+			<rawdata id="200">
+				<canframe canId="200"/>
+			</rawdata>
+		</transformation>
+		<transformation destination="3" type="toMisc">
+			<rawdata id="500">
+				<canframe canId="500"/>
+			</rawdata>
+			<rawdata id="600">
+				<canframe canId="600"/>
+			</rawdata>
+		</transformation>
+	</gateway>
+
+</config>
