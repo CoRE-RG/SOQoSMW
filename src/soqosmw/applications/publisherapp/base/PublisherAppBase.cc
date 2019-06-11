@@ -40,7 +40,9 @@ PublisherAppBase::PublisherAppBase() {
 }
 
 PublisherAppBase::~PublisherAppBase() {
-    delete _writer;
+    if(_writer){
+        delete _writer;
+    }
 }
 
 bool PublisherAppBase::isEnabled() {
