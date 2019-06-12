@@ -70,6 +70,13 @@ public:
 
     void addConnection(ConnectionSpecificInformation* csi);
 
+    /**
+     * Get the qos class for this publisher
+     */
+    virtual QoSGroups getQoSClass() override {
+        return QoSGroups::STD_UDP;
+    }
+
 protected:
 
     /**

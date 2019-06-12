@@ -41,6 +41,13 @@ public:
     IRTPublisher(std::string path, PublisherWriter* writer);
     virtual ~IRTPublisher();
 
+    /**
+     * Get the qos class for this publisher
+     */
+    virtual QoSGroups getQoSClass() override {
+        return QoSGroups::RT;
+    }
+
 };
 
 } /*end namespace soqosmw*/

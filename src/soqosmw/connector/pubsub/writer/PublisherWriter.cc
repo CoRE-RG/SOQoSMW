@@ -67,5 +67,16 @@ void PublisherWriter::notify(cMessage* msg) {
 //    delete msg;
 }
 
-} /*end namespace soqosmw*/
+IPublisher* PublisherWriter::findPublisherLike(
+        std::string& publisherPath, int qos) {
+    for (auto pub : _publishers){
+        if(pub->getEndpointPath() == publisherPath){
+            if(pub->getQoSClass() == qos) {
+                return pub;
+            }
+        }
+    }
+    return nullptr;
+}
 
+} /*end namespace soqosmw*/

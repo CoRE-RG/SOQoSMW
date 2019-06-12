@@ -25,6 +25,7 @@
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
+#include <connector/pubsub/writer/PublisherWriter.h>
 #include <iostream>
 #include <unordered_map>
 
@@ -207,7 +208,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 fillEnvelope(establish);
                 establish->setQosClass(response->getQosClass());
 
-                // TODO UDP create subscriber if udp is wanted -> NOT TESTED
+                // create subscriber if udp is wanted -> NOT TESTED
                 if (response->getQosClass() == QoSGroup::QoSGroups::STD_UDP) {
 
 
@@ -221,7 +222,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                     //create subscriber
                     UDPSubscriber* subscriber = dynamic_cast<UDPSubscriber*>(ServiceEndpointFactory::getInstance().createSubscriber(path, connectionType, reader));
 
-                    // TODO UDP encapsulate the CSI into the packet. -> NOT TESTED
+                    // encapsulate the CSI into the packet. -> NOT TESTED
                     ConnectionSpecificInformation* info = subscriber->getConnectionSpecificInformation();
                     if(info){
                         establish->encapsulate(info);
@@ -270,8 +271,14 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 //get responsible writer
                 PublisherWriter* writer = _lsm->getPublisherWriterForName(path);
 
-                //create publisher
-                IPublisher* publisher = ServiceEndpointFactory::getInstance().createPublisher(path, establish->getQosClass(), writer);
+                // check if a publisher like that already exists
+                IPublisher* publisher = writer->findPublisherLike(path, establish->getQosClass());
+
+                if(!publisher){
+                    //create publisher
+                    publisher = ServiceEndpointFactory::getInstance().createPublisher(path, establish->getQosClass(), writer);
+                }
+
 
                 if(publisher) {
 
@@ -279,7 +286,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                     connection = publisher->getConnectionSpecificInformation();
 
                     if(connection && connection->getConnectionType() == ConnectionType::ct_udp) {
-                        // TODO UDP if UDP connect directly to subscriber now.
+                        // if UDP connect directly to subscriber now.
                         if(ConnectionSpecificInformation* subConnection = dynamic_cast<ConnectionSpecificInformation*>( establish->decapsulate())){
                             if(UDPPublisher* udpPublisher = dynamic_cast<UDPPublisher*> (publisher)){
                                 udpPublisher->addConnection(subConnection);

@@ -17,16 +17,17 @@
 #define SOQOSMW_ENDPOINTS_PUBLISHER_REALTIME_AVB_AVBPUBLISHER_H_
 
 #include <endpoints/publisher/realtime/base/IRTPublisher.h>
+
+//STD
 #include <omnetpp/clistener.h>
 #include <cstdint>
 #include <string>
-
-#include <core4inet/base/avb/AVBDefs.h>
+//INET
 #include <inet/linklayer/common/MACAddress.h>
+//CoRE4INET
+#include <core4inet/base/avb/AVBDefs.h>
 
-namespace soqosmw {
-class ConnectionSpecificInformation;
-} /* namespace soqosmw */
+
 
 namespace CoRE4INET {
 class SRPTable;

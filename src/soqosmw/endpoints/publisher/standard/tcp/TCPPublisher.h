@@ -63,6 +63,13 @@ public:
 
     virtual void notify(omnetpp::cMessage* notification) override;
 
+    /**
+     * Get the qos class for this publisher
+     */
+    virtual QoSGroups getQoSClass() override {
+        return QoSGroups::STD_TCP;
+    }
+
 protected:
 
     /**

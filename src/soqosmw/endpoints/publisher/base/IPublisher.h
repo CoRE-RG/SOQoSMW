@@ -19,9 +19,7 @@
 #include <endpoints/base/IEndpoint.h>
 #include <string>
 
-namespace soqosmw {
-class ConnectionSpecificInformation;
-} /* namespace soqosmw */
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 
 namespace soqosmw {
 class PublisherWriter;
@@ -52,11 +50,18 @@ public:
     virtual ~IPublisher();
 
     /**
-     * Publish a payloud to all subscribers. This needs to be implemented by all subclasses.
+     * Publish a payload to all subscribers. This needs to be implemented by all subclasses.
      * @param payload
      */
     virtual void publish(omnetpp::cPacket* payload) = 0;
+    /**
+     * get the connection specific information for this publisher
+     */
     virtual ConnectionSpecificInformation* getConnectionSpecificInformation() = 0;
+    /**
+     * Get the qos class for this publisher
+     */
+    virtual QoSGroups getQoSClass() = 0;
 
     PublisherWriter* getWriter() {
         return _writer;

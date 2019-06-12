@@ -22,6 +22,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <string>
 
 namespace omnetpp {
 class cPacket;
@@ -46,6 +47,12 @@ public:
     IQoSPolicy* getQoSValueFor(std::string property);
 
     void notify (omnetpp::cMessage* msg);
+
+    /**
+     * Searches for a publisher with the path and the correct qos in the list.
+     * @return if found the publisher, else nullptr
+     */
+    IPublisher* findPublisherLike (std::string& publisherPath, int qos);
 
 private:
     /**
