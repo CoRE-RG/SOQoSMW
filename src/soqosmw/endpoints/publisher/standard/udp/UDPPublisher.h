@@ -45,11 +45,8 @@ private:
         }
 
         void deliver(omnetpp::cPacket* payload, const char *message = ""){
-            omnetpp::cPacket* deliver = new cPacket();
-            deliver->setTimestamp();
-            deliver->setByteLength(payload->getByteLength());
-            deliver->setName(message);
-            _socket->sendTo(deliver, _remoteAddress, _remotePort);
+            payload->setName(message);
+            _socket->sendTo(payload, _remoteAddress, _remotePort);
         }
 
     private:

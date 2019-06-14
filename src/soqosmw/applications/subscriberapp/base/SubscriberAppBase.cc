@@ -25,6 +25,8 @@
 #include <inet/linklayer/ethernet/EtherFrame_m.h>
 #include <core4inet/base/avb/AVBDefs.h>
 
+#include <inet/transportlayer/contract/tcp/TCPCommand_m.h>
+
 namespace soqosmw {
 using namespace std;
 using namespace CoRE4INET;
@@ -72,11 +74,9 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         //TODO set the gate at the reader to get all messages
 
         delete msg;
-    } else if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
-        //send(msg, gate("std_tcpIn")->getNextGate());
-
-        _reader->notify(msg);
-
+    } else if(dynamic_cast<inet::TCPConnectInfo*>(msg->getControlInfo())){
+            // check if it is control information
+            _reader->notify(msg);
     } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
         //this is a subscription message so handle it.
