@@ -19,56 +19,97 @@
 
 #include "soqosmw/endpoints/base/EndpointBase.h"
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
+#include <algorithm>
 
 namespace soqosmw {
 
 void ConnectorBase::initialize()
 {
-    enabled = true;
+    handleParameterChange(nullptr);
 }
 
 void ConnectorBase::handleMessage(cMessage *msg)
 {
-    if(enabled){
-        if (msg->arrivedOn("applicationIn")){
-            //from application --> forward to all endpoints
-            for(auto endpoint : _endpoints) {
-                sendDirect(msg->dup(), _endpoints->gate("connectorIn"));
-            }
+    if (_endpointFwdEnabled && msg->arrivedOn("applicationIn")){
+        //from applications --> forward to all endpoints
+        for(auto endpoint : _endpoints) {
+            sendDirect(msg->dup(), endpoint->gate("connectorIn"));
+        }
 
-        } else if (msg->arrivedOn("endpointIn")) {
-            //from endpoint --> forward to application
-            sendDirect(msg->dup(), _executingApplication->gate("connectorIn"));
+    } else if (_applicationFwdEnabled && msg->arrivedOn("endpointIn")) {
+        //from endpoints --> forward to applications
+        for(auto application : _applications) {
+            sendDirect(msg->dup(), application->gate("connectorIn"));
         }
     }
 
     delete msg;
 }
 
-const std::vector<EndpointBase*>& ConnectorBase::getEndpoints() const {
-    return _endpoints;
+void ConnectorBase::handleParameterChange(const char* parname) {
+    if (!parname || !strcmp(parname, "maxApplications")) {
+        _maxApplications = par("maxApplications");
+    }
+    if (!parname || !strcmp(parname, "maxEndpoints")) {
+        _maxEndpoints = par("maxEndpoints");
+    }
+    if (!parname || !strcmp(parname, "applicationFwdEnabled")) {
+        _applicationFwdEnabled = par("applicationFwdEnabled");
+    }
+    if (!parname || !strcmp(parname, "endpointFwdEnabled")) {
+        _endpointFwdEnabled = par("endpointFwdEnabled");
+    }
 }
 
-void ConnectorBase::setEndpoints(
-        const std::vector<EndpointBase*>& endpoints) {
-    _endpoints = endpoints;
+bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
+    if(endpoint && (_maxEndpoints < 0 || (int)_endpoints.size() < _maxEndpoints)) {
+        //check if not already in the list, then add.
+        auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
+        if (it == _endpoints.end()){
+            _endpoints.push_back(endpoint);
+            return true;
+        }
+    }
+    return false;
 }
 
-const SOQoSMWApplicationBase*& ConnectorBase::getExecutingApplication() const {
-    return _executingApplication;
+EndpointBase* ConnectorBase::removeEndpoint(EndpointBase* endpoint) {
+    //check if in the list, then remove.
+    if(endpoint){
+        auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
+        if (it == _endpoints.end()){
+            EndpointBase* temp = *it;
+            _endpoints.erase(it);
+            return temp;
+        }
+    }
+    return nullptr;
 }
 
-void ConnectorBase::setExecutingApplication(
-        const SOQoSMWApplicationBase*& executingApplication) {
-    _executingApplication = executingApplication;
+bool ConnectorBase::addApplication(SOQoSMWApplicationBase* application) {
+    if(application && (_maxApplications < 0 || (int)_applications.size() < _maxApplications)){
+        //check if not already in the list, then add.
+        auto it = find(_applications.begin(), _applications.end(), application);
+        if (it == _applications.end()){
+            _applications.push_back(application);
+            return true;
+        }
+    }
+    return false;
 }
 
-bool ConnectorBase::isEnabled() const {
-    return enabled;
-}
-
-void ConnectorBase::setEnabled(bool enabled = false) {
-    this->enabled = enabled;
+SOQoSMWApplicationBase* ConnectorBase::removeApplication(
+        SOQoSMWApplicationBase* application) {
+    //check if in the list, then remove.
+    if(application){
+        auto it = find(_applications.begin(), _applications.end(), application);
+        if (it == _applications.end()){
+            SOQoSMWApplicationBase* temp = *it;
+            _applications.erase(it);
+            return temp;
+        }
+    }
+    return nullptr;
 }
 
 } /*end namespace soqosmw*/

@@ -30,4 +30,15 @@ simple SubscriberConnector extends ConnectorBase
 {
     parameters:
         @class(soqosmw::SubscriberConnector);
+        // maximum number of appilcations allowed to connect to this connector.
+        // -1 = infinite
+        maxApplications = default(-1);
+        // maximum number of endpoints allowed to connect to this connector.
+        // -1 = infinite
+        maxEndpoints = default(1);
+        
+        // Indicates if messages should be forwarded to applications.
+        applicationFwdEnabled = default(true);
+        // Indicates if messages should be forwarded to endpoints.
+        endpointFwdEnabled = default(false);
 }

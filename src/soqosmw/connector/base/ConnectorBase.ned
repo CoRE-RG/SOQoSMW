@@ -26,6 +26,19 @@ package soqosmw.connector.base;
 //
 simple ConnectorBase
 {
+    parameters:
+        // maximum number of appilcations allowed to connect to this connector.
+        // -1 = infinite
+        int maxApplications = default(-1);
+        // maximum number of endpoints allowed to connect to this connector.
+        // -1 = infinite
+        int maxEndpoints = default(-1);
+        
+        // Indicates if messages should be forwarded to applications.
+        bool applicationFwdEnabled = default(true);
+        // Indicates if messages should be forwarded to endpoints.
+        bool endpointFwdEnabled = default(true);
+        
     gates:
         // input gate for messegas from the application
         input applicationIn @directIn;

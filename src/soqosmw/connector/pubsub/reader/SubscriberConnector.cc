@@ -17,33 +17,8 @@
 
 #include <connector/pubsub/reader/SubscriberConnector.h>
 
-#include "soqosmw/endpoints/subscriber/base/SubscriberBase.h"
-
 namespace soqosmw {
 
 Define_Module(SubscriberConnector);
-
-void PublisherConnector::addEndpoint(EndpointBase* endpoint) {
-    if(dynamic_cast<SubscriberBase*>(endpoint)){
-        //check if not already in the list, then add.
-        auto it = find(_endpoints.begin(), _endpoints.end(), _endpoints);
-        if (it == _endpoints.end()){
-            _endpoints.push_back(subscriber);
-        }
-    }
-}
-
-EndpointBase* PublisherConnector::removeEndpoint(EndpointBase* endpoint) {
-    //check if in the list, then remove.
-    if(dynamic_cast<SubscriberBase*>(endpoint)){
-        auto it = find(_endpoints.begin(), _endpoints.end(), _endpoints);
-        if (it == _endpoints.end()){
-            EndpointBase* temp = *it;
-            _endpoints.erase(it);
-            return temp;
-        }
-    }
-    return nullptr;
-}
 
 } /*end namespace soqosmw*/

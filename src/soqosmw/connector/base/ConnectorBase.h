@@ -40,13 +40,15 @@ class ConnectorBase : public cSimpleModule
 {
 public:
     /**
-     * Adds the endpoint to this connector only if the endpoint is not already in the list.
-     * It allows the transmission of messages to the executing application.
+     * Adds the endpoint to this connector only if the endpoint is not already in the list
+     * and the list is not larger then max applications.
      * Implementing ConnectorClasses need to check for the correct type of endpoint.
      *
      * @param endpoint    the endpoint to add.
+     *
+     * @return            true if the endpoint has been added.
      */
-    void addEndpoint(EndpointBase* endpoint) = 0;
+    virtual bool addEndpoint(EndpointBase* endpoint);
 
     /**
      * Removes the endpoint from this connector if present.
@@ -56,34 +58,107 @@ public:
      * @return  the endpoint if it was removed (pointer no longer managed by this module)
      *          nullptr if the endpoint is not registered.
      */
-    EndpointBase* removeEndpoint(EndpointBase* endpoint) = 0;
+    virtual EndpointBase* removeEndpoint(EndpointBase* endpoint);
+
+    /**
+     * Adds the application to this connector only if the application is not already in the list
+     * and the list is not larger then max applications.
+     * Implementing ConnectorClasses need to check for the correct type of application.
+     *
+     * @param application    the application to add.
+     *
+     * @return               true if the application has been added.
+     */
+    virtual bool addApplication(SOQoSMWApplicationBase* application);
+
+    /**
+     * Removes the application from this connector if present.
+     * Implementing ConnectorClasses need to check for the correct type of application.
+     *
+     * @param application    the endpoint to remove.
+     * @return  the application if it was removed (pointer no longer managed by this module)
+     *          nullptr if the application is not registered.
+     */
+    virtual SOQoSMWApplicationBase* removeApplication(SOQoSMWApplicationBase* endpoint);
 
     //getter + setter
-    const std::vector<EndpointBase*>& getEndpoints() const;
-    const SOQoSMWApplicationBase* getExecutingApplication() const;
-    void setExecutingApplication(
-            const SOQoSMWApplicationBase* executingApplication);
-    bool isEnabled() const;
-    void setEnabled(bool enabled = false);
+    bool isApplicationFwdEnabled() const {
+        return _applicationFwdEnabled;
+    }
+
+    void setApplicationFwdEnabled(bool applicationFwdEnabled) {
+        _applicationFwdEnabled = applicationFwdEnabled;
+    }
+
+    bool isEndpointFwdEnabled() const {
+        return _endpointFwdEnabled;
+    }
+
+    void setEndpointFwdEnabled(bool endpointFwdEnabled) {
+        _endpointFwdEnabled = endpointFwdEnabled;
+    }
+
+    const std::vector<EndpointBase*>& getEndpoints() const {
+        return _endpoints;
+    }
+
+    const std::vector<SOQoSMWApplicationBase*>& getApplications() const {
+        return _applications;
+    }
 
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void handleParameterChange(const char* parname) override;
 
     /**
-     * Caches if forwarding is enabled.
+     * Caches if forwarding to the endpoints is enabled.
      */
-    bool enabled = false;
+    bool _endpointFwdEnabled;
 
     /**
-     * Contains pointers to the registered subscribers on this writer.
+     * Caches if forwarding to the applications is enabled.
+     */
+    bool _applicationFwdEnabled;
+
+    /**
+     * Endpoints to connect to the applications.
      */
     std::vector<EndpointBase*> _endpoints;
 
     /**
-     * Owner Module of this Endpoint.
+     * The maximum number of allowed endpoints connected to this connector.
+     * if < 0 infinite.
      */
-    SOQoSMWApplicationBase* _executingApplication;
+    int _maxEndpoints = -1;
+
+    /**
+     * Applications to connect to the endpoint.
+     */
+    std::vector<SOQoSMWApplicationBase*> _applications;
+
+    /**
+     * The maximum number of allowed applications connected to this connector.
+     * if < 0 infinite.
+     */
+    int _maxApplications = -1;
+
+    /**
+     * Gate name for traffic from the application module.
+     */
+    static const char APPLICATION_IN_GATE_NAME []; // = "applicationIn";
+    /**
+     * Gate name for traffic to the application module.
+     */
+    static const char APPLICATION_OUT_GATE_NAME []; // = "connectorIn";
+    /**
+     * Gate name for traffic from the endpoint module.
+     */
+    static const char ENDPOINT_IN_GATE_NAME []; //= "endpointIn";
+    /**
+     * Gate name for traffic to the endpoint module.
+     */
+    static const char ENDPOINT_OUT_GATE_NAME []; //= "connectorIn";
 };
 
 } /*end namespace soqosmw*/

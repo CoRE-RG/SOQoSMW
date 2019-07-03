@@ -17,34 +17,9 @@
 
 #include "PublisherConnector.h"
 
-#include "soqosmw/endpoints/publisher/base/PublisherBase.h"
-
 namespace soqosmw {
 
 Define_Module(PublisherConnector);
-
-void PublisherConnector::addEndpoint(EndpointBase* endpoint) {
-    if(dynamic_cast<PublisherBase*>(endpoint)){
-        //check if not already in the list, then add.
-        auto it = find(_endpoints.begin(), _endpoints.end(), _endpoints);
-        if (it == _endpoints.end()){
-            _endpoints.push_back(subscriber);
-        }
-    }
-}
-
-EndpointBase* PublisherConnector::removeEndpoint(EndpointBase* endpoint) {
-    //check if in the list, then remove.
-    if(dynamic_cast<PublisherBase*>(endpoint)){
-        auto it = find(_endpoints.begin(), _endpoints.end(), _endpoints);
-        if (it == _endpoints.end()){
-            EndpointBase* temp = *it;
-            _endpoints.erase(it);
-            return temp;
-        }
-    }
-    return nullptr;
-}
 
 
 } /*end namespace soqosmw*/
