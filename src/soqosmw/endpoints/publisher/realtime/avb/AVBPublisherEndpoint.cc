@@ -1,0 +1,180 @@
+//
+// c Timo Haeckel, for HAW Hamburg
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+#include "AVBPublisherEndpoint.h"
+
+#include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
+
+//INET
+#include "inet/linklayer/ethernet/Ethernet.h"
+//CoRE4INET
+#include "core4inet/base/CoRE4INET_Defs.h"
+#include "core4inet/utilities/ConfigFunctions.h"
+#include <core4inet/base/NotifierConsts.h>
+//AUTO-GENERATED MESSAGES
+#include <core4inet/linklayer/ethernet/avb/AVBFrame_m.h>
+
+using namespace CoRE4INET;
+using namespace inet;
+
+namespace soqosmw {
+
+Define_Module(AVBPublisherEndpoint);
+
+void AVBPublisherEndpoint::initialize() {
+
+    //find srp table
+    _srpTable = check_and_cast<SRPTable *>(
+            _connector->getApplications()[0]->getParentModule()->getSubmodule("srpTable"));
+    if(!_srpTable){
+        throw cRuntimeError("srpTable module required for stream reservation but not found");
+    }
+
+    _avbOutCTC = _connector->getApplications()[0]->getParentModule()->getSubmodule("avbCTC");
+    if(!_avbOutCTC){
+        throw cRuntimeError("avbOutCTC module required for stream sending but not found");
+    }
+
+    _multicastMAC = inet::MACAddress::generateAutoAddress();
+    _multicastMAC.setAddressByte(0, (_multicastMAC.getAddressByte(1) | 0x01));
+
+    RTPublisherEndpointBase::initialize();
+}
+
+void AVBPublisherEndpoint::handleParameterChange(const char* parname) {
+    RTPublisherEndpointBase::handleParameterChange(parname);
+
+    if (!parname || !strcmp(parname, "srClass"))
+    {
+        if (strcmp(par("srClass").stringValue(), "A") == 0)
+        {
+            this->_srClass = SR_CLASS::A;
+        }
+        else if (strcmp(par("srClass").stringValue(), "B") == 0)
+        {
+            this->_srClass = SR_CLASS::B;
+        }
+        else
+        {
+            throw cRuntimeError("Parameter srClass of %s is %s and is only allowed to be A or B", getFullPath().c_str(),
+                    par("srClass").stringValue());
+        }
+    }
+    if (!parname || !strcmp(parname, "streamID"))
+    {
+#if LONG_BIT == 32
+        this->_streamID = parameterULongCheckRange(par("streamID"), 0, static_cast<unsigned long>(MAX_STREAM_ID));
+#else
+        this->_streamID = parameterULongCheckRange(par("streamID"), 0, MAX_STREAM_ID);
+#endif
+    }
+    if (!parname || !strcmp(parname, "intervalFrames"))
+    {
+        this->_intervalFrames = static_cast<uint16_t>(parameterULongCheckRange(par("intervalFrames"), 1,
+        MAX_INTERVAL_FRAMES));
+    }
+    if (!parname || !strcmp(parname, "vlan_id"))
+    {
+        this->_vlanID = static_cast<uint16_t>(parameterULongCheckRange(par("vlan_id"), 0, MAX_VLAN_ID));
+    }
+    if (!parname || !strcmp(parname, "payload"))
+    {
+        auto payload = parameterULongCheckRange(par("payload"), 0,
+                MAX_ETHERNET_DATA_BYTES);
+
+        if (payload <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES - ETHER_8021Q_TAG_BYTES))
+        {
+            _frameSize = MIN_ETHERNET_FRAME_BYTES;
+        }
+        else
+        {
+            _frameSize = payload + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
+        }
+    }
+}
+
+void AVBPublisherEndpoint::receiveSignal(__attribute__((unused))   cComponent *src,
+        simsignal_t id, cObject *obj, __attribute__((unused))   cObject *details) {
+    if (id == NF_AVB_LISTENER_REGISTERED)
+    {
+        SRPTable::ListenerEntry *lentry = dynamic_cast<SRPTable::ListenerEntry*>(obj);
+
+        //If talker for the desired stream, register Listener
+        if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
+        {
+            EV_INFO << _endpointPath << ": Listener for stream " << lentry->streamId << " registered!" << std::endl;
+
+            _isConnected = true;
+        }
+    }
+    else if (id == NF_AVB_LISTENER_REGISTRATION_TIMEOUT || id == NF_AVB_LISTENER_UNREGISTERED)
+    {
+        SRPTable::ListenerEntry *lentry = dynamic_cast<SRPTable::ListenerEntry*>(obj);
+
+        //If talker for the desired stream, unregister Listener
+        if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
+        {
+            EV_INFO << _endpointPath << ": Listener Removed at stream " << _streamID << endl;
+            //check whether there are listeners left
+            if (_srpTable->getListenersForStreamId(_streamID, _vlanID).size() == 0)
+            {
+                EV_DEBUG << _endpointPath << ": No more Listeners Registered for " << _streamID << "!" << std::endl;
+                _isConnected = false;
+            }
+        }
+    }
+}
+
+void AVBPublisherEndpoint::initializeTransportConnection() {
+    _isConnected = false;
+    EV_INFO << "Register Talker in node" << std::endl;
+    _srpTable->subscribe(NF_AVB_LISTENER_REGISTERED, this);
+    _srpTable->subscribe(NF_AVB_LISTENER_UNREGISTERED, this);
+    _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);
+    _srpTable->updateTalkerWithStreamId(_streamID, this,
+            _multicastMAC, _srClass, _frameSize, _intervalFrames, _vlanID);
+    EV_INFO << _endpointPath << ": Registered AVBTalker with streamID " << _streamID << endl;
+}
+
+ConnectionSpecificInformation* AVBPublisherEndpoint::getConnectionSpecificInformation() {
+    CSI_AVB* connection = new CSI_AVB();
+    connection->setStreamID(_streamID);
+    connection->setVlanID(_vlanID);
+
+    return connection;
+}
+
+void AVBPublisherEndpoint::publish(cPacket* msg) {
+    if (_isConnected) {
+        char frameName[10];
+        sprintf(frameName, "Stream %lu", _streamID);
+        AVBFrame *outFrame = new AVBFrame(frameName);
+        outFrame->setTimestamp();
+        outFrame->setStreamID(_streamID);
+        outFrame->setDest(_multicastMAC);
+        outFrame->setVID(_vlanID);
+
+        outFrame->encapsulate(msg);
+        //Padding
+        if (outFrame->getByteLength() < MIN_ETHERNET_FRAME_BYTES) {
+            outFrame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
+        }
+        sendDirect(outFrame, _avbOutCTC->gate("in"));
+    }
+}
+
+} /*end namespace soqosmw*/
