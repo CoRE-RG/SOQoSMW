@@ -17,14 +17,58 @@
 
 #include "EndpointBase.h"
 
-Define_Module(EndpointBase);
+namespace soqosmw {
+
+//Gate names
+const char EndpointBase::CONNECTOR_OUT_GATE_NAME[] = "endpointIn";
+const char EndpointBase::CONNECTOR_IN_GATE_NAME[] = "connectorIn";
+
+const char EndpointBase::TRANSPORT_IN_GATE_NAME[] = "transportIn";
+const char EndpointBase::TRANSPORT_OUT_GATE_NAME[] = "transportOut";
+
 
 void EndpointBase::initialize()
 {
-    // TODO - Generated method body
+    //nothing to do
+    initializeTransportConnection();
 }
 
 void EndpointBase::handleMessage(cMessage *msg)
 {
-    // TODO - Generated method body
+    if(msg->arrivedOn(CONNECTOR_IN_GATE_NAME)){
+        // from connector
+        handleConnectorIn(msg);
+
+    }else if(msg->arrivedOn(TRANSPORT_IN_GATE_NAME)){
+        // from transport
+        handleTransportIn(msg);
+    } else {
+        delete msg;
+    }
 }
+
+void EndpointBase::handleParameterChange(const char* parname) {
+    if (!parname || !strcmp(parname, "qos")) {
+        if(par("qos")){
+            if (!strcmp(par("qos"), "RT")) {
+                _qos = QoSGroups::RT;
+            } else if (!strcmp(par("qos"), "WEB")) {
+                _qos = QoSGroups::WEB;
+            } else if (!strcmp(par("qos"), "STD_TCP")) {
+                _qos = QoSGroups::STD_TCP;
+            } else if (!strcmp(par("qos"), "STD_UDP")) {
+                _qos = QoSGroups::STD_UDP;
+            } else {
+                throw cRuntimeError("Endpoint QoS parameter set to unknown value");
+            }
+        } else {
+            throw cRuntimeError("Endpoint QoS parameter not set");
+        }
+    }
+    if (!parname || !strcmp(parname, "endpointPath")) {
+        _endpointPath = par("endpointPath").stdstringValue();
+    }
+}
+
+
+} /*end namespace soqosmw*/

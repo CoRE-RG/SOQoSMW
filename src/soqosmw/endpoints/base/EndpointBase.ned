@@ -18,12 +18,29 @@
 package soqosmw.endpoints.base;
 
 //
-// The SubscriberConnector implements the common interface for all connctor modules @see~ConnectorBase.
-// This module is created by the LocalServiceManager module (@see~LocalServiceManager)
-// during runtime to connect a subscriber application to its protocol specific subscriper endpoints.
+// The EndpointBase provides a common interface for all endpoint modules.
+// Endpoints are created by the QoSNegotiationProtocol module (@see~QoSNegotiationProtocol)
+// during runtime to connect realise a local endpoint for a service. 
+// Endpoints are connected to a specific transport and a connector module (@see~ConnectorBase)
+// which loosely couples an endpoint to an application (@see~SOQoSMWApplicationBase). 
 //
 // @author Timo Haeckel, for HAW Hamburg
 //
 simple EndpointBase
 {
+    parameters:
+        // indicates which qos is realized in this endpoint one of RT, STD_UDP, STD_TCP, WEB
+        string qos;  
+        
+     	//The name of the endpoint as a path (e.g. "Reifendruck/links").
+    	string endpointPath = default("");
+    
+    gates:
+        // input gate for messegas from the application
+        input connectorIn @directIn;
+        
+        // incoming traffic from transport layer        
+        input transportIn @loose;
+        // outgoing traffic to transport layer
+        input transportOut @loose;
 }

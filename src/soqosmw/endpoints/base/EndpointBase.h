@@ -19,17 +19,115 @@
 #define __SOQOSMW_ENDPOINTBASE_H_
 
 #include <omnetpp.h>
+#include <string>
+
+#include "soqosmw/connector/base/ConnectorBase.h"
+
+//AUTO-GENERATED MESSAGES
+#include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 
 using namespace omnetpp;
 
+namespace soqosmw {
+
 /**
- * TODO - Generated class
+ * The EndpointBase provides a common interface for all endpoint modules.
+ * Endpoints are created by the LocalServiceManager module (@see~LocalServiceManager)
+ * during runtime to connect a service application to its protocol specific service endpoints.
+ *
+ * @author Timo Haeckel, for HAW Hamburg
  */
 class EndpointBase : public cSimpleModule
 {
+public:
+
+    /**
+     * Creates a connection specific information for this endpoint.
+     * @return  the connection specific information.
+     */
+    virtual ConnectionSpecificInformation* getConnectionSpecificInformation() = 0;
+
+    QoSGroups getQos() const {
+        return _qos;
+    }
+
+    const ConnectorBase* getConnector() const {
+        return _connector;
+    }
+
+    void setConnector(ConnectorBase* connector) {
+        _connector = connector;
+    }
+
+    const std::string& getEndpointPath() const {
+        return _endpointPath;
+    }
+
+    void setEndpointPath(const std::string& path) {
+        _endpointPath = path;
+    }
+
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void handleParameterChange(const char* parname) override;
+
+    /**
+     * Is called during module initialization to initialize the transport connection;
+     */
+    virtual void initializeTransportConnection() = 0;
+
+    /**
+     * Handles messages incoming from transport gate and
+     * forwards them to the connector if they are for applications.
+     *
+     * @param msg   the message to handle.
+     */
+    virtual void handleTransportIn(cMessage *msg) = 0;
+
+    /**
+     * Handles messages incoming from the connector gate and
+     * forwards them to the transport if needed.
+     *
+     * @param msg   the message to handle.
+     */
+    virtual void handleConnectorIn(cMessage *msg) = 0;
+
+
+    /**
+     * The name of the endpoint as a path for better specifying (e.g. "Reifendruck/links").
+     */
+    std::string _endpointPath;
+
+    /**
+     * The connector to applications.
+     */
+    ConnectorBase* _connector;
+
+    /**
+     * Holds the information about the QoS group realized in this endpoint.
+     */
+    QoSGroups _qos;
+
+    /**
+     * Gate name (@directIn) for request inputs in data stores
+     */
+    static const char CONNECTOR_OUT_GATE_NAME []; // = "endpointIn";
+    /**
+     * Gate name (@directIn) for response inputs to NetConf server
+     */
+    static const char CONNECTOR_IN_GATE_NAME []; // = "connectorIn";
+    /**
+     * Gate name for transport inputs
+     */
+    static const char TRANSPORT_IN_GATE_NAME []; //= "transportIn";
+    /**
+     * Gate name for transport outputs
+     */
+    static const char TRANSPORT_OUT_GATE_NAME []; //= "transportOut";
 };
+
+} /*end namespace soqosmw*/
 
 #endif
