@@ -37,6 +37,11 @@ public:
         return _value;
     }
 
+    virtual bool operator==(IQoSPolicy& other){
+        QoSGroup& real = static_cast<QoSGroup&> (other);
+        return real._value == _value;
+    }
+
 private:
     const QoSGroups_t _value;
 };

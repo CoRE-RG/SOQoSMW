@@ -27,5 +27,29 @@
 #include <soqosmw/qospolicy/std/LocalAddressQoSPolicy.h>
 #include <soqosmw/qospolicy/std/LocalPortQoSPolicy.h>
 
+#include <string>
+#include <unordered_map>
 
+
+namespace soqosmw {
+typedef std::unordered_map<std::string, IQoSPolicy*> QoSPolicyMap;
+
+bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right){
+    if(left.size() == right.size()){
+        for(auto& elementsLeft : left){
+            auto elementRight = right.find(elementsLeft.first);
+            if(elementRight != right.end()){
+                if(*(elementRight->second) != *(elementsLeft.second)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+} /* end namespace  */
 #endif /* SOQOSMW_QOSPOLICY_BASE_QOSPOLICY_H_ */

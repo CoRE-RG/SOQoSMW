@@ -33,6 +33,11 @@ public:
         return _value;
     }
 
+    virtual bool operator==(IQoSPolicy& other){
+        SRClassQoSPolicy& real = static_cast<SRClassQoSPolicy&> (other);
+        return real._value == _value;
+    }
+
 private:
     const CoRE4INET::SR_CLASS _value;
 };

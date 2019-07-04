@@ -24,6 +24,11 @@ public:
         return _value;
     }
 
+    virtual bool operator==(IQoSPolicy& other){
+        SizeQoSPolicy& real = static_cast<SizeQoSPolicy&> (other);
+        return real._value == _value;
+    }
+
 private:
     const size_t _value;
 };

@@ -29,6 +29,11 @@ public:
         return _value;
     }
 
+    virtual bool operator==(IQoSPolicy& other){
+        StringQoSPolicy& real = static_cast<StringQoSPolicy&> (other);
+        return real._value == _value;
+    }
+
 private:
     const std::string _value;
 };

@@ -25,6 +25,11 @@ public:
     IQoSPolicy();
     virtual ~IQoSPolicy();
 
+    bool operator!=(IQoSPolicy& other) {
+        return !(*this == other);
+    };
+    virtual bool operator==(IQoSPolicy& other) = 0;
+
 private:
 
 };

@@ -26,6 +26,11 @@ public:
         return _value;
     }
 
+    virtual bool operator==(IQoSPolicy& other){
+        UInt16QoSPolicy& real = static_cast<UInt16QoSPolicy&> (other);
+        return real._value == _value;
+    }
+
 private:
     const uint16_t _value;
 };
