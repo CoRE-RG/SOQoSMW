@@ -39,9 +39,4 @@ simple UDPSubscriberEndpoint extends STDSubscriberEndpointBase
         string localAddress;
         // Local port for TCP socket
         int localPort;
-        
-        // Remote IP address for TCP socket
-        string remoteAddress;
-        // Remote port for TCP socket
-        int remotePort;
 }

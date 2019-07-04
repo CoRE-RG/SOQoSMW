@@ -73,15 +73,16 @@ void LocalServiceManager::handleParameterChange(const char* parname) {
 }
 
 ConnectorBase* LocalServiceManager::registerPublisherService(std::string& publisherPath,
-            QoSPolicyMap& qosPolicies,
+        QoSPolicyMap& qosPolicies,
             SOQoSMWApplicationBase* executingApplication) {
     Enter_Method("LSM:registerPublisherService()");
 
     // check if the publisher already exists.
-    if(PublisherConnector *connector = _publisherConnectors.find(publisherPath)){
-        if(connector->addApplication(executingApplication)){
-            connector->setQos(qosPolicies);
-            return connector;
+    auto iter = _publisherConnectors.find(publisherPath);
+    if(iter != _publisherConnectors.end()){
+        if(iter->second->addApplication(executingApplication)){
+            iter->second->setQos(qosPolicies);
+            return iter->second;
         } else {
             throw cRuntimeError("This Publisher Service already exists on this host...");
         }
@@ -115,12 +116,13 @@ ConnectorBase* LocalServiceManager::registerSubscriberService(std::string& subsc
     Enter_Method("LSM:registerSubscriberService()");
 
     // check if the subscriber already exists.
-    if(SubscriberConnector *connector = _subscriberConnectors.find(publisherPath)){
+    auto iter = _subscriberConnectors.find(publisherPath);
+    if(iter != _subscriberConnectors.end()){
         // we allready have a service subscribing to the data
-        if(equalQoSMap(qosPolicies, connector->getQos())){
+        if(equalQoSMap(qosPolicies, iter->second->getQos())){
             // same qos as well so try to add and return
-            if(connector->addApplication(executingApplication)){
-                return connector;
+            if(iter->second->addApplication(executingApplication)){
+                return iter->second;
             } else {
                 throw cRuntimeError("This Subscriber service already exists on this host...");
             }
@@ -167,14 +169,14 @@ ConnectorBase* LocalServiceManager::registerSubscriberService(std::string& subsc
     return module;
 }
 
-ConnectorBase* LocalServiceManager::getPublisherConnectorForName(
+PublisherConnector* LocalServiceManager::getPublisherConnectorForName(
         std::string& publisherPath) {
 
     return _publisherConnectors[publisherPath];
 }
 
 
-ConnectorBase* LocalServiceManager::getSubscriberConnectorForName(
+SubscriberConnector* LocalServiceManager::getSubscriberConnectorForName(
         std::string& publisherPath) {
 
     return _subscriberConnectors[publisherPath];
@@ -182,19 +184,96 @@ ConnectorBase* LocalServiceManager::getSubscriberConnectorForName(
 
 PublisherEndpointBase* LocalServiceManager::createOrFindPublisherFor(
         std::string& publisherPath, int qos) {
+//    if(writer){
+//            switch(qos){
+//            case QoSGroups::RT:
+//
+//                //Create AVB Publisher!
+//                publisher = new AVBPublisher(publisherPath, writer);
+//                break;
+//            case QoSGroups::STD_TCP:
+//
+//                //Create TCP Publisher!
+//                publisher = new TCPPublisher(publisherPath, writer);
+//                break;
+//            case QoSGroups::STD_UDP:
+//
+//                //Create UDP Publisher!
+//                publisher = new UDPPublisher(publisherPath, writer);
+
+    //get endpoint details
+                //    connection = pub->getConnectionSpecificInformation();
+                //
+                //    if(connection && connection->getConnectionType() == ConnectionType::ct_udp) {
+                //        // if UDP connect directly to subscriber now.
+                //        if(ConnectionSpecificInformation* subConnection = dynamic_cast<ConnectionSpecificInformation*>( establish->decapsulate())){
+                //            if(UDPPublisherEndpoint* udpPublisher = dynamic_cast<UDPPublisherEndpoint*> (pub)){
+                //                udpPublisher->addRemote(subConnection);
+                //            }
+                //        }
+                //    }
+//                break;
+//
+//            default:
+//                break;
+//            }
+//        }
+//
+//        //connect endpoint to the writer
+//        if(publisher){
+//            writer->addPublisher(publisher);
+//        }
+}
+
+SubscriberEndpointBase* LocalServiceManager::createOrFindSubscriberFor(
+        std::string& publisherPath, ConnectionSpecificInformation* csi) {
+//    SubscriberEndpointBase* sub = findSubscriberLike(publisherPath, );
+
+//    if(!sub) {
+//        switch(csi->getConnectionType()){
+//        case ConnectionType::ct_avb:
+//
+//            //create according endpoint
+//            subscriber = new AVBSubscriber(publisherPath, reader, csi);
+//            break;
+//        case ConnectionType::ct_tcp:
+//
+//            //create according endpoint
+//            subscriber = new TCPSubscriber(publisherPath, reader, csi);
+//            break;
+//        case ConnectionType::ct_udp:
+//
+//            //create according endpoint
+//            subscriber = new UDPSubscriber(publisherPath, reader, csi);
+//        default:
+//            break;
+//        }
+//
+//        //connect endpoint to the reader
+//        if(subscriber){
+//            reader->addSubscriber(subscriber);
+//        }
+//    }
+
+//    return sub;
 }
 
 PublisherEndpointBase* LocalServiceManager::findPublisherLike(
         std::string& publisherPath, int qos) {
+    PublisherEndpointBase* pub = nullptr;
 
-}
-
-SubscriberEndpointBase* LocalServiceManager::createOrFindSubscriberFor(
-        std::string& publisherPath, int qos) {
+    return pub;
 }
 
 SubscriberEndpointBase* LocalServiceManager::findSubscriberLike(
         std::string& publisherPath, int qos) {
+    SubscriberEndpointBase* sub = nullptr;
+
+    // find fitting connectors
+
+    // check if the
+
+    return sub;
 }
 
 } /* end namespace  */

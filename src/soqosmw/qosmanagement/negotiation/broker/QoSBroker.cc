@@ -13,19 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <endpoints/publisher/base/IPublisher.h>
-#include <endpoints/subscriber/base/ISubscriber.h>
-#include <endpoints/subscriber/standard/udp/UDPSubscriber.h>
-#include <endpoints/publisher/standard/udp/UDPPublisher.h>
-#include <factory/ServiceEndpointFactory.h>
-#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
-#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <omnetpp/clog.h>
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
+
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
-#include <connector/pubsub/writer/PublisherWriter.h>
+#include <connector/base/ConnectorBase.h>
+#include "soqosmw/endpoints/publisher/standard/udp/UDPPublisherEndpoint.h"
+//AUTO-GENERATED Messages
+#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
+#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 #include <iostream>
 #include <unordered_map>
 
@@ -100,7 +97,7 @@ bool QoSBroker::startNegotiation() {
         QoSNegotiationRequest* request = new QoSNegotiationRequest("QoSNegotiationRequest");
         //fill envelope
         fillEnvelope(request);
-        std::unordered_map<std::string, IQoSPolicy*> qosPolicies =
+        QoSPolicyMap qosPolicies =
                 _request->getQosPolicies();
         switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
         case QoSGroup::WEB:
@@ -210,22 +207,21 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
 
                 // create subscriber if udp is wanted -> NOT TESTED
                 if (response->getQosClass() == QoSGroup::QoSGroups::STD_UDP) {
+                    CSI_UDP* csi = new CSI_UDP();
 
+                    // create or find the subscriber
+                    SubscriberEndpointBase* sub = _lsm->createOrFindSubscriberFor(_remote.getPath(),csi);
 
-                    string& path = _remote.getPath();
-                    //get responsible writer
-                    SubscriptionReader* reader = _lsm->getSubscriberConnectorForName(path);
-
-                    CSI_UDP* connectionType = new CSI_UDP;
-                    connectionType->setConnectionType(ConnectionType::ct_udp);
-
-                    //create subscriber
-                    UDPSubscriber* subscriber = dynamic_cast<UDPSubscriber*>(ServiceEndpointFactory::getInstance().createSubscriber(path, connectionType, reader));
-
-                    // encapsulate the CSI into the packet. -> NOT TESTED
-                    ConnectionSpecificInformation* info = subscriber->getConnectionSpecificInformation();
-                    if(info){
-                        establish->encapsulate(info);
+                    if(sub){
+                        // encapsulate the CSI into the packet. -> NOT TESTED
+                        ConnectionSpecificInformation* info = sub->getConnectionSpecificInformation();
+                        if(info){
+                            establish->encapsulate(info);
+                        } else {
+                            throw cRuntimeError("Did not receive a connection info...");
+                        }
+                    } else {
+                        throw cRuntimeError("No subscriber was created...");
                     }
                 }
 
@@ -264,53 +260,41 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
 
             if (isEstablishAcceptable(establish)) {
 
-                ConnectionSpecificInformation* connection = nullptr;
+                // create or find the publisher
+                PublisherEndpointBase* pub = _lsm->createOrFindPublisherFor(_local.getPath(),establish->getQosClass());
 
-                //get path
-                string& path = _local.getPath();
-                //get responsible writer
-                PublisherWriter* writer = _lsm->getPublisherConnectorForName(path);
+                if(pub){
+                    // encapsulate the CSI into the packet.
+                    ConnectionSpecificInformation* info = pub->getConnectionSpecificInformation();
+                    if(info){
+                        finalise->encapsulate(info);
 
-                // check if a publisher like that already exists
-                ConnectorBase* publisher = writer->findPublisherLike(path, establish->getQosClass());
-
-                if(!publisher){
-                    //create publisher
-                    publisher = ServiceEndpointFactory::getInstance().createPublisher(path, establish->getQosClass(), writer);
-                }
-
-
-                if(publisher) {
-
-                    //get endpoint details
-                    connection = publisher->getConnectionSpecificInformation();
-
-                    if(connection && connection->getConnectionType() == ConnectionType::ct_udp) {
-                        // if UDP connect directly to subscriber now.
-                        if(ConnectionSpecificInformation* subConnection = dynamic_cast<ConnectionSpecificInformation*>( establish->decapsulate())){
-                            if(UDPPublisher* udpPublisher = dynamic_cast<UDPPublisher*> (publisher)){
-                                udpPublisher->addConnection(subConnection);
+                        if(info->getConnectionType() == ConnectionType::ct_udp) {
+                            // if UDP connect directly to subscriber now.
+                            if(ConnectionSpecificInformation* subConnection = dynamic_cast<ConnectionSpecificInformation*>( establish->decapsulate())){
+                                if(UDPPublisherEndpoint* udpPublisher = dynamic_cast<UDPPublisherEndpoint*> (pub)){
+                                    udpPublisher->addRemote(subConnection);
+                                }
                             }
                         }
+
+                        // successful negotiation
+                        finalise->setFinalStatus(QoSNegotiationStatus::Success);
+                        EV_DEBUG << " --> finalise success" << endl;
+                        _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
+                    } else {
+                        // negotiation failed. QUIT
+                        finalise->setFinalStatus(QoSNegotiationStatus::Failure);
+                        EV_DEBUG << " --> finalise failed" << endl;
+                        _state = QoSBrokerStates_t::SERVER_FAILURE;
+                        throw cRuntimeError("Did not receive a connection info...");
                     }
-                }
-
-
-
-                if(connection){
-                    //pack details to message
-                    finalise->encapsulate(connection);
-
-                    // successful negotiation
-                    finalise->setFinalStatus(QoSNegotiationStatus::Success);
-                    EV_DEBUG << " --> finalise success" << endl;
-                    _state = QoSBrokerStates_t::SERVER_SESSION_ESTABLISHED;
-
                 } else {
                     // negotiation failed. QUIT
                     finalise->setFinalStatus(QoSNegotiationStatus::Failure);
                     EV_DEBUG << " --> finalise failed" << endl;
                     _state = QoSBrokerStates_t::SERVER_FAILURE;
+                    throw cRuntimeError("No publisher was created...");
                 }
 
             } else {
@@ -344,19 +328,18 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                 _request->setStatus(RequestStatus::FINALISED_SUCCESS);
 
                 //get connection specific information
-                cPacket* enc = finalise->decapsulate();
-                if(enc){
-                    ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(enc);
+                ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(finalise->decapsulate());
+                if(info){
 
-                    // TODO UDP do not create another udp subscriber NOT TESTED
+                    // do not create another udp subscriber!
                     if (info->getConnectionType() != ConnectionType::ct_udp) {
-                        //get path
-                        string& path = _remote.getPath();
-                        //get responsible writer
-                        SubscriptionReader* reader = _lsm->getSubscriberConnectorForName(path);
 
-                        //create subscriber
-                        ServiceEndpointFactory::getInstance().createSubscriber(path, info, reader);
+                        // create or find the subscriber
+                        SubscriberEndpointBase* sub = _lsm->createOrFindSubscriberFor(_remote.getPath(),info);
+
+                        if(!sub){
+                            throw cRuntimeError("No subscriber was created...");
+                        }
                     }
                 }
 

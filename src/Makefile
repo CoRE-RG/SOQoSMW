@@ -54,24 +54,21 @@ OBJS = \
     $O/soqosmw/endpoints/subscriber/standard/base/STDSubscriberEndpointBase.o \
     $O/soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriberEndpoint.o \
     $O/soqosmw/endpoints/subscriber/standard/udp/UDPSubscriberEndpoint.o \
-    $O/soqosmw/factory/ServiceEndpointFactory.o \
     $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
     $O/soqosmw/qospolicy/base/IQoSPolicy.o \
-    $O/soqosmw/qospolicy/base/QoSPolicyFactory.o \
+    $O/soqosmw/qospolicy/base/qospolicy.o \
     $O/soqosmw/servicemanager/LocalServiceManager.o \
     $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
     $O/soqosmw/messages/Envelope_m.o \
     $O/soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.o \
-    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o \
-    $O/soqosmw/messages/application/ApplicationCallbacks_m.o
+    $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
 
 # Message files
 MSGFILES = \
     soqosmw/messages/Envelope.msg \
     soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation.msg \
-    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg \
-    soqosmw/messages/application/ApplicationCallbacks.msg
+    soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol.msg
 
 # SM files
 SMFILES =

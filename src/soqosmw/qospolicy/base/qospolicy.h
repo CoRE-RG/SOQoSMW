@@ -9,7 +9,6 @@
 #define SOQOSMW_QOSPOLICY_BASE_QOSPOLICY_H_
 
 #include <soqosmw/qospolicy/base/IQoSPolicy.h>
-#include <soqosmw/qospolicy/base/QoSPolicyFactory.h>
 
 #include <soqosmw/qospolicy/base/types/DoubleQoSPolicy.h>
 #include <soqosmw/qospolicy/base/types/IntQoSPolicy.h>
@@ -34,22 +33,13 @@
 namespace soqosmw {
 typedef std::unordered_map<std::string, IQoSPolicy*> QoSPolicyMap;
 
-bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right){
-    if(left.size() == right.size()){
-        for(auto& elementsLeft : left){
-            auto elementRight = right.find(elementsLeft.first);
-            if(elementRight != right.end()){
-                if(*(elementRight->second) != *(elementsLeft.second)) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
+/**
+ * This function checks if the policies in the left and right map are equal.
+ * @param left      one policy list
+ * @param right     the other policy list
+ * @return          left == right
+ */
+bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right);
 
 } /* end namespace  */
 #endif /* SOQOSMW_QOSPOLICY_BASE_QOSPOLICY_H_ */

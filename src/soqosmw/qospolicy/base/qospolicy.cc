@@ -3,30 +3,35 @@
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
-// 
+//
 
-#include <qospolicy/base/QoSPolicyFactory.h>
+#include "soqosmw/qospolicy/base/qospolicy.h"
+
 
 namespace soqosmw {
 
-using namespace std;
+bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right){
+    if(left.size() == right.size()){
+        for(auto& elementsLeft : left){
+            auto elementRight = right.find(elementsLeft.first);
+            if(elementRight != right.end()){
+                if(*(elementRight->second) != *(elementsLeft.second)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
 
-QoSPolicyFactory::QoSPolicyFactory() {
-    // TODO Auto-generated constructor stub
-
+    return true;
 }
-
-QoSPolicyFactory::~QoSPolicyFactory() {
-    // TODO Auto-generated destructor stub
-
-}
-
-} /* end namepsace soqosmw */
+} /* end namespace  */

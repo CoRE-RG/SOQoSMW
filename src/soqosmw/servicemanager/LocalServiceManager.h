@@ -28,11 +28,12 @@
 #include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include "soqosmw/discovery/static/StaticServiceDiscovery.h"
+#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
 
 //STD
 #include <atomic>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <vector>
 //INET
 #include <inet/networklayer/common/L3Address.h>
@@ -122,10 +123,21 @@ protected:
      * The connector will be connected as well.
      *
      * @param publisherPath     the path of the publisher.
-     * @param qos               the QoS of the publisher.
+     * @param csi               the csi of the publisher.
      * @return                  the corresponding publisher
      */
-    PublisherEndpointBase* createOrFindPublisherFor(std::string& publisherPath, int qos);
+    PublisherEndpointBase* createOrFindPublisherFor(std::string& publisherPath,  int qos);
+
+    /**
+     * Tries to find a subscriber on this node for the given publisher name and QoS.
+     * If it can't be found a new one is created.
+     * The connector will be connected as well.
+     *
+     * @param publisherPath     the path of the publisher.
+     * @param csi               the csi of the publisher.
+     * @return                  the corresponding publisher
+     */
+    SubscriberEndpointBase* createOrFindSubscriberFor(std::string& publisherPath, ConnectionSpecificInformation* csi);
 
     /**
      * Searches for a publisher on this node for the given name and QoS.
@@ -135,17 +147,6 @@ protected:
      * @return                  the publisher if found, else nullptr.
      */
     PublisherEndpointBase* findPublisherLike(std::string& publisherPath, int qos);
-
-    /**
-     * Tries to find a subscriber on this node for the given publisher name and QoS.
-     * If it can't be found a new one is created.
-     * The connector will be connected as well.
-     *
-     * @param publisherPath     the path of the publisher.
-     * @param qos               the QoS of the publisher.
-     * @return                  the corresponding publisher
-     */
-    SubscriberEndpointBase* createOrFindSubscriberFor(std::string& publisherPath, int qos);
 
     /**
      * Searches for a subscriber on this node for the given name and QoS.
@@ -160,12 +161,12 @@ protected:
     /**
      * Contains pointers to the existing publisher connectors on a node.
      */
-    std::unordered_map<std::string, PublisherConnector*> _publisherConnectors;
+    std::map<std::string, PublisherConnector*> _publisherConnectors;
 
     /**
      * contains pointers to the existing subscriber connectors on a node.
      */
-    std::unordered_map<std::string, SubscriberConnector*> _subscriberConnectors;
+    std::map<std::string, SubscriberConnector*> _subscriberConnectors;
 
     /**
      * A pointer to the service discovery.

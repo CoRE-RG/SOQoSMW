@@ -80,16 +80,6 @@ protected:
      * The local UDP port.
      */
     int _localPort;
-
-    /**
-     * The remote IP address.
-     */
-    std::string _remoteAddress;
-
-    /**
-     * The remote UDP port.
-     */
-    int _remotePort;
 };
 
 } /*end namespace soqosmw*/

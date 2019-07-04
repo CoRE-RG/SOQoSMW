@@ -69,14 +69,6 @@ void UDPSubscriberEndpoint::handleParameterChange(const char* parname) {
     {
         _localPort = par("localPort");
     }
-    if (!parname || !strcmp(parname, "remoteAddress"))
-    {
-        _remoteAddress = par("remoteAddress").stdstringValue();
-    }
-    if (!parname || !strcmp(parname, "remotePort"))
-    {
-        _remotePort = par("remotePort");
-    }
 }
 
 } /*end namespace soqosmw*/

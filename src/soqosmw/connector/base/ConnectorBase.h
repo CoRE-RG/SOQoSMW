@@ -108,11 +108,11 @@ public:
         return _applications;
     }
 
-    const QoSPolicyMap& getQos() const {
+    QoSPolicyMap& getQos() {
         return _qos;
     }
 
-    void setQos(const QoSPolicyMap& qos) {
+    void setQos(QoSPolicyMap& qos) {
         _qos = qos;
     }
 

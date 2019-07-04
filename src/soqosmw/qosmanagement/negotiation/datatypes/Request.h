@@ -37,7 +37,7 @@ enum RequestStatus {
 class Request {
 public:
     Request(int id, EndpointDescription& local, EndpointDescription& remote,
-            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
+            QoSPolicyMap& qosPolicies,
             omnetpp::cGate *notificationGate) :
             _id(id), _local(local), _remote(remote), _qosPolicies(qosPolicies), _notificationGate(
                     notificationGate) {
@@ -60,7 +60,7 @@ public:
         return _remote;
     }
 
-    const std::unordered_map<std::string, IQoSPolicy*>& getQosPolicies() const {
+    const QoSPolicyMap& getQosPolicies() const {
         return _qosPolicies;
     }
 
@@ -80,7 +80,7 @@ private:
     const int _id;
     const EndpointDescription _local;
     const EndpointDescription _remote;
-    const std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
+    const QoSPolicyMap _qosPolicies;
     omnetpp::cGate *_notificationGate;
     RequestStatus _status;
 };

@@ -86,7 +86,7 @@ protected:
     /**
      * Caches QoS Policy parameters
      */
-    std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
+    QoSPolicyMap _qosPolicies;
 
     /**
      * Caches the start time parameter
