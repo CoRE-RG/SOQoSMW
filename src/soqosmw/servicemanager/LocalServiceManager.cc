@@ -14,8 +14,8 @@
 // 
 
 #include <base/EndpointDescription.h>
-#include <connector/pubsub/reader/SubscriptionReader.h>
-#include <connector/pubsub/writer/PublisherWriter.h>
+#include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
+#include "soqosmw/connector/pubsub/writer/PublisherConnector.h"
 #include <discovery/static/StaticServiceDiscovery.h>
 #include <omnetpp/cexception.h>
 #include <omnetpp/cmessage.h>
@@ -82,7 +82,7 @@ PublisherWriter* LocalServiceManager::createPublisher(string& publisherPath,
     PublisherWriter* writer = new PublisherWriter(executingApplication, qosPolicies);
 
     //save the writer so that new endpoints can be connected to the application.
-    _publisherWriters[publisherPath] = writer;
+    _publisherConnectors[publisherPath] = writer;
 
     return writer;
 }
@@ -116,7 +116,7 @@ SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath
     SubscriptionReader* reader = new SubscriptionReader(executingApplication, qosPolicies);
 
     // save the reader so that new endpoints can be connected to the application.
-    _subscriptionReaders[publisherPath] = reader;
+    _subscriberConnectors[publisherPath] = reader;
 
     return reader;
 }
@@ -124,14 +124,14 @@ SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath
 PublisherWriter* LocalServiceManager::getPublisherWriterForName(
         std::string& publisherPath) {
 
-    return _publisherWriters[publisherPath];
+    return _publisherConnectors[publisherPath];
 }
 
 
 SubscriptionReader* LocalServiceManager::getSubscriptionReaderForName(
         std::string& publisherPath) {
 
-    return _subscriptionReaders[publisherPath];
+    return _subscriberConnectors[publisherPath];
 }
 
 

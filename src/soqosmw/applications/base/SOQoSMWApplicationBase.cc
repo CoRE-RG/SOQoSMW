@@ -14,8 +14,9 @@
 // 
 
 #include <applications/base/SOQoSMWApplicationBase.h>
-#include <omnetpp/cexception.h>
-#include <omnetpp/cpar.h>
+
+#include "soqosmw/connector/base/ConnectorBase.h"
+
 #include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 
@@ -23,28 +24,24 @@ namespace soqosmw {
 
 SOQoSMWApplicationBase::~SOQoSMWApplicationBase()
 {
-
-}
-
-void SOQoSMWApplicationBase::initialize() {
 }
 
 void SOQoSMWApplicationBase::handleMessage(cMessage *msg) {
+    throw cRuntimeError("SOQoSMWApplicationBase does not handle messages. Implementations need to handle them.");
+}
 
-    // do nothing...
+void SOQoSMWApplicationBase::initialize() {
+    _localServiceManager =
+            dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
+                    par("serviceManagerModule")));
+    if (!_localServiceManager) {
+        throw cRuntimeError(
+                "Configuration problem of parameter serviceManagerModule in module %s.",
+                this->getFullName());
+    }
 }
 
 void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
-    if (!parname || strcmp(parname, "serviceManagerModule")) {
-        _localServiceManager =
-                dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
-                        par("serviceManagerModule")));
-        if (!_localServiceManager) {
-            throw cRuntimeError(
-                    "Configuration problem of parameter serviceManagerModule in module %s.",
-                    this->getFullName());
-        }
-    }
     if (!parname || !strcmp(parname, "applicationUDPPort")) {
         _udpPort = par("applicationUDPPort");
         if (_udpPort <= 0) {

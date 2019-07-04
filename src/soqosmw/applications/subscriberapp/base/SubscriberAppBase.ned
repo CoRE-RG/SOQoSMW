@@ -1,4 +1,6 @@
 //
+// c Timo Haeckel, for HAW Hamburg
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +20,10 @@ package soqosmw.applications.subscriberapp.base;
 import soqosmw.applications.base.SOQoSMWApplicationBase;
 
 //
-// TODO auto-generated module
+// The SubscriberAppBase provides a subscriber implementation of the soqosmw application base.
+// These modules realize a data subscriber service.
+//
+// @author Timo Haeckel, for HAW Hamburg
 //
 simple SubscriberAppBase extends SOQoSMWApplicationBase
 {
@@ -45,7 +50,4 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         string publisherName = default("PublisherService");
         
         string qosGroup = default("STD_TCP"); //RT, WEB, STD ( " " seperated list of policies each policy with structure type::value)
-	
-	gates:
-	    input AVBin;
 }

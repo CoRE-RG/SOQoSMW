@@ -79,11 +79,6 @@ protected:
     size_t _framesize;
 
     /**
-     * Save the responsible writer to publish
-     */
-    PublisherWriter* _writer;
-
-    /**
      * Name of the service to publish.
      */
     std::string _serviceName;

@@ -36,11 +36,17 @@ protected:
      */
     virtual void initialize();
 
+    /**
+     * This method should be called from subclasses unless the module
+     * resets the bag on its own.
+     *
+     * @param msg Parameter must be forwarded from subclass
+     */
+    virtual void handleMessage(cMessage *msg) override;
+
 public:
     GatewaySubscriberApp();
     virtual ~GatewaySubscriberApp();
-
-    virtual void notify(cMessage* msg) override;
 
 private:
 };

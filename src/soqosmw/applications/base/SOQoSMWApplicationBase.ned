@@ -1,4 +1,6 @@
 //
+// c Timo Haeckel, for HAW Hamburg
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -18,24 +20,25 @@ package soqosmw.applications.base;
 import soqosmw.applications.base.ISOQoSMWApplication;
 
 //
-// TODO auto-generated module
+// The SOQoSMWApplicationBase provides a base implementation of the common
+// interface for all soqosmw application modules.
+// These modules realize a data publisher or subscriber service.
+//
+// @author Timo Haeckel, for HAW Hamburg
 //
 simple SOQoSMWApplicationBase like ISOQoSMWApplication
 {
     parameters:
-        @class(soqosmw::SOQoSMWApplicationBase);
+        // name of the serviceManager module
         string serviceManagerModule = default ("lsm");
-        string appCallbackGateName = default ("appCallback");
-        
-        string localAddress = default("");
+    	// local IP address
+    	string localAddress = default("");
+    	// the tcp port for this service
     	int applicationTCPPort;
+    	// the udp port for this service
     	int applicationUDPPort;
         
     gates:
-        input appCallback;
-    	
-        input std_tcpIn @labels(TCPCommand/up);
-        output std_tcpOut @labels(TCPCommand/down);
-        input std_udpIn @labels(UDPCommand/up);
-        output std_udpOut @labels(UDPCommand/down);
+        // the connector gate to receive messages.
+        input connectorIn @direct;
 }

@@ -14,8 +14,8 @@
 // 
 
 #include <applications/publisherapp/gateway/GatewayPublisherApp.h>
-#include <connector/pubsub/writer/PublisherWriter.h>
 #include <qospolicy/base/qospolicy.h>
+#include "soqosmw/connector/base/ConnectorBase.h"
 
 #include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
 #include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
@@ -77,10 +77,10 @@ void GatewayPublisherApp::handleMessage(cMessage *msg) {
 
     if(msg->arrivedOn("gwIn")){
         //msg is from gateway
-        if (_writer) {
+        if (_connector) {
             SignalsAndGateways::GatewayAggregationMessage* gwam = dynamic_cast<SignalsAndGateways::GatewayAggregationMessage*>(msg);
             if(gwam){
-                _writer->write(gwam);
+                sendDirect(gwam, _connector->gate("applicationIn"));
                 EV_DEBUG << _serviceName << ": Message Published." << endl;
             } else {
                 delete msg;

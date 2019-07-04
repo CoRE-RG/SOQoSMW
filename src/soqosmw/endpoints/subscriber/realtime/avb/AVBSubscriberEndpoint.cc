@@ -22,6 +22,8 @@
 //CoRE4INET
 #include "core4inet/base/NotifierConsts.h"
 #include "core4inet/utilities/ConfigFunctions.h"
+//AUTO-GENERATED MESSAGES
+#include <core4inet/linklayer/ethernet/avb/AVBFrame_m.h>
 
 using namespace std;
 using namespace CoRE4INET;
@@ -115,8 +117,10 @@ void AVBSubscriberEndpoint::handleMessage(cMessage *msg)
             scheduleUpdateMessage(simTime() + _updateInterval);
         }
     } else if(msg->arrivedOn("AVBin")){
-        //TODO do we need to unpack this packet?
-        handleTransportIn(msg);
+        if(AVBFrame* frame = dynamic_cast<AVBFrame*>(msg)){
+            handleTransportIn(frame->decapsulate());
+        }
+        delete msg;
     }
     else
     {

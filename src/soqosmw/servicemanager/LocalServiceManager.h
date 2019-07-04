@@ -27,8 +27,8 @@
 #include <inet/networklayer/common/L3Address.h>
 
 namespace soqosmw {
-class PublisherWriter;
-class SubscriptionReader;
+class PublisherConnector;
+class SubscriberConnector;
 } /* namespace soqosmw */
 
 namespace soqosmw {
@@ -83,7 +83,7 @@ public:
      *
      * @return If a publisher could be created it returns a pointer to the PublisherWriter. Else nullptr.
      */
-    PublisherWriter* createPublisher(std::string& publisherPath,
+    ConnectorBase* createPublisher(std::string& publisherPath,
             std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
 
@@ -97,14 +97,24 @@ public:
      *
      * @return If a subscriber could be created it returns a pointer to the SubscriptionReader. Else nullptr.
      */
-    SubscriptionReader* createSubscriber(std::string& subscriberPath,
+    ConnectorBase* createSubscriber(std::string& subscriberPath,
             std::string& publisherPath,
             std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
             SOQoSMWApplicationBase* executingApplication);
 
-    PublisherWriter* getPublisherWriterForName (std::string& publisherPath);
+    /**
+     * Finds the connector for the publisher
+     * @param publisherPath     the name of the publisher as a path
+     * @return                  the connector if found, else nullptr
+     */
+    ConnectorBase* getPublisherWriterForName (std::string& publisherPath);
 
-    SubscriptionReader* getSubscriptionReaderForName (std::string& publisherPath);
+    /**
+     * Finds the connector for the subscriber
+     * @param publisherPath     the name of the publisher as a path
+     * @return                  the connector if found, else nullptr
+     */
+    ConnectorBase* getSubscriptionReaderForName (std::string& publisherPath);
 
 
     /**
@@ -116,7 +126,7 @@ public:
      *
      * @return true if the publisher was removed, false if not found.
      */
-    bool removePublisher(PublisherWriter* publisher,
+    bool removePublisher(ConnectorBase* publisher,
             SOQoSMWApplicationBase* executingApplication);
 
     /**
@@ -128,19 +138,19 @@ public:
      *
      * @return true if the subscriber was removed, false if not found.
      */
-    bool removeSubscriber(SubscriptionReader* subscriber,
+    bool removeSubscriber(ConnectorBase* subscriber,
             SOQoSMWApplicationBase* executingApplication);
 
 private:
     /**
      * Contains pointers to the existing publishers on a node.
      */
-    std::unordered_map<std::string, PublisherWriter*> _publisherWriters;
+    std::unordered_map<std::string, PublisherConnector*> _publisherConnectors;
 
     /**
      * contains pointers to the existing subscribers on a node.
      */
-    std::unordered_map<std::string, SubscriptionReader*> _subscriptionReaders;
+    std::unordered_map<std::string, SubscriberConnector*> _subscriberConnectors;
 
     /**
      * A pointer to the service discovery.

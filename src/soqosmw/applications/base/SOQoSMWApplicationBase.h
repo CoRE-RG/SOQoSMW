@@ -16,17 +16,20 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
 
-#include <omnetpp/cpacket.h>
-#include <omnetpp/csimplemodule.h>
+#include <omnetpp.h>
 #include <string>
+
+/**
+ * forward declarations
+ */
+namespace soqosmw {
+class ConnectorBase;
+class LocalServiceManager;
+} /* namespace soqosmw */
 
 using namespace omnetpp;
 
 namespace soqosmw {
-
-/**
- * forward declaration of LocalServiceManager to let them know each other.
- */
 class LocalServiceManager;
 
 /**
@@ -41,42 +44,6 @@ class LocalServiceManager;
 class SOQoSMWApplicationBase: public virtual cSimpleModule {
 public:
     virtual ~SOQoSMWApplicationBase();
-
-    /**
-     * This method returns the LocalServiceManager reference to interact with soqosmw services.
-     * @return
-     */
-    LocalServiceManager* getLocalServiceManager() const {
-        return _localServiceManager;
-    }
-
-    virtual void notify(cPacket* msg){
-        delete msg;
-    }
-
-    const std::string& getLocalAddress() const {
-        return _localAddress;
-    }
-
-    void setLocalAddress(const std::string& localAddress) {
-        _localAddress = localAddress;
-    }
-
-    int getTcpPort() const {
-        return _tcpPort;
-    }
-
-    void setTcpPort(int tcpPort) {
-        _tcpPort = tcpPort;
-    }
-
-    int getUdpPort() const {
-        return _udpPort;
-    }
-
-    void setUdpPort(int udpPort) {
-        _udpPort = udpPort;
-    }
 
 protected:
     /**
@@ -100,15 +67,29 @@ protected:
      * @throws cRuntimeError When needed parameters could not be found.
      */
     virtual void handleParameterChange(const char* parname) override;
-
-private:
     /**
      * Reference to the LocalServiceManager.
      */
     LocalServiceManager* _localServiceManager;
 
-    int _tcpPort=-1;
-    int _udpPort=-1;
+    /**
+     * Reference to the Connector module to the endpoints of this service.
+     */
+    ConnectorBase* _connector;
+
+    /**
+     * TCP port used for TCP endpoints
+     */
+    int _tcpPort;
+
+    /**
+     * UDP port used for UDP endpoints
+     */
+    int _udpPort;
+
+    /**
+     * The local address.
+     */
     std::string _localAddress;
 };
 

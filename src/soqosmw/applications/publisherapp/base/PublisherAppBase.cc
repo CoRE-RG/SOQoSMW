@@ -14,9 +14,9 @@
 // 
 
 #include <applications/publisherapp/base/PublisherAppBase.h>
-#include <connector/pubsub/writer/PublisherWriter.h>
 #include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
+#include "soqosmw/connector/base/ConnectorBase.h"
 #include <cstring>
 #include <iostream>
 #include <utility>
@@ -25,10 +25,11 @@
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/Ethernet.h>
 
-namespace soqosmw {
 using namespace inet;
 using namespace CoRE4INET;
 using namespace std;
+
+namespace soqosmw {
 
 simsignal_t PublisherAppBase::sigPayload = registerSignal("payloadSignal");
 
@@ -40,9 +41,6 @@ PublisherAppBase::PublisherAppBase() {
 }
 
 PublisherAppBase::~PublisherAppBase() {
-    if(_writer){
-        delete _writer;
-    }
 }
 
 bool PublisherAppBase::isEnabled() {
@@ -127,7 +125,7 @@ void PublisherAppBase::createPublisherWithQoS() {
     //printQoS();
 
     //register this as new publisher app!
-    _writer = getLocalServiceManager()->createPublisher(this->_serviceName,
+    _connector = _localServiceManager->createPublisher(this->_serviceName,
             this->_qosPolicies, this);
 }
 
@@ -150,13 +148,13 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
     } else if (msg->isSelfMessage()
             && (strcmp(msg->getName(), SEND_MSG_NAME) == 0)) {
-        if (_writer) { //TODO There is no check of registered publishers
+        if (_connector) {
             cPacket *payloadPacket = new cPacket;
             payloadPacket->setTimestamp();
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
 
-            _writer->write(payloadPacket);
+            sendDirect(payloadPacket, _connector->gate("applicationIn"));
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
             //schedule next send event
@@ -168,33 +166,15 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
 
     } else {
-        cout << "Publisher " << _serviceName << " arrived on: " << msg->getArrivalGate()->getFullName() << ", on path: " <<
-                                msg->getFullPath() << endl;
-        if(msg->arrivedOn("std_tcpIn") || msg->arrivedOn("std_udpIn")){
-            //send(msg, gate("std_tcpIn")->getNextGate());
-            _writer->notify(msg);
-        } else {
-            delete msg;
-        }
+        delete msg;
     }
 
 }
 
 void PublisherAppBase::setQoS() {
-    std::string qosGroup = par("qosGroup").stdstringValue();
-
-    //TODO fix here! Publisher doesn't need to know its QoS Group because he doesn't have a fixed one.
-//    if(qosGroup == "STD_TCP") {
-//        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_TCP);
-        _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
-//    } else if(qosGroup == "STD_UDP") {
-//        _qosPolicies[QoSPolicyNames::QoSGroup] = new QoSGroup (QoSGroup::STD_UDP);
-        _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
-//    } else {
-        //TODO fix here! Error if RT Services are in use...
-//        cRuntimeError("Not a valid connection type");
-//    }
-    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
+    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(_tcpPort);
+    _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(_udpPort);
+    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(_localAddress);
     _qosPolicies[QoSPolicyNames::StreamID] = new StreamIDQoSPolicy(_streamID);
     _qosPolicies[QoSPolicyNames::SRClass] = new SRClassQoSPolicy(_srClass);
     _qosPolicies[QoSPolicyNames::Framesize] = new FramesizeQoSPolicy(_framesize);
@@ -210,7 +190,6 @@ void PublisherAppBase::printQoS() {
 
     cout << endl;
     cout << "checking values: " << endl;
-    cout << "QoSGroup: " << (dynamic_cast<QoSGroup*>(_qosPolicies[QoSPolicyNames::QoSGroup]))->getValue() << endl;
     cout << "StreamID: " << (dynamic_cast<StreamIDQoSPolicy*>(_qosPolicies[QoSPolicyNames::StreamID]))->getValue() << endl;
     int value = (int)(dynamic_cast<SRClassQoSPolicy*>(_qosPolicies[QoSPolicyNames::SRClass]))->getValue();
     cout << "SRClass: " << value << endl;

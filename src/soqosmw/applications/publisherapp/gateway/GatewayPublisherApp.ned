@@ -1,4 +1,6 @@
 //
+// c Timo Haeckel, for HAW Hamburg
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +20,10 @@ package soqosmw.applications.publisherapp.gateway;
 import soqosmw.applications.publisherapp.base.PublisherAppBase;
 
 //
-// TODO auto-generated module
+// The GatewayPublisherApp is a soqosmw service running on a gateway module.
+// It is used to provide legacy bus data as a service.
+//
+// @author Timo Haeckel, for HAW Hamburg
 //
 simple GatewayPublisherApp extends PublisherAppBase
 {

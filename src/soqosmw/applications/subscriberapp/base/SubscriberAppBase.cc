@@ -14,7 +14,7 @@
 // 
 
 #include <applications/subscriberapp/base/SubscriberAppBase.h>
-#include <connector/pubsub/reader/SubscriptionReader.h>
+#include "soqosmw/connector/base/ConnectorBase.h"
 #include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
 #include <qospolicy/base/qospolicy.h>
 #include <servicemanager/LocalServiceManager.h>
@@ -24,8 +24,6 @@
 #include <core4inet/utilities/ConfigFunctions.h>
 #include <inet/linklayer/ethernet/EtherFrame_m.h>
 #include <core4inet/base/avb/AVBDefs.h>
-
-#include <inet/transportlayer/contract/tcp/TCPCommand_m.h>
 
 namespace soqosmw {
 using namespace std;
@@ -38,12 +36,9 @@ Define_Module(SubscriberAppBase);
 simsignal_t SubscriberAppBase::_rxPkSignal = registerSignal("rxPk");
 
 SubscriberAppBase::SubscriberAppBase() {
-    _reader = nullptr;
 }
 
 SubscriberAppBase::~SubscriberAppBase() {
-
-    delete _reader;
 }
 
 void SubscriberAppBase::initialize()
@@ -65,48 +60,32 @@ void SubscriberAppBase::initialize()
 
 void SubscriberAppBase::handleMessage(cMessage *msg)
 {
-    SOQoSMWApplicationBase::handleMessage(msg);
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         setQoS();
         //create a subscriber
-        _reader = getLocalServiceManager()->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
+        _connector = _localServiceManager->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
 
         //TODO set the gate at the reader to get all messages
 
-        delete msg;
-    } else if(dynamic_cast<inet::TCPConnectInfo*>(msg->getControlInfo())){
-            // check if it is control information
-            _reader->notify(msg);
     } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
         //this is a subscription message so handle it.
-        notify(msg);
+        if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
+        {
+            emit(_rxPkSignal, frame);
+        }
     }
-}
-
-void SubscriberAppBase::notify(cMessage* msg) {
-    Enter_Method("SubscriberAppBase::notify()");
-    EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
-
-    if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
-    {
-        emit(_rxPkSignal, frame);
-    }
-
     delete msg;
 }
 
 void SubscriberAppBase::setQoS() {
     _qosPolicies[QoSPolicyNames::QoSGroup] = _qosGroup;
-    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(getLocalAddress());
+    _qosPolicies[QoSPolicyNames::LocalAddress] = new LocalAddressQoSPolicy(_localAddress);
     std::string qosGroup = par("qosGroup").stdstringValue();
     if(qosGroup == "STD_TCP") {
-            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getTcpPort());
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(_tcpPort);
     } else if(qosGroup == "STD_UDP") {
-            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(getUdpPort());
-    } else {
-        //TODO fix here! Error if RT Services are in use.
-//        cRuntimeError("Not a valid connection type");
+            _qosPolicies[QoSPolicyNames::LocalPort] = new LocalPortQoSPolicy(_udpPort);
     }
 }
 
@@ -143,9 +122,6 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
         }
 
     }
-
-
-
 
 }
 

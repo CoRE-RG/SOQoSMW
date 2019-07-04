@@ -71,6 +71,12 @@ public:
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+
+    /**
+     * @brief Indicates a parameter has changed.
+     *
+     * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
+     */
     virtual void handleParameterChange(const char* parname) override;
 
     /**
@@ -111,11 +117,11 @@ public:
     QoSGroups _qos;
 
     /**
-     * Gate name (@directIn) for request inputs in data stores
+     * Gate name (@directIn) to forward messages to the connector
      */
     static const char CONNECTOR_OUT_GATE_NAME []; // = "endpointIn";
     /**
-     * Gate name (@directIn) for response inputs to NetConf server
+     * Gate name (@directIn) to receive messages from the connector
      */
     static const char CONNECTOR_IN_GATE_NAME []; // = "connectorIn";
     /**

@@ -1,4 +1,6 @@
 //
+// c Timo Haeckel, for HAW Hamburg
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +20,10 @@ package soqosmw.applications.subscriberapp.gateway;
 import soqosmw.applications.subscriberapp.base.SubscriberAppBase;
 
 //
-// TODO auto-generated module
+// The GatewaySubscriberApp is a soqosmw service running on a gateway module.
+// It is used to provide service data to a legacy bus.
+//
+// @author Timo Haeckel, for HAW Hamburg
 //
 simple GatewaySubscriberApp extends SubscriberAppBase
 {

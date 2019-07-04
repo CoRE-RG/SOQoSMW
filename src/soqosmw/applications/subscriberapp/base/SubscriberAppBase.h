@@ -71,11 +71,6 @@ protected:
      */
     std::unordered_map<std::string, IQoSPolicy*> _qosPolicies;
 
-    /**
-     * Reference to the soqosmw subscriberReader module.
-     */
-    SubscriptionReader *_reader;
-
     QoSGroup* _qosGroup;
 
 
@@ -102,8 +97,6 @@ protected:
 public:
     SubscriberAppBase();
     virtual ~SubscriberAppBase();
-
-    virtual void notify(cMessage* msg);
 
 private:
     void setQoS();

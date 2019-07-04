@@ -33,6 +33,14 @@ namespace soqosmw {
  */
 class PublisherEndpointBase : public EndpointBase
 {
+public:
+    bool isIsConnected() const {
+        return _isConnected;
+    }
+
+    void setIsConnected(bool isConnected = false) {
+        _isConnected = isConnected;
+    }
 
 protected:
     /**

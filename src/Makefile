@@ -36,24 +36,24 @@ OBJS = \
     $O/soqosmw/applications/publisherapp/gateway/GatewayPublisherApp.o \
     $O/soqosmw/applications/subscriberapp/base/SubscriberAppBase.o \
     $O/soqosmw/applications/subscriberapp/gateway/GatewaySubscriberApp.o \
-    $O/soqosmw/connector/base/IConnector.o \
-    $O/soqosmw/connector/pubsub/reader/SubscriptionReader.o \
-    $O/soqosmw/connector/pubsub/writer/PublisherWriter.o \
+    $O/soqosmw/connector/base/ConnectorBase.o \
+    $O/soqosmw/connector/pubsub/reader/SubscriberConnector.o \
+    $O/soqosmw/connector/pubsub/writer/PublisherConnector.o \
     $O/soqosmw/discovery/base/IServiceDiscovery.o \
     $O/soqosmw/discovery/static/StaticServiceDiscovery.o \
-    $O/soqosmw/endpoints/base/IEndpoint.o \
-    $O/soqosmw/endpoints/publisher/base/IPublisher.o \
-    $O/soqosmw/endpoints/publisher/realtime/avb/AVBPublisher.o \
-    $O/soqosmw/endpoints/publisher/realtime/base/IRTPublisher.o \
-    $O/soqosmw/endpoints/publisher/standard/base/ISTDPublisher.o \
-    $O/soqosmw/endpoints/publisher/standard/tcp/TCPPublisher.o \
-    $O/soqosmw/endpoints/publisher/standard/udp/UDPPublisher.o \
-    $O/soqosmw/endpoints/subscriber/base/ISubscriber.o \
-    $O/soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriber.o \
-    $O/soqosmw/endpoints/subscriber/realtime/base/IRTSubscriber.o \
-    $O/soqosmw/endpoints/subscriber/standard/base/ISTDSubscriber.o \
-    $O/soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriber.o \
-    $O/soqosmw/endpoints/subscriber/standard/udp/UDPSubscriber.o \
+    $O/soqosmw/endpoints/base/EndpointBase.o \
+    $O/soqosmw/endpoints/publisher/base/PublisherEndpointBase.o \
+    $O/soqosmw/endpoints/publisher/realtime/avb/AVBPublisherEndpoint.o \
+    $O/soqosmw/endpoints/publisher/realtime/base/RTPublisherEndpointBase.o \
+    $O/soqosmw/endpoints/publisher/standard/base/STDPublisherEndpointBase.o \
+    $O/soqosmw/endpoints/publisher/standard/tcp/TCPPublisherEndpoint.o \
+    $O/soqosmw/endpoints/publisher/standard/udp/UDPPublisherEndpoint.o \
+    $O/soqosmw/endpoints/subscriber/base/SubscriberEndpointBase.o \
+    $O/soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriberEndpoint.o \
+    $O/soqosmw/endpoints/subscriber/realtime/base/RTSubscriberEndpointBase.o \
+    $O/soqosmw/endpoints/subscriber/standard/base/STDSubscriberEndpointBase.o \
+    $O/soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriberEndpoint.o \
+    $O/soqosmw/endpoints/subscriber/standard/udp/UDPSubscriberEndpoint.o \
     $O/soqosmw/factory/ServiceEndpointFactory.o \
     $O/soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.o \
     $O/soqosmw/qosmanagement/negotiation/broker/QoSBroker.o \
