@@ -214,7 +214,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
 
                     string& path = _remote.getPath();
                     //get responsible writer
-                    SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+                    SubscriptionReader* reader = _lsm->getSubscriberConnectorForName(path);
 
                     CSI_UDP* connectionType = new CSI_UDP;
                     connectionType->setConnectionType(ConnectionType::ct_udp);
@@ -269,10 +269,10 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 //get path
                 string& path = _local.getPath();
                 //get responsible writer
-                PublisherWriter* writer = _lsm->getPublisherWriterForName(path);
+                PublisherWriter* writer = _lsm->getPublisherConnectorForName(path);
 
                 // check if a publisher like that already exists
-                IPublisher* publisher = writer->findPublisherLike(path, establish->getQosClass());
+                ConnectorBase* publisher = writer->findPublisherLike(path, establish->getQosClass());
 
                 if(!publisher){
                     //create publisher
@@ -353,7 +353,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                         //get path
                         string& path = _remote.getPath();
                         //get responsible writer
-                        SubscriptionReader* reader = _lsm->getSubscriptionReaderForName(path);
+                        SubscriptionReader* reader = _lsm->getSubscriberConnectorForName(path);
 
                         //create subscriber
                         ServiceEndpointFactory::getInstance().createSubscriber(path, info, reader);

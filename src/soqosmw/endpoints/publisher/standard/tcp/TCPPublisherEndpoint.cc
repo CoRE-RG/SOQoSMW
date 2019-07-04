@@ -51,10 +51,16 @@ ConnectionSpecificInformation* TCPPublisherEndpoint::getConnectionSpecificInform
 }
 
 void TCPPublisherEndpoint::initializeTransportConnection() {
+    // get owning app
+    SOQoSMWApplicationBase* app = _connector->getApplications()[0];
+    if(!app){
+        throw cRuntimeError("Owning application not found in init of publisher.");
+    }
+
     _isConnected = false;
 
     // find TCP module and add another gate.
-    cModule* tcp = _connector->getApplications()[0]->getParentModule()->getSubmodule("tcp");
+    cModule* tcp = app->getParentModule()->getSubmodule("tcp");
     if(!tcp){
         throw cRuntimeError("tcp module required for tcp publisher but not found");
     }

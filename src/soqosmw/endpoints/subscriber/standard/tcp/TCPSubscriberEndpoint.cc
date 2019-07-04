@@ -46,9 +46,14 @@ void TCPSubscriberEndpoint::handleTransportIn(cMessage* msg) {
 }
 
 void TCPSubscriberEndpoint::initializeTransportConnection() {
+    // get owning app
+    SOQoSMWApplicationBase* app = _connector->getApplications()[0];
+    if(!app){
+        throw cRuntimeError("Owning application not found in init of publisher.");
+    }
 
     // find TCP module and add another gate.
-    cModule* tcp = _connector->getApplications()[0]->getParentModule()->getSubmodule("tcp");
+    cModule* tcp = app->getParentModule()->getSubmodule("tcp");
     if(!tcp){
         throw cRuntimeError("tcp module required for tcp subscriber but not found");
     }

@@ -125,7 +125,7 @@ void PublisherAppBase::createPublisherWithQoS() {
     //printQoS();
 
     //register this as new publisher app!
-    _connector = _localServiceManager->createPublisher(this->_serviceName,
+    _connector = _localServiceManager->registerPublisherService(this->_serviceName,
             this->_qosPolicies, this);
 }
 

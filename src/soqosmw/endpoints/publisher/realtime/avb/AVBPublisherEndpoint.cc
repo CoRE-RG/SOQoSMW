@@ -36,15 +36,20 @@ namespace soqosmw {
 Define_Module(AVBPublisherEndpoint);
 
 void AVBPublisherEndpoint::initialize() {
+    // get owning app
+    SOQoSMWApplicationBase* app = _connector->getApplications()[0];
+    if(!app){
+        throw cRuntimeError("Owning application not found in init of publisher.");
+    }
 
     //find srp table
     _srpTable = check_and_cast<SRPTable *>(
-            _connector->getApplications()[0]->getParentModule()->getSubmodule("srpTable"));
+            app->getParentModule()->getSubmodule("srpTable"));
     if(!_srpTable){
         throw cRuntimeError("srpTable module required for stream reservation but not found");
     }
 
-    _avbOutCTC = _connector->getApplications()[0]->getParentModule()->getSubmodule("avbCTC");
+    _avbOutCTC = app->getParentModule()->getSubmodule("avbCTC");
     if(!_avbOutCTC){
         throw cRuntimeError("avbOutCTC module required for stream sending but not found");
     }

@@ -36,9 +36,14 @@ ConnectionSpecificInformation* UDPSubscriberEndpoint::getConnectionSpecificInfor
 }
 
 void UDPSubscriberEndpoint::initializeTransportConnection() {
+    // get owning app
+    SOQoSMWApplicationBase* app = _connector->getApplications()[0];
+    if(!app){
+        throw cRuntimeError("Owning application not found in init of publisher.");
+    }
 
     // find UDP module and add another gate.
-    cModule* udp = _connector->getApplications()[0]->getParentModule()->getSubmodule("udp");
+    cModule* udp = app->getParentModule()->getSubmodule("udp");
     if(!udp){
         throw cRuntimeError("udp module required for udp subscriber but not found");
     }

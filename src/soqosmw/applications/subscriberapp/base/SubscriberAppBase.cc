@@ -63,7 +63,7 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
     if(msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)){
         setQoS();
         //create a subscriber
-        _connector = _localServiceManager->createSubscriber(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
+        _connector = _localServiceManager->registerSubscriberService(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
 
         //TODO set the gate at the reader to get all messages
 

@@ -17,12 +17,6 @@
 #include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
 #include "soqosmw/connector/pubsub/writer/PublisherConnector.h"
 #include <discovery/static/StaticServiceDiscovery.h>
-#include <omnetpp/cexception.h>
-#include <omnetpp/cmessage.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/regmacros.h>
-#include <omnetpp/simutil.h>
 #include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
 #include <servicemanager/LocalServiceManager.h>
 #include <algorithm>
@@ -59,6 +53,8 @@ void LocalServiceManager::initialize(int stage) {
        _qosnp =
                dynamic_cast<QoSNegotiationProtocol*>(getParentModule()->getSubmodule(
                        par("qosnpmoduleName")));
+       WATCH_MAP(_publisherConnectors);
+       WATCH_MAP(_subscriberConnectors);
     }
 }
 
@@ -76,22 +72,61 @@ void LocalServiceManager::handleParameterChange(const char* parname) {
 
 }
 
-PublisherWriter* LocalServiceManager::createPublisher(string& publisherPath,
-        unordered_map<string, IQoSPolicy*>& qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) {
-    PublisherWriter* writer = new PublisherWriter(executingApplication, qosPolicies);
+ConnectorBase* LocalServiceManager::registerPublisherService(std::string& publisherPath,
+            QoSPolicyMap& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication) {
+    Enter_Method("LSM:registerPublisherService()");
+
+    // check if the publisher already exists.
+    if(PublisherConnector *connector = _publisherConnectors.find(publisherPath)){
+        if(connector->addApplication(executingApplication)){
+            connector->setQos(qosPolicies);
+            return connector;
+        } else {
+            throw cRuntimeError("This Publisher Service already exists on this host...");
+        }
+    }
+
+    // create a connector for the publisher
+    // 1. Find the factory object;
+    cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.writer.PublisherConnector");
+    // 2. Create the module;
+    PublisherConnector *module = dynamic_cast<PublisherConnector*> (moduleType->create("PublisherConnector", this));
+    // 3. Set up its parameters and gate sizes as needed;
+    module->addApplication(executingApplication);
+    module->setQos(qosPolicies);
+    module->finalizeParameters();
+    // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
+    module->buildInside();
+    // 5. Schedule activation message(s) for the new simple module(s).
+    module->scheduleStart(simTime());
 
     //save the writer so that new endpoints can be connected to the application.
-    _publisherConnectors[publisherPath] = writer;
+    _publisherConnectors[publisherPath] = module;
 
-    return writer;
+    return module;
 }
 
-SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath,
-        string& publisherPath, unordered_map<string, IQoSPolicy*>& qosPolicies,
-        SOQoSMWApplicationBase* executingApplication) {
+ConnectorBase* LocalServiceManager::registerSubscriberService(std::string& subscriberPath,
+            std::string& publisherPath,
+            QoSPolicyMap& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication)
+{
+    Enter_Method("LSM:registerSubscriberService()");
 
-    Enter_Method("LSM:createSubscriber()");
+    // check if the subscriber already exists.
+    if(SubscriberConnector *connector = _subscriberConnectors.find(publisherPath)){
+        // we allready have a service subscribing to the data
+        if(equalQoSMap(qosPolicies, connector->getQos())){
+            // same qos as well so try to add and return
+            if(connector->addApplication(executingApplication)){
+                return connector;
+            } else {
+                throw cRuntimeError("This Subscriber service already exists on this host...");
+            }
+        }
+    }
+    // otherwise we need a new negotiation!
 
     //check if publisher exists in the network and start the negotiation with a request.
     if (_sd->contains(publisherPath)) {
@@ -112,66 +147,54 @@ SubscriptionReader* LocalServiceManager::createSubscriber(string& subscriberPath
                 "The publisher you are requesting is unknown and has no entry in the ServiceRegistry.");
     }
 
-    //create the writer
-    SubscriptionReader* reader = new SubscriptionReader(executingApplication, qosPolicies);
+    // create a connector for the subscriber
+    // 1. Find the factory object;
+    cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.writer.SubscriberConnector");
+    // 2. Create the module;
+    SubscriberConnector *module = dynamic_cast<SubscriberConnector*> (moduleType->create("SubscriberConnector", this));
+    // 3. Set up its parameters and gate sizes as needed;
+    module->addApplication(executingApplication);
+    module->setQos(qosPolicies);
+    module->finalizeParameters();
+    // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
+    module->buildInside();
+    // 5. Schedule activation message(s) for the new simple module(s).
+    module->scheduleStart(simTime());
 
     // save the reader so that new endpoints can be connected to the application.
-    _subscriberConnectors[publisherPath] = reader;
+    _subscriberConnectors[publisherPath] = module;
 
-    return reader;
+    return module;
 }
 
-PublisherWriter* LocalServiceManager::getPublisherWriterForName(
+ConnectorBase* LocalServiceManager::getPublisherConnectorForName(
         std::string& publisherPath) {
 
     return _publisherConnectors[publisherPath];
 }
 
 
-SubscriptionReader* LocalServiceManager::getSubscriptionReaderForName(
+ConnectorBase* LocalServiceManager::getSubscriberConnectorForName(
         std::string& publisherPath) {
 
     return _subscriberConnectors[publisherPath];
 }
 
-
-bool LocalServiceManager::removePublisher(PublisherWriter* publisher,
-        SOQoSMWApplicationBase* executingApplication){
-    //dummy
-    return true;
+PublisherEndpointBase* LocalServiceManager::createOrFindPublisherFor(
+        std::string& publisherPath, int qos) {
 }
 
-/**bool LocalServiceManager::removePublisher(PublisherWriter* publisher,
-        SOQoSMWApplicationBase* executingApplication) {
-    bool removed = false;
-    _publisherWriters.erase("sasd");
-    auto it = find(_publishers.begin(), _publishers.end(), publisher);
-    if (it != _publishers.end()
-            && publisher->isExecutedBy(executingApplication)) {
-        _publishers.erase(it);
-        delete publisher;
-        removed = true;
-    }
-    return removed;
-}**/
+PublisherEndpointBase* LocalServiceManager::findPublisherLike(
+        std::string& publisherPath, int qos) {
 
-bool LocalServiceManager::removeSubscriber(SubscriptionReader* subscriber,
-        SOQoSMWApplicationBase* executingApplication) {
-    //dummy
-    return true;
 }
-/**
-bool LocalServiceManager::removeSubscriber(SubscriptionReader* subscriber,
-        SOQoSMWApplicationBase* executingApplication) {
-    bool removed = false;
-    auto it = find(_subscribers.begin(), _subscribers.end(), subscriber);
-    if (it != _subscribers.end()
-            && subscriber->isExecutedBy(executingApplication)) {
-        _subscribers.erase(it);
-        delete subscriber;
-        removed = true;
-    }
-    return removed;
-}**/
+
+SubscriberEndpointBase* LocalServiceManager::createOrFindSubscriberFor(
+        std::string& publisherPath, int qos) {
+}
+
+SubscriberEndpointBase* LocalServiceManager::findSubscriberLike(
+        std::string& publisherPath, int qos) {
+}
 
 } /* end namespace  */

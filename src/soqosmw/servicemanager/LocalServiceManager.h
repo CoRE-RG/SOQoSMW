@@ -16,29 +16,26 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
 
-#include <omnetpp/csimplemodule.h>
+#include <omnetpp.h>
+
 #include <qosmanagement/negotiation/datatypes/Request.h>
 #include <qospolicy/base/qospolicy.h>
+#include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
+#include "soqosmw/connector/pubsub/writer/PublisherConnector.h"
+#include "soqosmw/endpoints/publisher/base/PublisherEndpointBase.h"
+#include "soqosmw/endpoints/subscriber/base/SubscriberEndpointBase.h"
+#include "soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.h"
+#include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
+#include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
+#include "soqosmw/discovery/static/StaticServiceDiscovery.h"
+
+//STD
 #include <atomic>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
+//INET
 #include <inet/networklayer/common/L3Address.h>
-
-namespace soqosmw {
-class PublisherConnector;
-class SubscriberConnector;
-} /* namespace soqosmw */
-
-namespace soqosmw {
-class QoSNegotiationProtocol;
-} /* namespace soqosmw */
-
-namespace soqosmw {
-class SOQoSMWApplicationBase;
-class StaticServiceDiscovery;
-} /* namespace soqosmw */
 
 using namespace omnetpp;
 
@@ -52,6 +49,41 @@ namespace soqosmw {
  * @author Timo Haeckel
  */
 class LocalServiceManager: public cSimpleModule {
+    friend QoSNegotiationProtocol;
+    friend QoSBroker;
+
+public:
+    LocalServiceManager();
+    virtual ~LocalServiceManager();
+
+    /**
+     * @brief This Method creates a new Publisher according to the QoSPolicies.
+     *
+     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
+     * @param qosPolicies The QoS Policies for the Publisher.
+     * @param executingModule The service executing the request.
+     *
+     * @return If a publisher could be created it returns a pointer to the PublisherWriter. Else nullptr.
+     */
+    ConnectorBase* registerPublisherService(std::string& publisherPath,
+            QoSPolicyMap& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
+
+    /**
+     * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
+     *
+     * @param subscriberPath Path of the Subscriber Service (e.g. "bordcomputer")
+     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
+     * @param qosPolicies The QoS Policies for the Subscriber.
+     * @param executingModule The service executing the request.
+     *
+     * @return If a subscriber could be created it returns a pointer to the SubscriptionReader. Else nullptr.
+     */
+    ConnectorBase* registerSubscriberService(std::string& subscriberPath,
+            std::string& publisherPath,
+            QoSPolicyMap& qosPolicies,
+            SOQoSMWApplicationBase* executingApplication);
+
 protected:
     /**
      * @brief Initialization of the module.
@@ -70,85 +102,68 @@ protected:
 
     virtual void handleParameterChange(const char* parname) override;
 
-public:
-    LocalServiceManager();
-    virtual ~LocalServiceManager();
-
-    /**
-     * @brief This Method creates a new Publisher according to the QoSPolicies.
-     *
-     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
-     * @param qosPolicies The QoS Policies for the Publisher.
-     * @param executingModule The omnetpp::cModule executing the request.
-     *
-     * @return If a publisher could be created it returns a pointer to the PublisherWriter. Else nullptr.
-     */
-    ConnectorBase* createPublisher(std::string& publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
-            SOQoSMWApplicationBase* executingApplication);
-
-    /**
-     * @brief This Method creates a new Subscriber for the publisher Service according to the QoSPolicies.
-     *
-     * @param subscriberPath Path of the Subscriber Service (e.g. "bordcomputer")
-     * @param publisherPath Path of the Publisher Service (e.g. "reifendruck/links")
-     * @param qosPolicies The QoS Policies for the Subscriber.
-     * @param executingModule The omnetpp::cModule executing the request.
-     *
-     * @return If a subscriber could be created it returns a pointer to the SubscriptionReader. Else nullptr.
-     */
-    ConnectorBase* createSubscriber(std::string& subscriberPath,
-            std::string& publisherPath,
-            std::unordered_map<std::string, IQoSPolicy*>& qosPolicies,
-            SOQoSMWApplicationBase* executingApplication);
-
     /**
      * Finds the connector for the publisher
      * @param publisherPath     the name of the publisher as a path
      * @return                  the connector if found, else nullptr
      */
-    ConnectorBase* getPublisherWriterForName (std::string& publisherPath);
+    PublisherConnector* getPublisherConnectorForName (std::string& publisherPath);
 
     /**
      * Finds the connector for the subscriber
      * @param publisherPath     the name of the publisher as a path
      * @return                  the connector if found, else nullptr
      */
-    ConnectorBase* getSubscriptionReaderForName (std::string& publisherPath);
-
+    SubscriberConnector* getSubscriberConnectorForName (std::string& publisherPath);
 
     /**
-     * @brief This method removes the given publisher.
-     * NOTE the publisher pointer is no longer valid now and will be set to a nullptr.
+     * Tries to find a publisher on this node for the given name and QoS.
+     * If it can't be found a new one is created.
+     * The connector will be connected as well.
      *
-     * @param publisher A pointer to the publisher that should be removed.
-     * @param executingModule The omnetpp::cModule executing the request.
-     *
-     * @return true if the publisher was removed, false if not found.
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the corresponding publisher
      */
-    bool removePublisher(ConnectorBase* publisher,
-            SOQoSMWApplicationBase* executingApplication);
+    PublisherEndpointBase* createOrFindPublisherFor(std::string& publisherPath, int qos);
 
     /**
-     * @brief This method removes the given subscriber.
-     * NOTE the subscriber pointer is no longer valid now and will be set to a nullptr.
+     * Searches for a publisher on this node for the given name and QoS.
      *
-     * @param subscriber A pointer to the subscriber that should be removed.
-     * @param executingModule The omnetpp::cModule executing the request.
-     *
-     * @return true if the subscriber was removed, false if not found.
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the publisher if found, else nullptr.
      */
-    bool removeSubscriber(ConnectorBase* subscriber,
-            SOQoSMWApplicationBase* executingApplication);
+    PublisherEndpointBase* findPublisherLike(std::string& publisherPath, int qos);
 
-private:
     /**
-     * Contains pointers to the existing publishers on a node.
+     * Tries to find a subscriber on this node for the given publisher name and QoS.
+     * If it can't be found a new one is created.
+     * The connector will be connected as well.
+     *
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the corresponding publisher
+     */
+    SubscriberEndpointBase* createOrFindSubscriberFor(std::string& publisherPath, int qos);
+
+    /**
+     * Searches for a subscriber on this node for the given name and QoS.
+     *
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the corresponding publisher
+     */
+    SubscriberEndpointBase* findSubscriberLike(std::string& publisherPath, int qos);
+
+
+    /**
+     * Contains pointers to the existing publisher connectors on a node.
      */
     std::unordered_map<std::string, PublisherConnector*> _publisherConnectors;
 
     /**
-     * contains pointers to the existing subscribers on a node.
+     * contains pointers to the existing subscriber connectors on a node.
      */
     std::unordered_map<std::string, SubscriberConnector*> _subscriberConnectors;
 

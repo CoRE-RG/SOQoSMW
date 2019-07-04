@@ -20,6 +20,8 @@
 
 #include <omnetpp.h>
 
+#include "soqosmw/qospolicy/base/qospolicy.h"
+
 namespace soqosmw {
 class SOQoSMWApplicationBase;
 class EndpointBase;
@@ -79,7 +81,7 @@ public:
      * @return  the application if it was removed (pointer no longer managed by this module)
      *          nullptr if the application is not registered.
      */
-    virtual SOQoSMWApplicationBase* removeApplication(SOQoSMWApplicationBase* endpoint);
+    virtual SOQoSMWApplicationBase* removeApplication(SOQoSMWApplicationBase* application);
 
     //getter + setter
     bool isApplicationFwdEnabled() const {
@@ -104,6 +106,14 @@ public:
 
     const std::vector<SOQoSMWApplicationBase*>& getApplications() const {
         return _applications;
+    }
+
+    const QoSPolicyMap& getQos() const {
+        return _qos;
+    }
+
+    void setQos(const QoSPolicyMap& qos) {
+        _qos = qos;
     }
 
   protected:
@@ -136,6 +146,11 @@ public:
      * Applications to connect to the endpoint.
      */
     std::vector<SOQoSMWApplicationBase*> _applications;
+
+    /**
+     * QoS of the connection
+     */
+    QoSPolicyMap _qos;
 
     /**
      * The maximum number of allowed applications connected to this connector.
