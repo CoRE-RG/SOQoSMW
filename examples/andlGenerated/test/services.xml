@@ -1,9 +1,0 @@
-<services>
-	<service name="luminositySubscriber" node="Infotainment"/>
-	<service name="musicSubscriber" node="Infotainment"/>
-	<service name="luminosity2Subscriber" node="GatewaySteuerung_2.tte[0]"/>
-	<service name="luminosityPublisher" node="GatewayLicht.tte[0]"/>
-	<service name="luminosity2Publisher" node="GatewayLicht.tte[1]"/>
-	<service name="luminositySubscriber" node="GatewaySteuerung.tte[0]"/>
-	<service name="musicPublisher" node="Radio"/>
-</services>

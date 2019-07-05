@@ -1,26 +1,53 @@
-*.aux
-*.log
-*.gz
-*.out
-*.vpp.lck
-*.bak*
-*.vux
-out/*
-out/gcc-debug/src/.last-copts
-*.dll
-*_m.cc
+# ignore generated files
+.settings/
 *_m.h
-examples/soqosmw_rtip_host/small_network/results/
-doc/doxy/
-doc/neddoc/
-doc/index.html
-examples/soqosmw_pubsub/small_network/results/
-*.anf
-*.pdf
-*.tks
-*.sca
+*_m.cc
+/src/Makefile
+/src/Makefile.vc
+/doc/doxy
+/doc/neddoc
+/doc/index.html
+/FeatureBuildTest
+
+# settings
+*.qtenvrc
+*.tkenvrc
+*.tkenvlog
+*.cmdenv-log
+
+#results
+/examples/*/results/
+/examples/*/*/results/
+/examples/*/*/*/results/
+/examples/*/*/*/*/results/
 *.vci
 *.vec
-*.so
-examples/soqosmw_gatewaypubsub/gateway_net/core
+*.sca
+*.anf
 
+#tests
+/tests/*/work/
+
+# ignore binary files
+/out
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.o
+*.obj
+
+# local files not to be committed
+.oppfeaturestate
+.nedexclusions
+src/*/features.h
+
+# ignore backup and temp files
+*.tmp*
+
+#ignore Apple files
+.DS_Store
+
+test/smoke/test\.out

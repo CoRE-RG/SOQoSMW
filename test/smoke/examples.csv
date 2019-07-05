@@ -1,0 +1,5 @@
+# workingdir,                        args,                                          simtimelimit,    fingerprint
+/examples/paper/cross,               -f omnetpp.ini -c General -r 0
+/examples/paper/gateway_net,         -f omnetpp.ini -c General -r 0
+/examples/test_gateway/minimal_net,  -f omnetpp.ini -c General -r 0
+/examples/test_pubsub/small_network, -f omnetpp.ini -c General -r 0

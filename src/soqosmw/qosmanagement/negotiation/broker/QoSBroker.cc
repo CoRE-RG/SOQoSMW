@@ -193,6 +193,8 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                     // create or find the subscriber
                     SubscriberEndpointBase* sub = _lsm->createOrFindSubscriberFor(_remote.getPath(),csi);
 
+                    delete csi;
+
                     if(sub){
                         // encapsulate the CSI into the packet. -> NOT TESTED
                         ConnectionSpecificInformation* info = sub->getConnectionSpecificInformation();
@@ -256,6 +258,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                                 if(UDPPublisherEndpoint* udpPublisher = dynamic_cast<UDPPublisherEndpoint*> (pub)){
                                     udpPublisher->addRemote(subConnection);
                                 }
+                                delete subConnection;
                             }
                         }
 
@@ -322,6 +325,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                             throw cRuntimeError("No subscriber was created...");
                         }
                     }
+                    delete info;
                 }
 
 
