@@ -103,7 +103,7 @@ void UDPPublisherEndpoint::addRemote(ConnectionSpecificInformation* csi) {
 void UDPPublisherEndpoint::publish(cPacket* msg) {
     if(_isConnected) {
         for(auto pair = _remotes.begin(); pair != _remotes.end(); pair++){
-            _serverSocket.sendTo(msg, pair->first, pair->second);
+            _serverSocket.sendTo(msg->dup(), pair->first, pair->second);
         }
     }
 }
