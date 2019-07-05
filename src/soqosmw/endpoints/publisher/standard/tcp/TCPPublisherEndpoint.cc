@@ -33,6 +33,8 @@ TCPPublisherEndpoint::~TCPPublisherEndpoint() {
 }
 
 void TCPPublisherEndpoint::handleParameterChange(const char* parname) {
+    STDPublisherEndpointBase::handleParameterChange(parname);
+
     if (!parname || !strcmp(parname, "localAddress"))
     {
         _localAddress = par("localAddress").stdstringValue();
@@ -69,7 +71,7 @@ void TCPPublisherEndpoint::initializeTransportConnection() {
     tcp->setGateSize("appOut", tcp->gateSize("appOut")+1);
     // connect to transport gates
     this->gate(TRANSPORT_OUT_GATE_NAME)->connectTo(tcp->gate("appIn", tcp->gateSize("appIn")-1));
-    this->gate(TRANSPORT_IN_GATE_NAME)->connectTo(tcp->gate("appOut", tcp->gateSize("appOut")-1));
+    tcp->gate("appOut", tcp->gateSize("appOut")-1)->connectTo(this->gate(TRANSPORT_IN_GATE_NAME));
 
     // update server socket and listen
     _serverSocket.renewSocket();

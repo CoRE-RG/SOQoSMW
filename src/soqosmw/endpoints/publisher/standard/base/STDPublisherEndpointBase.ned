@@ -32,5 +32,4 @@ simple STDPublisherEndpointBase extends PublisherEndpointBase
 {
     parameters:
         endpointPath = default("RTPublisher");
-    	qos = "STD"; //invalid ...
 }

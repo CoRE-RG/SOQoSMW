@@ -58,12 +58,5 @@ module SOQoSMWHost extends RTIPHost
 
         qosnp.udpOut --> udp.appIn++;
         qosnp.udpIn <-- udp.appOut++;
-        
-        for i=0..numServices-1 {
-            services[i].std_tcpOut --> tcp.appIn++;
-            services[i].std_tcpIn <-- tcp.appOut++;
-            services[i].std_udpOut --> udp.appIn++;
-            services[i].std_udpIn <-- udp.appOut++;
-        }
 
 }

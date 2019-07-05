@@ -42,6 +42,7 @@ ConnectionSpecificInformation* AVBSubscriberEndpoint::getConnectionSpecificInfor
 
 void AVBSubscriberEndpoint::initialize()
 {
+    _updateMessage = nullptr;
     // get owning app
     SOQoSMWApplicationBase* app = _connector->getApplications()[0];
     if(!app){
@@ -66,8 +67,6 @@ void AVBSubscriberEndpoint::initializeTransportConnection() {
 
     // register listener
     _srpTable->updateListenerWithStreamId(_streamID, this, _vlanID);
-
-    // start update Interval.
     if (_updateInterval > 0)
     {
         scheduleUpdateMessage(simTime() + _updateInterval);
@@ -135,6 +134,8 @@ void AVBSubscriberEndpoint::handleMessage(cMessage *msg)
 }
 
 void AVBSubscriberEndpoint::handleParameterChange(const char* parname) {
+    RTSubscriberEndpointBase::handleParameterChange(parname);
+
     if (!parname || !strcmp(parname, "updateInterval"))
     {
         this->_updateInterval = parameterDoubleCheckRange(par("updateInterval"), 0, DBL_MAX);
@@ -159,12 +160,13 @@ void AVBSubscriberEndpoint::handleParameterChange(const char* parname) {
 
 void AVBSubscriberEndpoint::scheduleUpdateMessage(SimTime at) {
     // create message if it doesnt exist
-    if(!_updateMessage){
+    if(_updateMessage){
+        // cancel previously scheduled updates
+        if(_updateMessage->isScheduled()){
+            cancelEvent(_updateMessage);
+        }
+    } else {
         _updateMessage = new cMessage("updateSubscription");
-    }
-    // cancel previously scheduled updates
-    if(_updateMessage->isScheduled()){
-        cancelEvent(_updateMessage);
     }
     // schedule the message
     scheduleAt(at, _updateMessage);

@@ -138,7 +138,6 @@ void PublisherAppBase::scheduleNextMessage() {
 
 void PublisherAppBase::handleMessage(cMessage *msg) {
 
-    SOQoSMWApplicationBase::handleMessage(msg);
     if (msg->isSelfMessage() && (strcmp(msg->getName(), START_MSG_NAME) == 0)) {
 
         createPublisherWithQoS();

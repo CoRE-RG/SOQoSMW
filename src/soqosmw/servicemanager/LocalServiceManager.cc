@@ -96,13 +96,18 @@ ConnectorBase* LocalServiceManager::registerPublisherService(std::string& publis
     // 1. Find the factory object;
     cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.writer.PublisherConnector");
     // 2. Create the module;
-    PublisherConnector *module = dynamic_cast<PublisherConnector*> (moduleType->create("publisherConnectors", this));
+    int vectorsize = 0;
+    if(getSubmodule("publisherConnectors", 0)){
+        vectorsize = getSubmodule("publisherConnectors", 0)->getVectorSize();
+    }
+    PublisherConnector *module = dynamic_cast<PublisherConnector*> (moduleType->create("publisherConnectors", this, vectorsize + 1, vectorsize));
     // 3. Set up its parameters and gate sizes as needed;
     module->addApplication(executingApplication);
     module->setQos(qosPolicies);
     module->finalizeParameters();
     // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
     module->buildInside();
+    module->callInitialize();
     // 5. Schedule activation message(s) for the new simple module(s).
     module->scheduleStart(simTime());
 
@@ -155,15 +160,20 @@ ConnectorBase* LocalServiceManager::registerSubscriberService(std::string& subsc
 
     // create a connector for the subscriber
     // 1. Find the factory object;
-    cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.writer.SubscriberConnector");
+    cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.reader.SubscriberConnector");
     // 2. Create the module;
-    SubscriberConnector *module = dynamic_cast<SubscriberConnector*> (moduleType->create("subscriberConnectors", this));
+    int vectorsize = 0;
+    if(getSubmodule("subscriberConnectors", 0)){
+        vectorsize = getSubmodule("subscriberConnectors", 0)->getVectorSize();
+    }
+    SubscriberConnector *module = dynamic_cast<SubscriberConnector*> (moduleType->create("subscriberConnectors", this, vectorsize + 1, vectorsize));
     // 3. Set up its parameters and gate sizes as needed;
     module->addApplication(executingApplication);
     module->setQos(qosPolicies);
     module->finalizeParameters();
     // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
     module->buildInside();
+    module->callInitialize();
     // 5. Schedule activation message(s) for the new simple module(s).
     module->scheduleStart(simTime());
 
@@ -223,6 +233,7 @@ PublisherEndpointBase* LocalServiceManager::createOrFindPublisherFor(
             pub->finalizeParameters();
             // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
             pub->buildInside();
+            pub->callInitialize();
             // 5. Schedule activation message(s) for the new simple module(s).
             pub->scheduleStart(simTime());
         } else {
@@ -264,6 +275,7 @@ SubscriberEndpointBase* LocalServiceManager::createOrFindSubscriberFor(
             sub->finalizeParameters();
             // 4. Tell the (possibly compound) module to recursively create its internal submodules and connections;
             sub->buildInside();
+            sub->callInitialize();
             // 5. Schedule activation message(s) for the new simple module(s).
             sub->scheduleStart(simTime());
         } else {
@@ -294,28 +306,11 @@ int LocalServiceManager::getQoSGroupForConnectionType(int type){
     //return QoSGroup::RT;
 }
 
-PublisherConnector* LocalServiceManager::findPublisherConnectorLike(
-        std::string& publisherPath, int qos) {
-
-    // find fitting connectors
-    PublisherConnector* connector = getPublisherConnectorForName(publisherPath);
-    if(connector){
-        // we allready have a service subscribing to the data
-        QoSGroup* conQoS = dynamic_cast<QoSGroup*>(connector->getQos()[QoSPolicyNames::QoSGroup]);
-        if(qos == conQoS->getValue()){
-            // same qos as well so try to add and return
-            return connector;
-        }
-    }
-
-    return nullptr;
-}
-
 PublisherEndpointBase* LocalServiceManager::findPublisherLike(
         std::string& publisherPath, int qos) {
 
     // find fitting connectors
-    PublisherConnector* connector = findPublisherConnectorLike(publisherPath, qos);
+    PublisherConnector* connector = getPublisherConnectorForName(publisherPath);
     if(connector){
         for (auto endpoint: connector->getEndpoints()){
             if(endpoint->getQos() == qos){

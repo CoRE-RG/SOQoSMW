@@ -118,15 +118,6 @@ protected:
     SubscriberConnector* getSubscriberConnectorForName (std::string& publisherPath);
 
     /**
-     * Searches for a publisher connector on this node for the given name and QoS.
-     *
-     * @param publisherPath     the path of the publisher.
-     * @param qos               the QoS of the publisher.
-     * @return                  the publisher if found, else nullptr.
-     */
-    PublisherConnector* findPublisherConnectorLike(std::string& publisherPath, int qos);
-
-    /**
      * Searches for a subscriber connector on this node for the given name and QoS.
      *
      * @param publisherPath     the path of the publisher.

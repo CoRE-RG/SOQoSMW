@@ -37,6 +37,8 @@ ConnectionSpecificInformation* UDPPublisherEndpoint::getConnectionSpecificInform
 }
 
 void UDPPublisherEndpoint::handleParameterChange(const char* parname) {
+    STDPublisherEndpointBase::handleParameterChange(parname);
+
     if (!parname || !strcmp(parname, "localAddress"))
     {
         _localAddress = par("localAddress").stdstringValue();
@@ -81,10 +83,10 @@ void UDPPublisherEndpoint::initializeTransportConnection() {
     udp->setGateSize("appOut", udp->gateSize("appOut")+1);
     // connect to transport gates
     this->gate(TRANSPORT_OUT_GATE_NAME)->connectTo(udp->gate("appIn", udp->gateSize("appIn")-1));
-    this->gate(TRANSPORT_IN_GATE_NAME)->connectTo(udp->gate("appOut", udp->gateSize("appOut")-1));
+    udp->gate("appOut", udp->gateSize("appOut")-1)->connectTo(this->gate(TRANSPORT_IN_GATE_NAME));
 
     // update server socket and listen
-    _serverSocket.setOutputGate(gate("TRANSPORT_OUT_GATE_NAME"));
+    _serverSocket.setOutputGate(gate(TRANSPORT_OUT_GATE_NAME));
     _serverSocket.setReuseAddress(true);
 
     _serverSocket.bind(_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);

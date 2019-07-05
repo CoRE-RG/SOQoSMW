@@ -10,6 +10,8 @@
 
 #include <qospolicy/base/types/IntQoSPolicy.h>
 
+#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+
 namespace soqosmw {
 
 namespace QoSPolicyNames {
@@ -22,18 +24,14 @@ const std::string QoSGroup = "QoSGroup"; //one of enum WEB, STD, RT
 class QoSGroup: public IQoSPolicy {
 public:
 
-    typedef enum QoSGroups{
-        WEB, STD_TCP, STD_UDP, RT
-    }QoSGroups_t;
-
-    QoSGroup(QoSGroups_t value) : _value (value){
+    QoSGroup(QoSGroups value) : _value (value){
 
     }
     virtual ~QoSGroup(){
 
     }
 
-    const QoSGroups_t getValue(){
+    const QoSGroups getValue(){
         return _value;
     }
 
@@ -43,7 +41,7 @@ public:
     }
 
 private:
-    const QoSGroups_t _value;
+    const QoSGroups _value;
 };
 
 } /* namespace soqosmw */

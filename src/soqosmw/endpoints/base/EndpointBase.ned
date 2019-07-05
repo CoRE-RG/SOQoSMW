@@ -42,5 +42,5 @@ simple EndpointBase
         // incoming traffic from transport layer        
         input transportIn @loose;
         // outgoing traffic to transport layer
-        input transportOut @loose;
+        output transportOut @loose;
 }

@@ -110,13 +110,13 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
     if (!parname || !strcmp(parname, "qosGroup")) {
         string group = par("qosGroup").stdstringValue();
         if(group == "WS"){
-            _qosGroup = new QoSGroup(QoSGroup::WEB);
+            _qosGroup = new QoSGroup(QoSGroups::WEB);
         } else if(group == "STD_TCP"){
-            _qosGroup = new QoSGroup(QoSGroup::STD_TCP);
+            _qosGroup = new QoSGroup(QoSGroups::STD_TCP);
         } else if(group == "STD_UDP"){
-            _qosGroup = new QoSGroup(QoSGroup::STD_UDP);
+            _qosGroup = new QoSGroup(QoSGroups::STD_UDP);
         } else if(group == "RT"){
-            _qosGroup = new QoSGroup(QoSGroup::RT);
+            _qosGroup = new QoSGroup(QoSGroups::RT);
         } else {
             cRuntimeError("Not a valid connection type");
         }

@@ -32,5 +32,4 @@ simple STDSubscriberEndpointBase extends SubscriberEndpointBase
 {
     parameters:
         endpointPath = default("RTSubscriber");
-    	qos = "STD"; // invalid...
 }

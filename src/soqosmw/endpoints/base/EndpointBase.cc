@@ -29,6 +29,7 @@ const char EndpointBase::TRANSPORT_OUT_GATE_NAME[] = "transportOut";
 
 void EndpointBase::initialize()
 {
+    handleParameterChange(nullptr);
     //nothing to do
     initializeTransportConnection();
 }
@@ -49,20 +50,16 @@ void EndpointBase::handleMessage(cMessage *msg)
 
 void EndpointBase::handleParameterChange(const char* parname) {
     if (!parname || !strcmp(parname, "qos")) {
-        if(par("qos")){
-            if (!strcmp(par("qos"), "RT")) {
-                _qos = QoSGroups::RT;
-            } else if (!strcmp(par("qos"), "WEB")) {
-                _qos = QoSGroups::WEB;
-            } else if (!strcmp(par("qos"), "STD_TCP")) {
-                _qos = QoSGroups::STD_TCP;
-            } else if (!strcmp(par("qos"), "STD_UDP")) {
-                _qos = QoSGroups::STD_UDP;
-            } else {
-                throw cRuntimeError("Endpoint QoS parameter set to unknown value");
-            }
+        if (!strcmp(par("qos"), "RT")) {
+            _qos = QoSGroups::RT;
+        } else if (!strcmp(par("qos"), "WEB")) {
+            _qos = QoSGroups::WEB;
+        } else if (!strcmp(par("qos"), "STD_TCP")) {
+            _qos = QoSGroups::STD_TCP;
+        } else if (!strcmp(par("qos"), "STD_UDP")) {
+            _qos = QoSGroups::STD_UDP;
         } else {
-            throw cRuntimeError("Endpoint QoS parameter not set");
+            throw cRuntimeError("Endpoint QoS parameter set to unknown value");
         }
     }
     if (!parname || !strcmp(parname, "endpointPath")) {

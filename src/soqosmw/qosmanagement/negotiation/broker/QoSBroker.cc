@@ -99,26 +99,7 @@ bool QoSBroker::startNegotiation() {
         fillEnvelope(request);
         QoSPolicyMap qosPolicies =
                 _request->getQosPolicies();
-        switch ((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue()) {
-        case QoSGroup::WEB:
-            request->setQosClass(QoSGroups::WEB);
-            break;
-        case QoSGroup::STD_TCP:
-            request->setQosClass(QoSGroups::STD_TCP);
-            break;
-        case QoSGroup::STD_UDP:
-            request->setQosClass(QoSGroups::STD_UDP);
-            break;
-        case QoSGroup::RT:
-            request->setQosClass(QoSGroups::RT);
-            break;
-        default:
-            _request->setStatus(RequestStatus::INVALID);
-            finishNegotiation();
-            EV_ERROR
-                            << "QoSBroker: starting negotiation --> no valid QoSProperties set.";
-            return false;
-        }
+        request->setQosClass((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue());
 
         //send QoS Request
         sendMessage(request);
@@ -206,7 +187,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 establish->setQosClass(response->getQosClass());
 
                 // create subscriber if udp is wanted -> NOT TESTED
-                if (response->getQosClass() == QoSGroup::QoSGroups::STD_UDP) {
+                if (response->getQosClass() == QoSGroups::STD_UDP) {
                     CSI_UDP* csi = new CSI_UDP();
 
                     // create or find the subscriber

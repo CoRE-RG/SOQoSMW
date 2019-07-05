@@ -29,6 +29,7 @@ void PublisherEndpointBase::handleConnectorIn(cMessage* msg) {
     if(cPacket* packet = dynamic_cast<cPacket*>(msg)){
         if(_isConnected){
             publish(packet);
+            return;// dont delete now
         }
     }
     delete msg;
