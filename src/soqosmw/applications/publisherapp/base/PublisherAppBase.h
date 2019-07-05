@@ -144,6 +144,7 @@ protected:
     virtual void scheduleNextMessage();
 
 private:
+    simsignal_t _msgSentSignal;
 };
 
 } /* end namespace soqosmw */

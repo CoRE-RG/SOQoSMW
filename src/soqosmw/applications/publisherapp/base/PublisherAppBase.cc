@@ -57,6 +57,7 @@ void PublisherAppBase::initialize() {
     SOQoSMWApplicationBase::initialize();
     handleParameterChange(nullptr);
 
+    this->_msgSentSignal = registerSignal("msgSent");
     _framesize = getPayloadBytes();
 //    if (getPayloadBytes()
 //            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
@@ -154,8 +155,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
 
-            //todo emit packet that was send.
-
+            emit(this->_msgSentSignal,simTime());
             sendDirect(payloadPacket, _connector->gate("applicationIn"));
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
