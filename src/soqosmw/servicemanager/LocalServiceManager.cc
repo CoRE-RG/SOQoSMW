@@ -527,7 +527,7 @@ PublisherEndpointBase* LocalServiceManager::createTCPPublisherEndpoint(
     if(qos == QoSGroups::STD_TCP){
         // 1. Find the factory object;
         cModuleType * moduleType = cModuleType::get(
-                    "soqosmw.endpoints.publisher.standard.udp.TCPPublisherEndpoint");
+                    "soqosmw.endpoints.publisher.standard.tcp.TCPPublisherEndpoint");
         // 2. Create the module;
         int vectorsize = 0;
         if(getSubmodule("tcpPublisherEndpoints", 0)){

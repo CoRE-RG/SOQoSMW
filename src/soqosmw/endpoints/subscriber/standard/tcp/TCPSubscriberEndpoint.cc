@@ -69,7 +69,7 @@ void TCPSubscriberEndpoint::initializeTransportConnection() {
     _socket.setDataTransferMode(TCPDataTransferMode::TCP_TRANSFER_OBJECT);
     _socket.bind(_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
 
-    _socket.setOutputGate(gate("TRANSPORT_OUT_GATE_NAME"));
+    _socket.setOutputGate(gate(TRANSPORT_OUT_GATE_NAME));
 
     _socket.connect(L3AddressResolver().resolve(_remoteAddress.c_str()), _remotePort);
 }

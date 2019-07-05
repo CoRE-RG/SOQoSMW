@@ -78,7 +78,7 @@ void TCPPublisherEndpoint::initializeTransportConnection() {
     _serverSocket.setDataTransferMode(TCPDataTransferMode::TCP_TRANSFER_OBJECT);
     _serverSocket.bind(_localAddress.c_str() ? L3AddressResolver().resolve(_localAddress.c_str()) : L3Address(), _localPort);
 
-    _serverSocket.setOutputGate(gate("TRANSPORT_OUT_GATE_NAME"));
+    _serverSocket.setOutputGate(gate(TRANSPORT_OUT_GATE_NAME));
 
     _serverSocket.listen();
 }
