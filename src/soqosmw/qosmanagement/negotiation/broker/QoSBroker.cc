@@ -100,7 +100,8 @@ bool QoSBroker::startNegotiation() {
         QoSPolicyMap qosPolicies =
                 _request->getQosPolicies();
         request->setQosClass((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue());
-
+        //todo set request size
+        request->setByteLength(sizeof(request));
         //send QoS Request
         sendMessage(request);
         EV_DEBUG << "QoSBroker: starting negotiation"
@@ -153,6 +154,7 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
                 response->setResponseStatus(QoSNegotiationStatus::Failure);
             }
 
+            response->setByteLength(sizeof(response));
             //send response
             sendMessage(response);
             _state = QoSBrokerStates_t::SERVER_PENDING_ACCEPT;
@@ -209,6 +211,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 }
 
                 //send connection request
+                establish->setByteLength(sizeof(establish));
                 sendMessage(establish);
                 EV_DEBUG << " --> send establish request" << endl;
                 _request->setStatus(RequestStatus::ESTABLISH_SEND);
@@ -288,6 +291,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 _state = QoSBrokerStates_t::SERVER_FAILURE;
             }
             finishNegotiation();
+            finalise->setByteLength(sizeof(finalise));
             sendMessage(finalise);
             handled = true;
         } else {

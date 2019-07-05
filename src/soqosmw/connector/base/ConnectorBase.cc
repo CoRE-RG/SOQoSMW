@@ -35,12 +35,14 @@ void ConnectorBase::handleMessage(cMessage *msg)
         for(auto endpoint : _endpoints) {
             sendDirect(msg->dup(), endpoint->gate("connectorIn"));
         }
+        // todo emit ...
 
     } else if (_applicationFwdEnabled && msg->arrivedOn("endpointIn")) {
         //from endpoints --> forward to applications
         for(auto application : _applications) {
             sendDirect(msg->dup(), application->gate("connectorIn"));
         }
+        // todo emit ...
     }
 
     delete msg;
@@ -67,6 +69,7 @@ bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
             _endpoints.push_back(endpoint);
+            // todo emit ...
             return true;
         }
     }
@@ -78,6 +81,7 @@ EndpointBase* ConnectorBase::removeEndpoint(EndpointBase* endpoint) {
     if(endpoint){
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
+            // todo emit ...
             EndpointBase* temp = *it;
             _endpoints.erase(it);
             return temp;
@@ -91,6 +95,7 @@ bool ConnectorBase::addApplication(SOQoSMWApplicationBase* application) {
         //check if not already in the list, then add.
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
+            // todo emit ...
             _applications.push_back(application);
             return true;
         }
@@ -104,6 +109,7 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
     if(application){
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
+            // todo emit ...
             SOQoSMWApplicationBase* temp = *it;
             _applications.erase(it);
             return temp;

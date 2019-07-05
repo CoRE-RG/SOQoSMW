@@ -154,6 +154,8 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
 
+            //todo emit packet that was send.
+
             sendDirect(payloadPacket, _connector->gate("applicationIn"));
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 

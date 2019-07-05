@@ -52,6 +52,8 @@ void GatewaySubscriberApp::handleMessage(cMessage* msg) {
 
     if(msg->arrivedOn("connectorIn")){
         if(GatewayAggregationMessage* gwam = dynamic_cast<GatewayAggregationMessage*>(msg)){
+            //todo emit packet that was received
+
             //unpack can frames and forward
             sendDirect(gwam->dup(), _toGateway);
         } else {

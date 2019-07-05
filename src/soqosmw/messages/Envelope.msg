@@ -15,6 +15,8 @@
 
 cplusplus {{
 #include "soqosmw/base/EndpointDescription.h"
+
+#define SOQOSMW_ENVELOPE_BYTESIZE sizeof(int) + 2*sizeof(EndpointDescription)
 }}
 
 class noncobject EndpointDescription;

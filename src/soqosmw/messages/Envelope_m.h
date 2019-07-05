@@ -18,13 +18,15 @@
 
 // cplusplus {{
 #include "soqosmw/base/EndpointDescription.h"
+
+#define SOQOSMW_ENVELOPE_BYTESIZE sizeof(int) + 2*sizeof(EndpointDescription)
 // }}
 
 
 namespace soqosmw {
 
 /**
- * Enum generated from <tt>soqosmw/messages/Envelope.msg:24</tt> by nedtool.
+ * Enum generated from <tt>soqosmw/messages/Envelope.msg:26</tt> by nedtool.
  * <pre>
  * enum SOQoSMWProtocols
  * {
@@ -38,7 +40,7 @@ enum SOQoSMWProtocols {
 };
 
 /**
- * Class generated from <tt>soqosmw/messages/Envelope.msg:31</tt> by nedtool.
+ * Class generated from <tt>soqosmw/messages/Envelope.msg:33</tt> by nedtool.
  * <pre>
  * //
  * // TODO generated message class
