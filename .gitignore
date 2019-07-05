@@ -51,3 +51,8 @@ src/*/features.h
 .DS_Store
 
 test/smoke/test\.out
+
+#ignore andl generated files
+/simulations/src/andlGenerated/
+/simulations/src/minimal_net/
+
