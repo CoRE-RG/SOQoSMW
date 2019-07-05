@@ -118,6 +118,24 @@ protected:
     SubscriberConnector* getSubscriberConnectorForName (std::string& publisherPath);
 
     /**
+     * Searches for a publisher connector on this node for the given name and QoS.
+     *
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the publisher if found, else nullptr.
+     */
+    PublisherConnector* findPublisherConnectorLike(std::string& publisherPath, int qos);
+
+    /**
+     * Searches for a subscriber connector on this node for the given name and QoS.
+     *
+     * @param publisherPath     the path of the publisher.
+     * @param qos               the QoS of the publisher.
+     * @return                  the subscriber if found, else nullptr.
+     */
+    SubscriberConnector* findSubscriberConnectorLike(std::string& publisherPath, int qos);
+
+    /**
      * Tries to find a publisher on this node for the given name and QoS.
      * If it can't be found a new one is created.
      * The connector will be connected as well.
@@ -165,6 +183,8 @@ protected:
 
     /**
      * contains pointers to the existing subscriber connectors on a node.
+     * TODO maybe we need to allow more than one subscriber connector per publisher for differen QoS?
+     * Or we take the best QoS needed on device?
      */
     std::map<std::string, SubscriberConnector*> _subscriberConnectors;
 
@@ -192,6 +212,22 @@ protected:
      * Caches the localAddress parameter.
      */
     inet::L3Address _localAddress;
+
+private:
+    /**
+     * Matches the connection type to the qos group
+     * @param type      connection type. @see~ConnectionType
+     * @return          the qos group. @see~QoSGroups
+     */
+    int getQoSGroupForConnectionType(int type);
+
+    SubscriberEndpointBase* createAVBSubscriberEndpoint(std::string& publisherPath, ConnectionSpecificInformation* csi, SubscriberConnector* connector);
+    SubscriberEndpointBase* createTCPSubscriberEndpoint(std::string& publisherPath, ConnectionSpecificInformation* csi, SubscriberConnector* connector);
+    SubscriberEndpointBase* createUDPSubscriberEndpoint(std::string& publisherPath, ConnectionSpecificInformation* csi, SubscriberConnector* connector);
+
+    PublisherEndpointBase* createAVBPublisherEndpoint(std::string& publisherPath, int qos, PublisherConnector* connector);
+    PublisherEndpointBase* createTCPPublisherEndpoint(std::string& publisherPath, int qos, PublisherConnector* connector);
+    PublisherEndpointBase* createUDPPublisherEndpoint(std::string& publisherPath, int qos, PublisherConnector* connector);
 };
 
 } /* end namespace  */

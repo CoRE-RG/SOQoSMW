@@ -57,14 +57,15 @@ void PublisherAppBase::initialize() {
     SOQoSMWApplicationBase::initialize();
     handleParameterChange(nullptr);
 
-    if (getPayloadBytes()
-            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
-                    - ETHER_8021Q_TAG_BYTES)) {
-        _framesize = MIN_ETHERNET_FRAME_BYTES;
-    } else {
-        _framesize =
-                getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
-    }
+    _framesize = getPayloadBytes();
+//    if (getPayloadBytes()
+//            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
+//                    - ETHER_8021Q_TAG_BYTES)) {
+//        _framesize = MIN_ETHERNET_FRAME_BYTES;
+//    } else {
+//        _framesize =
+//                getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
+//    }
 
     if (isEnabled()) {
         scheduleAt(simTime() + par("startTime").doubleValue(),
