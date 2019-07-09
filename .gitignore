@@ -56,3 +56,4 @@ test/smoke/test\.out
 /simulations/src/andlGenerated/
 /simulations/src/minimal_net/
 
+/.computed/
