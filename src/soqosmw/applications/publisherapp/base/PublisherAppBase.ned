@@ -47,7 +47,7 @@ simple PublisherAppBase extends SOQoSMWApplicationBase
         string srClass = default("A");
         
         @signal[payloadSignal];
-        @signal[msgSent](type="simtime_t");
+        @signal[msgSent](type=long);//type="simtime_t");
         @statistic[msgSentCount](title="msgSent count"; source="msgSent"; record=vector; interpolationmode=none);
     
     	//Service Description

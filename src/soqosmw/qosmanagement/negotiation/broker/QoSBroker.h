@@ -88,6 +88,8 @@ public:
         return _negotiationFinished;
     }
 
+    simtime_t getTimeStamp();
+
 protected:
 
     /**
@@ -203,6 +205,10 @@ private:
      */
     bool _negotiationFinished;
 
+    /**
+     * Time stamp
+     */
+    simtime_t _timeStamp;
 };
 
 } /* namespace soqosmw */

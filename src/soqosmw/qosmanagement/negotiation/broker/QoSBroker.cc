@@ -93,6 +93,7 @@ bool QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
 bool QoSBroker::startNegotiation() {
     bool handled = false;
     if (_state == QoSBrokerStates_t::CLIENT_STARTUP) {
+        this->_timeStamp = simTime();
         //create QoS Request Message
         QoSNegotiationRequest* request = new QoSNegotiationRequest("QoSNegotiationRequest");
         //fill envelope
@@ -412,6 +413,10 @@ bool QoSBroker::isResponsibleFor(EndpointDescription& local,
 
 void QoSBroker::finishNegotiation() {
     _negotiationFinished = true;
+}
+
+simtime_t QoSBroker::getTimeStamp() {
+    return this->_timeStamp;
 }
 
 } /* namespace soqosmw */

@@ -44,6 +44,8 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {
+    this->_qosNt = registerSignal("qosNt");
+
     if(stage == 1) {
     }
     if (stage == QOSNP_INIT_STAGE) {
@@ -71,6 +73,11 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
                         as_negotiation->getSender())) {
                     handled = (*broker)->handleMessage(as_negotiation);
                     if ((*broker)->isNegotiationFinished()) {
+                        // capture duration of negotiation
+                        simtime_t recentTime = simTime();
+                        simtime_t launchTime = (*broker)->getTimeStamp();
+                        simtime_t finishTime = recentTime - launchTime;
+                        emit(this->_qosNt,finishTime);
                         _brokers.erase(broker);
                     }
                     break;

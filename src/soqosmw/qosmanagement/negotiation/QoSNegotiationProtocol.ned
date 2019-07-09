@@ -23,6 +23,9 @@ simple QoSNegotiationProtocol like IUDPApp
 {
     parameters:
         @class(soqosmw::QoSNegotiationProtocol);
+        
+        @signal[qosNt](type=simtime_t);
+        @statistic[NegotiationTime](title="QosNegotiation Time"; source="qosNt"; record=vector; interpolationmode=none);
                 
        	//UDP common parameters
        	string interfaceTableModule;   // The path to the InterfaceTable module

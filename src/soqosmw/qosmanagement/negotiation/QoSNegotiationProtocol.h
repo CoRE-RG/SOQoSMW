@@ -124,6 +124,11 @@ private:
      * Reference to the local service manager.
      */
     LocalServiceManager* _lsm;
+
+    /**
+     * Signal to capture time points of negotiation messages.
+     */
+    simsignal_t _qosNt;
 };
 
 } /* namespace soqosmw */
