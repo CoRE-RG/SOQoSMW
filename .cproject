@@ -123,8 +123,8 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings">
-		<doc-comment-executingApplication id="org.eclipse.cdt.ui.doxygen">
+		<doc-comment-owner id="org.eclipse.cdt.ui.doxygen">
 			<path value=""/>
-		</doc-comment-executingApplication>
+		</doc-comment-owner>
 	</storageModule>
 </cproject>

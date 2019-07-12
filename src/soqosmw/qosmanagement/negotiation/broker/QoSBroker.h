@@ -170,6 +170,16 @@ private:
      */
     std::string getStateAsName();
 
+
+    //size calculation for messages
+
+    /**
+     * Calculates the byte size of the message.
+     * @param request   the request to calculate the byte size for
+     * @return          the byte size
+     */
+    size_t getNegotiationMessageSize(QoSNegotiationProtocolMsg* request);
+
     /**
      * Holds the current state.
      */
