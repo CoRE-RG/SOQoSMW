@@ -88,7 +88,17 @@ public:
         return _negotiationFinished;
     }
 
-    simtime_t getTimeStamp();
+    /**
+     * Returns the start timestamp of the sent request message
+     * @return _startTimestamp
+     */
+    simtime_t getStartTimestamp();
+
+    /**
+     * Returns the finish timestamp of the arrived finalise message
+     * @return
+     */
+    simtime_t getFinishTimestamp();
 
 protected:
 
@@ -216,9 +226,14 @@ private:
     bool _negotiationFinished;
 
     /**
-     * Time stamp
+     * Start timestamp
      */
-    simtime_t _timeStamp;
+    simtime_t _startTimestamp;
+
+    /**
+     * Finish timestamp
+     */
+    simtime_t _finishTimestamp;
 };
 
 } /* namespace soqosmw */

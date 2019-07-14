@@ -73,11 +73,12 @@ void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
                         as_negotiation->getSender())) {
                     handled = (*broker)->handleMessage(as_negotiation);
                     if ((*broker)->isNegotiationFinished()) {
-                        // capture duration of negotiation
-                        simtime_t recentTime = simTime();
-                        simtime_t launchTime = (*broker)->getTimeStamp();
-                        simtime_t finishTime = recentTime - launchTime;
-                        emit(this->_qosNt,finishTime);
+                        // emit duration of negotiation
+                        simtime_t startTimestamp = (*broker)->getStartTimestamp();
+                        simtime_t finishTimestamp = (*broker)->getFinishTimestamp();
+                        if (startTimestamp != -1 && finishTimestamp != -1) {
+                            emit(this->_qosNt,finishTimestamp - startTimestamp);
+                        }
                         _brokers.erase(broker);
                     }
                     break;

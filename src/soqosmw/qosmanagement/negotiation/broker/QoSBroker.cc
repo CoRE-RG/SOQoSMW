@@ -35,7 +35,7 @@ using namespace std;
 
 QoSBroker::QoSBroker(UDPSocket* socket, LocalServiceManager* lsm, EndpointDescription local,
         EndpointDescription remote, Request* request) :
-        _socket(socket), _lsm(lsm), _local(local), _remote(remote), _request(request) {
+        _socket(socket), _lsm(lsm), _local(local), _remote(remote), _request(request), _startTimestamp(-1), _finishTimestamp(-1) {
     _negotiationFinished = false;
     if (request != nullptr) {
         _state = QoSBrokerStates_t::CLIENT_STARTUP;
@@ -82,7 +82,7 @@ bool QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
                 break;
             }
         } else {
-            //i am not responsible do nothing...
+            // i am not responsible do nothing...
             EV_ERROR << "QoSBroker:" << " --> message received"
                             << " --> I am not responsible." << endl;
         }
@@ -93,17 +93,17 @@ bool QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
 bool QoSBroker::startNegotiation() {
     bool handled = false;
     if (_state == QoSBrokerStates_t::CLIENT_STARTUP) {
-        this->_timeStamp = simTime();
-        //create QoS Request Message
+        this->_startTimestamp = simTime();
+        // create QoS Request Message
         QoSNegotiationRequest* request = new QoSNegotiationRequest("QoSNegotiationRequest");
-        //fill envelope
+        // fill envelope
         fillEnvelope(request);
         QoSPolicyMap qosPolicies =
                 _request->getQosPolicies();
         request->setQosClass((dynamic_cast<QoSGroup*>(qosPolicies[QoSPolicyNames::QoSGroup]))->getValue());
-        //todo set request size
+        // set request size
         request->setByteLength(getNegotiationMessageSize(request));
-        //send QoS Request
+        // send QoS Request
         sendMessage(request);
         EV_DEBUG << "QoSBroker: starting negotiation"
                         << " --> send negotiation request.";
@@ -127,10 +127,10 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
     if (request) {
         if (_state == QoSBrokerStates_t::SERVER_NO_SESSION) {
 
-            //request received --> check requirements
+            // request received --> check requirements
             bool requestAcceptables = isRequestAcceptable(request);
 
-            //create response
+            // create response
             QoSNegotiationResponse* response = new QoSNegotiationResponse("QoSNegotiationResponse");
             fillEnvelope(response);
             response->setQosClass(request->getQosClass());
@@ -154,9 +154,9 @@ bool QoSBroker::handleRequest(QoSNegotiationRequest* request) {
                 //create accept payload
                 response->setResponseStatus(QoSNegotiationStatus::Failure);
             }
-            //todo set response size
+            // set response size
             response->setByteLength(getNegotiationMessageSize(response));
-            //send response
+            // send response
             sendMessage(response);
             _state = QoSBrokerStates_t::SERVER_PENDING_ACCEPT;
             handled = true;
@@ -175,7 +175,7 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
     bool handled = false;
     if (response) {
         if (_state == QoSBrokerStates_t::CLIENT_PENDING_REQUEST) {
-            //response received --> check contract
+            // response received --> check contract
             EV_DEBUG << "QoSBroker: received response";
 
             if (response->getResponseStatus()
@@ -183,13 +183,12 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                 // successfull negotiation
                 EV_DEBUG << " --> negotiation successful";
 
-                //create Connection request
+                // create Connection request
                 QoSNegotiationEstablish* establish =
                         new QoSNegotiationEstablish("QoSNegotiationEstablish");
                 fillEnvelope(establish);
                 establish->setQosClass(response->getQosClass());
 
-                // create subscriber if udp is wanted -> NOT TESTED
                 if (response->getQosClass() == QoSGroups::STD_UDP) {
                     CSI_UDP* csi = new CSI_UDP();
 
@@ -199,7 +198,6 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                     delete csi;
 
                     if(sub){
-                        // encapsulate the CSI into the packet. -> NOT TESTED
                         ConnectionSpecificInformation* info = sub->getConnectionSpecificInformation();
                         if(info){
                             establish->encapsulate(info);
@@ -210,9 +208,9 @@ bool QoSBroker::handleResponse(QoSNegotiationResponse* response) {
                         throw cRuntimeError("No subscriber was created...");
                     }
                 }
-                //todo set establish size
+                // set establish size
                 establish->setByteLength(getNegotiationMessageSize(establish));
-                //send connection establish
+                // send connection establish
                 sendMessage(establish);
                 EV_DEBUG << " --> send establish request" << endl;
                 _request->setStatus(RequestStatus::ESTABLISH_SEND);
@@ -240,7 +238,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
     if (establish) {
         if (_state == QoSBrokerStates_t::SERVER_PENDING_ACCEPT) {
             EV_DEBUG << "QoSBroker: received establish";
-            //create response
+            // create response
             QoSNegotiationFinalise* finalise = new QoSNegotiationFinalise("QoSNegotiationFinalise");
             fillEnvelope(finalise);
             finalise->setQosClass(establish->getQosClass());
@@ -292,7 +290,7 @@ bool QoSBroker::handleEstablish(QoSNegotiationEstablish* establish) {
                 _state = QoSBrokerStates_t::SERVER_FAILURE;
             }
             finishNegotiation();
-            //todo set finalize size
+            // set finalise size
             finalise->setByteLength(getNegotiationMessageSize(finalise));
             sendMessage(finalise);
             handled = true;
@@ -317,7 +315,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                 _state = QoSBrokerStates_t::CLIENT_SUCCESS;
                 _request->setStatus(RequestStatus::FINALISED_SUCCESS);
 
-                //get connection specific information
+                // get connection specific information
                 ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(finalise->decapsulate());
                 if(info){
 
@@ -341,6 +339,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
             }
             finishNegotiation();
             handled = true;
+            this->_finishTimestamp = simTime();
         } else {
             EV_ERROR
                             << "QoSBroker: not in correct state to handle new request. State is: "
@@ -353,11 +352,11 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
 }
 
 bool QoSBroker::isRequestAcceptable(QoSNegotiationRequest* request) {
-    //get payload
+    // get payload
 
-    //check if service exists on this node and get a reference
+    // check if service exists on this node and get a reference
 
-    //ask service if it can handle the request
+    // ask service if it can handle the request
 
     return true;
 }
@@ -367,16 +366,16 @@ bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish) {
 }
 
 void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope) {
-    //set receiver
+    // set receiver
     EndpointDescription receiver(_remote);
     envelope->setReceiver(receiver);
-    //set sender
+    // set sender
     EndpointDescription sender(_local);
     envelope->setSender(sender);
 }
 
 void QoSBroker::sendMessage(QoSNegotiationProtocolMsg* payload_packet) {
-    //payload_packet->setByteLength(sizeof(*payload_packet));
+    // payload_packet->setByteLength(sizeof(*payload_packet));
     _socket->sendTo(payload_packet, _remote.getNetworkAddr(),
             _remote.getNetworkPort());
 }
@@ -416,8 +415,12 @@ void QoSBroker::finishNegotiation() {
     _negotiationFinished = true;
 }
 
-simtime_t QoSBroker::getTimeStamp() {
-    return this->_timeStamp;
+simtime_t QoSBroker::getStartTimestamp() {
+    return this->_startTimestamp;
+}
+
+simtime_t QoSBroker::getFinishTimestamp() {
+    return this->_finishTimestamp;
 }
 
 size_t QoSBroker::getNegotiationMessageSize(QoSNegotiationProtocolMsg* msg) {
@@ -432,10 +435,10 @@ size_t QoSBroker::getNegotiationMessageSize(QoSNegotiationProtocolMsg* msg) {
     result = minimumSize + pathsSize;
     switch (msg->getMessageType()) {
         case QoSNegotiationMsgType::QoS_Response:
-            result += sizeof(int); // response;
+            result += sizeof(int); // responseStatus
             break;
         case QoSNegotiationMsgType::QoS_Finalise:
-            result += sizeof(int); // final
+            result += sizeof(int); // finalStatus
             break;
         }
     return result;
