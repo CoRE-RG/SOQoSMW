@@ -129,6 +129,11 @@ private:
      * Signal to capture time points of negotiation messages.
      */
     simsignal_t _qosNt;
+
+    /**
+     * Signal to emit QOSNP frames.
+     */
+    static simsignal_t _rxPkSignal;
 };
 
 } /* namespace soqosmw */

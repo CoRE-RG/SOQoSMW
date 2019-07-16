@@ -1,4 +1,4 @@
-package soqosmw.examples.negotiationTestNetwork;
+package soqosmw.examples.negotiationTestNetwork.UDP;
 
 import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
 import core4inet.incoming.AS6802.TTIncoming;

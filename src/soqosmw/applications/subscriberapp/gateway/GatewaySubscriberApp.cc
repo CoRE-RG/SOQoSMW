@@ -51,6 +51,7 @@ void GatewaySubscriberApp::initialize()
 void GatewaySubscriberApp::handleMessage(cMessage* msg) {
 
     if(msg->arrivedOn("connectorIn")){
+
         if(GatewayAggregationMessage* gwam = dynamic_cast<GatewayAggregationMessage*>(msg)){
             //todo emit packet that was received
 

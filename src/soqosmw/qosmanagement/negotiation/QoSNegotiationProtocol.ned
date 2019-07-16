@@ -26,6 +26,15 @@ simple QoSNegotiationProtocol like IUDPApp
         
         @signal[qosNt](type=simtime_t);
         @statistic[NegotiationTime](title="QosNegotiation Time"; source="qosNt"; record=vector; interpolationmode=none);
+        
+        //Signal emitted when a frame is received, contains received EtherFrame
+        @signal[rxPk](type=soqosmw::Envelope);
+        //Statistic of the amount of packets that were received by the application
+        @statistic[rxPk](title="Received Packets"; source=rxPk; record=count; unit=packets);
+        //Statistic of the amount of bytes that were received by the application
+        @statistic[rxBytes](title="Received Bytes"; source=rxPk; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        //End-to-end latency
+        @statistic[rxLatency](title="End-to-end latency"; source="messageAge(rxPk)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
                 
        	//UDP common parameters
        	string interfaceTableModule;   // The path to the InterfaceTable module
@@ -33,6 +42,7 @@ simple QoSNegotiationProtocol like IUDPApp
        	int protocolPort = default(5005);  // local port (-1: use ephemeral port)
         string localAddress = default("");
         string lsmmoduleName = default("lsm");
+        double processingDelay @unit(s) = default(0s);
         
     gates:
         //UDP Transport Protocol gates
