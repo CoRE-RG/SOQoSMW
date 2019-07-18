@@ -29,10 +29,16 @@ module SOQoSMWHost extends RTIPHost
     	hasTcp = true; //needed for tcp based communication
     	int numServices = default(0);
     	string localAddress = default("");
+        double qosnp_processing_delay @unit(s) = default(4us); // Forwardingdelay of the device hardware
     	*.localAddress = localAddress;
     	*.lsmmoduleName = "lsm";
     	*.sdmoduleName = "sd";
     	*.qosnpmoduleName = "qosnp";
+    	
+    types:
+        channel ProcessingDelay extends ned.DelayChannel
+        {
+        }
     	
     submodules:
         
@@ -56,7 +62,7 @@ module SOQoSMWHost extends RTIPHost
         
     connections allowunconnected:
 
-        qosnp.udpOut --> udp.appIn++;
+        qosnp.udpOut --> ProcessingDelay{ delay = (qosnp_processing_delay); } --> udp.appIn++;
         qosnp.udpIn <-- udp.appOut++;
 
 }

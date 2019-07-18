@@ -133,7 +133,7 @@ private:
     /**
      * Signal to emit QOSNP frames.
      */
-    static simsignal_t _rxPkSignal;
+    simsignal_t _rxPkSignal;
 };
 
 } /* namespace soqosmw */

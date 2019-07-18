@@ -36,8 +36,6 @@ using namespace inet;
 
 Define_Module(QoSNegotiationProtocol);
 
-simsignal_t QoSNegotiationProtocol::_rxPkSignal = registerSignal("rxPk");
-
 QoSNegotiationProtocol::QoSNegotiationProtocol() {
 }
 
@@ -47,6 +45,7 @@ QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 
 void QoSNegotiationProtocol::initialize(int stage) {
     this->_qosNt = registerSignal("qosNt");
+    this->_rxPkSignal = registerSignal("rxPk");
 
     if(stage == 1) {
     }
