@@ -15,11 +15,16 @@
 
 package soqosmw.qosmanagement.negotiation;
 
+import soqosmw.utility.processing.ProcessingTimeSimulation;
+
 import inet.applications.contract.IUDPApp;
+
 //
-// TODO auto-generated module
+// Manages the Quality-of-Service (QoS) Negotiation for a soqosmw host and several services.
 //
-simple QoSNegotiationProtocol like IUDPApp
+// @author Timo Haeckel and Mehmet Cakir, for HAW Hamburg
+//
+simple QoSNegotiationProtocol extends ProcessingTimeSimulation like IUDPApp
 {
     parameters:
         @class(soqosmw::QoSNegotiationProtocol);
@@ -42,7 +47,9 @@ simple QoSNegotiationProtocol like IUDPApp
        	int protocolPort = default(5005);  // local port (-1: use ephemeral port)
         string localAddress = default("");
         string lsmmoduleName = default("lsm");
-        double processingDelay @unit(s) = default(0s);
+        
+        processingTime = default(0);
+        allowParallelProcessing = default(true);
         
     gates:
         //UDP Transport Protocol gates

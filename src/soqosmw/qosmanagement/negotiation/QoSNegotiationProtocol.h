@@ -20,6 +20,8 @@
 #include <qosmanagement/negotiation/broker/QoSBroker.h>
 #include <vector>
 
+#include "soqosmw/utility/processing/ProcessingTimeSimulation.h"
+
 #include <inet/networklayer/common/L3Address.h>
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
@@ -46,7 +48,7 @@ namespace soqosmw {
  *
  * @author Timo Haeckel
  */
-class QoSNegotiationProtocol: public cSimpleModule {
+class QoSNegotiationProtocol: public ProcessingTimeSimulation {
     friend class LocalServiceManager;
     friend class QoSBroker;
 public:
@@ -58,26 +60,19 @@ protected:
     virtual int numInitStages() const override {
         return NO_OF_INIT_STAGES;
     }
-    virtual void handleMessage(cMessage *msg) override;
     virtual void handleParameterChange(const char* parname) override;
+
+    /**
+     * Processes the scheduled message. Needs to delete the message after handling it.
+     * @param msg  the incoming message
+     */
+    virtual void processScheduledMessage(cMessage *msg) override;
 
 private:
 
     int getProtocolPort();
 
     void createQoSBroker(Request* request);
-
-    /**
-     * Fills the soqosmw message envelope with endpoint descriptions.
-     * @param envelope
-     */
-    void fillEnvelope(Envelope* envelope);
-
-    /**
-     * Sends a message via UDP.
-     * @param msg the message to send.
-     */
-    void sendMessage(cPacket* msg);
 
     /**
      * Sets up the UDP socket.

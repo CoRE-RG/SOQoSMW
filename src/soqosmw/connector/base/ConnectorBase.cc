@@ -33,9 +33,6 @@ void ConnectorBase::initialize()
 
 void ConnectorBase::handleMessage(cMessage *msg)
 {
-    cMessage* processingDelay = new cMessage(PROCESSINGDELAY_MSG_NAME);
-    //processingDelay->setC
-    scheduleAt(simTime(), msg);
     bool forwarded = false;
     if (_endpointFwdEnabled && msg->arrivedOn("applicationIn")){
         //from applications --> forward to all endpoints
@@ -44,7 +41,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
             forwarded = true;
         }
         if (forwarded){
-            // todo emit ...
             // signal forwardedToEndpoints
             emit(this->_forwardedToEndpointsSignal, msg);
         }
@@ -56,7 +52,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
             forwarded = true;
         }
         if (forwarded){
-            // todo emit ...
             // signal forwardedToApplications
             emit(this->_forwardedToApplicationsSignal, msg);
         }
@@ -64,7 +59,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
 
     if(!forwarded){
         //message was dropped so emit.
-        //signal messageDropped
         emit(this->_messageDroppedSignal,msg);
     }
 
@@ -104,7 +98,6 @@ EndpointBase* ConnectorBase::removeEndpoint(EndpointBase* endpoint) {
     if(endpoint){
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
-            // todo emit ...
             EndpointBase* temp = *it;
             _endpoints.erase(it);
             return temp;
@@ -118,7 +111,6 @@ bool ConnectorBase::addApplication(SOQoSMWApplicationBase* application) {
         //check if not already in the list, then add.
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
-            // todo emit ...
             _applications.push_back(application);
             return true;
         }
@@ -132,7 +124,6 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
     if(application){
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
-            // todo emit ...
             SOQoSMWApplicationBase* temp = *it;
             _applications.erase(it);
             return temp;

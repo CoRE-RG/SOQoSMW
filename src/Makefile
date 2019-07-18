@@ -60,6 +60,7 @@ OBJS = \
     $O/soqosmw/qospolicy/base/qospolicy.o \
     $O/soqosmw/servicemanager/LocalServiceManager.o \
     $O/soqosmw/test/discovery/static/StaticServiceDiscoveryTest.o \
+    $O/soqosmw/utility/processing/ProcessingTimeSimulation.o \
     $O/soqosmw/messages/Envelope_m.o \
     $O/soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.o \
     $O/soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.o
