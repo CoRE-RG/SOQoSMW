@@ -39,6 +39,21 @@ simple ConnectorBase
         // Indicates if messages should be forwarded to endpoints.
         bool endpointFwdEnabled = default(true);
         
+        // Signal emitted when a message is forwarded to Endpoints
+        @signal[forwardedToEPs](type=omnetpp::cPacket);
+        //Statistic of the amount of messages that were forwarded to endpoints
+        @statistic[fwdToEPs](title="Forwarded to EPs"; source=forwardedToEPs; record=count; unit=packets);
+        
+        // Signal emitted when a message is forwarded to Applications
+        @signal[forwardedToApps](type=omnetpp::cPacket);
+        //Statistic of the amount of messages that were forwarded to endpoints
+        @statistic[fwdToApps](title="Forwarded to Apps"; source=forwardedToApps; record=count; unit=packets);
+        
+        // Signal emitted when a message is dropped
+        @signal[messageDropped](type=omnetpp::cPacket);
+        //Statistic of the amount of messages that were dropped
+        @statistic[msgDropped](title="Messaged dropped"; source=messageDropped; record=count; unit=packets);
+        
     gates:
         // input gate for messegas from the application
         input applicationIn @directIn;

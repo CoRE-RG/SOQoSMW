@@ -60,8 +60,6 @@ void QoSNegotiationProtocol::initialize(int stage) {
 }
 
 void QoSNegotiationProtocol::handleMessage(cMessage *msg) {
-    msg->setContextPointer(msg);
-    (cMessage*) msg->getContextPointer();
     if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
         emit(_rxPkSignal, as_envelope);
         //is in soqosmw::Envelope --> check other types

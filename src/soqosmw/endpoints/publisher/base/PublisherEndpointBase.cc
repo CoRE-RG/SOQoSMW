@@ -33,7 +33,7 @@ void PublisherEndpointBase::handleConnectorIn(cMessage* msg) {
             publish(packet);
             return;// dont delete now
         }
-        // else
+        // else drop emit
     }
     delete msg;
 }

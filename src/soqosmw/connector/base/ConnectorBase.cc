@@ -26,23 +26,46 @@ namespace soqosmw {
 void ConnectorBase::initialize()
 {
     handleParameterChange(nullptr);
+    this->_forwardedToEndpointsSignal = registerSignal("forwardedToEPs");
+    this->_forwardedToApplicationsSignal = registerSignal("forwardedToApps");
+    this->_messageDroppedSignal = registerSignal("msgDropped");
 }
 
 void ConnectorBase::handleMessage(cMessage *msg)
 {
+    cMessage* processingDelay = new cMessage(PROCESSINGDELAY_MSG_NAME);
+    //processingDelay->setC
+    scheduleAt(simTime(), msg);
+    bool forwarded = false;
     if (_endpointFwdEnabled && msg->arrivedOn("applicationIn")){
         //from applications --> forward to all endpoints
         for(auto endpoint : _endpoints) {
             sendDirect(msg->dup(), endpoint->gate("connectorIn"));
+            forwarded = true;
         }
-        // todo emit ...
+        if (forwarded){
+            // todo emit ...
+            // signal forwardedToEndpoints
+            emit(this->_forwardedToEndpointsSignal, msg);
+        }
 
     } else if (_applicationFwdEnabled && msg->arrivedOn("endpointIn")) {
         //from endpoints --> forward to applications
         for(auto application : _applications) {
             sendDirect(msg->dup(), application->gate("connectorIn"));
+            forwarded = true;
         }
-        // todo emit ...
+        if (forwarded){
+            // todo emit ...
+            // signal forwardedToApplications
+            emit(this->_forwardedToApplicationsSignal, msg);
+        }
+    }
+
+    if(!forwarded){
+        //message was dropped so emit.
+        //signal messageDropped
+        emit(this->_messageDroppedSignal,msg);
     }
 
     delete msg;

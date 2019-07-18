@@ -31,6 +31,8 @@ using namespace omnetpp;
 
 namespace soqosmw {
 
+#define PROCESSINGDELAY_MSG_NAME "Processing Delay"
+
 /**
  * The ConnectorBase provides a common interface for all connctor modules.
  * Those modules are created by the LocalServiceManager module (@see~LocalServiceManager)
@@ -115,6 +117,22 @@ public:
     void setQos(QoSPolicyMap& qos) {
         _qos = qos;
     }
+
+private:
+    /**
+     * Signal to emit messages which are forwarded to Endpoints
+     */
+    simsignal_t _forwardedToEndpointsSignal;
+
+    /**
+     * Signal to emit messages which are forwarded to Applications
+     */
+    simsignal_t _forwardedToApplicationsSignal;
+
+    /**
+     * Signal to emit messages which are dropped
+     */
+    simsignal_t _messageDroppedSignal;
 
   protected:
     virtual void initialize();
