@@ -28,7 +28,7 @@ void ConnectorBase::initialize()
     handleParameterChange(nullptr);
     this->_forwardedToEndpointsSignal = registerSignal("forwardedToEPs");
     this->_forwardedToApplicationsSignal = registerSignal("forwardedToApps");
-    this->_messageDroppedSignal = registerSignal("msgDropped");
+    this->_messageDroppedSignal = registerSignal("messageDropped");
 }
 
 void ConnectorBase::handleMessage(cMessage *msg)

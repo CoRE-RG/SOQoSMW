@@ -55,7 +55,7 @@ simple ConnectorBase
         @statistic[msgDropped](title="Messaged dropped"; source=messageDropped; record=count; unit=packets);
         
     gates:
-        // input gate for messegas from the application
+        // input gate for messages from the application
         input applicationIn @directIn;
         // input gate for messages from endpoints
         input endpointIn @directIn;
