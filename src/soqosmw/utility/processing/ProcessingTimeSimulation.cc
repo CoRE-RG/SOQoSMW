@@ -33,6 +33,7 @@ void ProcessingTimeSimulation::initialize()
 {
     _queueSize = registerSignal("queueSize");
     _waitingTime = registerSignal("waitingTime");
+    _busy = false;
 }
 
 void ProcessingTimeSimulation::handleParameterChange(const char* parname) {
