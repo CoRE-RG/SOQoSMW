@@ -50,12 +50,12 @@ private:
      */
     double _startTime;
 
-protected:
     /**
      * Signal that is emitted every time a frame was sent.
      */
-    static simsignal_t _rxPkSignal;
+     simsignal_t _rxPkSignal;
 
+protected:
     /**
      * Name of this subscriber service.
      */

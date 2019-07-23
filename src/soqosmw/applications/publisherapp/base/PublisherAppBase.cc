@@ -31,13 +31,11 @@ using namespace std;
 
 namespace soqosmw {
 
-simsignal_t PublisherAppBase::sigPayload = registerSignal("payloadSignal");
-
 Define_Module(PublisherAppBase);
 
 PublisherAppBase::PublisherAppBase() {
     this->_enabled = false;
-    this->_payload = 0;
+    this->_sigPayload = 0;
 }
 
 PublisherAppBase::~PublisherAppBase() {
@@ -49,7 +47,7 @@ bool PublisherAppBase::isEnabled() {
 
 size_t PublisherAppBase::getPayloadBytes() {
     handleParameterChange("payload");
-    emit(sigPayload, static_cast<unsigned long>(this->_payload));
+    emit(this->_sigPayload, static_cast<unsigned long>(this->_payload));
     return this->_payload;
 }
 
@@ -58,6 +56,7 @@ void PublisherAppBase::initialize() {
     handleParameterChange(nullptr);
 
     this->_msgSentSignal = registerSignal("msgSent");
+    this->_sigPayload = registerSignal("payloadSignal");
     _framesize = getPayloadBytes();
 //    if (getPayloadBytes()
 //            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
@@ -154,6 +153,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
             payloadPacket->setTimestamp();
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
+            emit(this->_msgSentSignal, msg);
             sendDirect(payloadPacket, _connector->gate("applicationIn"));
             EV_DEBUG << _serviceName << ": Message Published." << endl;
 
