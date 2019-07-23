@@ -68,6 +68,7 @@ void ProcessingTimeSimulation::handleMessage(cMessage *msg)
         processScheduledMessage(data_msg);
         //Trigger next service time
         triggerNextProcessingTime();
+        delete msg;
     } else {
         simulateProcessingTime(msg);
     }

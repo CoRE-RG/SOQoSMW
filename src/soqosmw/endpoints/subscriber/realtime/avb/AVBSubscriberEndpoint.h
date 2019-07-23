@@ -57,6 +57,12 @@ public:
     virtual void handleParameterChange(const char* parname) override;
 
     /**
+    * Processes the scheduled message. Needs to delete the message after handling it.
+    * @param msg  the incoming message
+    */
+   virtual void processScheduledMessage(cMessage *msg) override;
+
+    /**
      * Receives Stream Reservation Protocol signals
      */
     virtual void receiveSignal(cComponent *src, simsignal_t id, cObject *obj, cObject *details) override;
