@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for $(LIB_PREFIX)soqosmw
 #
 # This file was generated with the command:
-#  opp_makemake --make-so -f --deep -S -KCORE4INET_PROJ=../../CoRE4INET -KINET_PROJ=../../inet -KFICO4OMNET_PROJ=../../FiCo4OMNeT -KSIGNALSANDGATEWAYS_PROJ=../../SignalsAndGateways -I. -Isoqosmw -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -L$$\(CORE4INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(FICO4OMNET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(INET_PROJ\)/out/$$\(CONFIGNAME\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
+#  opp_makemake --make-so -f --deep -S -KSIGNALSANDGATEWAYS_PROJ=../../SignalsAndGateways -KCORE4INET_PROJ=../../CoRE4INET -KINET_PROJ=../../inet -KFICO4OMNET_PROJ=../../FiCo4OMNeT -I. -Isoqosmw -I$$\(SIGNALSANDGATEWAYS_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src -I$$\(CORE4INET_PROJ\)/src/core4inet/api/AS6802/tte_api -I$$\(INET_PROJ\)/src -I$$\(FICO4OMNET_PROJ\)/src -L$$\(SIGNALSANDGATEWAYS_PROJ\)/out/$$\(CONFIGNAME\)/src -lSignalsAndGateways
 #
 
 # Name of target to be created (-o option)
@@ -12,17 +12,17 @@ TARGET = $(LIB_PREFIX)soqosmw$(SHARED_LIB_SUFFIX)
 INCLUDE_PATH = \
     -I. \
     -Isoqosmw \
+    -I$(SIGNALSANDGATEWAYS_PROJ)/src \
     -I$(CORE4INET_PROJ)/src \
     -I$(CORE4INET_PROJ)/src/core4inet/api/AS6802/tte_api \
     -I$(INET_PROJ)/src \
-    -I$(FICO4OMNET_PROJ)/src \
-    -I$(SIGNALSANDGATEWAYS_PROJ)/src
+    -I$(FICO4OMNET_PROJ)/src
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)$(CORE4INET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(FICO4OMNET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(INET_PROJ)/out/$(CONFIGNAME)/src $(LDFLAG_LIBPATH)$(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src  -lCoRE4INET -lFiCo4OMNeT -lINET -lSignalsAndGateways
+LIBS = $(LDFLAG_LIBPATH)$(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src  -lSignalsAndGateways
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -75,10 +75,10 @@ MSGFILES = \
 SMFILES =
 
 # Other makefile variables (-K)
+SIGNALSANDGATEWAYS_PROJ=../../SignalsAndGateways
 CORE4INET_PROJ=../../CoRE4INET
 INET_PROJ=../../inet
 FICO4OMNET_PROJ=../../FiCo4OMNeT
-SIGNALSANDGATEWAYS_PROJ=../../SignalsAndGateways
 
 #------------------------------------------------------------------------------
 
@@ -103,7 +103,7 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = -loppenvir$D $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(TOOLCHAIN_NAME),clangc2)
-LIBS += -Wl,-rpath,$(abspath $(CORE4INET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(FICO4OMNET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(INET_PROJ)/out/$(CONFIGNAME)/src) -Wl,-rpath,$(abspath $(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src)
+LIBS += -Wl,-rpath,$(abspath $(SIGNALSANDGATEWAYS_PROJ)/out/$(CONFIGNAME)/src)
 endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)

@@ -173,7 +173,7 @@ void AVBPublisherEndpoint::publish(cPacket* msg) {
         outFrame->setDest(_multicastMAC);
         outFrame->setVID(_vlanID);
 
-        outFrame->encapsulate(msg);
+        outFrame->encapsulate(msg->dup());
         //Padding
         if (outFrame->getByteLength() < MIN_ETHERNET_FRAME_BYTES) {
             outFrame->setByteLength(MIN_ETHERNET_FRAME_BYTES);
