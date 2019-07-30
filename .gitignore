@@ -56,4 +56,6 @@ test/smoke/test\.out
 /simulations/src/andlGenerated/
 /simulations/src/minimal_net/
 
+!/simulations/src/andlGenerated/RecBarToZonesServices/
+
 /.computed/
