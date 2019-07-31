@@ -32,4 +32,5 @@ simple PublisherEndpointBase extends EndpointBase
 {
     parameters:
         endpointPath = default("Publisher");
+        @display("i=block/departure");
 }

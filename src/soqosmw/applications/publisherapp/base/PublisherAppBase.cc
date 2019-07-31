@@ -34,7 +34,7 @@ namespace soqosmw {
 Define_Module(PublisherAppBase);
 
 PublisherAppBase::PublisherAppBase() {
-    this->_enabled = false;
+    this->_enabled = true;
     this->_sigPayload = 0;
 }
 
@@ -58,14 +58,14 @@ void PublisherAppBase::initialize() {
     this->_msgSentSignal = registerSignal("msgSent");
     this->_sigPayload = registerSignal("payloadSignal");
     _framesize = getPayloadBytes();
-//    if (getPayloadBytes()
-//            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
-//                    - ETHER_8021Q_TAG_BYTES)) {
-//        _framesize = MIN_ETHERNET_FRAME_BYTES;
-//    } else {
-//        _framesize =
-//                getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
-//    }
+    if (getPayloadBytes()
+            <= (MIN_ETHERNET_FRAME_BYTES - ETHER_MAC_FRAME_BYTES
+                    - ETHER_8021Q_TAG_BYTES)) {
+        _framesize = MIN_ETHERNET_FRAME_BYTES;
+    } else {
+        _framesize =
+                getPayloadBytes() + ETHER_MAC_FRAME_BYTES + ETHER_8021Q_TAG_BYTES;
+    }
 
     if (isEnabled()) {
         scheduleAt(simTime() + par("startTime").doubleValue(),
@@ -144,6 +144,9 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
         //schedule next send event
         scheduleNextMessage();
+        if (getEnvir()->isGUI()) {
+            getDisplayString().setTagArg("i2", 0, "status/active");
+        }
         delete msg;
 
     } else if (msg->isSelfMessage()

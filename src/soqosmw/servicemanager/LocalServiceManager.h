@@ -173,11 +173,21 @@ protected:
     std::map<std::string, PublisherConnector*> _publisherConnectors;
 
     /**
+     * Counter for publishing endpoints created.
+     */
+    int _publisherEndpointCount = 0;
+
+    /**
      * contains pointers to the existing subscriber connectors on a node.
      * TODO maybe we need to allow more than one subscriber connector per publisher for differen QoS?
      * Or we take the best QoS needed on device?
      */
     std::map<std::string, SubscriberConnector*> _subscriberConnectors;
+
+    /**
+     * Counter for subscribing endpoints created.
+     */
+    int _subscriberEndpointCount = 0;
 
     /**
      * A pointer to the service discovery.

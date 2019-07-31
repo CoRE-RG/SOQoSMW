@@ -33,39 +33,40 @@ simple ConnectorBase
         // maximum number of endpoints allowed to connect to this connector.
         // -1 = infinite
         int maxEndpoints = default(-1);
-        
+
         // Indicates if messages should be forwarded to applications.
         bool applicationFwdEnabled = default(true);
         // Indicates if messages should be forwarded to endpoints.
         bool endpointFwdEnabled = default(true);
-        
+
         // Signal emitted when a message is forwarded to Endpoints
         @signal[forwardedToEPs](type=omnetpp::cPacket);
         //Statistic of the amount of messages that were forwarded to endpoints
         @statistic[fwdToEPs](title="Forwarded to EPs"; source=forwardedToEPs; record=count; unit=packets);
         //Statistic of the amount of bytes that were forwarded to endpoints
-        @statistic[fwdToEPsBytes](title="Fowarded Bytes"; source=forwardedToEPs; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        @statistic[fwdToEPsBytes](title="Fowarded Bytes"; source=forwardedToEPs; unit=B; record="sum(packetBytes)","vector(packetBytes)","histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
         //End-to-end latency
         @statistic[fwdToEPsLatency](title="End-to-end latency"; source="messageAge(forwardedToEPs)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
-        
+
         // Signal emitted when a message is forwarded to Applications
         @signal[forwardedToApps](type=omnetpp::cPacket);
         //Statistic of the amount of messages that were forwarded to applications
         @statistic[fwdToApps](title="Forwarded to Apps"; source=forwardedToApps; record=count; unit=packets);
         //Statistic of the amount of bytes that were forwarded to applications
-        @statistic[fwdToAppsBytes](title="Forwarded Bytes"; source=forwardedToApps; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        @statistic[fwdToAppsBytes](title="Forwarded Bytes"; source=forwardedToApps; unit=B; record="sum(packetBytes)","vector(packetBytes)","histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
         //End-to-end latency
         @statistic[fwdToAppsLatency](title="End-to-end latency"; source="messageAge(forwardedToApps)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
-        
+
         // Signal emitted when a message is dropped
         @signal[messageDropped](type=omnetpp::cPacket);
         //Statistic of the amount of messages that were dropped
         @statistic[msgDropped](title="Messaged dropped"; source=messageDropped; record=count; unit=packets);
         //Statistic of the amount of bytes that were dropped
-        @statistic[msgDroppedBytes](title="Dropped Bytes"; source=messageDropped; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        @statistic[msgDroppedBytes](title="Dropped Bytes"; source=messageDropped; unit=B; record="sum(packetBytes)","vector(packetBytes)","histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
         //End-to-end latency
         @statistic[msgDroppedLatency](title="End-to-end latency"; source="messageAge(messageDropped)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
-        
+
+        @display("i=block/layer");
     gates:
         // input gate for messages from the application
         input applicationIn @directIn;

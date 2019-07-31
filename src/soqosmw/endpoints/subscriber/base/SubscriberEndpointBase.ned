@@ -32,4 +32,5 @@ simple SubscriberEndpointBase extends EndpointBase
 {
     parameters:
         endpointPath = default("Subscriber");
+        @display("i=block/arrival");
 }

@@ -96,11 +96,8 @@ ConnectorBase* LocalServiceManager::registerPublisherService(std::string& publis
     // 1. Find the factory object;
     cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.writer.PublisherConnector");
     // 2. Create the module;
-    int vectorsize = 0;
-    if(getSubmodule("publisherConnectors", 0)){
-        vectorsize = getSubmodule("publisherConnectors", 0)->getVectorSize();
-    }
-    PublisherConnector *module = dynamic_cast<PublisherConnector*> (moduleType->create("publisherConnectors", this, vectorsize + 1, vectorsize));
+    int vectorsize = _publisherConnectors.size();
+    PublisherConnector *module = dynamic_cast<PublisherConnector*> (moduleType->create("publisherConnectors", this->getParentModule(), vectorsize + 1, vectorsize));
     // 3. Set up its parameters and gate sizes as needed;
     module->addApplication(executingApplication);
     module->setQos(qosPolicies);
@@ -162,11 +159,8 @@ ConnectorBase* LocalServiceManager::registerSubscriberService(std::string& subsc
     // 1. Find the factory object;
     cModuleType *moduleType = cModuleType::get("soqosmw.connector.pubsub.reader.SubscriberConnector");
     // 2. Create the module;
-    int vectorsize = 0;
-    if(getSubmodule("subscriberConnectors", 0)){
-        vectorsize = getSubmodule("subscriberConnectors", 0)->getVectorSize();
-    }
-    SubscriberConnector *module = dynamic_cast<SubscriberConnector*> (moduleType->create("subscriberConnectors", this, vectorsize + 1, vectorsize));
+    int vectorsize  = _subscriberConnectors.size();
+    SubscriberConnector *module = dynamic_cast<SubscriberConnector*> (moduleType->create("subscriberConnectors", this->getParentModule(), vectorsize + 1, vectorsize));
     // 3. Set up its parameters and gate sizes as needed;
     module->addApplication(executingApplication);
     module->setQos(qosPolicies);
@@ -367,14 +361,10 @@ SubscriberEndpointBase* LocalServiceManager::createAVBSubscriberEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.subscriber.realtime.avb.AVBSubscriberEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("avbSubscriberEndpoints", 0)){
-            vectorsize = getSubmodule("avbSubscriberEndpoints", 0)->getVectorSize();
-        }
         AVBSubscriberEndpoint* avbEndpoint =
                             dynamic_cast<AVBSubscriberEndpoint*>(
-                                    moduleType->create("avbSubscriberEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("subscriberEndpoints", this->getParentModule(), _subscriberEndpointCount + 1, _subscriberEndpointCount));
+        _subscriberEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         avbEndpoint->par("updateInterval").setDoubleValue(par("updateInterval"));
         avbEndpoint->par("retryInterval").setDoubleValue(par("retryInterval"));
@@ -404,14 +394,10 @@ SubscriberEndpointBase* LocalServiceManager::createTCPSubscriberEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.subscriber.standard.tcp.TCPSubscriberEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("tcpSubscriberEndpoints", 0)){
-            vectorsize = getSubmodule("tcpSubscriberEndpoints", 0)->getVectorSize();
-        }
         TCPSubscriberEndpoint* tcpEndpoint =
                             dynamic_cast<TCPSubscriberEndpoint*>(
-                                    moduleType->create("tcpSubscriberEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("subscriberEndpoints", this->getParentModule(), _subscriberEndpointCount + 1, _subscriberEndpointCount));
+        _subscriberEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         tcpEndpoint->par("localAddress").setStringValue(localAddr);
@@ -443,14 +429,10 @@ SubscriberEndpointBase* LocalServiceManager::createUDPSubscriberEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.subscriber.standard.udp.UDPSubscriberEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("udpSubscriberEndpoints", 0)){
-            vectorsize = getSubmodule("udpSubscriberEndpoints", 0)->getVectorSize();
-        }
         UDPSubscriberEndpoint* udpEndpoint =
                             dynamic_cast<UDPSubscriberEndpoint*>(
-                                    moduleType->create("udpSubscriberEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("subscriberEndpoints", this->getParentModule(), _subscriberEndpointCount + 1, _subscriberEndpointCount));
+        _subscriberEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         udpEndpoint->par("localAddress").setStringValue(localAddr);
@@ -478,14 +460,10 @@ PublisherEndpointBase* LocalServiceManager::createAVBPublisherEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.publisher.realtime.avb.AVBPublisherEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("avbPublisherEndpoints", 0)){
-            vectorsize = getSubmodule("avbPublisherEndpoints", 0)->getVectorSize();
-        }
         AVBPublisherEndpoint* avbEndpoint =
                             dynamic_cast<AVBPublisherEndpoint*>(
-                                    moduleType->create("avbPublisherEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("publisherEndpoints", this->getParentModule(), _publisherEndpointCount + 1, _publisherEndpointCount));
+        _publisherEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         auto streamID = (dynamic_cast<StreamIDQoSPolicy*>(connector->getQos()[QoSPolicyNames::StreamID]))->getValue();
         avbEndpoint->par("streamID").setLongValue(streamID);
@@ -529,14 +507,10 @@ PublisherEndpointBase* LocalServiceManager::createTCPPublisherEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.publisher.standard.tcp.TCPPublisherEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("tcpPublisherEndpoints", 0)){
-            vectorsize = getSubmodule("tcpPublisherEndpoints", 0)->getVectorSize();
-        }
         TCPPublisherEndpoint* tcpEndpoint =
                             dynamic_cast<TCPPublisherEndpoint*>(
-                                    moduleType->create("tcpPublisherEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("publisherEndpoints", this->getParentModule(), _publisherEndpointCount + 1, _publisherEndpointCount));
+        _publisherEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         tcpEndpoint->par("localAddress").setStringValue(localAddr);
@@ -564,14 +538,10 @@ PublisherEndpointBase* LocalServiceManager::createUDPPublisherEndpoint(
         cModuleType * moduleType = cModuleType::get(
                     "soqosmw.endpoints.publisher.standard.udp.UDPPublisherEndpoint");
         // 2. Create the module;
-        int vectorsize = 0;
-        if(getSubmodule("udpPublisherEndpoints", 0)){
-            vectorsize = getSubmodule("udpPublisherEndpoints", 0)->getVectorSize();
-        }
         UDPPublisherEndpoint* udpEndpoint =
                             dynamic_cast<UDPPublisherEndpoint*>(
-                                    moduleType->create("udpPublisherEndpoints", this, vectorsize + 1, vectorsize));
-
+                                    moduleType->create("publisherEndpoints", this->getParentModule(), _publisherEndpointCount + 1, _publisherEndpointCount));
+        _publisherEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         udpEndpoint->par("localAddress").setStringValue(localAddr);

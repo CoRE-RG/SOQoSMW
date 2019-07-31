@@ -32,11 +32,10 @@ void SOQoSMWApplicationBase::handleMessage(cMessage *msg) {
 
 void SOQoSMWApplicationBase::initialize() {
     _localServiceManager =
-            dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
-                    par("serviceManagerModule")));
+            dynamic_cast<LocalServiceManager*>(getParentModule()->getModuleByPath(par("serviceManagerModulePath")));
     if (!_localServiceManager) {
         throw cRuntimeError(
-                "Configuration problem of parameter serviceManagerModule in module %s.",
+                "Configuration problem of parameter serviceManagerModulePath in module %s.",
                 this->getFullName());
     }
 }

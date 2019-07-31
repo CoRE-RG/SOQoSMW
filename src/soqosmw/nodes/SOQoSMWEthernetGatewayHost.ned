@@ -27,42 +27,43 @@ module SOQoSMWEthernetGatewayHost extends SOQoSMWHost like IEthernetGatewayHost
 {
     parameters:
         //@display("bgb=688,409");
-        
+
         int numberOfTT_Vlinks = default(0);
         int numberOfRC_Vlinks = default(0);
-        
+
+        @display("i=device/port");
     gates:
         output upperLayerOut;
         input upperLayerIn;
-        
+
     submodules:
         //Application for the ethernet node in the gateway
         gatewayApp: EthernetGatewayApplication {
-            @display("p=282,37");
+            @display("p=283,65");
         }
-        
+
         //Vector of output buffers for timetriggered traffic(TT)
         TTvlinks[numberOfTT_Vlinks]: TTQueueBuffer {
-            @display("p=561,37,r,70");
+            @display("p=308,386,r,70");
         }
-        
+
         //Vector of input buffers for timetriggered traffic(TT)
         TTvlinks_ctc[numberOfTT_Vlinks]: TTIncoming {
-            @display("p=561,154,r,70");
+            @display("p=308,315,r,70");
         }
-        
+
         //Vector of output buffers for rate constrained traffic(RC)
         RCvlinks[numberOfRC_Vlinks]: RCQueueBuffer {
             parameters:
-                @display("p=561,232,r,70");
+                @display("p=162,386,r,70");
         }
-        
+
         //Vector of input buffers for rate constrained traffic(RC)
         RCvlinks_ctc[numberOfRC_Vlinks]: RCIncoming {
             parameters:
-                @display("p=561,349,r,70");
+                @display("p=162,315,r,70");
         }
-        
+
     connections:
         gatewayApp.upperLayerOut --> upperLayerOut;
         gatewayApp.upperLayerIn <-- upperLayerIn;
@@ -72,5 +73,5 @@ module SOQoSMWEthernetGatewayHost extends SOQoSMWHost like IEthernetGatewayHost
         for i=0..numberOfRC_Vlinks-1 {
             RCvlinks_ctc[i].out --> RCvlinks[i].in;
         }
-    
+
 }

@@ -46,14 +46,8 @@ void SubscriberAppBase::initialize()
     this->_rxPkSignal = registerSignal("rxPk");
 
     scheduleAt(simTime() + par("startTime").doubleValue(), new cMessage(START_MSG_NAME));
-    if (getEnvir()->isGUI())
-    {
+    if (getEnvir()->isGUI()) {
         getDisplayString().setTagArg("i2", 0, "status/asleep");
-    }
-
-    if (getEnvir()->isGUI())
-    {
-        getDisplayString().setTagArg("i2", 0, "status/hourglass");
     }
 }
 
@@ -63,8 +57,9 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         setQoS();
         //create a subscriber
         _connector = _localServiceManager->registerSubscriberService(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
-
-        //TODO set the gate at the reader to get all messages
+        if (getEnvir()->isGUI()) {
+            getDisplayString().setTagArg("i2", 0, "status/active");
+        }
 
     } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;

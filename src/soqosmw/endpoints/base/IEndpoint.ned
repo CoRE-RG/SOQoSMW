@@ -15,27 +15,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package soqosmw.applications.base;
+package soqosmw.endpoints.base;
 
-//
-// The ISOQoSMWApplication provides a common interface for all soqosmw application modules.
-// These modules realize a data publisher or subscriber service.
-//
-// @author Timo Haeckel, for HAW Hamburg
-//
-moduleinterface ISOQoSMWApplication {
+moduleinterface IEndpoint
+{
     parameters:
-        @display("i=block/app");
-        // name of the serviceManager module
-        string serviceManagerModulePath;
-    	// local IP address
-    	string localAddress;
-    	// the tcp port for this service
-    	int applicationTCPPort;
-    	// the udp port for this service
-    	int applicationUDPPort;
-    	
+        // indicates which qos is realized in this endpoint one of RT, STD_UDP, STD_TCP, WEB
+        string qos;  
+        
+     	//The name of the endpoint as a path (e.g. "Reifendruck/links").
+    	string endpointPath;
+    
     gates:
-        // the connector gate to receive messages.
-        input connectorIn @direct;
+        // input gate for messegas from the application
+        input connectorIn @directIn;
+        
+        // incoming traffic from transport layer        
+        input transportIn @loose;
+        // outgoing traffic to transport layer
+        output transportOut @loose;
 }

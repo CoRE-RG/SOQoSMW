@@ -28,7 +28,7 @@ import soqosmw.utility.processing.ProcessingTimeSimulation;
 //
 // @author Timo Haeckel and Mehmet Cakir, for HAW Hamburg
 //
-simple EndpointBase extends ProcessingTimeSimulation
+simple EndpointBase extends ProcessingTimeSimulation like IEndpoint
 {
     parameters:
         // indicates which qos is realized in this endpoint one of RT, STD_UDP, STD_TCP, WEB
