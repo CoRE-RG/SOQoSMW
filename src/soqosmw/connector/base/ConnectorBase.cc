@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 namespace soqosmw {
 
@@ -135,22 +136,49 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
 }
 
 void ConnectorBase::finish(){
+    static std::mutex mutex;
+    std::stringstream ss;
     std::string hostname = getParentModule()->getParentModule()->getName();
+    ss << "{";
     if (hostname == "tte") {
-        std::cout << "Gateway name: " << getParentModule()->getParentModule()->getParentModule()->getFullName() << endl; // Gateway name
+        ss << "\"gatewayName\":" << "\"" << getParentModule()->getParentModule()->getParentModule()->getFullName() << "\""; // Gateway name
     } else {
-        std::cout << "Host name: " << getParentModule()->getParentModule()->getFullName() << endl; // Host name
+        ss << "\"hostName\":" << "\"" << getParentModule()->getParentModule()->getFullName() << "\""; // Host name
     }
-    // for each _applications print _applications[i]->getName();
+    ss << ",";
+    ss << "\"applications\":[";
+    int elemCounter = 0;
+    int listLength = this->_applications.size();
     for (SOQoSMWApplicationBase* application : this->_applications) {
         // additional information on real application name
-        std::cout << "Application name: " << application->getServiceName() << endl;
+        ss << "\"" << application->getServiceName() << "\"";
+        elemCounter++;
+        if (elemCounter != listLength) {
+            ss << ",";
+        }
     }
-    std::cout << "Connector name: " << this->getFullName() << endl; // connector name
-    // for each _endpoints print _endpoints[i]->getName();
+    ss << "]";
+    ss << ",";
+    ss << "\"connectorName\":" << "\"" << this->getFullName() << "\""; // connector name
+    ss << ",";
+    ss << "\"endpoints\":[";
+    elemCounter = 0;
+    listLength = this->_endpoints.size();
     for (EndpointBase* endpoint : this->_endpoints) {
-        std::cout << "Endpoint name: " << endpoint->getFullName() << endl;
+        ss << "\"" << endpoint->getFullName() << "\"";
+        elemCounter++;
+        if (elemCounter != listLength) {
+            ss << ",";
+        }
     }
+    ss << "]";
+    ss << "}";
+    mutex.lock();
+    std::ofstream outfile;
+    outfile.open("connectorsmapping.txt", std::ios::app);
+    outfile << ss.str() << std::endl;
+    outfile.close();
+    mutex.unlock();
 }
 
 } /*end namespace soqosmw*/

@@ -19,7 +19,7 @@
 #define __SOQOSMW_CONNECTORBASE_H_
 
 #include <omnetpp.h>
-
+#include <mutex>
 #include "soqosmw/qospolicy/base/qospolicy.h"
 
 namespace soqosmw {
