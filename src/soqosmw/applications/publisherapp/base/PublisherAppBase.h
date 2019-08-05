@@ -84,11 +84,6 @@ protected:
     simsignal_t _msgSentSignal;
 
     /**
-     * Name of the service to publish.
-     */
-    std::string _serviceName;
-
-    /**
      * Caches QoS Policy parameters
      */
     QoSPolicyMap _qosPolicies;

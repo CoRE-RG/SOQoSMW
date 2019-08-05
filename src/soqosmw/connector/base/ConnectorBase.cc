@@ -20,6 +20,8 @@
 #include "soqosmw/endpoints/base/EndpointBase.h"
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include <algorithm>
+#include <string>
+#include <iostream>
 
 namespace soqosmw {
 
@@ -130,6 +132,25 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
         }
     }
     return nullptr;
+}
+
+void ConnectorBase::finish(){
+    std::string hostname = getParentModule()->getParentModule()->getName();
+    if (hostname == "tte") {
+        std::cout << "Gateway name: " << getParentModule()->getParentModule()->getParentModule()->getFullName() << endl; // Gateway name
+    } else {
+        std::cout << "Host name: " << getParentModule()->getParentModule()->getFullName() << endl; // Host name
+    }
+    // for each _applications print _applications[i]->getName();
+    for (SOQoSMWApplicationBase* application : this->_applications) {
+        // additional information on real application name
+        std::cout << "Application name: " << application->getServiceName() << endl;
+    }
+    std::cout << "Connector name: " << this->getFullName() << endl; // connector name
+    // for each _endpoints print _endpoints[i]->getName();
+    for (EndpointBase* endpoint : this->_endpoints) {
+        std::cout << "Endpoint name: " << endpoint->getFullName() << endl;
+    }
 }
 
 } /*end namespace soqosmw*/

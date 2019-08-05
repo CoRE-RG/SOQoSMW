@@ -138,6 +138,7 @@ private:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
     virtual void handleParameterChange(const char* parname) override;
+    virtual void finish() override;
 
     /**
      * Caches if forwarding to the endpoints is enabled.

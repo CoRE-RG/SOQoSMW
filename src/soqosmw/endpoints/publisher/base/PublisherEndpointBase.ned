@@ -33,4 +33,22 @@ simple PublisherEndpointBase extends EndpointBase
     parameters:
         endpointPath = default("Publisher");
         @display("i=block/departure");
+        
+        //Signal emitted when a message is published
+        @signal[msgSent](type=omnetpp::cMessage);
+        //Statistic of the amount of packets that were sent by the publisher
+        @statistic[msgCount](title="Sent Packets"; source=msgSent; record=count; unit=packets);
+        //Statistic of the amount of bytes that were sent by the publisher
+        @statistic[msgBytes](title="Sent Bytes"; source=msgSent; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        //End-to-end latency
+        @statistic[msgLatency](title="End-to-end latency"; source="messageAge(msgSent)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
+        
+        //Signal emitted when a message is dropped
+        @signal[msgDrop](type=omnetpp::cMessage);
+        //Statistic of the amount of packets that were sent by the publisher
+        @statistic[msgDropCount](title="Sent Packets"; source=msgDrop; record=count; unit=packets);
+        //Statistic of the amount of bytes that were sent by the publisher
+        @statistic[msgDropBytes](title="Sent Bytes"; source=msgDrop; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
+        //End-to-end latency
+        @statistic[msgDropLatency](title="End-to-end latency"; source="messageAge(msgDrop)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
 }

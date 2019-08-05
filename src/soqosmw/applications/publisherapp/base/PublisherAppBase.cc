@@ -95,7 +95,7 @@ void PublisherAppBase::handleParameterChange(const char* parname) {
         MAX_ETHERNET_DATA_BYTES);
     }
     if (!parname || !strcmp(parname, "serviceName")) {
-        this->_serviceName = par("serviceName").stdstringValue();
+        this->_publisherName = par("serviceName").stdstringValue();
     }
     if (!parname || !strcmp(parname, "interval")) {
         this->_interval = CoRE4INET::parameterDoubleCheckRange(par("interval"),
@@ -126,7 +126,7 @@ void PublisherAppBase::createPublisherWithQoS() {
     //printQoS();
 
     //register this as new publisher app!
-    _connector = _localServiceManager->registerPublisherService(this->_serviceName,
+    _connector = _localServiceManager->registerPublisherService(this->_publisherName,
             this->_qosPolicies, this);
 }
 
@@ -157,7 +157,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
             payloadPacket->setByteLength(
                     static_cast<int64_t>(getPayloadBytes()));
             sendDirect(payloadPacket, _connector->gate("applicationIn"));
-            EV_DEBUG << _serviceName << ": Message Published." << endl;
+            EV_DEBUG << _publisherName << ": Message Published." << endl;
 
             //schedule next send event
             scheduleNextMessage();

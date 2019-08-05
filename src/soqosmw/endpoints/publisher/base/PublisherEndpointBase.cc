@@ -20,6 +20,12 @@
 
 namespace soqosmw {
 
+void PublisherEndpointBase::initialize() {
+    this->_msgSent = registerSignal("msgSent");
+    this->_msgDrop = registerSignal("msgDrop");
+    EndpointBase::initialize();
+}
+
 void PublisherEndpointBase::handleTransportIn(cMessage* msg) {
     //ignore messages from transport layer... shouldnt actually be called..
     throw cRuntimeError("Received a message from transport, this should not happen...");
@@ -30,6 +36,9 @@ void PublisherEndpointBase::handleConnectorIn(cMessage* msg) {
 
         if(_isConnected){
             publish(packet);
+            emit(this->_msgSent,msg);
+        } else {
+            emit(this->_msgDrop,msg);
         }
     }
     delete msg;

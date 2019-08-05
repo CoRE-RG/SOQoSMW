@@ -45,6 +45,8 @@ class SOQoSMWApplicationBase: public virtual cSimpleModule {
 public:
     virtual ~SOQoSMWApplicationBase();
 
+    std::string getServiceName();
+
 protected:
     /**
      * Initialization of the module.
@@ -91,6 +93,16 @@ protected:
      * The local address.
      */
     std::string _localAddress;
+
+    /**
+     * Name of the subscriber service.
+     */
+    std::string _subscriberName;
+
+    /**
+     * Name of the service to publish.
+     */
+    std::string _publisherName;
 };
 
 } /* end namespace soqosmw */

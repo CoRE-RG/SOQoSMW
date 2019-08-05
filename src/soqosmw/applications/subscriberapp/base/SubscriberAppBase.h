@@ -56,10 +56,6 @@ private:
      simsignal_t _rxPkSignal;
 
 protected:
-    /**
-     * Name of this subscriber service.
-     */
-    std::string _subscriberName;
 
     /**
      * Name of the publishing service to subscribe to.

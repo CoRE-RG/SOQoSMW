@@ -43,6 +43,8 @@ public:
     }
 
 protected:
+    virtual void initialize() override;
+
     /**
      * Handles messages incoming from transport gate and
      * forwards them to the connector if they are for applications.
@@ -73,6 +75,17 @@ protected:
      * Is this publisher connected?
      */
     bool _isConnected = false;
+
+private:
+    /**
+     * Signal to capture statistics for sent messages
+     */
+    simsignal_t _msgSent;
+
+    /**
+     * Signal to capture statistics for dropped messages
+     */
+    simsignal_t _msgDrop;
 
 };
 
