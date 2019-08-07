@@ -89,7 +89,7 @@ bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
             _endpoints.push_back(endpoint);
-            // todo emit ...
+            // TODO emit ...
             return true;
         }
     }
@@ -160,12 +160,12 @@ void ConnectorBase::finish(){
     ss << "]";
     ss << ",";
     ss << "\"connectorName\":" << "\"" << this->getFullName() << "\""; // connector name
+    listLength = this->_endpoints.size();
     ss << ",";
     ss << "\"endpoints\":[";
     elemCounter = 0;
-    listLength = this->_endpoints.size();
     for (EndpointBase* endpoint : this->_endpoints) {
-        ss << "\"" << endpoint->getFullName() << "\"";
+        ss << "{\"" << "name" << "\":\"" << endpoint->getFullName() << "\",\"" << "created" << "\":\"" << endpoint->getCreationTime() << "\"}" ;
         elemCounter++;
         if (elemCounter != listLength) {
             ss << ",";

@@ -39,6 +39,11 @@ simple EndpointBase extends ProcessingTimeSimulation like IEndpoint
     	
     	processingTime = default(0);
         allowParallelProcessing = default(true);
+        
+        // Signal emitted when connector will be created
+        @signal[endpointCreationTime](type=simtime_t);
+        //Statistic of the simtime
+        @statistic[endpointCreatedAt](title="Endpoint creation time"; source=endpointCreationTime; record=sum; unit=s);
     
     gates:
         // input gate for messegas from the application

@@ -69,6 +69,19 @@ public:
         _endpointPath = path;
     }
 
+    simtime_t getCreationTime();
+
+private:
+    /**
+     * Signal to emit creationTime
+     */
+    simsignal_t _creationTimeSignal;
+
+    /**
+     * The time the connector is created at.
+     */
+    simtime_t _creationTime;
+
   protected:
     virtual void initialize();
 

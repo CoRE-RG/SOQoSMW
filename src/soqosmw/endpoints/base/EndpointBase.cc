@@ -33,6 +33,13 @@ void EndpointBase::initialize()
     handleParameterChange(nullptr);
     //nothing to do
     initializeTransportConnection();
+    this->_creationTimeSignal = registerSignal("endpointCreationTime");
+    this->_creationTime = simTime();
+    emit(this->_creationTimeSignal, this->_creationTime);
+}
+
+simtime_t EndpointBase::getCreationTime() {
+    return this->_creationTime;
 }
 
 void EndpointBase::processScheduledMessage(cMessage* msg) {

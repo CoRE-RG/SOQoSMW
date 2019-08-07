@@ -67,6 +67,7 @@ simple ConnectorBase
         @statistic[msgDroppedLatency](title="End-to-end latency"; source="messageAge(messageDropped)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
 
         @display("i=block/layer");
+        
     gates:
         // input gate for messages from the application
         input applicationIn @directIn;
