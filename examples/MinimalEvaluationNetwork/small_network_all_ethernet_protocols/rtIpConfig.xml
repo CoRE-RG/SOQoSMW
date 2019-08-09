@@ -1,0 +1,14 @@
+<rtIpConfig>
+	<node id="SubscriberAVB">
+	</node>
+
+	<node id="SubscriberTCP">
+	</node>
+
+	<node id="SubscriberUDP">
+	</node>
+
+	<node id="Publisher">
+	</node>
+
+</rtIpConfig>

@@ -81,6 +81,9 @@ void ConnectorBase::handleParameterChange(const char* parname) {
     if (!parname || !strcmp(parname, "endpointFwdEnabled")) {
         _endpointFwdEnabled = par("endpointFwdEnabled");
     }
+    if (!parname || !strcmp(parname, "createConnectorMappingEnabled")) {
+        _createConnectorMappingEnabled = par("createConnectorMappingEnabled");
+    }
 }
 
 bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
@@ -136,49 +139,51 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
 }
 
 void ConnectorBase::finish(){
-    static std::mutex mutex;
-    std::stringstream ss;
-    std::string hostname = getParentModule()->getParentModule()->getName();
-    ss << "{";
-    if (hostname == "tte") {
-        ss << "\"gatewayName\":" << "\"" << getParentModule()->getParentModule()->getParentModule()->getFullName() << "\""; // Gateway name
-    } else {
-        ss << "\"hostName\":" << "\"" << getParentModule()->getParentModule()->getFullName() << "\""; // Host name
-    }
-    ss << ",";
-    ss << "\"applications\":[";
-    int elemCounter = 0;
-    int listLength = this->_applications.size();
-    for (SOQoSMWApplicationBase* application : this->_applications) {
-        // additional information on real application name
-        ss << "\"" << application->getServiceName() << "\"";
-        elemCounter++;
-        if (elemCounter != listLength) {
-            ss << ",";
+    if (_createConnectorMappingEnabled) {
+        static std::mutex mutex;
+        std::stringstream ss;
+        std::string hostname = getParentModule()->getParentModule()->getName();
+        ss << "{";
+        if (hostname == "tte") {
+            ss << "\"gatewayName\":" << "\"" << getParentModule()->getParentModule()->getParentModule()->getFullName() << "\""; // Gateway name
+        } else {
+            ss << "\"hostName\":" << "\"" << getParentModule()->getParentModule()->getFullName() << "\""; // Host name
         }
-    }
-    ss << "]";
-    ss << ",";
-    ss << "\"connectorName\":" << "\"" << this->getFullName() << "\""; // connector name
-    listLength = this->_endpoints.size();
-    ss << ",";
-    ss << "\"endpoints\":[";
-    elemCounter = 0;
-    for (EndpointBase* endpoint : this->_endpoints) {
-        ss << "{\"" << "name" << "\":\"" << endpoint->getFullName() << "\",\"" << "created" << "\":\"" << endpoint->getCreationTime() << "\"}" ;
-        elemCounter++;
-        if (elemCounter != listLength) {
-            ss << ",";
+        ss << ",";
+        ss << "\"applications\":[";
+        int elemCounter = 0;
+        int listLength = this->_applications.size();
+        for (SOQoSMWApplicationBase* application : this->_applications) {
+            // additional information on real application name
+            ss << "\"" << application->getServiceName() << "\"";
+            elemCounter++;
+            if (elemCounter != listLength) {
+                ss << ",";
+            }
         }
+        ss << "]";
+        ss << ",";
+        ss << "\"connectorName\":" << "\"" << this->getFullName() << "\""; // connector name
+        listLength = this->_endpoints.size();
+        ss << ",";
+        ss << "\"endpoints\":[";
+        elemCounter = 0;
+        for (EndpointBase* endpoint : this->_endpoints) {
+            ss << "{\"" << "name" << "\":\"" << endpoint->getFullName() << "\",\"" << "created" << "\":\"" << endpoint->getCreationTime() << "\"}" ;
+            elemCounter++;
+            if (elemCounter != listLength) {
+                ss << ",";
+            }
+        }
+        ss << "]";
+        ss << "}";
+        mutex.lock();
+        std::ofstream outfile;
+        outfile.open("connectorsmapping.txt", std::ios::app);
+        outfile << ss.str() << std::endl;
+        outfile.close();
+        mutex.unlock();
     }
-    ss << "]";
-    ss << "}";
-    mutex.lock();
-    std::ofstream outfile;
-    outfile.open("connectorsmapping.txt", std::ios::app);
-    outfile << ss.str() << std::endl;
-    outfile.close();
-    mutex.unlock();
 }
 
 } /*end namespace soqosmw*/

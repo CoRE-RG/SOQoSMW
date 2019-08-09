@@ -151,6 +151,11 @@ private:
     bool _applicationFwdEnabled;
 
     /**
+     * Caches if connector mapping creation after simulation is enabled.
+     */
+    bool _createConnectorMappingEnabled;
+
+    /**
      * Endpoints to connect to the applications.
      */
     std::vector<EndpointBase*> _endpoints;

@@ -38,6 +38,8 @@ simple ConnectorBase
         bool applicationFwdEnabled = default(true);
         // Indicates if messages should be forwarded to endpoints.
         bool endpointFwdEnabled = default(true);
+        // Indicates if connector mapping should be created after simulation
+        bool createConnectorMappingEnabled =  default(false);
 
         // Signal emitted when a message is forwarded to Endpoints
         @signal[forwardedToEPs](type=omnetpp::cPacket);

@@ -1,6 +1,0 @@
-{"hostName":"Publisher","applications":["service1Publisher"],"connectorName":"publisherConnectors[0]","endpoints":[]}
-{"hostName":"Subscriber","applications":["service1UDPSubscriber"],"connectorName":"subscriberConnectors[0]","endpoints":[]}
-{"hostName":"Subscriber","applications":["service1TCPSubscriber"],"connectorName":"subscriberConnectors[1]","endpoints":[]}
-{"hostName":"Subscriber","applications":["service1AVBSubscriber"],"connectorName":"subscriberConnectors[1]","endpoints":[]}
-{"hostName":"Publisher","applications":["service1Publisher"],"connectorName":"publisherConnectors[0]","endpoints":[{"name":"publisherEndpoints[0]","created":"0.000092376"}]}
-{"hostName":"Subscriber","applications":["service1Subscriber"],"connectorName":"subscriberConnectors[0]","endpoints":[{"name":"subscriberEndpoints[0]","created":"0.000112052"}]}
