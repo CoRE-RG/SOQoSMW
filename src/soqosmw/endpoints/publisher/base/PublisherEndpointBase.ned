@@ -51,4 +51,11 @@ simple PublisherEndpointBase extends EndpointBase
         @statistic[msgDropBytes](title="Sent Bytes"; source=msgDrop; unit=B; record="sum(packetBytes)","vector(packetBytes)", "histogram(packetBytes)?","floatingIntervalSumVector(packetBytes)?"; interpolationmode=none); //possible parameter e.g.: **.floatingintervalvectorrecorder-measure-interval = 20ms for floatingIntervalRecorders
         //End-to-end latency
         @statistic[msgDropLatency](title="End-to-end latency"; source="messageAge(msgDrop)"; unit=s; record=stats,histogram?,vector; interpolationmode=none);
+        
+        //Signal emitted when a new remote connection is established
+        @signal[remotes]();
+        //Statistic of the total amount of remotes
+        @statistic[remotesCount](title="Conencted remotes"; source=remotes; record=count);
+        //Connection times
+        @statistic[remotes](title="Remote connection times"; source="remotes"; unit=s; record=stats,histogram?,"vector(constant1)"; interpolationmode=none);
 }

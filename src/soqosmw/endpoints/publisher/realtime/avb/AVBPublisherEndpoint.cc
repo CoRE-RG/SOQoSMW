@@ -114,7 +114,7 @@ void AVBPublisherEndpoint::handleParameterChange(const char* parname) {
 
 void AVBPublisherEndpoint::receiveSignal(__attribute__((unused))   cComponent *src,
         simsignal_t id, cObject *obj, __attribute__((unused))   cObject *details) {
-    if (id == NF_AVB_LISTENER_REGISTERED)
+    if (id == NF_AVB_LISTENER_REGISTERED || id == NF_AVB_LISTENER_UPDATED)
     {
         SRPTable::ListenerEntry *lentry = dynamic_cast<SRPTable::ListenerEntry*>(obj);
 
@@ -122,6 +122,8 @@ void AVBPublisherEndpoint::receiveSignal(__attribute__((unused))   cComponent *s
         if (lentry && lentry->streamId == _streamID && lentry->vlan_id == _vlanID)
         {
             EV_INFO << _endpointPath << ": Listener for stream " << lentry->streamId << " registered!" << std::endl;
+
+            emit(_remotesSignal,1);
 
             _isConnected = true;
         }
@@ -147,6 +149,7 @@ void AVBPublisherEndpoint::receiveSignal(__attribute__((unused))   cComponent *s
 void AVBPublisherEndpoint::initializeTransportConnection() {
     _isConnected = false;
     EV_INFO << "Register Talker in node" << std::endl;
+    _srpTable->subscribe(NF_AVB_LISTENER_UPDATED, this);
     _srpTable->subscribe(NF_AVB_LISTENER_REGISTERED, this);
     _srpTable->subscribe(NF_AVB_LISTENER_UNREGISTERED, this);
     _srpTable->subscribe(NF_AVB_LISTENER_REGISTRATION_TIMEOUT, this);

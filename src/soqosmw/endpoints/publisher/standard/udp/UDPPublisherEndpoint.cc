@@ -95,6 +95,7 @@ void UDPPublisherEndpoint::initializeTransportConnection() {
 
 void UDPPublisherEndpoint::addRemote(ConnectionSpecificInformation* csi) {
     if(CSI_UDP* csiUdp = dynamic_cast<CSI_UDP*>(csi)){
+        emit(_remotesSignal,1);
         // create new processor and add to list
         _remotes.push_back(pair<L3Address,int>(L3AddressResolver().resolve(csiUdp->getAddress()), csiUdp->getPort()));
     }

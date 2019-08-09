@@ -23,6 +23,7 @@ namespace soqosmw {
 void PublisherEndpointBase::initialize() {
     this->_msgSent = registerSignal("msgSent");
     this->_msgDrop = registerSignal("msgDrop");
+    this->_remotesSignal = registerSignal("remotes");
     EndpointBase::initialize();
 }
 

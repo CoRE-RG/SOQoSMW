@@ -76,6 +76,11 @@ protected:
      */
     bool _isConnected = false;
 
+    /**
+     * Signal to capture statistics for connected remotes
+     */
+    simsignal_t _remotesSignal;
+
 private:
     /**
      * Signal to capture statistics for sent messages
