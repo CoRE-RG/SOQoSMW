@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,7 @@ import soqosmw.endpoints.subscriber.realtime.base.RTSubscriberEndpointBase;
 // Subscribers are connected to a specific transport and a subscriber connector module (@see~SubscriberConnector)
 // which loosely couples the subscriber endpoint with a subscriber application (@see~SubscriberAppBase). 
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 simple AVBSubscriberEndpoint extends RTSubscriberEndpointBase
 {

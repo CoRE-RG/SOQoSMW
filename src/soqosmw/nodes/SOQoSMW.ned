@@ -30,6 +30,9 @@ import soqosmw.endpoints.base.IEndpoint;
 // This compound module groups all SOQoSMW Components into on module.
 // All modules created during runtime will be integrated to this compound module.
 //
+// @author Timo Haeckel for HAW Hamburg
+//
+
 module SOQoSMW
 {
     parameters:

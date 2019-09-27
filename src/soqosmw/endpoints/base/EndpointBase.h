@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -33,11 +33,13 @@ using namespace omnetpp;
 namespace soqosmw {
 
 /**
- * The EndpointBase provides a common interface for all endpoint modules.
+ * @brief The EndpointBase provides a common interface for all endpoint modules.
  * Endpoints are created by the LocalServiceManager module (@see~LocalServiceManager)
  * during runtime to connect a service application to its protocol specific service endpoints.
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel and Mehmet Cakir for HAW Hamburg
  */
 class EndpointBase : public ProcessingTimeSimulation
 {

@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +23,7 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 // The SubscriberAppBase provides a subscriber implementation of the soqosmw application base.
 // These modules realize a data subscriber service.
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 simple SubscriberAppBase extends SOQoSMWApplicationBase
 {

@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,12 +23,14 @@
 namespace soqosmw {
 
 /**
- * The SubscriptionConnector implements the common interface for all connector modules @see~ConnectorBase.
+ * @brief The SubscriptionConnector implements the common interface for all connector modules @see~ConnectorBase.
  * This module is created by the LocalServiceManager module (@see~LocalServiceManager)
  * during runtime to connect a subscriber applications to its protocol specific subscriber endpoint.
  * Only allows traffic from one subscriber endpoint to the applications.
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/connector
+ *
+ * @author Timo Haeckel for HAW Hamburg
  */
 class SubscriberConnector : public ConnectorBase
 {

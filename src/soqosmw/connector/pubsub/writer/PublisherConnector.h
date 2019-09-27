@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,11 +23,13 @@
 namespace soqosmw {
 
 /**
- * The PublisherConnector implements the common interface for all connctor modules @see~ConnectorBase.
+ * @brief The PublisherConnector implements the common interface for all connctor modules @see~ConnectorBase.
  * This module is created by the LocalServiceManager module (@see~LocalServiceManager)
  * during runtime to connect a publisher application to its protocol specific publisher endpoints.
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/connector
+ *
+ * @author Timo Haeckel for HAW Hamburg
  */
 class PublisherConnector : public ConnectorBase
 {

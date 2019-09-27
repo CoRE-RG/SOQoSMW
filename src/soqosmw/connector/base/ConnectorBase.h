@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -34,11 +34,13 @@ namespace soqosmw {
 #define PROCESSINGDELAY_MSG_NAME "Processing Delay"
 
 /**
- * The ConnectorBase provides a common interface for all connctor modules.
+ * @brief The ConnectorBase provides a common interface for all connctor modules.
  * Those modules are created by the LocalServiceManager module (@see~LocalServiceManager)
  * during runtime to connect a service application to its protocol specific service endpoints.
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/connector
+ *
+ * @author Timo Haeckel and Mehmet Cakir for HAW Hamburg
  */
 class ConnectorBase : public cSimpleModule
 {

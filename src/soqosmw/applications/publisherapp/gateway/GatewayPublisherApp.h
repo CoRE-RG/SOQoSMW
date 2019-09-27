@@ -1,17 +1,19 @@
 //
+// c Timo Haeckel for HAW Hamburg
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
@@ -26,17 +28,17 @@ namespace soqosmw {
 #define NO_OF_INIT_STAGES 15
 
 /**
- * @brief Base class for a soqosmw publisher application.
+ * @brief A soqosmw gateway publisher application.
  *
  * @ingroup soqosmw/applications
  *
- * @author Timo Haeckel
+ * @author Timo Haeckel for HAW Hamburg
  */
 class GatewayPublisherApp: public virtual PublisherAppBase {
 private:
 
     /**
-     * Cachees the canIDs handled in this gateway app
+     * Caches the canIDs handled in this gateway app
      */
     std::vector<int> _canIds;
 

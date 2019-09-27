@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -25,9 +25,13 @@ using namespace omnetpp;
 namespace soqosmw {
 
 /**
- * Schedules Processing for incoming messages two for a later time slot.
+ * @brief Schedules Processing for incoming messages two for a later time slot.
  * Only allows the processing of one message at the time.
  * Other incoming messages wait in a queue.
+ *
+ * @ingroup soqosmw/utility
+ *
+ * @author Timo Haeckel for HAW Hamburg
  */
 class ProcessingTimeSimulation: public cSimpleModule {
 public:

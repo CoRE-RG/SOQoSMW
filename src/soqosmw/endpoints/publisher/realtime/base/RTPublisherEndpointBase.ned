@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +26,7 @@ import soqosmw.endpoints.publisher.base.PublisherEndpointBase;
 // Publishers are connected to a specific transport and a publisher connector module (@see~PublisherConnector)
 // which loosely couples the publisher endpoint with a publisher application (@see~PublisherAppBase). 
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 simple RTPublisherEndpointBase extends PublisherEndpointBase
 {

@@ -23,7 +23,7 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 // The PublisherAppBase provides a publisher implementation of the soqosmw application base.
 // These modules realize a data publisher service.
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 simple PublisherAppBase extends SOQoSMWApplicationBase
 {

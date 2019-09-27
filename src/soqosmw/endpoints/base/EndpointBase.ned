@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
 package soqosmw.endpoints.base;
@@ -26,7 +26,7 @@ import soqosmw.utility.processing.ProcessingTimeSimulation;
 // Endpoints are connected to a specific transport and a connector module (@see~ConnectorBase)
 // which loosely couples an endpoint to an application (@see~SOQoSMWApplicationBase). 
 //
-// @author Timo Haeckel and Mehmet Cakir, for HAW Hamburg
+// @author Timo Haeckel and Mehmet Cakir for HAW Hamburg
 //
 simple EndpointBase extends ProcessingTimeSimulation like IEndpoint
 {

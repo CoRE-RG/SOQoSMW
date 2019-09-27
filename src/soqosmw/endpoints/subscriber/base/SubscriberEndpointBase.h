@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,13 +23,15 @@
 namespace soqosmw {
 
 /**
- * The SubscriberEndpointBase implements the common interface for all endpoint modules (@see~EndpointBase).
+ * @brief The SubscriberEndpointBase implements the common interface for all endpoint modules (@see~EndpointBase).
  * Subscribers are created by the QoSNegotiationProtocol module (@see~QoSNegotiationProtocol)
  * during runtime to connect realise a subscribing endpoint for a service.
  * Subscribers are connected to a specific transport and a subscriber connector module (@see~SubscriberConnector)
  * which loosely couples the subscriber endpoint with a subscriber application (@see~SubscriberAppBase).
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel for HAW Hamburg
  */
 class SubscriberEndpointBase : public EndpointBase
 {

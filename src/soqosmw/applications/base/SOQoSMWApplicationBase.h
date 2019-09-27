@@ -1,4 +1,6 @@
 //
+// c Timo Haeckel for HAW Hamburg
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -39,7 +41,7 @@ class LocalServiceManager;
  *
  * @ingroup soqosmw/applications
  *
- * @author Timo Haeckel
+ * @author Timo Haeckel for HAW Hamburg
  */
 class SOQoSMWApplicationBase: public virtual cSimpleModule {
 public:

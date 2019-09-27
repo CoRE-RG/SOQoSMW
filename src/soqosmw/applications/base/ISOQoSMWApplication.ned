@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,7 @@ package soqosmw.applications.base;
 // The ISOQoSMWApplication provides a common interface for all soqosmw application modules.
 // These modules realize a data publisher or subscriber service.
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 moduleinterface ISOQoSMWApplication {
     parameters:

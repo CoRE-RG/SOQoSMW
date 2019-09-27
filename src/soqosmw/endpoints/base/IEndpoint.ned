@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -16,6 +16,12 @@
 // 
 
 package soqosmw.endpoints.base;
+
+//
+// The interface module for the endpoint module.
+//
+// @author Timo Haeckel for HAW Hamburg
+//
 
 moduleinterface IEndpoint
 {

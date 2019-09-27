@@ -24,7 +24,7 @@ import soqosmw.applications.base.ISOQoSMWApplication;
 // interface for all soqosmw application modules.
 // These modules realize a data publisher or subscriber service.
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel for HAW Hamburg
 //
 simple SOQoSMWApplicationBase like ISOQoSMWApplication
 {

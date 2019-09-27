@@ -1,5 +1,5 @@
 //
-// c Timo Haeckel, for HAW Hamburg
+// c Timo Haeckel for HAW Hamburg
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,13 +23,15 @@
 namespace soqosmw {
 
 /**
- * The STDPublisherEndpointBase is a publisher endpoint module with STD qos (@see~EndpointBase).
+ * @brief The STDPublisherEndpointBase is a publisher endpoint module with STD qos (@see~EndpointBase).
  * Publishers are created by the QoSNegotiationProtocol module (@see~QoSNegotiationProtocol)
  * during runtime to connect realise a publishing endpoint for a service.
  * Publishers are connected to a specific transport and a publisher connector module (@see~PublisherConnector)
  * which loosely couples the publisher endpoint with a publisher application (@see~PublisherAppBase).
  *
- * @author Timo Haeckel, for HAW Hamburg
+ * @ingroup soqosmw/endpoints
+ *
+ * @author Timo Haeckel for HAW Hamburg
  */
 class STDPublisherEndpointBase : public PublisherEndpointBase
 {
