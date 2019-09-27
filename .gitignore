@@ -53,7 +53,13 @@ src/*/features.h
 test/smoke/test\.out
 
 #ignore andl generated files
-/simulations/src/andlGenerated/
 /simulations/src/minimal_net/
+
+!/simulations/
+!/simulations/src/
+!/simulations/src/andlGenerated/
+!/simulations/src/andlGenerated/RecBarToZonesServices
+
+
 
 /.computed/

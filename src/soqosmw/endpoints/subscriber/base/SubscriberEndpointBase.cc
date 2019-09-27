@@ -23,8 +23,14 @@ namespace soqosmw {
 
 } /*end namespace soqosmw*/
 
+void soqosmw::SubscriberEndpointBase::initialize(){
+    this->_msgRecv = registerSignal("msgRecv");
+    EndpointBase::initialize();
+}
+
 void soqosmw::SubscriberEndpointBase::handleTransportIn(cMessage* msg) {
     sendDirect(msg, _connector->gate(CONNECTOR_OUT_GATE_NAME));
+    emit(this->_msgRecv, msg);
 }
 
 void soqosmw::SubscriberEndpointBase::handleConnectorIn(cMessage* msg) {

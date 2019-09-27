@@ -440,6 +440,7 @@ size_t QoSBroker::getNegotiationMessageSize(QoSNegotiationProtocolMsg* msg) {
         case QoSNegotiationMsgType::QoS_Finalise:
             result += sizeof(int); // finalStatus
             break;
+        default: break;
         }
     return result;
 }

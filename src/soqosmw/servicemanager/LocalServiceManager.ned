@@ -22,15 +22,18 @@ simple LocalServiceManager
 {
     parameters:
         @class(soqosmw::LocalServiceManager);
+        @display("i=block/cogwheel");
+        
+        // paths to used modules.
         string sdmoduleName = default("sd");
         string qosnpmoduleName = default("qosnp");
-        
+
         string localAddress = default("");
-        
+
         //parameters for service creation:
         	//AVB:
         	//Interval in which a subscription is updated
-            double updateInterval @unit("s") = default(6s);
-            //Interval in which a subscription is reregistered after a registration failed
-            double retryInterval @unit("s") = default(1s);
+        double updateInterval @unit("s") = default(6s);
+        //Interval in which a subscription is reregistered after a registration failed
+        double retryInterval @unit("s") = default(1s);
 }

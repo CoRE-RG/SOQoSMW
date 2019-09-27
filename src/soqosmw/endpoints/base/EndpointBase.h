@@ -22,6 +22,7 @@
 #include <string>
 
 #include "soqosmw/connector/base/ConnectorBase.h"
+#include "soqosmw/utility/processing/ProcessingTimeSimulation.h"
 
 //AUTO-GENERATED MESSAGES
 #include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
@@ -38,7 +39,7 @@ namespace soqosmw {
  *
  * @author Timo Haeckel, for HAW Hamburg
  */
-class EndpointBase : public cSimpleModule
+class EndpointBase : public ProcessingTimeSimulation
 {
 public:
 
@@ -68,9 +69,21 @@ public:
         _endpointPath = path;
     }
 
+    simtime_t getCreationTime();
+
+private:
+    /**
+     * Signal to emit creationTime
+     */
+    simsignal_t _creationTimeSignal;
+
+    /**
+     * The time the connector is created at.
+     */
+    simtime_t _creationTime;
+
   protected:
     virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
 
     /**
      * @brief Indicates a parameter has changed.
@@ -78,6 +91,12 @@ public:
      * @param parname Name of the changed parameter or nullptr if multiple parameter changed.
      */
     virtual void handleParameterChange(const char* parname) override;
+
+    /**
+    * Processes the scheduled message. Needs to delete the message after handling it.
+    * @param msg  the incoming message
+    */
+   virtual void processScheduledMessage(cMessage *msg) override;
 
     /**
      * Is called during module initialization to initialize the transport connection;

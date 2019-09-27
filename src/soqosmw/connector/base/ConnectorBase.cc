@@ -20,6 +20,9 @@
 #include "soqosmw/endpoints/base/EndpointBase.h"
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include <algorithm>
+#include <string>
+#include <iostream>
+#include <fstream>
 
 namespace soqosmw {
 
@@ -28,14 +31,11 @@ void ConnectorBase::initialize()
     handleParameterChange(nullptr);
     this->_forwardedToEndpointsSignal = registerSignal("forwardedToEPs");
     this->_forwardedToApplicationsSignal = registerSignal("forwardedToApps");
-    this->_messageDroppedSignal = registerSignal("msgDropped");
+    this->_messageDroppedSignal = registerSignal("messageDropped");
 }
 
 void ConnectorBase::handleMessage(cMessage *msg)
 {
-    cMessage* processingDelay = new cMessage(PROCESSINGDELAY_MSG_NAME);
-    //processingDelay->setC
-    scheduleAt(simTime(), msg);
     bool forwarded = false;
     if (_endpointFwdEnabled && msg->arrivedOn("applicationIn")){
         //from applications --> forward to all endpoints
@@ -44,7 +44,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
             forwarded = true;
         }
         if (forwarded){
-            // todo emit ...
             // signal forwardedToEndpoints
             emit(this->_forwardedToEndpointsSignal, msg);
         }
@@ -56,7 +55,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
             forwarded = true;
         }
         if (forwarded){
-            // todo emit ...
             // signal forwardedToApplications
             emit(this->_forwardedToApplicationsSignal, msg);
         }
@@ -64,7 +62,6 @@ void ConnectorBase::handleMessage(cMessage *msg)
 
     if(!forwarded){
         //message was dropped so emit.
-        //signal messageDropped
         emit(this->_messageDroppedSignal,msg);
     }
 
@@ -84,6 +81,9 @@ void ConnectorBase::handleParameterChange(const char* parname) {
     if (!parname || !strcmp(parname, "endpointFwdEnabled")) {
         _endpointFwdEnabled = par("endpointFwdEnabled");
     }
+    if (!parname || !strcmp(parname, "createConnectorMappingEnabled")) {
+        _createConnectorMappingEnabled = par("createConnectorMappingEnabled");
+    }
 }
 
 bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
@@ -92,7 +92,7 @@ bool ConnectorBase::addEndpoint(EndpointBase* endpoint) {
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
             _endpoints.push_back(endpoint);
-            // todo emit ...
+            // TODO emit ...
             return true;
         }
     }
@@ -104,7 +104,6 @@ EndpointBase* ConnectorBase::removeEndpoint(EndpointBase* endpoint) {
     if(endpoint){
         auto it = find(_endpoints.begin(), _endpoints.end(), endpoint);
         if (it == _endpoints.end()){
-            // todo emit ...
             EndpointBase* temp = *it;
             _endpoints.erase(it);
             return temp;
@@ -118,7 +117,6 @@ bool ConnectorBase::addApplication(SOQoSMWApplicationBase* application) {
         //check if not already in the list, then add.
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
-            // todo emit ...
             _applications.push_back(application);
             return true;
         }
@@ -132,13 +130,60 @@ SOQoSMWApplicationBase* ConnectorBase::removeApplication(
     if(application){
         auto it = find(_applications.begin(), _applications.end(), application);
         if (it == _applications.end()){
-            // todo emit ...
             SOQoSMWApplicationBase* temp = *it;
             _applications.erase(it);
             return temp;
         }
     }
     return nullptr;
+}
+
+void ConnectorBase::finish(){
+    if (_createConnectorMappingEnabled) {
+        static std::mutex mutex;
+        std::stringstream ss;
+        std::string hostname = getParentModule()->getParentModule()->getName();
+        ss << "{";
+        if (hostname == "tte") {
+            ss << "\"gatewayName\":" << "\"" << getParentModule()->getParentModule()->getParentModule()->getFullName() << "\""; // Gateway name
+        } else {
+            ss << "\"hostName\":" << "\"" << getParentModule()->getParentModule()->getFullName() << "\""; // Host name
+        }
+        ss << ",";
+        ss << "\"applications\":[";
+        int elemCounter = 0;
+        int listLength = this->_applications.size();
+        for (SOQoSMWApplicationBase* application : this->_applications) {
+            // additional information on real application name
+            ss << "\"" << application->getServiceName() << "\"";
+            elemCounter++;
+            if (elemCounter != listLength) {
+                ss << ",";
+            }
+        }
+        ss << "]";
+        ss << ",";
+        ss << "\"connectorName\":" << "\"" << this->getFullName() << "\""; // connector name
+        listLength = this->_endpoints.size();
+        ss << ",";
+        ss << "\"endpoints\":[";
+        elemCounter = 0;
+        for (EndpointBase* endpoint : this->_endpoints) {
+            ss << "{\"" << "name" << "\":\"" << endpoint->getFullName() << "\",\"" << "created" << "\":\"" << endpoint->getCreationTime() << "\"}" ;
+            elemCounter++;
+            if (elemCounter != listLength) {
+                ss << ",";
+            }
+        }
+        ss << "]";
+        ss << "}";
+        mutex.lock();
+        std::ofstream outfile;
+        outfile.open("connectorsmapping.txt", std::ios::app);
+        outfile << ss.str() << std::endl;
+        outfile.close();
+        mutex.unlock();
+    }
 }
 
 } /*end namespace soqosmw*/

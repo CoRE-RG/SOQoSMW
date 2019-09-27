@@ -80,8 +80,9 @@ void GatewayPublisherApp::handleMessage(cMessage *msg) {
         if (_connector) {
             SignalsAndGateways::GatewayAggregationMessage* gwam = dynamic_cast<SignalsAndGateways::GatewayAggregationMessage*>(msg);
             if(gwam){
+                emit(this->_msgSentSignal, msg);
                 sendDirect(gwam, _connector->gate("applicationIn"));
-                EV_DEBUG << _serviceName << ": Message Published." << endl;
+                EV_DEBUG << _publisherName << ": Message Published." << endl;
             } else {
                 delete msg;
             }

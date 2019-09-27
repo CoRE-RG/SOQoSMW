@@ -31,14 +31,25 @@ void SOQoSMWApplicationBase::handleMessage(cMessage *msg) {
 }
 
 void SOQoSMWApplicationBase::initialize() {
+    this->_subscriberName = "";
+    this->_publisherName = "";
     _localServiceManager =
-            dynamic_cast<LocalServiceManager*>(getParentModule()->getSubmodule(
-                    par("serviceManagerModule")));
+            dynamic_cast<LocalServiceManager*>(getParentModule()->getModuleByPath(par("serviceManagerModulePath")));
     if (!_localServiceManager) {
         throw cRuntimeError(
-                "Configuration problem of parameter serviceManagerModule in module %s.",
+                "Configuration problem of parameter serviceManagerModulePath in module %s.",
                 this->getFullName());
     }
+}
+
+std::string SOQoSMWApplicationBase::getServiceName() {
+    std::string serviceName = "";
+    if (this->_publisherName.length() > 0) {
+        serviceName = this->_publisherName;
+    } else if (this->_subscriberName.length() > 0) {
+        serviceName = this->_subscriberName;
+    }
+    return serviceName;
 }
 
 void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {

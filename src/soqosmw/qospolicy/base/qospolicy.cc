@@ -30,6 +30,8 @@ bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right){
                 return false;
             }
         }
+    } else {
+        return false;
     }
 
     return true;

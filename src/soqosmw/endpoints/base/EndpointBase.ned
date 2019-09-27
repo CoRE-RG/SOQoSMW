@@ -17,6 +17,8 @@
 
 package soqosmw.endpoints.base;
 
+import soqosmw.utility.processing.ProcessingTimeSimulation;
+
 //
 // The EndpointBase provides a common interface for all endpoint modules.
 // Endpoints are created by the QoSNegotiationProtocol module (@see~QoSNegotiationProtocol)
@@ -24,9 +26,9 @@ package soqosmw.endpoints.base;
 // Endpoints are connected to a specific transport and a connector module (@see~ConnectorBase)
 // which loosely couples an endpoint to an application (@see~SOQoSMWApplicationBase). 
 //
-// @author Timo Haeckel, for HAW Hamburg
+// @author Timo Haeckel and Mehmet Cakir, for HAW Hamburg
 //
-simple EndpointBase
+simple EndpointBase extends ProcessingTimeSimulation like IEndpoint
 {
     parameters:
         // indicates which qos is realized in this endpoint one of RT, STD_UDP, STD_TCP, WEB
@@ -34,6 +36,14 @@ simple EndpointBase
         
      	//The name of the endpoint as a path (e.g. "Reifendruck/links").
     	string endpointPath = default("");
+    	
+    	processingTime = default(0);
+        allowParallelProcessing = default(true);
+        
+        // Signal emitted when connector will be created
+        @signal[endpointCreationTime](type=simtime_t);
+        //Statistic of the simtime
+        @statistic[endpointCreatedAt](title="Endpoint creation time"; source=endpointCreationTime; record=sum; unit=s);
     
     gates:
         // input gate for messegas from the application

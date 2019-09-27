@@ -99,6 +99,9 @@ void TCPPublisherEndpoint::handleTransportIn(cMessage* msg) {
 
         //if not open a new one!
         if (!socket) {
+
+            emit(_remotesSignal,1);
+
             _isConnected = true;
             // new connection -- create new socket object and server process
             socket = new TCPSocket(msg);
@@ -113,7 +116,7 @@ void TCPPublisherEndpoint::handleTransportIn(cMessage* msg) {
 void TCPPublisherEndpoint::publish(cPacket* msg) {
     if(_isConnected) {
         for(auto iter = socketMap.begin(); iter != socketMap.end(); iter++){
-            iter->second->send(msg);
+            iter->second->send(msg->dup());
         }
     }
 }

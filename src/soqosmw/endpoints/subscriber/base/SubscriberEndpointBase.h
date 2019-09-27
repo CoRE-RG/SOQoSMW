@@ -34,6 +34,8 @@ namespace soqosmw {
 class SubscriberEndpointBase : public EndpointBase
 {
 protected:
+    virtual void initialize() override;
+
     /**
      * Handles messages incoming from transport gate and
      * forwards them to the connector if they are for applications.
@@ -49,6 +51,12 @@ protected:
      * @param msg   the message to handle.
      */
     virtual void handleConnectorIn(cMessage *msg) override;
+
+private:
+    /**
+     * Signal to capture statistics for received messages
+     */
+    simsignal_t _msgRecv;
 
 };
 

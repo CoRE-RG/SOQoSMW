@@ -17,52 +17,31 @@ package soqosmw.nodes;
 
 import core4inet.nodes.inet.RTIPHost;
 
-import soqosmw.qosmanagement.negotiation.QoSNegotiationProtocol;
-import soqosmw.discovery.base.IServiceDiscovery;
-import soqosmw.servicemanager.LocalServiceManager;
+import soqosmw.nodes.SOQoSMW;
 import soqosmw.applications.base.ISOQoSMWApplication;
 
 module SOQoSMWHost extends RTIPHost
 {
     parameters:
-    	hasUdp = true; //needed for qosnp
-    	hasTcp = true; //needed for tcp based communication
-    	int numServices = default(0);
-    	string localAddress = default("");
-        double qosnp_processing_delay @unit(s) = default(4us); // Forwardingdelay of the device hardware
-    	*.localAddress = localAddress;
-    	*.lsmmoduleName = "lsm";
-    	*.sdmoduleName = "sd";
-    	*.qosnpmoduleName = "qosnp";
-    	
-    types:
-        channel ProcessingDelay extends ned.DelayChannel
-        {
-        }
-    	
+        hasUdp = true; //needed for qosnp
+        hasTcp = true; //needed for tcp based communication
+        int numServices = default(0);
+        string localAddress = default("");
+        *.localAddress = localAddress;
+        @display("i=device/device");
     submodules:
-        
-        services [numServices] : <> like ISOQoSMWApplication {
-            
-        }
-        
-        qosnp: QoSNegotiationProtocol {
-            @display("p=344,45");
+
+        services[numServices]: <> like ISOQoSMWApplication {
+            @display("p=740,315,m,5,50,50");
         }
 
-        lsm: LocalServiceManager {
-
-            @display("p=276,45");
+        soqosmw: SOQoSMW {
+            @display("p=615,315");
         }
 
-        sd: <default("StaticServiceDiscovery")> like IServiceDiscovery {
-
-            @display("p=213,45");
-        }
-        
     connections allowunconnected:
 
-        qosnp.udpOut --> ProcessingDelay{ delay = (qosnp_processing_delay); } --> udp.appIn++;
-        qosnp.udpIn <-- udp.appOut++;
+        soqosmw.qosnpUDPOut --> udp.appIn++;
+        soqosmw.qosnpUDPIn <-- udp.appOut++;
 
 }

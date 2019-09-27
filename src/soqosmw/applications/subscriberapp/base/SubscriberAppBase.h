@@ -50,16 +50,12 @@ private:
      */
     double _startTime;
 
-protected:
     /**
      * Signal that is emitted every time a frame was sent.
      */
-    static simsignal_t _rxPkSignal;
+     simsignal_t _rxPkSignal;
 
-    /**
-     * Name of this subscriber service.
-     */
-    std::string _subscriberName;
+protected:
 
     /**
      * Name of the publishing service to subscribe to.

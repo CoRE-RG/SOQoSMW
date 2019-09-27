@@ -29,13 +29,20 @@ const char EndpointBase::TRANSPORT_OUT_GATE_NAME[] = "transportOut";
 
 void EndpointBase::initialize()
 {
+    ProcessingTimeSimulation::initialize();
     handleParameterChange(nullptr);
     //nothing to do
     initializeTransportConnection();
+    this->_creationTimeSignal = registerSignal("endpointCreationTime");
+    this->_creationTime = simTime();
+    emit(this->_creationTimeSignal, this->_creationTime);
 }
 
-void EndpointBase::handleMessage(cMessage *msg)
-{
+simtime_t EndpointBase::getCreationTime() {
+    return this->_creationTime;
+}
+
+void EndpointBase::processScheduledMessage(cMessage* msg) {
     if(msg->arrivedOn(CONNECTOR_IN_GATE_NAME)){
         // from connector
         handleConnectorIn(msg);
@@ -49,6 +56,8 @@ void EndpointBase::handleMessage(cMessage *msg)
 }
 
 void EndpointBase::handleParameterChange(const char* parname) {
+    ProcessingTimeSimulation::handleParameterChange(parname);
+
     if (!parname || !strcmp(parname, "qos")) {
         if (!strcmp(par("qos"), "RT")) {
             _qos = QoSGroups::RT;

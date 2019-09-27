@@ -32,7 +32,7 @@ simple SubscriberAppBase extends SOQoSMWApplicationBase
         @display("i=block/sink,blue");
         
         //Signal emitted when a frame is received, contains received EtherFrame
-        @signal[rxPk](type=inet::EtherFrame);
+        @signal[rxPk](type=omnetpp::cPacket);
         //Statistic of the amount of packets that were received by the application
         @statistic[rxPk](title="Received Packets"; source=rxPk; record=count; unit=packets);
         //Statistic of the amount of bytes that were received by the application

@@ -33,8 +33,6 @@ using namespace CoRE4INET;
 
 Define_Module(SubscriberAppBase);
 
-simsignal_t SubscriberAppBase::_rxPkSignal = registerSignal("rxPk");
-
 SubscriberAppBase::SubscriberAppBase() {
 }
 
@@ -45,16 +43,11 @@ void SubscriberAppBase::initialize()
 {
     SOQoSMWApplicationBase::initialize();
     handleParameterChange(nullptr);
+    this->_rxPkSignal = registerSignal("rxPk");
 
     scheduleAt(simTime() + par("startTime").doubleValue(), new cMessage(START_MSG_NAME));
-    if (getEnvir()->isGUI())
-    {
+    if (getEnvir()->isGUI()) {
         getDisplayString().setTagArg("i2", 0, "status/asleep");
-    }
-
-    if (getEnvir()->isGUI())
-    {
-        getDisplayString().setTagArg("i2", 0, "status/hourglass");
     }
 }
 
@@ -64,13 +57,14 @@ void SubscriberAppBase::handleMessage(cMessage *msg)
         setQoS();
         //create a subscriber
         _connector = _localServiceManager->registerSubscriberService(this->_subscriberName, this->_publisherName, this->_qosPolicies, this);
-
-        //TODO set the gate at the reader to get all messages
+        if (getEnvir()->isGUI()) {
+            getDisplayString().setTagArg("i2", 0, "status/active");
+        }
 
     } else {
         EV_DEBUG << "Subscriber " << _subscriberName << " received a message."  << endl;
         //this is a subscription message so handle it.
-        if (inet::EtherFrame *frame = dynamic_cast<inet::EtherFrame*>(msg))
+        if (omnetpp::cPacket *frame = dynamic_cast<omnetpp::cPacket*>(msg))
         {
             emit(_rxPkSignal, frame);
         }

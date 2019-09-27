@@ -20,5 +20,6 @@ package soqosmw.discovery.base;
 //
 moduleinterface IServiceDiscovery
 {
-    
+    parameters:
+        @display("i=block/table2");
 }

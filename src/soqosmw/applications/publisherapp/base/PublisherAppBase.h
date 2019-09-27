@@ -79,9 +79,9 @@ protected:
     size_t _framesize;
 
     /**
-     * Name of the service to publish.
+     * Signal that is emitted each time then a message is sent.
      */
-    std::string _serviceName;
+    simsignal_t _msgSentSignal;
 
     /**
      * Caches QoS Policy parameters
@@ -114,11 +114,6 @@ protected:
     unsigned long _streamID;
 
     /**
-     * Signal that is emitted each time the payload is used.
-     */
-    static simsignal_t sigPayload;
-
-    /**
      * Initialization of the module. Sends activator message
      */
     virtual void initialize();
@@ -144,7 +139,10 @@ protected:
     virtual void scheduleNextMessage();
 
 private:
-    simsignal_t _msgSentSignal;
+    /**
+     * Signal that is emitted each time the payload is used.
+     */
+    simsignal_t _sigPayload;
 };
 
 } /* end namespace soqosmw */

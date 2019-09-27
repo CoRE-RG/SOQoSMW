@@ -113,7 +113,7 @@ void AVBSubscriberEndpoint::receiveSignal(cComponent* src, simsignal_t id,
 
 void AVBSubscriberEndpoint::handleMessage(cMessage *msg)
 {
-    if (msg->isSelfMessage())
+    if (msg->isSelfMessage() && (strcmp(msg->getName(), "updateSubscription") == 0))
     {
         // update the subscription!
         _srpTable->updateListenerWithStreamId(_streamID, this, _vlanID);
@@ -121,7 +121,15 @@ void AVBSubscriberEndpoint::handleMessage(cMessage *msg)
         {
             scheduleUpdateMessage(simTime() + _updateInterval);
         }
-    } else if(msg->arrivedOn("AVBin")){
+    }
+    else
+    {
+        RTSubscriberEndpointBase::handleMessage(msg);
+    }
+}
+
+void AVBSubscriberEndpoint::processScheduledMessage(cMessage* msg) {
+    if(msg->arrivedOn("AVBin")){
         if(AVBFrame* frame = dynamic_cast<AVBFrame*>(msg)){
             handleTransportIn(frame->decapsulate());
         }

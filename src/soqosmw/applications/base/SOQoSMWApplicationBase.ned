@@ -30,7 +30,7 @@ simple SOQoSMWApplicationBase like ISOQoSMWApplication
 {
     parameters:
         // name of the serviceManager module
-        string serviceManagerModule = default ("lsm");
+        string serviceManagerModulePath = default (".soqosmw.lsm");
     	// local IP address
     	string localAddress = default("");
     	// the tcp port for this service

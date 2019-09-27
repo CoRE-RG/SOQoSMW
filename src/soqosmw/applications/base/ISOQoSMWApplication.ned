@@ -25,8 +25,9 @@ package soqosmw.applications.base;
 //
 moduleinterface ISOQoSMWApplication {
     parameters:
+        @display("i=block/app");
         // name of the serviceManager module
-        string serviceManagerModule;
+        string serviceManagerModulePath;
     	// local IP address
     	string localAddress;
     	// the tcp port for this service
