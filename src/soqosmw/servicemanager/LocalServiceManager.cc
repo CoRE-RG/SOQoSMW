@@ -370,8 +370,8 @@ SubscriberEndpointBase* LocalServiceManager::createAVBSubscriberEndpoint(
         // 3. Set up its parameters and gate sizes as needed;
         avbEndpoint->par("updateInterval").setDoubleValue(par("updateInterval"));
         avbEndpoint->par("retryInterval").setDoubleValue(par("retryInterval"));
-        avbEndpoint->par("streamID").setLongValue(csi_avb->getStreamID());
-        avbEndpoint->par("vlan_id").setLongValue(csi_avb->getVlanID());
+        avbEndpoint->par("streamID").setIntValue(csi_avb->getStreamID());
+        avbEndpoint->par("vlan_id").setIntValue(csi_avb->getVlanID());
 
         // cast back.
         ret = dynamic_cast<SubscriberEndpointBase*>(avbEndpoint);
@@ -404,9 +404,9 @@ SubscriberEndpointBase* LocalServiceManager::createTCPSubscriberEndpoint(
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         tcpEndpoint->par("localAddress").setStringValue(localAddr);
         int localPort = (dynamic_cast<LocalPortQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalPort]))->getValue();
-        tcpEndpoint->par("localPort").setLongValue(localPort);
+        tcpEndpoint->par("localPort").setIntValue(localPort);
         tcpEndpoint->par("remoteAddress").setStringValue(csi_tcp->getAddress());
-        tcpEndpoint->par("remotePort").setLongValue(csi_tcp->getPort());
+        tcpEndpoint->par("remotePort").setIntValue(csi_tcp->getPort());
 
         // cast back.
         ret = dynamic_cast<SubscriberEndpointBase*>(tcpEndpoint);
@@ -439,7 +439,7 @@ SubscriberEndpointBase* LocalServiceManager::createUDPSubscriberEndpoint(
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         udpEndpoint->par("localAddress").setStringValue(localAddr);
         int localPort = (dynamic_cast<LocalPortQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalPort]))->getValue();
-        udpEndpoint->par("localPort").setLongValue(localPort);
+        udpEndpoint->par("localPort").setIntValue(localPort);
 
         // cast back.
         ret = dynamic_cast<SubscriberEndpointBase*>(udpEndpoint);
@@ -468,7 +468,7 @@ PublisherEndpointBase* LocalServiceManager::createAVBPublisherEndpoint(
         _publisherEndpointCount++;
         // 3. Set up its parameters and gate sizes as needed;
         auto streamID = (dynamic_cast<StreamIDQoSPolicy*>(connector->getQos()[QoSPolicyNames::StreamID]))->getValue();
-        avbEndpoint->par("streamID").setLongValue(streamID);
+        avbEndpoint->par("streamID").setIntValue(streamID);
 
         auto srClass = (dynamic_cast<SRClassQoSPolicy*>(connector->getQos()[QoSPolicyNames::SRClass]))->getValue();
         string strSrClass;
@@ -480,13 +480,13 @@ PublisherEndpointBase* LocalServiceManager::createAVBPublisherEndpoint(
         avbEndpoint->par("srClass").setStringValue(strSrClass);
 
         auto intervalFrames = (dynamic_cast<IntervalFramesQoSPolicy*>(connector->getQos()[QoSPolicyNames::IntervalFrames]))->getValue();
-        avbEndpoint->par("intervalFrames").setLongValue(intervalFrames);
+        avbEndpoint->par("intervalFrames").setIntValue(intervalFrames);
 
         auto vlanID = (dynamic_cast<IntervalFramesQoSPolicy*>(connector->getQos()[QoSPolicyNames::IntervalFrames]))->getValue();
-        avbEndpoint->par("vlan_id").setLongValue(vlanID);
+        avbEndpoint->par("vlan_id").setIntValue(vlanID);
 
         auto payload = (dynamic_cast<FramesizeQoSPolicy*>(connector->getQos()[QoSPolicyNames::Framesize]))->getValue();
-        avbEndpoint->par("payload").setLongValue(payload);
+        avbEndpoint->par("payload").setIntValue(payload);
 
         // cast back.
         ret = dynamic_cast<PublisherEndpointBase*>(avbEndpoint);
@@ -517,7 +517,7 @@ PublisherEndpointBase* LocalServiceManager::createTCPPublisherEndpoint(
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         tcpEndpoint->par("localAddress").setStringValue(localAddr);
         int localPort = (dynamic_cast<LocalPortQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalPort]))->getValue();
-        tcpEndpoint->par("localPort").setLongValue(localPort);
+        tcpEndpoint->par("localPort").setIntValue(localPort);
 
         // cast back.
         ret = dynamic_cast<PublisherEndpointBase*>(tcpEndpoint);
@@ -548,7 +548,7 @@ PublisherEndpointBase* LocalServiceManager::createUDPPublisherEndpoint(
         string localAddr = (dynamic_cast<LocalAddressQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalAddress]))->getValue();
         udpEndpoint->par("localAddress").setStringValue(localAddr);
         int localPort = (dynamic_cast<LocalPortQoSPolicy*>(connector->getQos()[QoSPolicyNames::LocalPort]))->getValue();
-        udpEndpoint->par("localPort").setLongValue(localPort);
+        udpEndpoint->par("localPort").setIntValue(localPort);
 
         // cast back.
         ret = dynamic_cast<PublisherEndpointBase*>(udpEndpoint);

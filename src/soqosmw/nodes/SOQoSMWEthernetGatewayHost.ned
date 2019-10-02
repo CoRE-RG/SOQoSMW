@@ -24,6 +24,7 @@ import core4inet.incoming.AS6802.TTIncoming;
 import core4inet.buffer.AS6802.TTQueueBuffer;
 import core4inet.incoming.AS6802.RCIncoming;
 import core4inet.buffer.AS6802.RCQueueBuffer;
+import core4inet.buffer.base.BGQueueBuffer;
 
 //
 // The SOQoSMWEthernetGatewayHost module.
@@ -71,6 +72,11 @@ module SOQoSMWEthernetGatewayHost extends SOQoSMWHost like IEthernetGatewayHost
             parameters:
                 @display("p=162,315,r,70");
         }
+        
+        // Best-efford buffer for incoming traffic 
+        bgIn: BGQueueBuffer {
+            @display("p=335,232");
+        }
 
     connections:
         gatewayApp.upperLayerOut --> upperLayerOut;
@@ -81,5 +87,7 @@ module SOQoSMWEthernetGatewayHost extends SOQoSMWHost like IEthernetGatewayHost
         for i=0..numberOfRC_Vlinks-1 {
             RCvlinks_ctc[i].out --> RCvlinks[i].in;
         }
+        
+        bgIn.in <-- phy[0].bgOut;
 
 }
