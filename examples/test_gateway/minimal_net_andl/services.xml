@@ -1,0 +1,5 @@
+<services>
+	<service name="scheinwerferserviceSubscriber" node="InfotainmentSystem"/>
+	<service name="scheinwerferservicePublisher" node="GatewayLicht.tte[0]"/>
+	<service name="scheinwerferserviceSubscriber" node="GatewaySteuerung.tte[0]"/>
+</services>

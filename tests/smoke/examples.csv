@@ -1,5 +1,9 @@
-# workingdir,                        args,                                          simtimelimit,    fingerprint
-/examples/paper/cross,               -f omnetpp.ini -c General -r 0
-/examples/paper/gateway_net,         -f omnetpp.ini -c General -r 0
-/examples/test_gateway/minimal_net,  -f omnetpp.ini -c General -r 0
-/examples/test_pubsub/small_network, -f omnetpp.ini -c General -r 0
+# workingdir,                                                            args,                                          simtimelimit,    fingerprint
+/examples/test_gateway/minimal_net_andl,                                 -f omnetpp.ini -c General -r 0
+/examples/test_pubsub/small_network,                                     -f omnetpp.ini -c General -r 0
+/examples/MinimalEvaluationNetwork/large_network,                        -f omnetpp.ini -c General -r 0
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c General -r 0
+/examples/MinimalEvaluationNetwork/small_network_all_ethernet_protocols, -f omnetpp.ini -c General -r 0
+/examples/negotiationTestNetwork/RT,                                     -f omnetpp.ini -c General -r 0
+/examples/negotiationTestNetwork/TCP,                                    -f omnetpp.ini -c General -r 0
+/examples/negotiationTestNetwork/UDP,                                    -f omnetpp.ini -c General -r 0

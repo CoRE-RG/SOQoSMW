@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<gateway id="GatewaySteuerung">
+		<routing>
+			<route source="1" destination="0">
+				<rawdata id="3"/>
+			</route>
+		</routing>
+		<buffering>
+		</buffering>
+		<transformation destination="0" type="toCan">
+			<rawdata id="3"/>
+		</transformation>
+	</gateway>
+
+</config>

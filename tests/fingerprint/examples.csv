@@ -1,5 +1,9 @@
-# workingdir,                        args,                                          simtimelimit,    fingerprint
-/examples/paper/cross,               -f omnetpp.ini -c General -r 0,                100ms,           15fb-b147
-/examples/paper/gateway_net,         -f omnetpp.ini -c General -r 0,                100ms,           6531-c565
-/examples/test_gateway/minimal_net,  -f omnetpp.ini -c General -r 0,                100ms,           821a-a973
-/examples/test_pubsub/small_network, -f omnetpp.ini -c General -r 0,                100ms,           4bc2-b3cc
+# workingdir,                                                            args,                                          simtimelimit,    fingerprint
+/examples/test_gateway/minimal_net_andl,                                 -f omnetpp.ini -c General -r 0,                100ms,           0d78-ad59
+/examples/test_pubsub/small_network,                                     -f omnetpp.ini -c General -r 0,                100ms,           4bc2-b3cc
+/examples/MinimalEvaluationNetwork/large_network,                        -f omnetpp.ini -c General -r 0,                100ms,           3a00-fbc7
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c General -r 0,                100ms,           dfe6-91a0
+/examples/MinimalEvaluationNetwork/small_network_all_ethernet_protocols, -f omnetpp.ini -c General -r 0,                100ms,           2d3a-7a4d
+/examples/negotiationTestNetwork/RT,                                     -f omnetpp.ini -c General -r 0,                100ms,           ad23-6e81
+/examples/negotiationTestNetwork/TCP,                                    -f omnetpp.ini -c General -r 0,                100ms,           8b3e-b570
+/examples/negotiationTestNetwork/UDP,                                    -f omnetpp.ini -c General -r 0,                100ms,           802c-bed3

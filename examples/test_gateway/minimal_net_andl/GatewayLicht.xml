@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE config SYSTEM "../../src/signalsandgateways/gateway/GatewayConfig.dtd">-->
 <config>
 	<gateway id="GatewayLicht">
 		<routing>
 			<route source="0" destination="1">
-				<canframe canId="100"/>
+				<canframe canId="3"/>
 			</route>
 		</routing>
-		
+		<buffering>
+		</buffering>
 		<transformation destination="1" type="toMisc">
-			<rawdata id="100">
-				<canframe canId="100"/>
+			<rawdata id="3">
+				<canframe canId="3"/>
 			</rawdata>
 		</transformation>
 	</gateway>
+
 </config>

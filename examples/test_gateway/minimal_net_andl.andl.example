@@ -1,0 +1,64 @@
+types std {
+	ethernetLink ETH_100MBIT {
+		bandwidth 100 Mb/s;
+	}
+}
+
+settings {
+	rootPackage "soqosmw";
+}
+
+network minimal_net {
+	devices { 
+		node Scheinwerfer;
+		node Lichtregulierung;
+		node InfotainmentSystem;
+		
+		canLink Licht;
+		canLink Steuerung;
+		
+		gateway GatewayLicht;
+		gateway GatewaySteuerung;
+		
+		switch ethswitch;		
+	}
+	
+	connections {
+		segment backbone {
+			GatewayLicht <--> { new std.ETH_100MBIT } <--> ethswitch;
+			GatewaySteuerung <--> { new std.ETH_100MBIT } <--> ethswitch;
+			InfotainmentSystem <--> { new std.ETH_100MBIT } <--> ethswitch;
+		}
+		
+		segment canbus { 
+			GatewayLicht <--> Licht;
+			GatewaySteuerung <--> Steuerung;
+			Scheinwerfer <--> Licht;
+			Lichtregulierung <--> Steuerung;
+		}
+	}
+	
+	communication {
+		message scheinwerfermsg {
+			sender Scheinwerfer;
+			period 1ms;
+			payload 8B;
+			receivers Lichtregulierung;
+			mapping {
+				canbus : can { id 3; };
+				GatewayLicht;
+				backbone : be;
+				GatewaySteuerung;
+			}
+		}
+		
+		service scheinwerferservice {
+			publisher GatewayLicht;
+			subscriber {
+				RT GatewaySteuerung;
+				UDP InfotainmentSystem;
+			}
+			canIds 3;
+		}
+	}
+}
