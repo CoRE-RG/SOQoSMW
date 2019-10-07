@@ -63,3 +63,5 @@ test/smoke/test\.out
 
 
 /.computed/
+
+*.out
