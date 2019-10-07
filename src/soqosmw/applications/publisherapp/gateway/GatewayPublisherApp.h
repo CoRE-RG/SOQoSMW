@@ -18,7 +18,8 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
 
-#include <applications/publisherapp/base/PublisherAppBase.h>
+#include "soqosmw/applications/publisherapp/base/PublisherAppBase.h"
+//STD
 #include <vector>
 
 using namespace omnetpp;

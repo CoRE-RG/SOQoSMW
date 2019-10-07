@@ -23,10 +23,9 @@
 
 #include "soqosmw/connector/base/ConnectorBase.h"
 #include "soqosmw/utility/processing/ProcessingTimeSimulation.h"
-
 //AUTO-GENERATED MESSAGES
 #include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
-#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
 
 using namespace omnetpp;
 

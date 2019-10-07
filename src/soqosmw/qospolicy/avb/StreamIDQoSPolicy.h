@@ -18,7 +18,7 @@
 #ifndef SOQOSMW_QOSPOLICY_PUBLISHER_AVB_STREAMIDQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_PUBLISHER_AVB_STREAMIDQOSPOLICY_H_
 
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/IntQoSPolicy.h"
 
 namespace soqosmw {
 namespace QoSPolicyNames {

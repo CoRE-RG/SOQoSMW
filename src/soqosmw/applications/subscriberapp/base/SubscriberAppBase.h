@@ -18,9 +18,9 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
 
-#include <applications/base/SOQoSMWApplicationBase.h>
-#include <omnetpp/clistener.h>
-#include <qospolicy/base/qospolicy.h>
+#include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
+//STD
 #include <string>
 #include <unordered_map>
 

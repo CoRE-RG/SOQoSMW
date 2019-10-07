@@ -18,7 +18,7 @@
 #ifndef SOQOSMW_QOSPOLICY_AVB_INTERVALFRAMESQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_AVB_INTERVALFRAMESQOSPOLICY_H_
 
-#include <qospolicy/base/types/UInt16QoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/UInt16QoSPolicy.h"
 
 namespace soqosmw {
 

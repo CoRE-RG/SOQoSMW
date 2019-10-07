@@ -20,8 +20,8 @@
 
 #include <omnetpp.h>
 
-#include <qosmanagement/negotiation/datatypes/Request.h>
-#include <qospolicy/base/qospolicy.h>
+#include "soqosmw/qosmanagement/negotiation/datatypes/Request.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
 #include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
 #include "soqosmw/connector/pubsub/writer/PublisherConnector.h"
 #include "soqosmw/endpoints/publisher/base/PublisherEndpointBase.h"
@@ -30,7 +30,7 @@
 #include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include "soqosmw/discovery/static/StaticServiceDiscovery.h"
-#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
+#include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
 
 //STD
 #include <atomic>

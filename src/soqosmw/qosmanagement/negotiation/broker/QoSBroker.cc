@@ -15,21 +15,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <qosmanagement/negotiation/broker/QoSBroker.h>
+#include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 
-#include <qosmanagement/negotiation/datatypes/Request.h>
-#include <qospolicy/base/qospolicy.h>
-#include <servicemanager/LocalServiceManager.h>
-#include <connector/base/ConnectorBase.h>
+#include "soqosmw/qosmanagement/negotiation/datatypes/Request.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
+#include "soqosmw/connector/base/ConnectorBase.h"
 #include "soqosmw/endpoints/publisher/standard/udp/UDPPublisherEndpoint.h"
 //AUTO-GENERATED Messages
-#include <messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h>
-#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
+#include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
+//INET
+#include <inet/networklayer/common/L3Address.h>
+#include <inet/transportlayer/contract/udp/UDPSocket.h>
+//STD
 #include <iostream>
 #include <unordered_map>
 
-#include <inet/networklayer/common/L3Address.h>
-#include <inet/transportlayer/contract/udp/UDPSocket.h>
 
 namespace soqosmw {
 using namespace inet;

@@ -18,7 +18,8 @@
 #ifndef SOQOSMW_QOSPOLICY_BASE_TYPES_STRINGQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_BASE_TYPES_STRINGQOSPOLICY_H_
 
-#include <qospolicy/base/IQoSPolicy.h>
+#include "soqosmw/qospolicy/base/IQoSPolicy.h"
+
 #include <string>
 
 namespace soqosmw {

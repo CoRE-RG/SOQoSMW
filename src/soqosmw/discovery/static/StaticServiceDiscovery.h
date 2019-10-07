@@ -19,14 +19,12 @@
 #define __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
 
 //SOQOSMW
-#include <discovery/base/IServiceDiscovery.h>
-
+#include "soqosmw/discovery/base/IServiceDiscovery.h"
+//INET
+#include "inet/networklayer/common/L3Address.h"
 //STD
 #include <string>
 #include <unordered_map>
-
-//INET
-#include <inet/networklayer/common/L3Address.h>
 
 namespace soqosmw {
 

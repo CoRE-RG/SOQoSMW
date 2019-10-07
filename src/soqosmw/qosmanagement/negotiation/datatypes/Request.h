@@ -18,8 +18,9 @@
 #ifndef SOQOSMW_QOSMANAGEMENT_NEGOTIATION_DATATYPES_REQUEST_H_
 #define SOQOSMW_QOSMANAGEMENT_NEGOTIATION_DATATYPES_REQUEST_H_
 
-#include <base/EndpointDescription.h>
-#include <qospolicy/base/qospolicy.h>
+#include "soqosmw/base/EndpointDescription.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
+
 #include <string>
 #include <unordered_map>
 

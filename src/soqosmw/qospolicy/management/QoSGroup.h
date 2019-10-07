@@ -18,9 +18,9 @@
 #ifndef SOQOSMW_QOSPOLICY_MANAGEMENT_QOSGROUP_H_
 #define SOQOSMW_QOSPOLICY_MANAGEMENT_QOSGROUP_H_
 
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/IntQoSPolicy.h"
 
-#include <soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
+#include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
 
 namespace soqosmw {
 

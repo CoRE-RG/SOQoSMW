@@ -15,17 +15,20 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <applications/publisherapp/base/PublisherAppBase.h>
-#include <qospolicy/base/qospolicy.h>
-#include <servicemanager/LocalServiceManager.h>
+#include "soqosmw/applications/publisherapp/base/PublisherAppBase.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
 #include "soqosmw/connector/base/ConnectorBase.h"
+//CoRE4INET
+#include "core4inet/base/CoRE4INET_Defs.h"
+#include "core4inet/utilities/ConfigFunctions.h"
+//INET
+#include "inet/linklayer/ethernet/Ethernet.h"
+//STD
 #include <cstring>
 #include <iostream>
 #include <utility>
 
-#include <core4inet/base/CoRE4INET_Defs.h>
-#include <core4inet/utilities/ConfigFunctions.h>
-#include <inet/linklayer/ethernet/Ethernet.h>
 
 using namespace inet;
 using namespace CoRE4INET;

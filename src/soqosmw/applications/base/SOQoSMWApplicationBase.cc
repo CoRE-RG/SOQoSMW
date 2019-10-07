@@ -15,11 +15,10 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/base/SOQoSMWApplicationBase.h>
-
+#include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include "soqosmw/connector/base/ConnectorBase.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
 
-#include <servicemanager/LocalServiceManager.h>
 #include <cstring>
 
 namespace soqosmw {

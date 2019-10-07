@@ -18,14 +18,13 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
 
-#include <omnetpp/csimplemodule.h>
-#include <qosmanagement/negotiation/broker/QoSBroker.h>
-#include <vector>
-
+#include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 #include "soqosmw/utility/processing/ProcessingTimeSimulation.h"
-
-#include <inet/networklayer/common/L3Address.h>
-#include <inet/transportlayer/contract/udp/UDPSocket.h>
+//INET
+#include "inet/networklayer/common/L3Address.h"
+#include "inet/transportlayer/contract/udp/UDPSocket.h"
+//STD
+#include <vector>
 
 namespace soqosmw {
 class Request;

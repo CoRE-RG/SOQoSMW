@@ -18,12 +18,14 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
 
-#include <applications/base/SOQoSMWApplicationBase.h>
-#include <qospolicy/base/qospolicy.h>
+#include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
+//CoRE4INET
+#include "core4inet/base/avb/AVBDefs.h"
+//STD
 #include <cstdint>
 #include <string>
 #include <unordered_map>
-#include <core4inet/base/avb/AVBDefs.h>
 
 namespace soqosmw {
 class PublisherWriter;

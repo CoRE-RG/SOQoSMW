@@ -15,14 +15,18 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <applications/subscriberapp/gateway/GatewaySubscriberApp.h>
-
-#include <core4inet/utilities/ConfigFunctions.h>
-#include <inet/linklayer/ethernet/EtherFrame_m.h>
+#include "soqosmw/applications/subscriberapp/gateway/GatewaySubscriberApp.h"
+//CoRINETE
+#include "core4inet/utilities/ConfigFunctions.h"
+//AUTO-GENERATED MESSAGES
+#include "core4inet/linklayer/ethernet/avb/AVBFrame_m.h"
+//SignalsAndGateways
 #include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
-
 #include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
-#include <core4inet/linklayer/ethernet/avb/AVBFrame_m.h>
+//INET
+//AUTO-GENERATED MESSAGES
+#include "inet/linklayer/ethernet/EtherFrame_m.h"
+
 
 namespace soqosmw {
 using namespace std;

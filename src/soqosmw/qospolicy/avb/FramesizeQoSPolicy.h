@@ -18,7 +18,7 @@
 #ifndef SOQOSMW_QOSPOLICY_PUBLISHER_AVB_FRAMESIZEQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_PUBLISHER_AVB_FRAMESIZEQOSPOLICY_H_
 
-#include <qospolicy/base/types/SizeQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/SizeQoSPolicy.h"
 
 namespace soqosmw {
 

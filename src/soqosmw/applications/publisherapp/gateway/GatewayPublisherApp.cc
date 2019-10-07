@@ -15,10 +15,10 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <applications/publisherapp/gateway/GatewayPublisherApp.h>
-#include <qospolicy/base/qospolicy.h>
+#include "soqosmw/applications/publisherapp/gateway/GatewayPublisherApp.h"
+#include "soqosmw/qospolicy/base/qospolicy.h"
 #include "soqosmw/connector/base/ConnectorBase.h"
-
+//SignalsAndGateways
 #include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
 #include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
 

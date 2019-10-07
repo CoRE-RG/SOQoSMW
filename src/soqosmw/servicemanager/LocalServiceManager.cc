@@ -15,20 +15,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <base/EndpointDescription.h>
-#include <servicemanager/LocalServiceManager.h>
-#include <algorithm>
-#include <cstring>
-#include <iterator>
-
-#include <inet/networklayer/common/L3AddressResolver.h>
-
+#include "soqosmw/base/EndpointDescription.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
 #include "soqosmw/endpoints/subscriber/realtime/avb/AVBSubscriberEndpoint.h"
 #include "soqosmw/endpoints/subscriber/standard/tcp/TCPSubscriberEndpoint.h"
 #include "soqosmw/endpoints/subscriber/standard/udp/UDPSubscriberEndpoint.h"
 #include "soqosmw/endpoints/publisher/realtime/avb/AVBPublisherEndpoint.h"
 #include "soqosmw/endpoints/publisher/standard/tcp/TCPPublisherEndpoint.h"
 #include "soqosmw/endpoints/publisher/standard/udp/UDPPublisherEndpoint.h"
+//INET
+#include "inet/networklayer/common/L3AddressResolver.h"
+//STD
+#include <algorithm>
+#include <cstring>
+#include <iterator>
+
 
 using namespace std;
 using namespace inet;

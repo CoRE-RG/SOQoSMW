@@ -18,7 +18,8 @@
 #ifndef SOQOSMW_QOSPOLICY_STD_LOCALADDRESSQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_STD_LOCALADDRESSQOSPOLICY_H_
 
-#include <qospolicy/base/types/StringQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/StringQoSPolicy.h"
+
 #include <string>
 
 namespace soqosmw {

@@ -15,7 +15,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include <connector/pubsub/reader/SubscriberConnector.h>
+#include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
 
 namespace soqosmw {
 

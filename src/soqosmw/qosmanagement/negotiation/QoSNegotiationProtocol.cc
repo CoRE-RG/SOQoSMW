@@ -15,21 +15,18 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <base/EndpointDescription.h>
-#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <omnetpp/clog.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/regmacros.h>
-#include <omnetpp/simutil.h>
-#include <qosmanagement/negotiation/datatypes/Request.h>
-#include <qosmanagement/negotiation/QoSNegotiationProtocol.h>
-#include <servicemanager/LocalServiceManager.h>
+#include "soqosmw/base/EndpointDescription.h"
+#include "soqosmw/qosmanagement/negotiation/datatypes/Request.h"
+#include "soqosmw/qosmanagement/negotiation/QoSNegotiationProtocol.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
+//AUTO-GENERATED MESSAGES
+#include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
+//INET
+#include "inet/networklayer/common/L3AddressResolver.h"
+//STD
 #include <cstring>
 #include <iostream>
 #include <iterator>
-
-#include <inet/networklayer/common/L3AddressResolver.h>
 
 namespace soqosmw {
 using namespace std;

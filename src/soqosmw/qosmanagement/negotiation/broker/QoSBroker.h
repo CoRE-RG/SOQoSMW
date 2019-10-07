@@ -18,7 +18,7 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
 
-#include <base/EndpointDescription.h>
+#include "soqosmw/base/EndpointDescription.h"
 #include <string>
 
 namespace soqosmw {

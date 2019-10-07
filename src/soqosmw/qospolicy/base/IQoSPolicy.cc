@@ -15,7 +15,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <qospolicy/base/IQoSPolicy.h>
+#include "soqosmw/qospolicy/base/IQoSPolicy.h"
 
 namespace soqosmw {
 

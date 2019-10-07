@@ -15,16 +15,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <discovery/static/StaticServiceDiscovery.h>
-#include <omnetpp/clog.h>
-#include <omnetpp/cobjectfactory.h>
-#include <omnetpp/cpar.h>
-#include <omnetpp/cxmlelement.h>
-#include <omnetpp/regmacros.h>
+#include "soqosmw/discovery/static/StaticServiceDiscovery.h"
+//INET
+#include "inet/networklayer/common/L3AddressResolver.h"
+//STD
 #include <iostream>
 #include <vector>
 
-#include "inet/networklayer/common/L3AddressResolver.h"
 
 namespace soqosmw{
 

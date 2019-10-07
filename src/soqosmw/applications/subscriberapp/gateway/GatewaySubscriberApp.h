@@ -18,7 +18,7 @@
 #ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
 #define __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
 
-#include <applications/subscriberapp/base/SubscriberAppBase.h>
+#include "soqosmw/applications/subscriberapp/base/SubscriberAppBase.h"
 
 using namespace omnetpp;
 

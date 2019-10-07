@@ -15,17 +15,21 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <applications/subscriberapp/base/SubscriberAppBase.h>
+#include "soqosmw/applications/subscriberapp/base/SubscriberAppBase.h"
 #include "soqosmw/connector/base/ConnectorBase.h"
-#include <messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h>
-#include <qospolicy/base/qospolicy.h>
-#include <servicemanager/LocalServiceManager.h>
+#include "soqosmw/qospolicy/base/qospolicy.h"
+#include "soqosmw/servicemanager/LocalServiceManager.h"
+//AUTO-GENERATED MESSAGES
+#include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
+//CoRE4INET
+#include "core4inet/utilities/ConfigFunctions.h"
+#include "core4inet/base/avb/AVBDefs.h"
+//INET
+#include "inet/linklayer/ethernet/EtherFrame_m.h"
+//STD
 #include <cstring>
 #include <iostream>
 
-#include <core4inet/utilities/ConfigFunctions.h>
-#include <inet/linklayer/ethernet/EtherFrame_m.h>
-#include <core4inet/base/avb/AVBDefs.h>
 
 namespace soqosmw {
 using namespace std;

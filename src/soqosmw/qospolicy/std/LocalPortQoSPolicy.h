@@ -18,7 +18,8 @@
 #ifndef SOQOSMW_QOSPOLICY_STD_LOCALPORTQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_STD_LOCALPORTQOSPOLICY_H_
 
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/IntQoSPolicy.h"
+
 #include <string>
 
 namespace soqosmw {

@@ -18,9 +18,11 @@
 #ifndef SOQOSMW_QOSPOLICY_PUBLISHER_AVB_SRCLASSQOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_PUBLISHER_AVB_SRCLASSQOSPOLICY_H_
 
-#include <qospolicy/base/types/IntQoSPolicy.h>
+#include "soqosmw/qospolicy/base/types/IntQoSPolicy.h"
+//CoRE4INET
+#include "core4inet/base/avb/AVBDefs.h"
+//STD
 #include <string>
-#include <core4inet/base/avb/AVBDefs.h>
 
 namespace soqosmw {
 

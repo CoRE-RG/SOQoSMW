@@ -18,7 +18,8 @@
 #ifndef SOQOSMW_QOSPOLICY_BASE_TYPES_UINT16QOSPOLICY_H_
 #define SOQOSMW_QOSPOLICY_BASE_TYPES_UINT16QOSPOLICY_H_
 
-#include <qospolicy/base/IQoSPolicy.h>
+#include "soqosmw/qospolicy/base/IQoSPolicy.h"
+
 #include <cstdint>
 
 namespace soqosmw {
