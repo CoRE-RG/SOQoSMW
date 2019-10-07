@@ -25,7 +25,7 @@ package soqosmw.servicemanager;
 simple LocalServiceManager
 {
     parameters:
-        @class(soqosmw::LocalServiceManager);
+        @class(SOQoSMW::LocalServiceManager);
         @display("i=block/cogwheel");
         
         // paths to used modules.

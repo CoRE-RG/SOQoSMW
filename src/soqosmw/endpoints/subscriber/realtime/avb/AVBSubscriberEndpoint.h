@@ -24,7 +24,7 @@
 //CoRE4INET
 #include <core4inet/services/avb/SRP/SRPTable.h>
 
-namespace soqosmw {
+namespace SOQoSMW {
 /**
  * @brief The AVBSubscriberEndpoint is a subscriber endpoint module with RT qos (@see~EndpointBase).
  * It realizes an AVB specific subscriber endpoint.
@@ -112,6 +112,6 @@ public:
     uint16_t _vlanID;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

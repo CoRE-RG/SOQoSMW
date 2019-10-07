@@ -29,7 +29,7 @@ import soqosmw.connector.base.ConnectorBase;
 simple SubscriberConnector extends ConnectorBase
 {
     parameters:
-        @class(soqosmw::SubscriberConnector);
+        @class(SOQoSMW::SubscriberConnector);
         // maximum number of appilcations allowed to connect to this connector.
         // -1 = infinite
         maxApplications = default(-1);

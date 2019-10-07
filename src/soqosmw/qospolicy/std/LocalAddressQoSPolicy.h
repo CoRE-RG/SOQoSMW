@@ -22,7 +22,7 @@
 
 #include <string>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 namespace QoSPolicyNames {
 
@@ -50,6 +50,6 @@ public:
     }
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_STD_LOCALADDRESSQOSPOLICY_H_ */

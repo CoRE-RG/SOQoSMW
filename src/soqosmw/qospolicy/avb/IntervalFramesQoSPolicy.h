@@ -20,7 +20,7 @@
 
 #include "soqosmw/qospolicy/base/types/UInt16QoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 namespace QoSPolicyNames {
 
@@ -45,6 +45,6 @@ public:
     }
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_AVB_INTERVALFRAMESQOSPOLICY_H_ */

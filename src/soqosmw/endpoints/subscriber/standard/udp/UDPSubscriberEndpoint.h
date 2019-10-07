@@ -23,7 +23,7 @@
 //INET
 #include <inet/transportlayer/contract/udp/UDPSocket.h>
 
-namespace soqosmw {
+namespace SOQoSMW {
 /**
  * @brief The UDPSubscriberEndpoint is a subscriber endpoint module with STD qos (@see~EndpointBase).
  * It realizes an UDP specific subscriber endpoint.
@@ -76,6 +76,6 @@ protected:
     int _localPort;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

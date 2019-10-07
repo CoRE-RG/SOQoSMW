@@ -32,7 +32,7 @@ import soqosmw.endpoints.subscriber.standard.base.STDSubscriberEndpointBase;
 simple TCPSubscriberEndpoint extends STDSubscriberEndpointBase
 {
     parameters:
-        @class(soqosmw::TCPSubscriberEndpoint);
+        @class(SOQoSMW::TCPSubscriberEndpoint);
     	qos = "STD_TCP"; // invalid...
     
         // Local IP address for TCP socket

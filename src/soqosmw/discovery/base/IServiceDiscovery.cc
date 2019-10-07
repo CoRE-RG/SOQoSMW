@@ -17,6 +17,6 @@
 
 #include "IServiceDiscovery.h"
 
-namespace soqosmw{
+namespace SOQoSMW{
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

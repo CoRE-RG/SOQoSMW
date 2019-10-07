@@ -20,7 +20,7 @@
 
 #include <string>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The interface for the QoSPolicy.

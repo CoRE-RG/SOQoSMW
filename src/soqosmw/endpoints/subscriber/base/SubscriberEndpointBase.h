@@ -20,7 +20,7 @@
 
 #include "soqosmw/endpoints/base/EndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The SubscriberEndpointBase implements the common interface for all endpoint modules (@see~EndpointBase).
@@ -62,6 +62,6 @@ private:
 
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

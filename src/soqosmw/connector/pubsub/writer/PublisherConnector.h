@@ -20,7 +20,7 @@
 
 #include "soqosmw/connector/base/ConnectorBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The PublisherConnector implements the common interface for all connctor modules @see~ConnectorBase.
@@ -35,6 +35,6 @@ class PublisherConnector : public ConnectorBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

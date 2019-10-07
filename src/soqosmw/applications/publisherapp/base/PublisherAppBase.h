@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_PUBLISHERAPP_H_
+#ifndef __SOQOSMW_APPLICATIONS_PUBLISHERAPP_BASE_PUBLISHERAPP_H_
+#define __SOQOSMW_APPLICATIONS_PUBLISHERAPP_BASE_PUBLISHERAPP_H_
 
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include "soqosmw/qospolicy/base/qospolicy.h"
@@ -27,13 +27,13 @@
 #include <string>
 #include <unordered_map>
 
-namespace soqosmw {
+namespace SOQoSMW {
 class PublisherWriter;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define START_MSG_NAME "Start Message"
 #define SEND_MSG_NAME "Send Message"
@@ -149,6 +149,6 @@ private:
     simsignal_t _sigPayload;
 };
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */
 
 #endif

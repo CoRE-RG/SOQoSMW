@@ -15,14 +15,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_GWSINKAPPBASE_H_
+#ifndef __SOQOSMW_APPLICATIONS_SUBSCRIBERAPP_GATEWAY_GWSINKAPPBASE_H_
+#define __SOQOSMW_APPLICATIONS_SUBSCRIBERAPP_GATEWAY_GWSINKAPPBASE_H_
 
 #include "soqosmw/applications/subscriberapp/base/SubscriberAppBase.h"
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief Base class for a soqosmw publisher application.
@@ -57,6 +57,6 @@ public:
 private:
 };
 
-}/* end namespace soqosmw */
+}/* end namespace SOQoSMW */
 
 #endif

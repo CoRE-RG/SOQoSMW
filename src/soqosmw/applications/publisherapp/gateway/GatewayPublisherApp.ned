@@ -28,7 +28,7 @@ import soqosmw.applications.publisherapp.base.PublisherAppBase;
 simple GatewayPublisherApp extends PublisherAppBase
 {
     parameters:
-        @class(soqosmw::GatewayPublisherApp);
+        @class(SOQoSMW::GatewayPublisherApp);
                 
         //The CAN Data Frame ID(s) - String parameter (int) separated with commas
         string canIds = default("");		

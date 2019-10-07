@@ -32,7 +32,7 @@ import soqosmw.endpoints.publisher.standard.base.STDPublisherEndpointBase;
 simple UDPPublisherEndpoint extends STDPublisherEndpointBase
 {
     parameters:
-        @class(soqosmw::UDPPublisherEndpoint);
+        @class(SOQoSMW::UDPPublisherEndpoint);
     	qos = "STD_UDP";
     
         // Local ip address for TCP socket

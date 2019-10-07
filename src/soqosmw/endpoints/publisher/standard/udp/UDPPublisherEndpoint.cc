@@ -25,7 +25,7 @@
 using namespace inet;
 using namespace std;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(UDPPublisherEndpoint);
 
@@ -110,4 +110,4 @@ void UDPPublisherEndpoint::publish(cPacket* msg) {
 }
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_SUBSCRIBERAPPBASE_H_
+#ifndef __SOQOSMW_APPLICATIONS_SUBSCRIBERAPP_BASE_SUBSCRIBERAPPBASE_H_
+#define __SOQOSMW_APPLICATIONS_SUBSCRIBERAPP_BASE_SUBSCRIBERAPPBASE_H_
 
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 #include "soqosmw/qospolicy/base/qospolicy.h"
@@ -24,13 +24,13 @@
 #include <string>
 #include <unordered_map>
 
-namespace soqosmw {
+namespace SOQoSMW {
 class QoSGroup;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
-namespace soqosmw {
+namespace SOQoSMW {
 class SubscriptionReader;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 namespace omnetpp {
 class cMessage;
@@ -38,7 +38,7 @@ class cMessage;
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief Base class for a soqosmw subscriber application
@@ -104,6 +104,6 @@ private:
     void setQoS();
 };
 
-}/* end namespace soqosmw */
+}/* end namespace SOQoSMW */
 
 #endif

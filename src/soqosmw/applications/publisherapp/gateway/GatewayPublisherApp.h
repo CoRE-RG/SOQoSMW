@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_GWSOURCEAPPBASE_H_
+#ifndef __SOQOSMW_APPLICATIONS_PUBLISHERAPP_GATEWAY_GWSOURCEAPPBASE_H_
+#define __SOQOSMW_APPLICATIONS_PUBLISHERAPP_GATEWAY_GWSOURCEAPPBASE_H_
 
 #include "soqosmw/applications/publisherapp/base/PublisherAppBase.h"
 //STD
@@ -24,7 +24,7 @@
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define NO_OF_INIT_STAGES 15
 
@@ -78,6 +78,6 @@ protected:
 private:
 };
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */
 
 #endif

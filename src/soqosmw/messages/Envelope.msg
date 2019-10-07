@@ -31,7 +31,7 @@ cplusplus {{
 
 class noncobject EndpointDescription;
 
-namespace soqosmw;
+namespace SOQoSMW;
 
 enum SOQoSMWProtocols {
     QOSNEGOTIATIONPROTOCOL = 0;

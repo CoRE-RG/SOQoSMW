@@ -27,7 +27,7 @@
 #include <core4inet/base/avb/AVBDefs.h>
 #include <core4inet/services/avb/SRP/SRPTable.h>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The AVBPublisherEndpoint is a publisher endpoint module with RT qos (@see~EndpointBase).
@@ -114,6 +114,6 @@ protected:
     size_t _frameSize;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

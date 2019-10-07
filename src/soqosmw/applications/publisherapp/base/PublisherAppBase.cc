@@ -34,7 +34,7 @@ using namespace inet;
 using namespace CoRE4INET;
 using namespace std;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(PublisherAppBase);
 
@@ -206,4 +206,4 @@ void PublisherAppBase::printQoS() {
 
 }
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */

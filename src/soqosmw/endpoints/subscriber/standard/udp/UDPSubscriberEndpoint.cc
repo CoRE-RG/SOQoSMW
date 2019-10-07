@@ -24,7 +24,7 @@
 
 using namespace inet;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(UDPSubscriberEndpoint);
 
@@ -73,4 +73,4 @@ void UDPSubscriberEndpoint::handleParameterChange(const char* parname) {
     }
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

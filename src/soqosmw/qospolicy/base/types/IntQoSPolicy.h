@@ -20,7 +20,7 @@
 
 #include "soqosmw/qospolicy/base/IQoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The IntQoSPolicy.
@@ -51,6 +51,6 @@ private:
     const int _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_TYPES_INTQOSPOLICY_H_ */

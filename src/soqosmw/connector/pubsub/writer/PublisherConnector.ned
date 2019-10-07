@@ -29,7 +29,7 @@ import soqosmw.connector.base.ConnectorBase;
 simple PublisherConnector extends ConnectorBase
 {
     parameters:
-        @class(soqosmw::PublisherConnector);
+        @class(SOQoSMW::PublisherConnector);
         // maximum number of appilcations allowed to connect to this connector.
         // -1 = infinite
         maxApplications = default(1);

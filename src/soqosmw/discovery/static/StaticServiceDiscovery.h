@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERY_H_
+#ifndef __SOQOSMW_DISCOVERY_STATIC_STATICSERVICEDISCOVERY_H_
+#define __SOQOSMW_DISCOVERY_STATIC_STATICSERVICEDISCOVERY_H_
 
 //SOQOSMW
 #include "soqosmw/discovery/base/IServiceDiscovery.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define NO_OF_INIT_STAGES 15
 #define MY_INIT_STAGE 13
@@ -76,6 +76,6 @@ private:
     std::unordered_map<std::string, inet::L3Address> _registry;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

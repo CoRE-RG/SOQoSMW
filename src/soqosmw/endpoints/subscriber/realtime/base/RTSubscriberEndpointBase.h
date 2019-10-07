@@ -20,7 +20,7 @@
 
 #include "soqosmw/endpoints/subscriber/base/SubscriberEndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The RTSubscriberEndpointBase is a subscriber endpoint module with RT qos (@see~EndpointBase).
@@ -37,6 +37,6 @@ class RTSubscriberEndpointBase : public SubscriberEndpointBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

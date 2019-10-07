@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_LOCALSERVICEMANAGER_H_
+#ifndef __SOQOSMW_SERVICEMANAGER_LOCALSERVICEMANAGER_H_
+#define __SOQOSMW_SERVICEMANAGER_LOCALSERVICEMANAGER_H_
 
 #include <omnetpp.h>
 
@@ -42,7 +42,7 @@
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define NO_OF_INIT_STAGES 15
 

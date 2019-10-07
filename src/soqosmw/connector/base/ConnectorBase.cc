@@ -24,7 +24,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 void ConnectorBase::initialize()
 {
@@ -186,4 +186,4 @@ void ConnectorBase::finish(){
     }
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

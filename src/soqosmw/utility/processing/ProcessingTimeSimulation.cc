@@ -18,7 +18,7 @@
 #include "ProcessingTimeSimulation.h"
 
 
-namespace soqosmw{
+namespace SOQoSMW{
 
 #define MSGKIND_SERVICETIME     3
 
@@ -87,4 +87,4 @@ void ProcessingTimeSimulation::simulateProcessingTime(cMessage* msg) {
     emit(_queueSize, _msgList.size());
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

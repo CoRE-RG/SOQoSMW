@@ -24,15 +24,15 @@
 #include <string>
 #include <unordered_map>
 
-namespace soqosmw {
+namespace SOQoSMW {
 class SOQoSMWApplicationBase;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 namespace omnetpp {
 class cGate;
 } /* namespace omnetpp */
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 enum RequestStatus {
     CREATED,
@@ -103,6 +103,6 @@ private:
     RequestStatus _status;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSMANAGEMENT_NEGOTIATION_DATATYPES_REQUEST_H_ */

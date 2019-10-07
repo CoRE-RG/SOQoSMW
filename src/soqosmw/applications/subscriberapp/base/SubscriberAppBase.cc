@@ -31,7 +31,7 @@
 #include <iostream>
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 using namespace std;
 using namespace CoRE4INET;
 
@@ -125,4 +125,4 @@ void SubscriberAppBase::handleParameterChange(const char* parname)
 
 }
 
-}/* end namespace soqosmw */
+}/* end namespace SOQoSMW */

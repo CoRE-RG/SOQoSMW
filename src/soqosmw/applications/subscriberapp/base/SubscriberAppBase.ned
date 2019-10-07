@@ -28,7 +28,7 @@ import soqosmw.applications.base.SOQoSMWApplicationBase;
 simple SubscriberAppBase extends SOQoSMWApplicationBase
 {
     parameters:
-        @class(soqosmw::SubscriberAppBase);
+        @class(SOQoSMW::SubscriberAppBase);
         @display("i=block/sink,blue");
         
         //Signal emitted when a frame is received, contains received EtherFrame

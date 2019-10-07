@@ -20,7 +20,7 @@
 
 #include "soqosmw/endpoints/publisher/base/PublisherEndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The STDPublisherEndpointBase is a publisher endpoint module with STD qos (@see~EndpointBase).
@@ -37,6 +37,6 @@ class STDPublisherEndpointBase : public PublisherEndpointBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

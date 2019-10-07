@@ -32,7 +32,7 @@ import soqosmw.endpoints.subscriber.realtime.base.RTSubscriberEndpointBase;
 simple AVBSubscriberEndpoint extends RTSubscriberEndpointBase
 {
     parameters:
-        @class(soqosmw::AVBSubscriberEndpoint);
+        @class(SOQoSMW::AVBSubscriberEndpoint);
         
         //Interval in which a subscription is updated
         double updateInterval @unit("s") = default(6s);

@@ -28,7 +28,7 @@ import soqosmw.discovery.base.IServiceDiscovery;
 simple StaticServiceDiscovery like IServiceDiscovery
 {
     parameters:
-        @class(soqosmw::StaticServiceDiscovery);
+        @class(SOQoSMW::StaticServiceDiscovery);
         //this parameter holds the information of all services in the network,
         //so each node knows where the services are located.
         //Style:

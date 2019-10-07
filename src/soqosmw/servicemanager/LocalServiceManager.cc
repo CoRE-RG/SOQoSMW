@@ -35,7 +35,7 @@ using namespace std;
 using namespace inet;
 using namespace CoRE4INET;
 
-namespace soqosmw {
+namespace SOQoSMW {
 #define LSM_INIT_STAGE_1 1
 #define LSM_INIT_STAGE 14
 

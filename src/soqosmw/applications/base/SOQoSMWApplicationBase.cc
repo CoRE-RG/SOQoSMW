@@ -21,7 +21,7 @@
 
 #include <cstring>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 SOQoSMWApplicationBase::~SOQoSMWApplicationBase()
 {
@@ -75,4 +75,4 @@ void SOQoSMWApplicationBase::handleParameterChange(const char* parname) {
     }
 }
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */

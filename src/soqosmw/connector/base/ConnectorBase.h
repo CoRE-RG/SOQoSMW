@@ -22,14 +22,14 @@
 #include <mutex>
 #include "soqosmw/qospolicy/base/qospolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 class SOQoSMWApplicationBase;
 class EndpointBase;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define PROCESSINGDELAY_MSG_NAME "Processing Delay"
 
@@ -202,6 +202,6 @@ private:
     static const char ENDPOINT_OUT_GATE_NAME []; //= "connectorIn";
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

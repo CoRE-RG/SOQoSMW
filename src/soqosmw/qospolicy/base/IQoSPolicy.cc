@@ -17,7 +17,7 @@
 
 #include "soqosmw/qospolicy/base/IQoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 IQoSPolicy::IQoSPolicy(){
 }

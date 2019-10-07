@@ -18,7 +18,7 @@
 #include "soqosmw/qospolicy/base/qospolicy.h"
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 bool equalQoSMap(QoSPolicyMap& left, QoSPolicyMap& right){
     if(left.size() == right.size()){

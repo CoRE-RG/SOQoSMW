@@ -20,7 +20,7 @@
 
 #include "soqosmw/connector/base/ConnectorBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The SubscriptionConnector implements the common interface for all connector modules @see~ConnectorBase.
@@ -36,6 +36,6 @@ class SubscriberConnector : public ConnectorBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

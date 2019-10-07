@@ -23,7 +23,7 @@
 #include <vector>
 
 
-namespace soqosmw{
+namespace SOQoSMW{
 
 using namespace std;
 
@@ -75,4 +75,4 @@ void StaticServiceDiscovery::handleMessage(cMessage *msg)
     // TODO - Generated method body
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

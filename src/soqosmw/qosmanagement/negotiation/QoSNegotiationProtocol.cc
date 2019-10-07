@@ -28,7 +28,7 @@
 #include <iostream>
 #include <iterator>
 
-namespace soqosmw {
+namespace SOQoSMW {
 using namespace std;
 using namespace inet;
 #define QOSNP_INIT_STAGE 14
@@ -79,11 +79,11 @@ void QoSNegotiationProtocol::processScheduledMessage(cMessage* msg) {
 
     } else {
 
-        if (auto as_envelope = dynamic_cast<soqosmw::Envelope*>(msg)) {
+        if (auto as_envelope = dynamic_cast<SOQoSMW::Envelope*>(msg)) {
             emit(_rxPkSignal, as_envelope);
-            //is in soqosmw::Envelope --> check other types
+            //is in SOQoSMW::Envelope --> check other types
             if (auto as_negotiation =
-                    dynamic_cast<soqosmw::QoSNegotiationProtocolMsg*>(as_envelope)) {
+                    dynamic_cast<SOQoSMW::QoSNegotiationProtocolMsg*>(as_envelope)) {
 
                 //let the right broker handle the message.
                 bool handled = false;
@@ -126,12 +126,12 @@ void QoSNegotiationProtocol::processScheduledMessage(cMessage* msg) {
 
             } else {
                 EV_WARN << "QoSNegotiationProtocol:" << " --> message received"
-                               << " --> not of type soqosmw::QoSNegotiationProtocolMsg --> ignore it!"
+                               << " --> not of type SOQoSMW::QoSNegotiationProtocolMsg --> ignore it!"
                                << endl;
             }
         } else {
             EV_WARN << "QoSNegotiationProtocol:" << " --> message received"
-                           << " --> not in soqosmw::Envelope --> ignore it!"
+                           << " --> not in SOQoSMW::Envelope --> ignore it!"
                            << endl;
         }
     }
@@ -185,4 +185,4 @@ void QoSNegotiationProtocol::createQoSBroker(Request* request) {
 }
 
 }
-/* namespace soqosmw */
+/* namespace SOQoSMW */

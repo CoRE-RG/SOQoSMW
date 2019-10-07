@@ -15,15 +15,15 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERYTEST_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_STATICSERVICEDISCOVERYTEST_H_
+#ifndef __SOQOSMW_TEST_DISCOVERY_STATIC_STATICSERVICEDISCOVERYTEST_H_
+#define __SOQOSMW_TEST_DISCOVERY_STATIC_STATICSERVICEDISCOVERYTEST_H_
 
 #include <omnetpp.h>
 #include <soqosmw/discovery/static/StaticServiceDiscovery.h>
 
 using namespace omnetpp;
 
-namespace soqosmw{
+namespace SOQoSMW{
 
 /**
  * @brief The StaticServiceDiscoveryTest.
@@ -42,6 +42,6 @@ class StaticServiceDiscoveryTest : public cSimpleModule
     StaticServiceDiscovery* _sd;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

@@ -20,7 +20,7 @@
 
 #include "soqosmw/endpoints/subscriber/base/SubscriberEndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The STDSubscriberEndpointBase is a subscriber endpoint module with STD qos (@see~EndpointBase).
@@ -37,6 +37,6 @@ class STDSubscriberEndpointBase : public SubscriberEndpointBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

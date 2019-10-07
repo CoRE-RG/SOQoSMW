@@ -25,7 +25,7 @@
 
 using namespace inet;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(TCPSubscriberEndpoint);
 
@@ -96,4 +96,4 @@ void TCPSubscriberEndpoint::handleParameterChange(const char* parname) {
 }
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

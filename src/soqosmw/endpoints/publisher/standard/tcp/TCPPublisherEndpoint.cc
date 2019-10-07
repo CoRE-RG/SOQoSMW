@@ -24,7 +24,7 @@
 
 using namespace inet;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(TCPPublisherEndpoint);
 
@@ -121,4 +121,4 @@ void TCPPublisherEndpoint::publish(cPacket* msg) {
     }
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

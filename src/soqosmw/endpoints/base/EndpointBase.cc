@@ -17,7 +17,7 @@
 
 #include "EndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 //Gate names
 const char EndpointBase::CONNECTOR_OUT_GATE_NAME[] = "endpointIn";
@@ -77,4 +77,4 @@ void EndpointBase::handleParameterChange(const char* parname) {
 }
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

@@ -22,7 +22,7 @@
 
 #include <string>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The StringQoSPolicy.
@@ -56,6 +56,6 @@ private:
     const std::string _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_TYPES_STRINGQOSPOLICY_H_ */

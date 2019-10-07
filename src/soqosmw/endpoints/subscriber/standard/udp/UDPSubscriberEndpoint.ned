@@ -32,7 +32,7 @@ import soqosmw.endpoints.subscriber.standard.base.STDSubscriberEndpointBase;
 simple UDPSubscriberEndpoint extends STDSubscriberEndpointBase
 {
     parameters:
-        @class(soqosmw::UDPSubscriberEndpoint);
+        @class(SOQoSMW::UDPSubscriberEndpoint);
     	qos = "STD_UDP"; // invalid...
     
         // Local IP address for TCP socket

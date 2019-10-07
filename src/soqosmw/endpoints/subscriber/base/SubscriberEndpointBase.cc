@@ -18,22 +18,22 @@
 #include "SubscriberEndpointBase.h"
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
-void soqosmw::SubscriberEndpointBase::initialize(){
+void SOQoSMW::SubscriberEndpointBase::initialize(){
     this->_msgRecv = registerSignal("msgRecv");
     EndpointBase::initialize();
 }
 
-void soqosmw::SubscriberEndpointBase::handleTransportIn(cMessage* msg) {
+void SOQoSMW::SubscriberEndpointBase::handleTransportIn(cMessage* msg) {
     sendDirect(msg, _connector->gate(CONNECTOR_OUT_GATE_NAME));
     emit(this->_msgRecv, msg);
 }
 
-void soqosmw::SubscriberEndpointBase::handleConnectorIn(cMessage* msg) {
+void SOQoSMW::SubscriberEndpointBase::handleConnectorIn(cMessage* msg) {
     //ignore messages from connector ... shouldnt actually be called..
     throw cRuntimeError("Received a message from connector, this should not happen...");
 }

@@ -17,9 +17,9 @@
 
 #include "PublisherConnector.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(PublisherConnector);
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

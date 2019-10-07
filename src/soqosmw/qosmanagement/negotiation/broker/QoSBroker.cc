@@ -33,7 +33,7 @@
 #include <unordered_map>
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 using namespace inet;
 using namespace std;
 
@@ -65,19 +65,19 @@ bool QoSBroker::handleMessage(QoSNegotiationProtocolMsg *msg) {
             switch (msg->getMessageType()) {
             case QoSNegotiationMsgType::QoS_Request:
                 handled = handleRequest(
-                        dynamic_cast<soqosmw::QoSNegotiationRequest*>(msg));
+                        dynamic_cast<SOQoSMW::QoSNegotiationRequest*>(msg));
                 break;
             case QoSNegotiationMsgType::QoS_Response:
                 handled = handleResponse(
-                        dynamic_cast<soqosmw::QoSNegotiationResponse*>(msg));
+                        dynamic_cast<SOQoSMW::QoSNegotiationResponse*>(msg));
                 break;
             case QoSNegotiationMsgType::QoS_Establish:
                 handled = handleEstablish(
-                        dynamic_cast<soqosmw::QoSNegotiationEstablish*>(msg));
+                        dynamic_cast<SOQoSMW::QoSNegotiationEstablish*>(msg));
                 break;
             case QoSNegotiationMsgType::QoS_Finalise:
                 handled = handleFinalise(
-                        dynamic_cast<soqosmw::QoSNegotiationFinalise*>(msg));
+                        dynamic_cast<SOQoSMW::QoSNegotiationFinalise*>(msg));
                 break;
             default:
                 EV_ERROR << "QoSBroker:" << " --> message received"
@@ -320,7 +320,7 @@ bool QoSBroker::handleFinalise(QoSNegotiationFinalise* finalise) {
                 _request->setStatus(RequestStatus::FINALISED_SUCCESS);
 
                 // get connection specific information
-                ConnectionSpecificInformation* info = dynamic_cast<soqosmw::ConnectionSpecificInformation*>(finalise->decapsulate());
+                ConnectionSpecificInformation* info = dynamic_cast<SOQoSMW::ConnectionSpecificInformation*>(finalise->decapsulate());
                 if(info){
 
                     // do not create another udp subscriber!
@@ -369,7 +369,7 @@ bool QoSBroker::isEstablishAcceptable(QoSNegotiationEstablish* establish) {
     return true;
 }
 
-void QoSBroker::fillEnvelope(soqosmw::Envelope* envelope) {
+void QoSBroker::fillEnvelope(SOQoSMW::Envelope* envelope) {
     // set receiver
     EndpointDescription receiver(_remote);
     envelope->setReceiver(receiver);
@@ -449,4 +449,4 @@ size_t QoSBroker::getNegotiationMessageSize(QoSNegotiationProtocolMsg* msg) {
     return result;
 }
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */

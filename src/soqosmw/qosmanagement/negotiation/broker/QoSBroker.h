@@ -15,36 +15,36 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_QOSBROKER_H_
+#ifndef __SOQOSMW_QOSMANAGEMENT_NEGOTIATION_BROKER_QOSBROKER_H_
+#define __SOQOSMW_QOSMANAGEMENT_NEGOTIATION_BROKER_QOSBROKER_H_
 
 #include "soqosmw/base/EndpointDescription.h"
 #include <string>
 
-namespace soqosmw {
+namespace SOQoSMW {
 class LocalServiceManager;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
-namespace soqosmw {
+namespace SOQoSMW {
 class Request;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 namespace inet {
 class UDPSocket;
 } /* namespace inet */
 
-namespace soqosmw {
+namespace SOQoSMW {
 class Envelope;
 class QoSNegotiationEstablish;
 class QoSNegotiationFinalise;
 class QoSNegotiationProtocolMsg;
 class QoSNegotiationRequest;
 class QoSNegotiationResponse;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief QoSBroker handles the negotiation for a connection.
@@ -238,6 +238,6 @@ private:
     simtime_t _finishTimestamp;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif

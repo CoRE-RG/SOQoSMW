@@ -22,7 +22,7 @@
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief Schedules Processing for incoming messages two for a later time slot.
@@ -88,6 +88,6 @@ protected:
     simsignal_t _waitingTime;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

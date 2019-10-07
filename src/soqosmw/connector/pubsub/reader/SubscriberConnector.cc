@@ -17,8 +17,8 @@
 
 #include "soqosmw/connector/pubsub/reader/SubscriberConnector.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(SubscriberConnector);
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

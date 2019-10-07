@@ -20,7 +20,7 @@
 
 #include "soqosmw/qospolicy/base/IQoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The DoubleQoSPolicy.
@@ -48,6 +48,6 @@ private:
     const double _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_TYPES_DOUBLEQOSPOLICY_H_ */

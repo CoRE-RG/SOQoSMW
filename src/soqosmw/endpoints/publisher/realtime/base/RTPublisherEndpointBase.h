@@ -20,7 +20,7 @@
 
 #include "soqosmw/endpoints/publisher/base/PublisherEndpointBase.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The RTPublisherEndpointBase is a publisher endpoint module with RT qos (@see~EndpointBase).
@@ -37,6 +37,6 @@ class RTPublisherEndpointBase : public PublisherEndpointBase
 {
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

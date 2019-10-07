@@ -29,7 +29,7 @@
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The EndpointBase provides a common interface for all endpoint modules.
@@ -154,6 +154,6 @@ private:
     static const char TRANSPORT_OUT_GATE_NAME []; //= "transportOut";
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

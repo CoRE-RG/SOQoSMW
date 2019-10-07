@@ -28,6 +28,6 @@ import soqosmw.applications.subscriberapp.base.SubscriberAppBase;
 simple GatewaySubscriberApp extends SubscriberAppBase
 {
     parameters:
-        @class(soqosmw::GatewaySubscriberApp);
+        @class(SOQoSMW::GatewaySubscriberApp);
         
 }

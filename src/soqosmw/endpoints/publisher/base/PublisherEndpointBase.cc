@@ -18,7 +18,7 @@
 #include "PublisherEndpointBase.h"
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 void PublisherEndpointBase::initialize() {
     this->_msgSent = registerSignal("msgSent");
@@ -47,4 +47,4 @@ void PublisherEndpointBase::handleConnectorIn(cMessage* msg) {
 
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

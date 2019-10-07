@@ -29,13 +29,13 @@ import inet.applications.contract.IUDPApp;
 simple QoSNegotiationProtocol extends ProcessingTimeSimulation like IUDPApp
 {
     parameters:
-        @class(soqosmw::QoSNegotiationProtocol);
+        @class(SOQoSMW::QoSNegotiationProtocol);
 
         @signal[qosNt](type=simtime_t);
         @statistic[NegotiationTime](title="QosNegotiation Time"; source="qosNt"; record=vector; interpolationmode=none);
 
         //Signal emitted when a frame is received, contains received QoSNP-Message
-        @signal[rxPk](type=soqosmw::Envelope);
+        @signal[rxPk](type=SOQoSMW::Envelope);
         //Statistic of the amount of packets that were received by the application
         @statistic[rxPk](title="Received Packets"; source=rxPk; record=count; unit=packets);
         //Statistic of the amount of bytes that were received by the application

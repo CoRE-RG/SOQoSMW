@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_QoSNegotiationProtocol_H_
+#ifndef __SOQOSMW_QOSMANAGEMENT_NEGOTIATION_QoSNegotiationProtocol_H_
+#define __SOQOSMW_QOSMANAGEMENT_NEGOTIATION_QoSNegotiationProtocol_H_
 
 #include "soqosmw/qosmanagement/negotiation/broker/QoSBroker.h"
 #include "soqosmw/utility/processing/ProcessingTimeSimulation.h"
@@ -26,7 +26,7 @@
 //STD
 #include <vector>
 
-namespace soqosmw {
+namespace SOQoSMW {
 class Request;
 class Envelope;
 class QoSBroker;
@@ -34,11 +34,11 @@ class QoSNegotiationEstablish;
 class QoSNegotiationFinalise;
 class QoSNegotiationRequest;
 class QoSNegotiationResponse;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 #define NO_OF_INIT_STAGES 15
 
@@ -132,6 +132,6 @@ private:
     simsignal_t _rxPkSignal;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif

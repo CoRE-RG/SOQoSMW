@@ -23,7 +23,7 @@
 // @author Timo Haeckel and Mehmet Cakir for HAW Hamburg
 //
  
-namespace soqosmw;
+namespace SOQoSMW;
 
 //Type of ConenctionSpecificInformation
 enum ConnectionType{

@@ -29,7 +29,7 @@
 #include <inet/networklayer/common/L3Address.h>
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The UDPPublisherEndpoint is a publisher endpoint module with STD qos (@see~EndpointBase).
@@ -103,6 +103,6 @@ protected:
     std::vector<std::pair<inet::L3Address, int>> _remotes;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

@@ -23,7 +23,7 @@
 //INET
 #include <inet/transportlayer/contract/tcp/TCPSocket.h>
 
-namespace soqosmw {
+namespace SOQoSMW {
 /**
  * @brief The TCPSubscriberEndpoint is a subscriber endpoint module with STD qos (@see~EndpointBase).
  * It realizes an TCP specific subscriber endpoint.
@@ -94,6 +94,6 @@ protected:
     int _remotePort;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

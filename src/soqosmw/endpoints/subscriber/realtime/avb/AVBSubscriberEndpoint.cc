@@ -28,7 +28,7 @@
 using namespace std;
 using namespace CoRE4INET;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(AVBSubscriberEndpoint);
 
@@ -180,4 +180,4 @@ void AVBSubscriberEndpoint::scheduleUpdateMessage(SimTime at) {
     scheduleAt(at, _updateMessage);
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

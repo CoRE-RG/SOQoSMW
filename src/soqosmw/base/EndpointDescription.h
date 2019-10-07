@@ -22,7 +22,7 @@
 
 #include <inet/networklayer/common/L3Address.h>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief This class describes an Endpoint for soqosmw messages.
@@ -111,6 +111,6 @@ private:
     int _networkPort;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_BASE_ENDPOINTDESCRIPTION_H_ */

@@ -28,7 +28,7 @@
 #include "inet/linklayer/ethernet/EtherFrame_m.h"
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 using namespace std;
 using namespace SignalsAndGateways;
 using namespace CoRE4INET;
@@ -71,4 +71,4 @@ void GatewaySubscriberApp::handleMessage(cMessage* msg) {
     SubscriberAppBase::handleMessage(msg);
 }
 
-}/* end namespace soqosmw */
+}/* end namespace SOQoSMW */

@@ -18,7 +18,7 @@
 #include "StaticServiceDiscoveryTest.h"
 #include <string>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(StaticServiceDiscoveryTest);
 
@@ -41,4 +41,4 @@ void StaticServiceDiscoveryTest::handleMessage(cMessage *msg) {
     }
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

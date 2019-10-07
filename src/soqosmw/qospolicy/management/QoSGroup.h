@@ -22,7 +22,7 @@
 
 #include "soqosmw/messages/QoSNegotiationProtocol/QoSNegotiationProtocol_m.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 namespace QoSPolicyNames {
 
@@ -60,6 +60,6 @@ private:
     const QoSGroups _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_MANAGEMENT_QOSGROUP_H_ */

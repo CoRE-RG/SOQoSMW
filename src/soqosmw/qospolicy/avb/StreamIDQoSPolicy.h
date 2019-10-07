@@ -20,7 +20,7 @@
 
 #include "soqosmw/qospolicy/base/types/IntQoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 namespace QoSPolicyNames {
 
 const std::string StreamID = "StreamID"; //integer ID
@@ -44,6 +44,6 @@ public:
     }
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_PUBLISHER_AVB_STREAMIDQOSPOLICY_H_ */

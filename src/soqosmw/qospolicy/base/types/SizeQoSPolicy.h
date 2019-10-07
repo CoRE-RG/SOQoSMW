@@ -20,7 +20,7 @@
 
 #include "soqosmw/qospolicy/base/IQoSPolicy.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The SizeQoSPolicy.
@@ -50,6 +50,6 @@ private:
     const size_t _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_TYPES_SIZEQOSPOLICY_H_ */

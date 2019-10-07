@@ -15,8 +15,8 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_SOQOSMWAPPLICATIONBASE_H_
+#ifndef __SOQOSMW_APPLICATIONS_BASE_SOQOSMWAPPLICATIONBASE_H_
+#define __SOQOSMW_APPLICATIONS_BASE_SOQOSMWAPPLICATIONBASE_H_
 
 #include <omnetpp.h>
 #include <string>
@@ -24,14 +24,14 @@
 /**
  * forward declarations
  */
-namespace soqosmw {
+namespace SOQoSMW {
 class ConnectorBase;
 class LocalServiceManager;
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 class LocalServiceManager;
 
 /**
@@ -107,6 +107,6 @@ protected:
     std::string _publisherName;
 };
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */
 
 #endif

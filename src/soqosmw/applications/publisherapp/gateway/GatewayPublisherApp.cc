@@ -22,7 +22,7 @@
 #include "signalsandgateways/gateway/messages/GatewayAggregationMessage.h"
 #include "signalsandgateways/applications/ethernet/EthernetGatewayApplication.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 using namespace inet;
 using namespace CoRE4INET;
 using namespace SignalsAndGateways;
@@ -103,4 +103,4 @@ void GatewayPublisherApp::scheduleNextMessage() {
     //we do not send messages ourself!
 }
 
-} /* end namespace soqosmw */
+} /* end namespace SOQoSMW */

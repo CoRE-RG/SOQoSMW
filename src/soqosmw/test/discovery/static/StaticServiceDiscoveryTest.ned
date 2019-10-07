@@ -26,6 +26,6 @@ simple StaticServiceDiscoveryTest
 {
     
     parameters:
-        @class(soqosmw::StaticServiceDiscoveryTest);
+        @class(SOQoSMW::StaticServiceDiscoveryTest);
    		string sdmoduleName = default("sd");
 }

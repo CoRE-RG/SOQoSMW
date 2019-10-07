@@ -31,7 +31,7 @@
 using namespace CoRE4INET;
 using namespace inet;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 Define_Module(AVBPublisherEndpoint);
 
@@ -185,4 +185,4 @@ void AVBPublisherEndpoint::publish(cPacket* msg) {
     }
 }
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/

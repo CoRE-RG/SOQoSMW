@@ -28,7 +28,7 @@
 #include <inet/transportlayer/contract/tcp/TCPSocketMap.h>
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The AVBPublisherEndpoint is a publisher endpoint module with STD qos (@see~EndpointBase).
@@ -93,6 +93,6 @@ public:
     inet::TCPSocket _serverSocket;
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

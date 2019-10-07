@@ -15,14 +15,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __HAUPTPROJEKT_TIMO_HAECKEL_ISERVICEDISCOVERY_H_
-#define __HAUPTPROJEKT_TIMO_HAECKEL_ISERVICEDISCOVERY_H_
+#ifndef __SOQOSMW_DISCOVERY_BASE_ISERVICEDISCOVERY_H_
+#define __SOQOSMW_DISCOVERY_BASE_ISERVICEDISCOVERY_H_
 
 #include <omnetpp.h>
 
 using namespace omnetpp;
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief Base class for the service discovery module of soqosmw to switch from dynamic to static service discovery.
@@ -37,6 +37,6 @@ protected:
     virtual void handleMessage(cMessage *msg){};
 };
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 
 #endif

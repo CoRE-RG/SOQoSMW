@@ -32,7 +32,7 @@ import soqosmw.endpoints.publisher.realtime.base.RTPublisherEndpointBase;
 simple AVBPublisherEndpoint extends RTPublisherEndpointBase
 {
     parameters:
-        @class(soqosmw::AVBPublisherEndpoint);
+        @class(SOQoSMW::AVBPublisherEndpoint);
 
         // ID of the AVB Stream
         int streamID = default(0);     

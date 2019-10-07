@@ -22,7 +22,7 @@
 
 #include <cstdint>
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 /**
  * @brief The UInt16QoSPolicy.
@@ -53,6 +53,6 @@ private:
     const uint16_t _value;
 };
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 #endif /* SOQOSMW_QOSPOLICY_BASE_TYPES_UINT16QOSPOLICY_H_ */

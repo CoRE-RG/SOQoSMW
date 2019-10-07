@@ -22,9 +22,9 @@
 #include "inet/common/INETDefs.h"
 #include "core4inet/base/CoRE4INET_Defs.h"
 
-namespace soqosmw {
+namespace SOQoSMW {
 
-} /* namespace soqosmw */
+} /* namespace SOQoSMW */
 
 
 #endif /* BASE_QOS_DEFINES_H_ */

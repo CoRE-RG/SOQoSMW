@@ -18,8 +18,8 @@
 #include "STDSubscriberEndpointBase.h"
 
 
-namespace soqosmw {
+namespace SOQoSMW {
 
 
-} /*end namespace soqosmw*/
+} /*end namespace SOQoSMW*/
 

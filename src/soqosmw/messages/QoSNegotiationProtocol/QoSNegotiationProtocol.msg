@@ -27,10 +27,10 @@ cplusplus {{
 #include "soqosmw/messages/Envelope_m.h"
 #include "soqosmw/messages/QoSNegotiationProtocol/ConnectionSpecificInformation_m.h"
 }}
-packet soqosmw::Envelope;
+packet SOQoSMW::Envelope;
 enum SOQoSMWProtocols;
 
-namespace soqosmw;
+namespace SOQoSMW;
 
 //Groups of QoS Requirements
 enum QoSGroups {
@@ -56,7 +56,7 @@ enum QoSNegotiationStatus{
 
 
 //Message type for all Protocol message of the qos negotiation
-packet QoSNegotiationProtocolMsg extends soqosmw::Envelope {
+packet QoSNegotiationProtocolMsg extends SOQoSMW::Envelope {
     protocol = SOQoSMWProtocols::QOSNEGOTIATIONPROTOCOL; //indicates the type of message for better casting.
     //receiver; inherited from Envelope
     //sender; inherited from Envelope  
