@@ -166,7 +166,7 @@ void PublisherAppBase::handleMessage(cMessage *msg) {
 
             //schedule next send event
             scheduleNextMessage();
-            emit(this->_msgSentSignal,msg);
+            emit(this->_msgSentSignal,payloadPacket);
         } else {
             throw cRuntimeError("No Publisher Registered for this app.");
         }
