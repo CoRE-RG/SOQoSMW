@@ -1,5 +1,0 @@
-<services>
-	<service name="ReifendruckPublisher" node="GatewaySource.tte[0]" />
-	<service name="ActiveSafetyGW" node="GatewaySink.tte[0]" />
-	<service name="InfotainmentSystem" node="InfotainmentSystem" />
-</services>
