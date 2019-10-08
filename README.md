@@ -2,9 +2,12 @@
 SOQoSMW (Service-Oriented Quality-of-Service MiddleWare) is an open-source extension for the event-based simulation of service-oriented communication in real-time Ethernet networks in the [OMNEST/OMNeT++](https://omnetpp.org/) simulation system. It is based on the [INET-Framework](https://inet.omnetpp.org/), providing internet technologies, the [CoRE4INET Framework](https://github.com/CoRE-RG/CoRE4INET), providing real-time Ethernet protocols such as AS6802, AVB and TSN, and the SignalsAndGateway framework (https://github.com/CoRE-RG/SignalsAndGateways) providing gateways to legacy bus systems.
 SOQoSMW provides service-oriented middleware components, service applications and service endpoints for avb, tcp and udp. It was created by the [CoRE (Communication over Realtime Ethernet)](https://core-researchgroup.de/) at the [HAW-Hamburg (Hamburg University of Applied Sciences)](https://www.haw-hamburg.de/english.html).
 
+<img src="/doc/images/soqosmw.png" alt="SOQoSMW Environment" width="75%">
 
 ## News
-Model release including service-oriented middleware components, service applications and service endpoints for avb, tcp and udp. 
+* Switch to OMNeT++ 5.5.1 and INET 3.6.6
+* Continuous integration is now enabled.
+* Model release including service-oriented middleware components, service applications and service endpoints for avb, tcp and udp. 
 
 
 ## Quick Start
@@ -29,7 +32,30 @@ Model release including service-oriented middleware components, service applicat
     
 
 ## Continuous Integration
-We are working on it.
+
+The build state of the master branch is monitored:
+* Building:
+<a><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW"></a>
+* Tests:
+<a><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW_tests"></a>
+
+<table>
+  <tr>
+    <th></th>
+    <th>Ubuntu 18.04</th>
+    <th>Windows 10</th>
+  </tr>
+  <tr>
+    <td>Building</td>
+    <td><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW/Nodes=Ubuntu_18.04"></td>
+    <td><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW/Nodes=Windows_10"></td>
+  </tr>
+  <tr>
+    <td>Tests</td>
+    <td><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW_tests/Nodes=Ubuntu_18.04"></td>
+    <td><img src="https://jenkins.core-rg.de/buildStatus/icon?job=SOQoSMW/SOQoSMW_tests/Nodes=Windows_10"></td>
+  </tr>
+</table>
 
 
 ## Further Information
