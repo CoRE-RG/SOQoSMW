@@ -62,6 +62,10 @@ void QoSNegotiationProtocol::initialize(int stage) {
 
 void QoSNegotiationProtocol::processScheduledMessage(cMessage* msg) {
 
+    if (!isSocketBound()) {
+        socketSetup();
+    }
+
     if (msg->isSelfMessage() && msg->getKind() == MSGKIND_CREATEBROKERREQUEST) {
         // extract request from message
         Request* request = (Request*) msg->getContextPointer();
