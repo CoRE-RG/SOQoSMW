@@ -84,7 +84,7 @@ private:
     simtime_t _creationTime;
 
   protected:
-    virtual void initialize();
+    virtual void initialize() override;
 
     /**
      * @brief Indicates a parameter has changed.
