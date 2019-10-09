@@ -38,16 +38,17 @@ using namespace inet;
 Define_Module(QoSNegotiationProtocol);
 
 QoSNegotiationProtocol::QoSNegotiationProtocol() {
+    _socketBound = false;
 }
 
 QoSNegotiationProtocol::~QoSNegotiationProtocol() {
 }
 
 void QoSNegotiationProtocol::initialize(int stage) {
-    this->_qosNt = registerSignal("qosNt");
-    this->_rxPkSignal = registerSignal("rxPk");
 
     if(stage == 1) {
+        this->_qosNt = registerSignal("qosNt");
+        this->_rxPkSignal = registerSignal("rxPk");
         ProcessingTimeSimulation::initialize();
     }
     if (stage == QOSNP_INIT_STAGE) {
@@ -61,10 +62,6 @@ void QoSNegotiationProtocol::initialize(int stage) {
 }
 
 void QoSNegotiationProtocol::processScheduledMessage(cMessage* msg) {
-
-    if (!isSocketBound()) {
-        socketSetup();
-    }
 
     if (msg->isSelfMessage() && msg->getKind() == MSGKIND_CREATEBROKERREQUEST) {
         // extract request from message
