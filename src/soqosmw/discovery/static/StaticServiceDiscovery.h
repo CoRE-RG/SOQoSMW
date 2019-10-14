@@ -67,7 +67,7 @@ protected:
     virtual int numInitStages() const override {
         return NO_OF_INIT_STAGES;
     }
-    virtual void handleMessage(cMessage *msg);
+    virtual void handleMessage(cMessage *msg) override;
 
 private:
     /**

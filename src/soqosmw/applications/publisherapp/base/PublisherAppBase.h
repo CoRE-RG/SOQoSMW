@@ -120,7 +120,7 @@ protected:
     /**
      * Initialization of the module. Sends activator message
      */
-    virtual void initialize();
+    virtual void initialize() override;
 
     /**
      * This method should be called from subclasses unless the module

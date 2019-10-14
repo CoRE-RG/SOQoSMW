@@ -81,11 +81,7 @@ void AVBPublisherEndpoint::handleParameterChange(const char* parname) {
     }
     if (!parname || !strcmp(parname, "streamID"))
     {
-#if LONG_BIT == 32
         this->_streamID = parameterULongCheckRange(par("streamID"), 0, static_cast<unsigned long>(MAX_STREAM_ID));
-#else
-        this->_streamID = parameterULongCheckRange(par("streamID"), 0, MAX_STREAM_ID);
-#endif
     }
     if (!parname || !strcmp(parname, "intervalFrames"))
     {

@@ -103,7 +103,7 @@ protected:
      *
      * @param msg Parameter
      */
-    virtual void handleMessage(cMessage *msg);
+    virtual void handleMessage(cMessage *msg) override;
 
     virtual void handleParameterChange(const char* parname) override;
 

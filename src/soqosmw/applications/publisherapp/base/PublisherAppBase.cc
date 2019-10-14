@@ -122,7 +122,7 @@ void PublisherAppBase::handleParameterChange(const char* parname) {
     }
     if (!parname || !strcmp(parname, "streamID")) {
         this->_streamID = parameterULongCheckRange(par("streamID"), 0,
-                MAX_STREAM_ID);
+                static_cast<unsigned long>(MAX_STREAM_ID));
     }
 }
 
