@@ -2,7 +2,12 @@
 /examples/test_gateway/minimal_net_andl,                                 -f omnetpp.ini -c General -r 0
 /examples/test_pubsub/small_network,                                     -f omnetpp.ini -c General -r 0
 /examples/MinimalEvaluationNetwork/large_network,                        -f omnetpp.ini -c General -r 0
+/examples/MinimalEvaluationNetwork/large_network,                        -f omnetpp.ini -c With_CT -r 0
 /examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c General -r 0
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c AVB     -r 0
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c TCP     -r 0
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c UDP     -r 0
+/examples/MinimalEvaluationNetwork/small_network,                        -f omnetpp.ini -c With_CT -r 0
 /examples/MinimalEvaluationNetwork/small_network_all_ethernet_protocols, -f omnetpp.ini -c General -r 0
 /examples/negotiationTestNetwork/RT,                                     -f omnetpp.ini -c General -r 0
 /examples/negotiationTestNetwork/TCP,                                    -f omnetpp.ini -c General -r 0
