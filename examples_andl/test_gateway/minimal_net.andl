@@ -1,26 +1,42 @@
 types std {
 	ethernetLink ETH_100MBIT {
 		bandwidth 100 Mb/s;
+		length 5m;
 	}
 }
 
 settings {
-	rootPackage "soqosmw";
+	rootPackage "soqosmw.simulations";
 }
 
 network minimal_net {
 	devices { 
-		node Scheinwerfer;
-		node Lichtregulierung;
-		node InfotainmentSystem;
+		node Scheinwerfer {
+			position (69,29);
+		}
+		node Lichtregulierung {
+			position (362,29);
+		}
+		node InfotainmentSystem {
+			position (207,70);
+		}	
 		
-		canLink Licht;
-		canLink Steuerung;
+		canLink Licht {
+			position (69,109);
+		}
+		canLink Steuerung {
+			position (362,109);
+		}
 		
-		gateway GatewayLicht;
-		gateway GatewaySteuerung;
-		
-		switch ethswitch;		
+		gateway GatewayLicht { 
+			position (69,184);
+		}
+		gateway GatewaySteuerung { 
+			position (362,184);
+		}
+		switch ethswitch {
+			position (207,184);
+		}		
 	}
 	
 	connections {

@@ -1,15 +1,13 @@
-package soqosmw.examples.test_gateway.minimal_net_andl;
+package soqosmw.simulations.examples_andl.test_gateway.minimal_net;
 
-import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherHost;
+import core4inet.nodes.ethernet.avb_AS6802.TTEAVBEtherSwitch;
 import core4inet.incoming.AS6802.TTIncoming;
 import core4inet.buffer.AS6802.TTQueueBuffer;
 import core4inet.incoming.AS6802.RCIncoming;
 import core4inet.buffer.AS6802.RCQueueBuffer;
-import soqosmw.nodes.SOQoSMWHost;
 
 
-module InfotainmentSystem extends SOQoSMWHost
-{
+module ethswitch extends TTEAVBEtherSwitch{ 
 	submodules:
 	connections: 
  

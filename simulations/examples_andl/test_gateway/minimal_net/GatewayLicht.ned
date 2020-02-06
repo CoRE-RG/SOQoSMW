@@ -1,4 +1,4 @@
-package soqosmw.examples.test_gateway.minimal_net_andl;
+package soqosmw.simulations.examples_andl.test_gateway.minimal_net;
 
 import signalsandgateways.BusEthernetGateway;
 

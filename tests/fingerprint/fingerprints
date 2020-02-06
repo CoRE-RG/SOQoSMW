@@ -33,13 +33,13 @@ signalsandgatewaysRoot = os.path.abspath("../../../SignalsAndGateways")
 soqosmwRoot = os.path.abspath("../..")
 sep = ";" if sys.platform == 'win32' else ':'
 nedPath = inetRoot + os.sep + "src" + sep + core4inetRoot + os.sep + "src" + sep + fico4omnetRoot + os.sep + "src"  + sep + signalsandgatewaysRoot + os.sep + "src" \
-			+ sep + soqosmwRoot + os.sep + "src" + sep + soqosmwRoot + os.sep + "examples" + sep + soqosmwRoot + os.sep + "tests" + os.sep + "smoke"
+			+ sep + soqosmwRoot + os.sep + "src" + sep + soqosmwRoot + os.sep + "examples" + sep + soqosmwRoot + os.sep + "simulations" + sep + soqosmwRoot + os.sep + "tests" + os.sep + "smoke"
 inetLib = inetRoot + os.sep + "src" + os.sep + "INET"
 core4inetLib = core4inetRoot + os.sep + "src" + os.sep + "CoRE4INET"
 fico4omnetLib = fico4omnetRoot + os.sep + "src" + os.sep + "FiCo4OMNeT"
 signalsandgatewaysLib = signalsandgatewaysRoot + os.sep + "src" + os.sep + "SignalsAndGateways"
 soqosmwLib = soqosmwRoot + os.sep + "src" + os.sep + "SOQoSMW"
-opp_run = "opp_run"	
+opp_run = "opp_run"
 cpuTimeLimit = "30s"
 logFile = "test.out"
 
@@ -371,9 +371,8 @@ if __name__ == "__main__":
     testRunner = unittest.TextTestRunner(stream=sys.stdout, verbosity=9, resultclass=SimulationTextTestResult)
 
     testRunner.run(testSuite)
-    
+
     print
     generator.writeUpdatedCSVFiles()
 
     print "Log has been saved to %s" % logFile
-
