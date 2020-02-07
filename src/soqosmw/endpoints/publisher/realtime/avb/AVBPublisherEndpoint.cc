@@ -19,6 +19,8 @@
 
 #include "soqosmw/applications/base/SOQoSMWApplicationBase.h"
 
+//STD
+#include <string>
 //INET
 #include "inet/linklayer/ethernet/Ethernet.h"
 //CoRE4INET
@@ -28,6 +30,7 @@
 //AUTO-GENERATED MESSAGES
 #include <core4inet/linklayer/ethernet/avb/AVBFrame_m.h>
 
+using namespace std;
 using namespace CoRE4INET;
 using namespace inet;
 
@@ -164,9 +167,9 @@ ConnectionSpecificInformation* AVBPublisherEndpoint::getConnectionSpecificInform
 
 void AVBPublisherEndpoint::publish(cPacket* msg) {
     if (_isConnected) {
-        char frameName[10];
-        sprintf(frameName, "Stream %lu", _streamID);
-        AVBFrame *outFrame = new AVBFrame(frameName);
+        std::string name = "Stream ";
+        name += _streamID;
+        AVBFrame *outFrame = new AVBFrame(name.c_str());
         outFrame->setTimestamp();
         outFrame->setStreamID(_streamID);
         outFrame->setDest(_multicastMAC);
