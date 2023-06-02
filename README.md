@@ -1,5 +1,6 @@
 # SOQoSMW
-**NOTE: This project has been moved to [SOA4CoRE] (https://github.com/CoRE-RG/SOA4CoRE) and is no longer maintained here. Development and advancements continue in the new location.**
+>**NOTE: This project has been moved to [SOA4CoRE] (https://github.com/CoRE-RG/SOA4CoRE) and is no longer maintained here. Development and advancements continue in the new location.**
+
 SOQoSMW (Service-Oriented Quality-of-Service MiddleWare) is an open-source extension for the event-based simulation of service-oriented communication in real-time Ethernet networks in the [OMNEST/OMNeT++](https://omnetpp.org/) simulation system. It is based on the [INET-Framework](https://inet.omnetpp.org/), providing internet technologies, the [CoRE4INET Framework](https://github.com/CoRE-RG/CoRE4INET), providing real-time Ethernet protocols such as AS6802, AVB and TSN, and the SignalsAndGateway framework (https://github.com/CoRE-RG/SignalsAndGateways) providing gateways to legacy bus systems.
 SOQoSMW provides service-oriented middleware components, service applications and service endpoints for avb, tcp and udp. It was created by the [CoRE (Communication over Realtime Ethernet)](https://core-researchgroup.de/) at the [HAW-Hamburg (Hamburg University of Applied Sciences)](https://www.haw-hamburg.de/english.html).
 
